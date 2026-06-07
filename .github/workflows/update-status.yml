@@ -22,14 +22,20 @@ jobs:
           cat > /tmp/update.py << 'PYEOF'
           import json, urllib.request, time, sys
 
+          # sit do lineups → status_id
           SIT_PARA_STATUS = {"provavel": 6, "duvida": 2}
+
+          # Únicos status do cartola aceitos para quem NÃO está no lineup
+          # status 6 (Provável) do cartola significa "saudável/disponível",
+          # mas sem estar escalado é reserva → Nulo (7)
+          CARTOLA_ACEITOS_FORA_LINEUP = {2, 3, 5}  # Dúvida, Lesionado, Suspenso
 
           def fetch(url):
               req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
               with urllib.request.urlopen(req, timeout=30) as r:
                   return json.loads(r.read())
 
-          # cartola-mercado — base para todos os jogadores
+          # cartola-mercado — base para statuses de suspensão/lesão/dúvida
           try:
               mercado = fetch(
                   "https://provaveisdocartola.com.br/api/copa/cartola-mercado?_="
@@ -41,7 +47,7 @@ jobs:
               print(f"Aviso: cartola-mercado indisponivel — {e}", file=sys.stderr)
               status_map = {}
 
-          # lineups — sobrescreve status dos titulares (fonte mais precisa)
+          # lineups — fonte primária para titulares
           try:
               lineups = fetch("https://provaveisdocartola.com.br/api/copa/lineups")
               lineup_status = {}
@@ -72,11 +78,20 @@ jobs:
           status_ok = fotos_ok = 0
           for j in jogadores:
               aid = j["atleta_id"]
-              # lineups tem prioridade; cartola-mercado como fallback
-              novo_status = lineup_status.get(aid) or status_map.get(aid)
-              if novo_status is not None and j.get("status_id") != novo_status:
+
+              if aid in lineup_status:
+                  # Titular: status vem do lineup (Provável ou Dúvida)
+                  novo_status = lineup_status[aid]
+              else:
+                  # Não escalado: só preserva Suspenso/Lesionado/Dúvida do cartola
+                  # status 6 (Provável) sem estar no lineup = reserva = Nulo (7)
+                  s = status_map.get(aid, 7)
+                  novo_status = s if s in CARTOLA_ACEITOS_FORA_LINEUP else 7
+
+              if j.get("status_id") != novo_status:
                   j["status_id"] = novo_status
                   status_ok += 1
+
               nova_foto = foto_map.get(aid)
               if nova_foto and j.get("foto_url") != nova_foto:
                   j["foto_url"] = nova_foto
