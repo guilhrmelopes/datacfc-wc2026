@@ -1,0 +1,48 @@
+# ──────────────────────────────────────────────
+# Pipeline Python (uso local apenas)
+# ──────────────────────────────────────────────
+/src/
+/data/
+/exports/
+/logs/
+/scripts/
+/app.py
+/requirements.txt
+
+# ──────────────────────────────────────────────
+# Ambientes Python
+# ──────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.playwright/
+*.log
+
+# ──────────────────────────────────────────────
+# Frontend — dependências e build
+# ──────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/tsconfig.tsbuildinfo
+
+# ──────────────────────────────────────────────
+# Sistema operacional
+# ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ──────────────────────────────────────────────
+# Editores e IDEs
+# ──────────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo

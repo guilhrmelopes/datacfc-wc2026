@@ -1,0 +1,584 @@
+{
+  "torneio": "FIFA World Cup 2026",
+  "formato": "12 grupos (A–L), 4 seleções, 6 jogos por grupo",
+  "grupos": {
+    "A": [
+      "MEXICO",
+      "SOUTH AFRICA",
+      "SOUTH KOREA",
+      "CZECHIA"
+    ],
+    "B": [
+      "CANADA",
+      "BOSNIA AND HERZEGOVINA",
+      "QATAR",
+      "SWITZERLAND"
+    ],
+    "C": [
+      "BRAZIL",
+      "MOROCCO",
+      "HAITI",
+      "SCOTLAND"
+    ],
+    "D": [
+      "UNITED STATES",
+      "PARAGUAY",
+      "AUSTRALIA",
+      "TURKIYE"
+    ],
+    "E": [
+      "GERMANY",
+      "CURACAO",
+      "IVORY COAST",
+      "ECUADOR"
+    ],
+    "F": [
+      "NETHERLANDS",
+      "JAPAN",
+      "SWEDEN",
+      "TUNISIA"
+    ],
+    "G": [
+      "BELGIUM",
+      "EGYPT",
+      "IRAN",
+      "NEW ZEALAND"
+    ],
+    "H": [
+      "SPAIN",
+      "CAPE VERDE",
+      "SAUDI ARABIA",
+      "URUGUAY"
+    ],
+    "I": [
+      "FRANCE",
+      "SENEGAL",
+      "IRAQ",
+      "NORWAY"
+    ],
+    "J": [
+      "ARGENTINA",
+      "ALGERIA",
+      "AUSTRIA",
+      "JORDAN"
+    ],
+    "K": [
+      "PORTUGAL",
+      "DR CONGO",
+      "UZBEKISTAN",
+      "COLOMBIA"
+    ],
+    "L": [
+      "ENGLAND",
+      "CROATIA",
+      "GHANA",
+      "PANAMA"
+    ]
+  },
+  "confrontos": [
+    {
+      "grupo": "A",
+      "rodada": 1,
+      "mandante": "MEXICO",
+      "visitante": "SOUTH AFRICA",
+      "data": "2026-06-11"
+    },
+    {
+      "grupo": "A",
+      "rodada": 1,
+      "mandante": "SOUTH KOREA",
+      "visitante": "CZECHIA",
+      "data": "2026-06-11"
+    },
+    {
+      "grupo": "A",
+      "rodada": 2,
+      "mandante": "CZECHIA",
+      "visitante": "SOUTH AFRICA",
+      "data": "2026-06-18"
+    },
+    {
+      "grupo": "A",
+      "rodada": 2,
+      "mandante": "MEXICO",
+      "visitante": "SOUTH KOREA",
+      "data": "2026-06-18"
+    },
+    {
+      "grupo": "A",
+      "rodada": 3,
+      "mandante": "CZECHIA",
+      "visitante": "MEXICO",
+      "data": "2026-06-24"
+    },
+    {
+      "grupo": "A",
+      "rodada": 3,
+      "mandante": "SOUTH AFRICA",
+      "visitante": "SOUTH KOREA",
+      "data": "2026-06-24"
+    },
+    {
+      "grupo": "B",
+      "rodada": 1,
+      "mandante": "CANADA",
+      "visitante": "BOSNIA AND HERZEGOVINA",
+      "data": "2026-06-12"
+    },
+    {
+      "grupo": "B",
+      "rodada": 1,
+      "mandante": "QATAR",
+      "visitante": "SWITZERLAND",
+      "data": "2026-06-12"
+    },
+    {
+      "grupo": "B",
+      "rodada": 2,
+      "mandante": "SWITZERLAND",
+      "visitante": "BOSNIA AND HERZEGOVINA",
+      "data": "2026-06-18"
+    },
+    {
+      "grupo": "B",
+      "rodada": 2,
+      "mandante": "CANADA",
+      "visitante": "QATAR",
+      "data": "2026-06-18"
+    },
+    {
+      "grupo": "B",
+      "rodada": 3,
+      "mandante": "SWITZERLAND",
+      "visitante": "CANADA",
+      "data": "2026-06-24"
+    },
+    {
+      "grupo": "B",
+      "rodada": 3,
+      "mandante": "BOSNIA AND HERZEGOVINA",
+      "visitante": "QATAR",
+      "data": "2026-06-24"
+    },
+    {
+      "grupo": "C",
+      "rodada": 1,
+      "mandante": "BRAZIL",
+      "visitante": "MOROCCO",
+      "data": "2026-06-13"
+    },
+    {
+      "grupo": "C",
+      "rodada": 1,
+      "mandante": "HAITI",
+      "visitante": "SCOTLAND",
+      "data": "2026-06-13"
+    },
+    {
+      "grupo": "C",
+      "rodada": 2,
+      "mandante": "SCOTLAND",
+      "visitante": "MOROCCO",
+      "data": "2026-06-19"
+    },
+    {
+      "grupo": "C",
+      "rodada": 2,
+      "mandante": "BRAZIL",
+      "visitante": "HAITI",
+      "data": "2026-06-19"
+    },
+    {
+      "grupo": "C",
+      "rodada": 3,
+      "mandante": "SCOTLAND",
+      "visitante": "BRAZIL",
+      "data": "2026-06-24"
+    },
+    {
+      "grupo": "C",
+      "rodada": 3,
+      "mandante": "MOROCCO",
+      "visitante": "HAITI",
+      "data": "2026-06-24"
+    },
+    {
+      "grupo": "D",
+      "rodada": 1,
+      "mandante": "UNITED STATES",
+      "visitante": "PARAGUAY",
+      "data": "2026-06-12"
+    },
+    {
+      "grupo": "D",
+      "rodada": 1,
+      "mandante": "AUSTRALIA",
+      "visitante": "TURKIYE",
+      "data": "2026-06-13"
+    },
+    {
+      "grupo": "D",
+      "rodada": 2,
+      "mandante": "UNITED STATES",
+      "visitante": "AUSTRALIA",
+      "data": "2026-06-19"
+    },
+    {
+      "grupo": "D",
+      "rodada": 2,
+      "mandante": "TURKIYE",
+      "visitante": "PARAGUAY",
+      "data": "2026-06-19"
+    },
+    {
+      "grupo": "D",
+      "rodada": 3,
+      "mandante": "PARAGUAY",
+      "visitante": "AUSTRALIA",
+      "data": "2026-06-25"
+    },
+    {
+      "grupo": "D",
+      "rodada": 3,
+      "mandante": "TURKIYE",
+      "visitante": "UNITED STATES",
+      "data": "2026-06-25"
+    },
+    {
+      "grupo": "E",
+      "rodada": 1,
+      "mandante": "GERMANY",
+      "visitante": "CURACAO",
+      "data": "2026-06-14"
+    },
+    {
+      "grupo": "E",
+      "rodada": 1,
+      "mandante": "IVORY COAST",
+      "visitante": "ECUADOR",
+      "data": "2026-06-14"
+    },
+    {
+      "grupo": "E",
+      "rodada": 2,
+      "mandante": "GERMANY",
+      "visitante": "IVORY COAST",
+      "data": "2026-06-20"
+    },
+    {
+      "grupo": "E",
+      "rodada": 2,
+      "mandante": "ECUADOR",
+      "visitante": "CURACAO",
+      "data": "2026-06-20"
+    },
+    {
+      "grupo": "E",
+      "rodada": 3,
+      "mandante": "ECUADOR",
+      "visitante": "GERMANY",
+      "data": "2026-06-26"
+    },
+    {
+      "grupo": "E",
+      "rodada": 3,
+      "mandante": "CURACAO",
+      "visitante": "IVORY COAST",
+      "data": "2026-06-26"
+    },
+    {
+      "grupo": "F",
+      "rodada": 1,
+      "mandante": "NETHERLANDS",
+      "visitante": "JAPAN",
+      "data": "2026-06-14"
+    },
+    {
+      "grupo": "F",
+      "rodada": 1,
+      "mandante": "SWEDEN",
+      "visitante": "TUNISIA",
+      "data": "2026-06-14"
+    },
+    {
+      "grupo": "F",
+      "rodada": 2,
+      "mandante": "NETHERLANDS",
+      "visitante": "SWEDEN",
+      "data": "2026-06-20"
+    },
+    {
+      "grupo": "F",
+      "rodada": 2,
+      "mandante": "TUNISIA",
+      "visitante": "JAPAN",
+      "data": "2026-06-20"
+    },
+    {
+      "grupo": "F",
+      "rodada": 3,
+      "mandante": "JAPAN",
+      "visitante": "SWEDEN",
+      "data": "2026-06-26"
+    },
+    {
+      "grupo": "F",
+      "rodada": 3,
+      "mandante": "TUNISIA",
+      "visitante": "NETHERLANDS",
+      "data": "2026-06-26"
+    },
+    {
+      "grupo": "G",
+      "rodada": 1,
+      "mandante": "BELGIUM",
+      "visitante": "EGYPT",
+      "data": "2026-06-15"
+    },
+    {
+      "grupo": "G",
+      "rodada": 1,
+      "mandante": "IRAN",
+      "visitante": "NEW ZEALAND",
+      "data": "2026-06-15"
+    },
+    {
+      "grupo": "G",
+      "rodada": 2,
+      "mandante": "BELGIUM",
+      "visitante": "IRAN",
+      "data": "2026-06-21"
+    },
+    {
+      "grupo": "G",
+      "rodada": 2,
+      "mandante": "NEW ZEALAND",
+      "visitante": "EGYPT",
+      "data": "2026-06-21"
+    },
+    {
+      "grupo": "G",
+      "rodada": 3,
+      "mandante": "EGYPT",
+      "visitante": "IRAN",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "G",
+      "rodada": 3,
+      "mandante": "NEW ZEALAND",
+      "visitante": "BELGIUM",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "H",
+      "rodada": 1,
+      "mandante": "SPAIN",
+      "visitante": "CAPE VERDE",
+      "data": "2026-06-15"
+    },
+    {
+      "grupo": "H",
+      "rodada": 1,
+      "mandante": "SAUDI ARABIA",
+      "visitante": "URUGUAY",
+      "data": "2026-06-15"
+    },
+    {
+      "grupo": "H",
+      "rodada": 2,
+      "mandante": "SPAIN",
+      "visitante": "SAUDI ARABIA",
+      "data": "2026-06-21"
+    },
+    {
+      "grupo": "H",
+      "rodada": 2,
+      "mandante": "URUGUAY",
+      "visitante": "CAPE VERDE",
+      "data": "2026-06-21"
+    },
+    {
+      "grupo": "H",
+      "rodada": 3,
+      "mandante": "CAPE VERDE",
+      "visitante": "SAUDI ARABIA",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "H",
+      "rodada": 3,
+      "mandante": "URUGUAY",
+      "visitante": "SPAIN",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "I",
+      "rodada": 1,
+      "mandante": "FRANCE",
+      "visitante": "SENEGAL",
+      "data": "2026-06-16"
+    },
+    {
+      "grupo": "I",
+      "rodada": 1,
+      "mandante": "IRAQ",
+      "visitante": "NORWAY",
+      "data": "2026-06-16"
+    },
+    {
+      "grupo": "I",
+      "rodada": 2,
+      "mandante": "FRANCE",
+      "visitante": "IRAQ",
+      "data": "2026-06-22"
+    },
+    {
+      "grupo": "I",
+      "rodada": 2,
+      "mandante": "NORWAY",
+      "visitante": "SENEGAL",
+      "data": "2026-06-22"
+    },
+    {
+      "grupo": "I",
+      "rodada": 3,
+      "mandante": "SENEGAL",
+      "visitante": "IRAQ",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "I",
+      "rodada": 3,
+      "mandante": "NORWAY",
+      "visitante": "FRANCE",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "J",
+      "rodada": 1,
+      "mandante": "ARGENTINA",
+      "visitante": "ALGERIA",
+      "data": "2026-06-16"
+    },
+    {
+      "grupo": "J",
+      "rodada": 1,
+      "mandante": "AUSTRIA",
+      "visitante": "JORDAN",
+      "data": "2026-06-16"
+    },
+    {
+      "grupo": "J",
+      "rodada": 2,
+      "mandante": "ARGENTINA",
+      "visitante": "AUSTRIA",
+      "data": "2026-06-22"
+    },
+    {
+      "grupo": "J",
+      "rodada": 2,
+      "mandante": "JORDAN",
+      "visitante": "ALGERIA",
+      "data": "2026-06-22"
+    },
+    {
+      "grupo": "J",
+      "rodada": 3,
+      "mandante": "ALGERIA",
+      "visitante": "AUSTRIA",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "J",
+      "rodada": 3,
+      "mandante": "JORDAN",
+      "visitante": "ARGENTINA",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "K",
+      "rodada": 1,
+      "mandante": "PORTUGAL",
+      "visitante": "DR CONGO",
+      "data": "2026-06-17"
+    },
+    {
+      "grupo": "K",
+      "rodada": 1,
+      "mandante": "UZBEKISTAN",
+      "visitante": "COLOMBIA",
+      "data": "2026-06-17"
+    },
+    {
+      "grupo": "K",
+      "rodada": 2,
+      "mandante": "PORTUGAL",
+      "visitante": "UZBEKISTAN",
+      "data": "2026-06-23"
+    },
+    {
+      "grupo": "K",
+      "rodada": 2,
+      "mandante": "COLOMBIA",
+      "visitante": "DR CONGO",
+      "data": "2026-06-23"
+    },
+    {
+      "grupo": "K",
+      "rodada": 3,
+      "mandante": "DR CONGO",
+      "visitante": "UZBEKISTAN",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "K",
+      "rodada": 3,
+      "mandante": "COLOMBIA",
+      "visitante": "PORTUGAL",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "L",
+      "rodada": 1,
+      "mandante": "ENGLAND",
+      "visitante": "CROATIA",
+      "data": "2026-06-17"
+    },
+    {
+      "grupo": "L",
+      "rodada": 1,
+      "mandante": "GHANA",
+      "visitante": "PANAMA",
+      "data": "2026-06-17"
+    },
+    {
+      "grupo": "L",
+      "rodada": 2,
+      "mandante": "ENGLAND",
+      "visitante": "GHANA",
+      "data": "2026-06-23"
+    },
+    {
+      "grupo": "L",
+      "rodada": 2,
+      "mandante": "PANAMA",
+      "visitante": "CROATIA",
+      "data": "2026-06-23"
+    },
+    {
+      "grupo": "L",
+      "rodada": 3,
+      "mandante": "PANAMA",
+      "visitante": "ENGLAND",
+      "data": "2026-06-27"
+    },
+    {
+      "grupo": "L",
+      "rodada": 3,
+      "mandante": "CROATIA",
+      "visitante": "GHANA",
+      "data": "2026-06-27"
+    }
+  ]
+}
