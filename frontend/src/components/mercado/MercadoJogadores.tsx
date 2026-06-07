@@ -28,6 +28,30 @@ interface Props {
 }
 
 // ---------------------------------------------------------------------------
+// Status dos jogadores
+// ---------------------------------------------------------------------------
+const STATUS_MAP: Record<number, { label: string; cor: string }> = {
+  6: { label: "Provável",  cor: "bg-green-500"  },
+  2: { label: "Dúvida",    cor: "bg-amber-400"  },
+  5: { label: "Suspenso",  cor: "bg-red-500"    },
+  3: { label: "Lesionado", cor: "bg-orange-500" },
+  7: { label: "Nulo",      cor: "bg-gray-400"   },
+};
+
+const STATUS_ORDEM = [6, 2, 5, 3, 7] as const;
+
+function StatusDot({ statusId }: { statusId: number }) {
+  const s = STATUS_MAP[statusId];
+  if (!s) return null;
+  return (
+    <span
+      className={`inline-block h-2.5 w-2.5 shrink-0 rounded-full ${s.cor}`}
+      title={s.label}
+    />
+  );
+}
+
+// ---------------------------------------------------------------------------
 // Helpers de formatação
 // ---------------------------------------------------------------------------
 function fmt(valor: number | null | undefined, casas = 1): string {
@@ -160,6 +184,7 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
 export function MercadoJogadores({ jogadores }: Props) {
   const [posicao,       setPosicao]       = useState<BucketPos>("ATA");
   const [selecaoFiltro, setSelecaoFiltro] = useState<string>("TODAS");
+  const [statusFiltro,  setStatusFiltro]  = useState<string>("TODOS");
 
   const listaSelecoes = useMemo(
     () =>
@@ -174,9 +199,10 @@ export function MercadoJogadores({ jogadores }: Props) {
       jogadores
         .filter((j) => j.bucket_posicao === posicao)
         .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
+        .filter((j) => statusFiltro === "TODOS" || String(j.status_id) === statusFiltro)
         .sort((a, b) => (b.rating_recomendacao ?? 0) - (a.rating_recomendacao ?? 0))
         .slice(0, 500),
-    [jogadores, posicao, selecaoFiltro],
+    [jogadores, posicao, selecaoFiltro, statusFiltro],
   );
 
   const colunas = COLUNAS[posicao];
@@ -224,6 +250,29 @@ export function MercadoJogadores({ jogadores }: Props) {
               {listaSelecoes.map((s) => (
                 <SelectItem key={s} value={s}>
                   {traduzirSelecao(s)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Status */}
+        <div>
+          <label className="mb-1 block text-xs text-[var(--color-muted)]">
+            Status
+          </label>
+          <Select value={statusFiltro} onValueChange={setStatusFiltro}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="TODOS">Todos</SelectItem>
+              {STATUS_ORDEM.map((id) => (
+                <SelectItem key={id} value={String(id)}>
+                  <span className="flex items-center gap-2">
+                    <span className={`inline-block h-2 w-2 rounded-full ${STATUS_MAP[id].cor}`} />
+                    {STATUS_MAP[id].label}
+                  </span>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -281,6 +330,7 @@ export function MercadoJogadores({ jogadores }: Props) {
                           className="h-5 w-5 shrink-0 object-contain"
                         />
                       )}
+                      <StatusDot statusId={j.status_id} />
                       <span className="font-medium">{j.apelido}</span>
                     </div>
                   </td>

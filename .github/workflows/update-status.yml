@@ -1,0 +1,68 @@
+name: Atualizar status dos jogadores
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # 09h BRT (UTC-3)
+    - cron: '0 17 * * *'   # 14h BRT
+    - cron: '0 0  * * *'   # 21h BRT
+  workflow_dispatch:         # permite execução manual pelo painel do GitHub
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Atualizar status_id dos jogadores
+        run: |
+          python3 - <<'PYEOF'
+          import json, urllib.request, time, sys
+
+          url = (
+              "https://provaveisdocartola.com.br/api/copa/cartola-mercado?_="
+              + str(int(time.time() * 1000))
+          )
+          req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  data = json.loads(r.read())
+          except Exception as e:
+              print(f"Erro ao buscar API: {e}", file=sys.stderr)
+              sys.exit(1)
+
+          status_map = {
+              a["atleta_id"]: a["status_id"]
+              for a in data.get("atletas", [])
+          }
+          print(f"Atletas na API: {len(status_map)}")
+
+          path = "frontend/public/data/jogadores_mercado.json"
+          with open(path, encoding="utf-8") as f:
+              jogadores = json.load(f)
+
+          atualizados = 0
+          for j in jogadores:
+              novo = status_map.get(j["atleta_id"])
+              if novo is not None and j.get("status_id") != novo:
+                  j["status_id"] = novo
+                  atualizados += 1
+
+          with open(path, "w", encoding="utf-8") as f:
+              json.dump(jogadores, f, ensure_ascii=False, separators=(",", ":"))
+
+          print(f"Jogadores atualizados: {atualizados}")
+          PYEOF
+
+      - name: Commitar se houver mudanças
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet frontend/public/data/jogadores_mercado.json || (
+            git add frontend/public/data/jogadores_mercado.json &&
+            git commit -m "bot: atualizar status dos jogadores [skip ci]" &&
+            git push
+          )
