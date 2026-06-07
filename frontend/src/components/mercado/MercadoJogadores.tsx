@@ -323,13 +323,19 @@ export function MercadoJogadores({ jogadores }: Props) {
                   {/* JOGADOR */}
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-2">
-                      {j.url_escudo && (
+                      {j.foto_url ? (
+                        <img
+                          src={j.foto_url}
+                          alt={j.apelido}
+                          className="h-8 w-8 shrink-0 rounded-full object-cover"
+                        />
+                      ) : j.url_escudo ? (
                         <img
                           src={j.url_escudo}
                           alt={j.sigla}
-                          className="h-5 w-5 shrink-0 object-contain"
+                          className="h-8 w-8 shrink-0 object-contain"
                         />
-                      )}
+                      ) : null}
                       <StatusDot statusId={j.status_id} />
                       <span className="font-medium">{j.apelido}</span>
                     </div>

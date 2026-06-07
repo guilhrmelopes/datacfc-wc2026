@@ -1,4 +1,4 @@
-name: Atualizar status dos jogadores
+name: Atualizar status e fotos dos jogadores
 
 on:
   schedule:
@@ -17,44 +17,59 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Atualizar status_id dos jogadores
+      - name: Atualizar status_id e foto_url dos jogadores
         run: |
           python3 - <<'PYEOF'
           import json, urllib.request, time, sys
 
-          url = (
-              "https://provaveisdocartola.com.br/api/copa/cartola-mercado?_="
-              + str(int(time.time() * 1000))
-          )
-          req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-          try:
+          def fetch(url):
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
               with urllib.request.urlopen(req, timeout=30) as r:
-                  data = json.loads(r.read())
+                  return json.loads(r.read())
+
+          # --- fotos-atletas ---
+          try:
+              fotos_data = fetch("https://provaveisdocartola.com.br/api/copa/fotos-atletas")
+              foto_map = {int(aid): d["url"] for aid, d in fotos_data.get("atletas", {}).items()}
+              print(f"Fotos disponíveis: {len(foto_map)}")
           except Exception as e:
-              print(f"Erro ao buscar API: {e}", file=sys.stderr)
-              sys.exit(1)
+              print(f"Aviso: não foi possível buscar fotos — {e}", file=sys.stderr)
+              foto_map = {}
 
-          status_map = {
-              a["atleta_id"]: a["status_id"]
-              for a in data.get("atletas", [])
-          }
-          print(f"Atletas na API: {len(status_map)}")
+          # --- cartola-mercado (status) ---
+          try:
+              mercado = fetch(
+                  "https://provaveisdocartola.com.br/api/copa/cartola-mercado?_="
+                  + str(int(time.time() * 1000))
+              )
+              status_map = {a["atleta_id"]: a["status_id"] for a in mercado.get("atletas", [])}
+              print(f"Status disponíveis: {len(status_map)}")
+          except Exception as e:
+              print(f"Aviso: não foi possível buscar status — {e}", file=sys.stderr)
+              status_map = {}
 
+          # --- atualizar JSON ---
           path = "frontend/public/data/jogadores_mercado.json"
           with open(path, encoding="utf-8") as f:
               jogadores = json.load(f)
 
-          atualizados = 0
+          fotos_ok = status_ok = 0
           for j in jogadores:
-              novo = status_map.get(j["atleta_id"])
-              if novo is not None and j.get("status_id") != novo:
-                  j["status_id"] = novo
-                  atualizados += 1
+              aid = j["atleta_id"]
+              nova_foto = foto_map.get(aid)
+              if nova_foto and j.get("foto_url") != nova_foto:
+                  j["foto_url"] = nova_foto
+                  fotos_ok += 1
+              novo_status = status_map.get(aid)
+              if novo_status is not None and j.get("status_id") != novo_status:
+                  j["status_id"] = novo_status
+                  status_ok += 1
 
           with open(path, "w", encoding="utf-8") as f:
               json.dump(jogadores, f, ensure_ascii=False, separators=(",", ":"))
 
-          print(f"Jogadores atualizados: {atualizados}")
+          print(f"Fotos atualizadas: {fotos_ok}")
+          print(f"Status atualizados: {status_ok}")
           PYEOF
 
       - name: Commitar se houver mudanças
@@ -63,6 +78,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git diff --quiet frontend/public/data/jogadores_mercado.json || (
             git add frontend/public/data/jogadores_mercado.json &&
-            git commit -m "bot: atualizar status dos jogadores [skip ci]" &&
+            git commit -m "bot: atualizar status e fotos dos jogadores [skip ci]" &&
             git push
           )

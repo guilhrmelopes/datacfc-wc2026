@@ -66,6 +66,7 @@ export interface JogadorMercado {
   sigla: string;
   grupo: string;
   url_escudo: string | null;
+  foto_url: string | null;
   rating_recomendacao: number;
   mins_played: number;
   jogos_num: number;
