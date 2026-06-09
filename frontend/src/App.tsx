@@ -86,7 +86,6 @@ export default function App() {
           {mercado.dados && (
             <MercadoJogadores
               jogadores={mercado.dados.jogadores as JogadorMercado[]}
-              pontuacaoCedida={mercado.dados.pontuacaoCedida as PontuacaoCedida}
               oddsJogadores={mercado.dados.oddsJogadores}
             />
           )}

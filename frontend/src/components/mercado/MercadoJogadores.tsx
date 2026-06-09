@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { traduzirSelecao } from "@/lib/traducoes";
-import type { JogadorMercado, OddsJogadoresData, OddsJogadorEntry, PontuacaoCedida } from "@/types/dados";
+import type { JogadorMercado, OddsJogadoresData, OddsJogadorEntry } from "@/types/dados";
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -29,7 +29,6 @@ const COLUNAS_NAO_ORDENAVEIS = new Set(["adv"]);
 
 interface Props {
   jogadores: JogadorMercado[];
-  pontuacaoCedida: PontuacaoCedida;
   oddsJogadores?: OddsJogadoresData | null;
 }
 
@@ -133,12 +132,8 @@ const COL_CED: ColDef = {
   key: "ced",
   header: "CED",
   title: "Pontuação cedida pelo adversário",
-  render: (_j, ced) =>
-    ced !== null ? (
-      <span className="tabular-nums">{fmt(ced)}</span>
-    ) : (
-      <Dash />
-    ),
+  sortable: false,
+  render: () => <Dash />,
 };
 
 const COL_ADV: ColDef = {
@@ -222,21 +217,10 @@ const COL_XGXA90  = copaDash("xG+xA/90'", "xG + xA por 90 minutos");
 // Ordenação
 // ---------------------------------------------------------------------------
 
-function valorCed(j: JogadorMercado, pontuacaoCedida: PontuacaoCedida): number | null {
-  const advSigla = j.proximo_adversario_sigla?.trim().toUpperCase();
-  if (!advSigla) return null;
-  const perf = pontuacaoCedida[advSigla];
-  if (!perf) return null;
-  const bucket = perf[j.bucket_posicao];
-  const v = bucket?.cedido?.valor;
-  return v === null || v === undefined ? null : v;
-}
-
 function valorOrdenacao(
   j: JogadorMercado,
   colKey: string,
   odds: OddsJogadorEntry | null,
-  pontuacaoCedida: PontuacaoCedida,
 ): number | null {
   switch (colKey) {
     case "rating":
@@ -249,8 +233,6 @@ function valorOrdenacao(
       return odds?.ga_pct ?? null;
     case "sg_pct":
       return odds?.sg_pct ?? null;
-    case "ced":
-      return valorCed(j, pontuacaoCedida);
     case "j":
       return j.jogos_num > 0 ? j.jogos_num : null;
     case "min":
@@ -312,7 +294,7 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
 // ---------------------------------------------------------------------------
 // Componente
 // ---------------------------------------------------------------------------
-export function MercadoJogadores({ jogadores, pontuacaoCedida, oddsJogadores }: Props) {
+export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
   const oddsMap = oddsJogadores?.odds ?? null;
   const [posicao,       setPosicao]       = useState<BucketPos>("ATA");
   const [selecaoFiltro, setSelecaoFiltro] = useState<string>("TODAS");
@@ -355,13 +337,13 @@ export function MercadoJogadores({ jogadores, pontuacaoCedida, oddsJogadores }: 
       const oddsA = oddsMap ? (oddsMap[String(a.atleta_id)] ?? null) : null;
       const oddsB = oddsMap ? (oddsMap[String(b.atleta_id)] ?? null) : null;
       return compararValores(
-        valorOrdenacao(a, ordenarPor, oddsA, pontuacaoCedida),
-        valorOrdenacao(b, ordenarPor, oddsB, pontuacaoCedida),
+        valorOrdenacao(a, ordenarPor, oddsA),
+        valorOrdenacao(b, ordenarPor, oddsB),
         ordem,
       );
     });
     return dados.slice(0, 500);
-  }, [jogadores, posicao, selecaoFiltro, statusFiltro, ordenarPor, ordem, oddsMap, pontuacaoCedida]);
+  }, [jogadores, posicao, selecaoFiltro, statusFiltro, ordenarPor, ordem, oddsMap]);
 
   const colunas = COLUNAS[posicao];
   const totalCols = 1 + colunas.length; // 1 = coluna JOGADOR
@@ -511,10 +493,9 @@ export function MercadoJogadores({ jogadores, pontuacaoCedida, oddsJogadores }: 
                   {/* COLUNAS DINÂMICAS */}
                   {colunas.map((col) => {
                     const odds = oddsMap ? (oddsMap[String(j.atleta_id)] ?? null) : null;
-                    const ced = valorCed(j, pontuacaoCedida);
                     return (
                       <td key={col.key} className="px-3 py-2 text-center">
-                        {col.render(j, ced, odds)}
+                        {col.render(j, null, odds)}
                       </td>
                     );
                   })}
