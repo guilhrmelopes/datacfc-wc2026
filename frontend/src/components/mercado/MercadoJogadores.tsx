@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { traduzirSelecao } from "@/lib/traducoes";
-import type { JogadorMercado, PontuacaoCedida } from "@/types/dados";
+import type { JogadorMercado, OddsJogadoresData, OddsJogadorEntry, PontuacaoCedida } from "@/types/dados";
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -19,12 +19,13 @@ interface ColDef {
   key: string;
   header: string;
   title: string;
-  render: (j: JogadorMercado, ced: number | null) => React.ReactNode;
+  render: (j: JogadorMercado, ced: number | null, odds: OddsJogadorEntry | null) => React.ReactNode;
 }
 
 interface Props {
   jogadores: JogadorMercado[];
   pontuacaoCedida: PontuacaoCedida;
+  oddsJogadores?: OddsJogadoresData | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -61,6 +62,30 @@ function fmt(valor: number | null | undefined, casas = 1): string {
 
 function Dash() {
   return <span className="text-[var(--color-muted)]">—</span>;
+}
+
+function PctOdds({
+  pct,
+  casa,
+  odds,
+}: {
+  pct: number | null | undefined;
+  casa: string | null | undefined;
+  odds: number | null | undefined;
+}) {
+  if (pct === null || pct === undefined) return <Dash />;
+  const tooltip = casa && odds ? `${casa} — odds ${odds.toFixed(2)}` : undefined;
+  const cor =
+    pct >= 40
+      ? "text-green-400"
+      : pct >= 25
+        ? "text-amber-400"
+        : "text-[var(--color-fg)]";
+  return (
+    <span className={`tabular-nums font-medium ${cor}`} title={tooltip}>
+      {pct.toFixed(1)}%
+    </span>
+  );
 }
 
 
@@ -123,6 +148,25 @@ const COL_ADV: ColDef = {
     ),
 };
 
+// Colunas de odds de jogadores
+const COL_G_PCT: ColDef = {
+  key: "g_pct",
+  header: "⚽",
+  title: "Probabilidade de marcar a qualquer momento (Anytime Goalscorer) — melhor odd disponível",
+  render: (_j, _ced, odds) => (
+    <PctOdds pct={odds?.g_pct} casa={odds?.casa_g} odds={odds?.odds_g} />
+  ),
+};
+
+const COL_A_PCT: ColDef = {
+  key: "a_pct",
+  header: "🅰️",
+  title: "Probabilidade de dar assistência a qualquer momento (Player To Assist) — melhor odd disponível",
+  render: (_j, _ced, odds) => (
+    <PctOdds pct={odds?.a_pct} casa={odds?.casa_a} odds={odds?.odds_a} />
+  ),
+};
+
 // Colunas de métricas da Copa (ainda sem dados — Copa não iniciou)
 function copaDash(header: string, title: string): ColDef {
   return { key: header.toLowerCase().replace(/[^a-z0-9]/g, "_"), header, title, render: () => <Dash /> };
@@ -159,21 +203,25 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
   ZAG: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_INT, COL_C, COL_BR, COL_FD,
+    COL_G_PCT, COL_A_PCT,
     COL_CED, COL_ADV,
   ],
   LAT: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_G, COL_A, COL_XGXA90, COL_GCC, COL_FD, COL_BR,
+    COL_G_PCT, COL_A_PCT,
     COL_CED, COL_ADV,
   ],
   MEI: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_GCC, COL_XG, COL_XA, COL_XGXA90, COL_FD, COL_DS,
+    COL_G_PCT, COL_A_PCT,
     COL_CED, COL_ADV,
   ],
   ATA: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_FD, COL_XG, COL_XA, COL_XGXA90,
+    COL_G_PCT, COL_A_PCT,
     COL_CED, COL_ADV,
   ],
 };
@@ -181,7 +229,8 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
 // ---------------------------------------------------------------------------
 // Componente
 // ---------------------------------------------------------------------------
-export function MercadoJogadores({ jogadores }: Props) {
+export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
+  const oddsMap = oddsJogadores?.odds ?? null;
   const [posicao,       setPosicao]       = useState<BucketPos>("ATA");
   const [selecaoFiltro, setSelecaoFiltro] = useState<string>("TODAS");
   const [statusFiltro,  setStatusFiltro]  = useState<string>("TODOS");
@@ -342,11 +391,14 @@ export function MercadoJogadores({ jogadores }: Props) {
                   </td>
 
                   {/* COLUNAS DINÂMICAS */}
-                  {colunas.map((col) => (
-                    <td key={col.key} className="px-3 py-2 text-center">
-                      {col.render(j, null)}
-                    </td>
-                  ))}
+                  {colunas.map((col) => {
+                    const odds = oddsMap ? (oddsMap[String(j.atleta_id)] ?? null) : null;
+                    return (
+                      <td key={col.key} className="px-3 py-2 text-center">
+                        {col.render(j, null, odds)}
+                      </td>
+                    );
+                  })}
                 </tr>
               ))
             )}

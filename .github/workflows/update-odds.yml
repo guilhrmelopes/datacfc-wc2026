@@ -1,0 +1,66 @@
+name: Atualizar odds dos jogadores (G% e A%)
+
+# Roda 3× ao dia nos dias de Copa:
+#  • 06h BRT (09 UTC) — antes dos jogos do turno da tarde
+#  • 12h BRT (15 UTC) — antes dos jogos do turno da noite
+#  • 19h BRT (22 UTC) — atualização pós-escalação / véspera
+# Aciona manual sempre disponível via "Run workflow".
+
+on:
+  schedule:
+    - cron: '0  9 * * *'   # 06h BRT
+    - cron: '0 15 * * *'   # 12h BRT
+    - cron: '0 22 * * *'   # 19h BRT
+  workflow_dispatch:
+
+jobs:
+  scrape-odds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45         # máximo de 8 partidas × ~5min = ~40min
+
+    permissions:
+      contents: write
+
+    env:
+      ODDSNOTIFIER_HEADLESS: "true"
+      PYTHONPATH: ${{ github.workspace }}
+
+    steps:
+      # ── 1. Checkout ─────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── 2. Python + dependências ────────────────────────────────────────
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependências Python
+        run: |
+          pip install playwright>=1.44.0 thefuzz python-Levenshtein
+
+      # ── 3. Chromium com dependências de sistema ──────────────────────────
+      # --with-deps instala libglib2.0, libnss3, libnspr4 etc. no Ubuntu
+      - name: Instalar Playwright + Chromium
+        run: playwright install chromium --with-deps
+
+      # ── 4. Rodar scraper ─────────────────────────────────────────────────
+      - name: Raspar odds dos jogadores
+        run: python -m src.scrapers.scraper_odds_jogadores
+
+      # ── 5. Commit se houver mudanças ─────────────────────────────────────
+      - name: Commitar se houver mudanças
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Adiciona odds_jogadores.json e o log de debug (se gerado)
+          git add frontend/public/data/odds_jogadores.json
+
+          # Commita somente se houver diff staged
+          git diff --cached --quiet || (
+            git commit -m "bot: atualizar odds G%/A% dos jogadores [skip ci]" &&
+            git push
+          )

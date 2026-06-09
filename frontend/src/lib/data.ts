@@ -2,6 +2,7 @@ import type {
   ClassificacaoGrupos,
   Jogador,
   JogadorMercado,
+  OddsJogadoresData,
   PontuacaoCedida,
   Selecao,
 } from "@/types/dados";
@@ -33,6 +34,7 @@ export interface DadosMercado {
   jogadores: JogadorMercado[];
   selecoes: Selecao[];
   pontuacaoCedida: PontuacaoCedida;
+  oddsJogadores: OddsJogadoresData | null;
 }
 
 /** Dados da aba Radar (selecoes + pontuacao_cedida). */
@@ -46,14 +48,18 @@ export async function carregarDadosRadar(): Promise<
   return { selecoes, pontuacaoCedida };
 }
 
-/** Dados da aba Mercado (jogadores_mercado + selecoes + pontuacao_cedida). */
+/** Dados da aba Mercado (jogadores_mercado + selecoes + pontuacao_cedida + odds). */
 export async function carregarDadosMercado(): Promise<DadosMercado> {
-  const [jogadores, selecoes, pontuacaoCedida] = await Promise.all([
+  const [jogadores, selecoes, pontuacaoCedida, oddsResult] = await Promise.all([
     carregarJson<JogadorMercado[]>("/data/jogadores_mercado.json"),
     carregarJson<Selecao[]>("/data/selecoes.json"),
     carregarJson<PontuacaoCedida>("/data/pontuacao_cedida.json"),
+    // Odds são opcionais — arquivo pode não existir antes do primeiro scraping
+    fetch("/data/odds_jogadores.json")
+      .then((r) => (r.ok ? (r.json() as Promise<OddsJogadoresData>) : null))
+      .catch(() => null),
   ]);
-  return { jogadores, selecoes, pontuacaoCedida };
+  return { jogadores, selecoes, pontuacaoCedida, oddsJogadores: oddsResult };
 }
 
 /** Dados da aba Fase de Grupos (classificação). */

@@ -116,3 +116,20 @@ export interface LinhaClassificacao {
 }
 
 export type ClassificacaoGrupos = Record<string, LinhaClassificacao[]>;
+
+/** Odds de jogador para mercados de prop (goalscorer / assist). */
+export interface OddsJogadorEntry {
+  event_id: number;
+  g_pct:  number | null;
+  casa_g: string | null;
+  odds_g: number | null;
+  a_pct:  number | null;
+  casa_a: string | null;
+  odds_a: number | null;
+}
+
+export interface OddsJogadoresData {
+  atualizado_em: string;
+  total_jogadores: number;
+  odds: Record<string, OddsJogadorEntry>;
+}
