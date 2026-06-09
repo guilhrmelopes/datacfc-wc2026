@@ -6,6 +6,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  calcularPotencialRodada,
+  tooltipPotencialRodada,
+} from "@/lib/potencialRodada";
 import { traduzirSelecao } from "@/lib/traducoes";
 import type { JogadorMercado, OddsJogadoresData, OddsJogadorEntry } from "@/types/dados";
 
@@ -17,11 +21,20 @@ type BucketPos = (typeof POSICOES)[number];
 
 interface ColDef {
   key: string;
-  header: string;
+  header: React.ReactNode;
   title: string;
   sortable?: boolean;
   render: (j: JogadorMercado, ced: number | null, odds: OddsJogadorEntry | null) => React.ReactNode;
 }
+
+const HEADER_POTENCIAL_RODADA = (
+  <span
+    className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] font-serif italic leading-none"
+    aria-hidden
+  >
+    i
+  </span>
+);
 
 type Ordem = "asc" | "desc";
 
@@ -159,6 +172,23 @@ const COL_ADV: ColDef = {
     ),
 };
 
+const COL_POTENCIAL_RODADA: ColDef = {
+  key: "potencial_r1",
+  header: HEADER_POTENCIAL_RODADA,
+  title: "Potencial para Rodada",
+  render: (j, _ced, odds) => {
+    const valor = calcularPotencialRodada(j, odds);
+    return (
+      <span
+        className="tabular-nums font-medium"
+        title={tooltipPotencialRodada(j, odds, valor)}
+      >
+        {fmt(valor, 1)}
+      </span>
+    );
+  },
+};
+
 // Coluna de odds — marcar ou assistir
 const COL_GA_PCT: ColDef = {
   key: "ga_pct",
@@ -233,6 +263,8 @@ function valorOrdenacao(
       return odds?.ga_pct ?? null;
     case "sg_pct":
       return odds?.sg_pct ?? null;
+    case "potencial_r1":
+      return calcularPotencialRodada(j, odds);
     case "j":
       return j.jogos_num > 0 ? j.jogos_num : null;
     case "min":
@@ -263,31 +295,31 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG_PCT,
     COL_SG, COL_DE, COL_DE_PCT, COL_GE, COL_GS,
-    COL_CED, COL_ADV,
+    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
   ZAG: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_INT, COL_C, COL_BR, COL_FD,
     COL_SG_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV,
+    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
   LAT: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_G, COL_A, COL_XGXA90, COL_GCC, COL_FD, COL_BR,
     COL_SG_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV,
+    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
   MEI: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_GCC, COL_XG, COL_XA, COL_XGXA90, COL_FD, COL_DS,
     COL_GA_PCT,
-    COL_CED, COL_ADV,
+    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
   ATA: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_FD, COL_XG, COL_XA, COL_XGXA90,
     COL_GA_PCT,
-    COL_CED, COL_ADV,
+    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
 };
 
