@@ -29,9 +29,6 @@ import random
 import re
 import time
 import unicodedata
-import urllib.error
-import urllib.request
-from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -60,6 +57,8 @@ logger = logging.getLogger(__name__)
 
 _RAIZ = Path(__file__).resolve().parents[2]
 CAMINHO_MERCADO: Path = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
+CAMINHO_GRUPOS:  Path = _RAIZ / "frontend" / "public" / "data" / "grupos_wc2026.json"
+CAMINHO_EVENTOS: Path = _RAIZ / "frontend" / "public" / "data" / "eventos_odds_rodada1.json"
 CAMINHO_SAIDA:   Path = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
 
 # ──────────────────────────────────── Config ──────────────────────────────────
@@ -89,11 +88,12 @@ BOOKMAKERS_T2: list[str] = ["bet365", "betano", "unibet", "william hill", "bwin"
                              "betway", "888sport", "betclic", "kambi", "ladbrokes",
                              "leovegas", "betmgm", "sisal", "paddy power"]
 
-MAX_EVENTOS: int = 8
+MAX_EVENTOS: int = int(os.environ.get("ODDS_MAX_EVENTOS", "24"))
+RODADA_ALVO: int = int(os.environ.get("ODDS_RODADA", "1"))
 TIMEOUT_PAGINA: int = 35_000
 
-DELAY_MIN: float = float(os.environ.get("ODDS_DELAY_MIN", "25"))
-DELAY_MAX: float = float(os.environ.get("ODDS_DELAY_MAX", "45"))
+DELAY_MIN: float = float(os.environ.get("ODDS_DELAY_MIN", "12"))
+DELAY_MAX: float = float(os.environ.get("ODDS_DELAY_MAX", "22"))
 
 # Threshold fuzzy matching
 THRESHOLD_AUTO:   int = 85
@@ -108,74 +108,272 @@ ALIAS_JOGADORES: dict[str, int] = {
     "reyes romero":     132767,   # Israel Reyes Romero
 }
 
-# Mapa de nomes do oddsnotifier → selecao do Cartola (campo upper)
+# Mapa oddsnotifier → seleção Cartola (campo upper)
 ALIAS_TIMES: dict[str, str] = {
-    "KOREA REPUBLIC":         "SOUTH KOREA",
-    "IR IRAN":                "IRAN",
-    "CONGO DR":               "DR CONGO",
-    "USA":                    "UNITED STATES",
+    "KOREA REPUBLIC":          "SOUTH KOREA",
+    "SOUTH KOREA":             "SOUTH KOREA",
+    "CZECH REPUBLIC":          "CZECHIA",
+    "CZECHIA":                 "CZECHIA",
+    "BOSNIA & HERZ.":          "BOSNIA AND HERZEGOVINA",
+    "BOSNIA AND HERZEGOVINA":  "BOSNIA AND HERZEGOVINA",
+    "USA":                     "UNITED STATES",
+    "UNITED STATES":           "UNITED STATES",
+    "TURKIYE":                 "TURKIYE",
+    "TÜRKIYE":                 "TURKIYE",
+    "CAPE VERDE ISLANDS":      "CAPE VERDE",
+    "CAPE VERDE":              "CAPE VERDE",
+    "CURACAO":                 "CURACAO",
+    "CURAÇAO":                 "CURACAO",
+    "COTE D'IVOIRE":           "IVORY COAST",
+    "CÔTE D'IVOIRE":           "IVORY COAST",
+    "CONGO DR":                "DR CONGO",
+    "IR IRAN":                 "IRAN",
+    "IRAN":                    "IRAN",
+    "IRAQ":                    "IRAQ",
 }
 
-# Eventos fallback (caso a API de eventos retorne vazia)
-EVENTOS_FALLBACK: list[dict] = [
-    {"id": 66456904, "home": "Mexico",        "away": "South Africa",          "date": "2026-06-11T19:00:00Z"},
-    {"id": 66456906, "home": "Korea Republic","away": "Czechia",                "date": "2026-06-12T02:00:00Z"},
-    {"id": 66456908, "home": "Canada",        "away": "Bosnia and Herzegovina", "date": "2026-06-12T19:00:00Z"},
-    {"id": 66456910, "home": "USA",           "away": "Paraguay",               "date": "2026-06-13T01:00:00Z"},
-    {"id": 66456912, "home": "Qatar",         "away": "Switzerland",            "date": "2026-06-13T19:00:00Z"},
-    {"id": 66456928, "home": "Brazil",        "away": "Morocco",                "date": "2026-06-13T22:00:00Z"},
-    {"id": 66456914, "home": "Haiti",         "away": "Scotland",               "date": "2026-06-14T01:00:00Z"},
-    {"id": 66456916, "home": "Australia",     "away": "Turkiye",                "date": "2026-06-14T04:00:00Z"},
-]
+# Faixa de IDs oddsnotifier para descoberta automática (World Cup 2026)
+ODDS_ID_SCAN_MIN: int = 66456900
+ODDS_ID_SCAN_MAX: int = 66457150
 
 # ══════════════════════════════════════════════════════════════════════════════
-# [0] EVENTOS
+# [0] EVENTOS — fixtures WC2026 + mapeamento oddsEventId
 # ══════════════════════════════════════════════════════════════════════════════
 
+URL_WC2026 = "https://hub.oddsnotifier.io/world-cup-2026"
 URL_API_EVENTOS = "https://hub.oddsnotifier.io/api/events/football/international-world-cup"
 
 
-def buscar_eventos() -> list[dict]:
-    """
-    Tenta buscar partidas futuras na API.
-    Se falhar (429, vazio, timeout), usa EVENTOS_FALLBACK.
-    """
-    try:
-        req = urllib.request.Request(
-            URL_API_EVENTOS,
-            headers={"User-Agent": "Mozilla/5.0", "Accept": "application/json"},
-        )
-        with urllib.request.urlopen(req, timeout=25) as resp:
-            bruto = json.loads(resp.read())
+def _url_evento(event_id: int) -> str:
+    return f"https://hub.oddsnotifier.io/football/international-world-cup/{event_id}"
 
-        eventos_raw = bruto if isinstance(bruto, list) else bruto.get("events", bruto.get("data", []))
-        eventos: list[dict] = []
-        for ev in eventos_raw:
+
+def _extrair_json_array(rsc: str, chave: str) -> list | None:
+    """Extrai array JSON após '"chave":[' via balanceamento de colchetes."""
+    m = re.search(rf'"{re.escape(chave)}"\s*:\s*\[', rsc)
+    if not m:
+        return None
+    start = m.end() - 1
+    depth = 0
+    for i in range(start, len(rsc)):
+        if rsc[i] == "[":
+            depth += 1
+        elif rsc[i] == "]":
+            depth -= 1
+            if depth == 0:
+                raw = rsc[start:i + 1]
+                raw = re.sub(r'"oddsEventId"\s*:\s*"\$undefined"', "null", raw)
+                try:
+                    return json.loads(raw)
+                except json.JSONDecodeError:
+                    return None
+    return None
+
+
+def _extrair_json_object(rsc: str, chave: str) -> dict | None:
+    """Extrai objeto JSON após '"chave":{' via balanceamento de chaves."""
+    m = re.search(rf'"{re.escape(chave)}"\s*:\s*\{{', rsc)
+    if not m:
+        return None
+    start = m.end() - 1
+    depth = 0
+    for i in range(start, len(rsc)):
+        if rsc[i] == "{":
+            depth += 1
+        elif rsc[i] == "}":
+            depth -= 1
+            if depth == 0:
+                try:
+                    return json.loads(rsc[start:i + 1])
+                except json.JSONDecodeError:
+                    return None
+    return None
+
+
+def _nome_evento_pagina(pagina: Page, event_id: int) -> str | None:
+    """Lê 'Home vs Away' do título ou JSON-LD da página do evento."""
+    url = _url_evento(event_id)
+    try:
+        pagina.goto(url, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+        pagina.wait_for_timeout(1200)
+        titulo = pagina.title()
+        m = re.search(r"^(.+?) Odds \|", titulo)
+        if m and " vs " in m.group(1):
+            return m.group(1).strip()
+        ld = pagina.evaluate("""() => {
+            for (const s of document.querySelectorAll('script[type=\"application/ld+json\"]')) {
+                try {
+                    const j = JSON.parse(s.textContent);
+                    const items = Array.isArray(j) ? j : [j];
+                    for (const item of items) {
+                        if (item['@type'] === 'SportsEvent' && item.name) return item.name;
+                    }
+                } catch (_) {}
+            }
+            return null;
+        }""")
+        if ld and " vs " in ld:
+            return ld.strip()
+    except Exception as e:
+        logger.debug("Falha ao ler evento %d: %s", event_id, e)
+    return None
+
+
+def _times_do_nome_evento(nome: str) -> tuple[str, str] | None:
+    if " vs " not in nome:
+        return None
+    home, away = nome.split(" vs ", 1)
+    return home.strip(), away.strip()
+
+
+def _chave_confronto(home: str, away: str) -> tuple[str, str]:
+    return (_mapear_selecao(home.upper()), _mapear_selecao(away.upper()))
+
+
+def _carregar_confrontos_rodada(rodada: int) -> list[dict]:
+    if not CAMINHO_GRUPOS.exists():
+        logger.error("grupos_wc2026.json nao encontrado")
+        return []
+    with CAMINHO_GRUPOS.open(encoding="utf-8") as f:
+        dados = json.load(f)
+    return [c for c in dados.get("confrontos", []) if c.get("rodada") == rodada]
+
+
+def _fixtures_rodada_do_rsc(rsc: str, rodada: int) -> list[dict]:
+    fixtures = _extrair_json_array(rsc, "fixtures")
+    if not fixtures:
+        return []
+    confrontos = _carregar_confrontos_rodada(rodada)
+    chaves = {(c["mandante"], c["visitante"]) for c in confrontos}
+    resultado: list[dict] = []
+    for fx in fixtures:
+        if not isinstance(fx, dict):
+            continue
+        home, away = fx.get("home", ""), fx.get("away", "")
+        if _chave_confronto(home, away) in chaves:
+            resultado.append({
+                "fixture_id": fx.get("id"),
+                "home": home,
+                "away": away,
+                "date": fx.get("date", ""),
+                "grupo": fx.get("group", ""),
+            })
+    return resultado
+
+
+def _carregar_cache_eventos() -> dict[tuple[str, str], int]:
+    if not CAMINHO_EVENTOS.exists():
+        return {}
+    try:
+        with CAMINHO_EVENTOS.open(encoding="utf-8") as f:
+            bruto = json.load(f)
+        cache: dict[tuple[str, str], int] = {}
+        for ev in bruto.get("eventos", bruto if isinstance(bruto, list) else []):
             if not isinstance(ev, dict) or "id" not in ev:
                 continue
-            home = ev.get("home", ev.get("homeTeam", {}))
-            away = ev.get("away", ev.get("awayTeam", {}))
-            if isinstance(home, dict):
-                home = home.get("name", "?")
-            if isinstance(away, dict):
-                away = away.get("name", "?")
-            eventos.append({
-                "id": ev["id"],
-                "home": home or "?",
-                "away": away or "?",
-                "date": ev.get("date", ev.get("startTime", "")),
-            })
+            cache[_chave_confronto(ev.get("home", ""), ev.get("away", ""))] = int(ev["id"])
+        return cache
+    except (json.JSONDecodeError, OSError, ValueError):
+        return {}
 
+
+def _salvar_cache_eventos(eventos: list[dict]) -> None:
+    CAMINHO_EVENTOS.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "atualizado_em": datetime.now(tz=timezone.utc).isoformat(),
+        "rodada": RODADA_ALVO,
+        "eventos": eventos,
+    }
+    with CAMINHO_EVENTOS.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, indent=2)
+    logger.info("Cache eventos salvo: %d partidas -> %s", len(eventos), CAMINHO_EVENTOS)
+
+
+def _mapear_ids_eventos(pagina: Page, fixtures: list[dict], cache: dict[tuple[str, str], int]) -> list[dict]:
+    """
+    Associa cada fixture da rodada ao oddsEventId (66456xxx).
+    Usa cache versionado + varredura na faixa conhecida quando necessário.
+    """
+    faltando: list[dict] = []
+    mapeados: list[dict] = []
+
+    for fx in fixtures:
+        chave = _chave_confronto(fx["home"], fx["away"])
+        eid = cache.get(chave)
+        if eid:
+            mapeados.append({**fx, "id": eid})
+        else:
+            faltando.append(fx)
+
+    if not faltando:
+        return mapeados
+
+    logger.info("Descobrindo oddsEventId para %d partidas...", len(faltando))
+    chaves_faltando = {_chave_confronto(f["home"], f["away"]) for f in faltando}
+    novos: dict[tuple[str, str], int] = {}
+
+    for eid in range(ODDS_ID_SCAN_MIN, ODDS_ID_SCAN_MAX):
+        if not chaves_faltando:
+            break
+        if eid in cache.values():
+            continue
+        nome = _nome_evento_pagina(pagina, eid)
+        if not nome:
+            continue
+        times = _times_do_nome_evento(nome)
+        if not times:
+            continue
+        chave = _chave_confronto(times[0], times[1])
+        if chave in chaves_faltando:
+            novos[chave] = eid
+            chaves_faltando.discard(chave)
+            logger.info("  mapeado %d -> %s", eid, nome)
+
+    for fx in faltando:
+        chave = _chave_confronto(fx["home"], fx["away"])
+        eid = novos.get(chave) or cache.get(chave)
+        if eid:
+            mapeados.append({**fx, "id": eid})
+        else:
+            logger.warning("Sem oddsEventId: %s vs %s", fx["home"], fx["away"])
+
+    mapeados.sort(key=lambda e: e.get("date", ""))
+    if mapeados:
+        _salvar_cache_eventos([
+            {"id": e["id"], "home": e["home"], "away": e["away"],
+             "date": e.get("date", ""), "fixture_id": e.get("fixture_id")}
+            for e in mapeados
+        ])
+    return mapeados[:MAX_EVENTOS]
+
+
+def buscar_eventos(pagina: Page, rsc_wc2026: str = "") -> list[dict]:
+    """
+    Fonte primária: fixtures da página world-cup-2026 cruzadas com grupos_wc2026.
+    Fallback mínimo: cache eventos_odds_rodada1.json.
+    """
+    fixtures = _fixtures_rodada_do_rsc(rsc_wc2026, RODADA_ALVO) if rsc_wc2026 else []
+    cache = _carregar_cache_eventos()
+
+    if fixtures:
+        logger.info("Fixtures rodada %d no RSC: %d jogos", RODADA_ALVO, len(fixtures))
+        eventos = _mapear_ids_eventos(pagina, fixtures, cache)
         if eventos:
-            logger.info("API eventos: %d partidas", len(eventos))
-            return eventos[:MAX_EVENTOS]
+            return eventos
 
-        logger.warning("API eventos retornou vazio — usando fallback.")
-    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, KeyError) as e:
-        logger.warning("API eventos indisponivel (%s) — usando fallback.", e)
+    if cache:
+        confrontos = _carregar_confrontos_rodada(RODADA_ALVO)
+        chaves = {(c["mandante"], c["visitante"]) for c in confrontos}
+        eventos = []
+        for chave, eid in cache.items():
+            if chave in chaves:
+                eventos.append({"id": eid, "home": chave[0], "away": chave[1], "date": ""})
+        if eventos:
+            logger.info("Eventos via cache: %d partidas", len(eventos))
+            return sorted(eventos, key=lambda e: e.get("date", str(e["id"])))[:MAX_EVENTOS]
 
-    logger.info("Fallback: %d partidas hard-coded", len(EVENTOS_FALLBACK))
-    return EVENTOS_FALLBACK[:MAX_EVENTOS]
+    logger.error("Nenhum evento encontrado para rodada %d.", RODADA_ALVO)
+    return []
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -189,8 +387,9 @@ def _norm(texto: str) -> str:
 
 
 def _mapear_selecao(nome: str) -> str:
-    u = nome.upper().strip()
-    return ALIAS_TIMES.get(u, u)
+    forma = unicodedata.normalize("NFKD", nome)
+    ascii_n = "".join(c for c in forma if not unicodedata.combining(c)).upper().strip()
+    return ALIAS_TIMES.get(ascii_n, ascii_n)
 
 
 def carregar_jogadores(caminho: Path) -> list[dict]:
@@ -221,37 +420,82 @@ _PAT_MARKET_BLOCK = re.compile(
 )
 
 
-def _bookmaker_do_contexto(rsc: str, start: int) -> str:
-    """Determina o nome do bookmaker procurando o primeiro 'name' anterior que NÃO seja um mercado."""
-    contexto = rsc[max(0, start - 5000):start]
-    names = re.findall(r'"name"\s*:\s*"([^"]{2,60})"', contexto)
-    for nome in reversed(names):
-        if nome not in NOMES_MERCADOS_CONHECIDOS:
-            return nome
-    return "N/A"
+def _bookmaker_tier(nome: str) -> int:
+    n = _norm(nome)
+    if any(t in n for t in BOOKMAKERS_T1):
+        return 1
+    if any(t in n for t in BOOKMAKERS_T2):
+        return 2
+    return 3
+
+
+def _melhor_odd(
+    atual: tuple[float, str] | None,
+    nova_odd: float,
+    nova_bk: str,
+) -> tuple[float, str]:
+    """Prefere maior odd; empate favorece bookmaker tier menor."""
+    if atual is None:
+        return nova_odd, nova_bk
+    if nova_odd > atual[0] + 0.001:
+        return nova_odd, nova_bk
+    if abs(nova_odd - atual[0]) <= 0.001 and _bookmaker_tier(nova_bk) < _bookmaker_tier(atual[1]):
+        return nova_odd, nova_bk
+    return atual
 
 
 def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
     """
-    Parseia o texto RSC (__next_f concatenado) e retorna:
-      {
-        "g": { "Alexis Vega": (3.60, "Kambi"), ... },
-        "a": { "Jesus Gallardo": (5.50, "Bet365"), ... },
-      }
-    onde a tuple é (melhor_odd_decimal, nome_bookmaker).
-    Melhor odd = a MAIOR decimal (maior retorno ao apostador).
+    Parseia o bloco "bookmakers":{ "Bet365":[{markets}...], ... } no RSC.
+    Retorna melhor odd por jogador em goalscorer (g) e assist (a).
     """
     resultado: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}}
+    bookmakers = _extrair_json_object(rsc_conteudo, "bookmakers")
+    if not bookmakers:
+        logger.debug("Bloco bookmakers nao encontrado — fallback regex.")
+        return _extrair_odds_rsc_regex(rsc_conteudo)
 
-    for match in _PAT_MARKET_BLOCK.finditer(rsc_conteudo):
-        nome_mercado = match.group(1)
-        sufixo = MERCADOS_RSC.get(nome_mercado)
-        if sufixo is None:
+    for bk_name, mercados in bookmakers.items():
+        if not isinstance(mercados, list):
             continue
+        for mercado in mercados:
+            if not isinstance(mercado, dict):
+                continue
+            sufixo = MERCADOS_RSC.get(mercado.get("name", ""))
+            if sufixo is None:
+                continue
+            for item in mercado.get("odds") or []:
+                if not isinstance(item, dict):
+                    continue
+                label = item.get("label")
+                over = item.get("over")
+                if not label or over is None:
+                    continue
+                try:
+                    odds_val = float(over)
+                except (TypeError, ValueError):
+                    continue
+                if odds_val <= 1.0:
+                    continue
+                resultado[sufixo][label] = _melhor_odd(
+                    resultado[sufixo].get(label), odds_val, str(bk_name)
+                )
 
-        odds_raw = match.group(2)
-        bk_name = _bookmaker_do_contexto(rsc_conteudo, match.start())
+    logger.info("RSC parseado: %d goalscorer, %d assist", len(resultado["g"]), len(resultado["a"]))
+    return resultado
 
+
+def _extrair_odds_rsc_regex(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
+    """Fallback legado quando bookmakers JSON não está disponível."""
+    resultado: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}}
+    pat_bk_mkt = re.compile(
+        r'"([^"]{2,40})"\s*:\s*\[(?:[^\[\]]|\[[^\]]*\])*?"name"\s*:\s*"(Anytime Goalscorer|Player To Assist)"'
+        r'\s*,\s*"updatedAt"\s*:\s*"[^"]+"\s*,\s*"odds"\s*:\s*(\[[^\]]+\])',
+        re.DOTALL,
+    )
+    for match in pat_bk_mkt.finditer(rsc_conteudo):
+        bk_name, nome_mercado, odds_raw = match.group(1), match.group(2), match.group(3)
+        sufixo = MERCADOS_RSC[nome_mercado]
         for player_match in _PAT_LABEL_OVER.finditer(odds_raw):
             player_nome = player_match.group(1)
             try:
@@ -260,14 +504,9 @@ def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]
                 continue
             if odds_val <= 1.0:
                 continue
-
-            atual = resultado[sufixo].get(player_nome)
-            if atual is None or odds_val > atual[0]:
-                resultado[sufixo][player_nome] = (odds_val, bk_name)
-
-    total_g = len(resultado["g"])
-    total_a = len(resultado["a"])
-    logger.info("RSC parseado: %d goalscorer, %d assist", total_g, total_a)
+            resultado[sufixo][player_nome] = _melhor_odd(
+                resultado[sufixo].get(player_nome), odds_val, bk_name
+            )
     return resultado
 
 
@@ -452,12 +691,8 @@ def _prob(odds: float) -> float:
     return round(100.0 / odds, 2) if odds > 1.0 else 0.0
 
 
-def _url_evento(event_id: int) -> str:
-    return f"https://hub.oddsnotifier.io/football/international-world-cup/{event_id}"
-
-
 def _navegar_clicar_player(pagina: Page) -> None:
-    """Player → Anytime Goalscorer para garantir carregamento completo do RSC."""
+    """Player → Anytime Goalscorer + Player To Assist para RSC completo."""
     for seletor in ["button:has-text('Player')", "a:has-text('Player')",
                     "[role='tab']:has-text('Player')"]:
         try:
@@ -469,17 +704,17 @@ def _navegar_clicar_player(pagina: Page) -> None:
         except Exception:
             pass
 
-    for seletor in ["button:has-text('Anytime Goalscorer')",
-                    "a:has-text('Anytime Goalscorer')",
-                    "[role='tab']:has-text('Anytime Goalscorer')"]:
-        try:
-            el = pagina.locator(seletor).first
-            if el.is_visible(timeout=3000):
-                el.click(timeout=3000)
-                pagina.wait_for_timeout(random.randint(1500, 2500))
-                break
-        except Exception:
-            pass
+    for label in ("Anytime Goalscorer", "Player To Assist"):
+        for seletor in [f"button:has-text('{label}')", f"a:has-text('{label}')",
+                        f"[role='tab']:has-text('{label}')"]:
+            try:
+                el = pagina.locator(seletor).first
+                if el.is_visible(timeout=2500):
+                    el.click(timeout=3000)
+                    pagina.wait_for_timeout(random.randint(1200, 2000))
+                    break
+            except Exception:
+                pass
 
 
 def processar_evento(
@@ -575,8 +810,9 @@ def processar_evento(
         relatorio.match(nome_bk, melhor_j, melhor_score, desc)
 
         atleta_id_str = str(melhor_j["atleta_id"])
-        if atleta_id_str in resultado:
-            continue  # Evento mais próximo tem prioridade
+        existente = resultado.get(atleta_id_str)
+        if existente and existente.get("event_id") != eid:
+            continue
 
         entrada: dict[str, Any] = {"event_id": eid}
 
@@ -623,13 +859,8 @@ def executar() -> None:
     if not jogadores:
         return
 
-    # Carrega odds anteriores para merge incremental
+    # Rescrape completo da rodada (sem merge de execuções anteriores)
     resultado: dict[str, dict] = {}
-    if CAMINHO_SAIDA.exists():
-        with CAMINHO_SAIDA.open(encoding="utf-8") as f:
-            ant = json.load(f)
-        resultado = ant.get("odds", {})
-        logger.info("Odds anteriores: %d atletas", len(resultado))
 
     relatorio = Relatorio()
     total_add = 0
@@ -680,16 +911,16 @@ def executar() -> None:
         pagina.on("response", _capturar_rsc)
 
         try:
-            # Warm-up na página de competição
-            logger.info("Warm-up: /football/international-world-cup")
-            pagina.goto(
-                "https://hub.oddsnotifier.io/football/international-world-cup",
-                timeout=30_000,
-                wait_until="domcontentloaded",
-            )
-            pagina.wait_for_timeout(random.randint(5000, 9000))
+            # Warm-up + fixtures WC2026
+            logger.info("Warm-up: %s", URL_WC2026)
+            pagina.goto(URL_WC2026, timeout=30_000, wait_until="domcontentloaded")
+            pagina.wait_for_timeout(random.randint(5000, 8000))
+            rsc_wc2026 = _rsc_de_pagina(pagina) + "\n".join(rsc_acumulado)
 
-            eventos = buscar_eventos()
+            eventos = buscar_eventos(pagina, rsc_wc2026)
+            if not eventos:
+                logger.error("Abortando: nenhum evento para rodada %d.", RODADA_ALVO)
+                return
             for idx, evento in enumerate(eventos, start=1):
                 logger.info("[%d/%d] %s vs %s", idx, len(eventos),
                             evento["home"], evento["away"])

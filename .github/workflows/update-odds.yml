@@ -16,7 +16,7 @@ on:
 jobs:
   scrape-odds:
     runs-on: ubuntu-latest
-    timeout-minutes: 45         # máximo de 8 partidas × ~5min = ~40min
+    timeout-minutes: 90         # 24 partidas × ~3min
 
     permissions:
       contents: write
@@ -24,6 +24,8 @@ jobs:
     env:
       ODDSNOTIFIER_HEADLESS: "true"
       PYTHONPATH: ${{ github.workspace }}
+      ODDS_DELAY_MIN: "10"
+      ODDS_DELAY_MAX: "18"
 
     steps:
       # ── 1. Checkout ─────────────────────────────────────────────────────
@@ -57,7 +59,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           # Adiciona odds_jogadores.json e o log de debug (se gerado)
-          git add frontend/public/data/odds_jogadores.json
+          git add frontend/public/data/odds_jogadores.json frontend/public/data/eventos_odds_rodada1.json
 
           # Commita somente se houver diff staged
           git diff --cached --quiet || (
