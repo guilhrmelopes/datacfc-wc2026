@@ -19,8 +19,13 @@ interface ColDef {
   key: string;
   header: string;
   title: string;
+  sortable?: boolean;
   render: (j: JogadorMercado, ced: number | null, odds: OddsJogadorEntry | null) => React.ReactNode;
 }
+
+type Ordem = "asc" | "desc";
+
+const COLUNAS_NAO_ORDENAVEIS = new Set(["adv"]);
 
 interface Props {
   jogadores: JogadorMercado[];
@@ -128,13 +133,19 @@ const COL_CED: ColDef = {
   key: "ced",
   header: "CED",
   title: "Pontuação cedida pelo adversário",
-  render: () => <Dash />,
+  render: (_j, ced) =>
+    ced !== null ? (
+      <span className="tabular-nums">{fmt(ced)}</span>
+    ) : (
+      <Dash />
+    ),
 };
 
 const COL_ADV: ColDef = {
   key: "adv",
   header: "ADV",
   title: "Próximo adversário",
+  sortable: false,
   render: (j) =>
     j.proximo_adversario_escudo ? (
       <div className="flex flex-col items-center gap-0.5">
@@ -208,6 +219,61 @@ const COL_XA      = copaDash("xA",      "Assistências esperadas (Expected assis
 const COL_XGXA90  = copaDash("xG+xA/90'", "xG + xA por 90 minutos");
 
 // ---------------------------------------------------------------------------
+// Ordenação
+// ---------------------------------------------------------------------------
+
+function valorCed(j: JogadorMercado, pontuacaoCedida: PontuacaoCedida): number | null {
+  const advSigla = j.proximo_adversario_sigla?.trim().toUpperCase();
+  if (!advSigla) return null;
+  const perf = pontuacaoCedida[advSigla];
+  if (!perf) return null;
+  const bucket = perf[j.bucket_posicao];
+  const v = bucket?.cedido?.valor;
+  return v === null || v === undefined ? null : v;
+}
+
+function valorOrdenacao(
+  j: JogadorMercado,
+  colKey: string,
+  odds: OddsJogadorEntry | null,
+  pontuacaoCedida: PontuacaoCedida,
+): number | null {
+  switch (colKey) {
+    case "rating":
+      return j.rating_recomendacao > 0 ? j.rating_recomendacao : null;
+    case "mg":
+      return j.media_geral;
+    case "mb":
+      return j.media_base;
+    case "ga_pct":
+      return odds?.ga_pct ?? null;
+    case "sg_pct":
+      return odds?.sg_pct ?? null;
+    case "ced":
+      return valorCed(j, pontuacaoCedida);
+    case "j":
+      return j.jogos_num > 0 ? j.jogos_num : null;
+    case "min":
+      return j.jogos_num > 0 ? j.mins_played / j.jogos_num : null;
+    case "g":
+      return j.goals;
+    case "a":
+      return j.goal_assist;
+    case "sg":
+      return j.clean_sheet;
+    default:
+      return null;
+  }
+}
+
+function compararValores(va: number | null, vb: number | null, ordem: Ordem): number {
+  if (va === null && vb === null) return 0;
+  if (va === null) return 1;
+  if (vb === null) return -1;
+  return ordem === "asc" ? va - vb : vb - va;
+}
+
+// ---------------------------------------------------------------------------
 // Configuração de colunas por posição
 // ---------------------------------------------------------------------------
 const COLUNAS: Record<BucketPos, ColDef[]> = {
@@ -246,11 +312,29 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
 // ---------------------------------------------------------------------------
 // Componente
 // ---------------------------------------------------------------------------
-export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
+export function MercadoJogadores({ jogadores, pontuacaoCedida, oddsJogadores }: Props) {
   const oddsMap = oddsJogadores?.odds ?? null;
   const [posicao,       setPosicao]       = useState<BucketPos>("ATA");
   const [selecaoFiltro, setSelecaoFiltro] = useState<string>("TODAS");
   const [statusFiltro,  setStatusFiltro]  = useState<string>("TODOS");
+  const [ordenarPor,    setOrdenarPor]    = useState<string>("rating");
+  const [ordem,         setOrdem]         = useState<Ordem>("desc");
+
+  function handlePosicaoChange(v: BucketPos) {
+    setPosicao(v);
+    setOrdenarPor("rating");
+    setOrdem("desc");
+  }
+
+  function alternarOrdenacao(colKey: string) {
+    if (COLUNAS_NAO_ORDENAVEIS.has(colKey)) return;
+    if (ordenarPor === colKey) {
+      setOrdem((o) => (o === "asc" ? "desc" : "asc"));
+    } else {
+      setOrdenarPor(colKey);
+      setOrdem("desc");
+    }
+  }
 
   const listaSelecoes = useMemo(
     () =>
@@ -260,16 +344,24 @@ export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
     [jogadores],
   );
 
-  const linhas = useMemo(
-    () =>
-      jogadores
-        .filter((j) => j.bucket_posicao === posicao)
-        .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
-        .filter((j) => statusFiltro === "TODOS" || String(j.status_id) === statusFiltro)
-        .sort((a, b) => (b.rating_recomendacao ?? 0) - (a.rating_recomendacao ?? 0))
-        .slice(0, 500),
-    [jogadores, posicao, selecaoFiltro, statusFiltro],
-  );
+  const linhas = useMemo(() => {
+    const filtradas = jogadores
+      .filter((j) => j.bucket_posicao === posicao)
+      .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
+      .filter((j) => statusFiltro === "TODOS" || String(j.status_id) === statusFiltro);
+
+    const dados = [...filtradas];
+    dados.sort((a, b) => {
+      const oddsA = oddsMap ? (oddsMap[String(a.atleta_id)] ?? null) : null;
+      const oddsB = oddsMap ? (oddsMap[String(b.atleta_id)] ?? null) : null;
+      return compararValores(
+        valorOrdenacao(a, ordenarPor, oddsA, pontuacaoCedida),
+        valorOrdenacao(b, ordenarPor, oddsB, pontuacaoCedida),
+        ordem,
+      );
+    });
+    return dados.slice(0, 500);
+  }, [jogadores, posicao, selecaoFiltro, statusFiltro, ordenarPor, ordem, oddsMap, pontuacaoCedida]);
 
   const colunas = COLUNAS[posicao];
   const totalCols = 1 + colunas.length; // 1 = coluna JOGADOR
@@ -287,7 +379,7 @@ export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
           </label>
           <Select
             value={posicao}
-            onValueChange={(v) => setPosicao(v as BucketPos)}
+            onValueChange={(v) => handlePosicaoChange(v as BucketPos)}
           >
             <SelectTrigger className="w-[100px]">
               <SelectValue />
@@ -358,15 +450,24 @@ export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
           <thead className="bg-[var(--color-card)] text-xs uppercase tracking-wide text-[var(--color-muted)]">
             <tr>
               <th className="px-3 py-2">Jogador</th>
-              {colunas.map((col) => (
-                <th
-                  key={col.key}
-                  className="px-3 py-2 text-center"
-                  title={col.title}
-                >
-                  {col.header}
-                </th>
-              ))}
+              {colunas.map((col) => {
+                const sortable = col.sortable !== false && !COLUNAS_NAO_ORDENAVEIS.has(col.key);
+                return (
+                  <th
+                    key={col.key}
+                    className={
+                      sortable
+                        ? "cursor-pointer px-3 py-2 text-center hover:text-[var(--color-fg)] select-none"
+                        : "px-3 py-2 text-center"
+                    }
+                    title={col.title}
+                    onClick={sortable ? () => alternarOrdenacao(col.key) : undefined}
+                  >
+                    {col.header}
+                    {sortable && ordenarPor === col.key ? (ordem === "asc" ? " ↑" : " ↓") : ""}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
 
@@ -410,9 +511,10 @@ export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
                   {/* COLUNAS DINÂMICAS */}
                   {colunas.map((col) => {
                     const odds = oddsMap ? (oddsMap[String(j.atleta_id)] ?? null) : null;
+                    const ced = valorCed(j, pontuacaoCedida);
                     return (
                       <td key={col.key} className="px-3 py-2 text-center">
-                        {col.render(j, null, odds)}
+                        {col.render(j, ced, odds)}
                       </td>
                     );
                   })}
