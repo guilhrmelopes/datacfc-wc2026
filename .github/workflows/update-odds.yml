@@ -49,7 +49,7 @@ jobs:
         run: playwright install chromium --with-deps
 
       # ── 4. Rodar scraper ─────────────────────────────────────────────────
-      - name: Raspar odds dos jogadores
+      - name: Raspar odds GA% dos jogadores (marcar ou assistir)
         run: python -m src.scrapers.scraper_odds_jogadores
 
       # ── 5. Commit se houver mudanças ─────────────────────────────────────
@@ -63,6 +63,6 @@ jobs:
 
           # Commita somente se houver diff staged
           git diff --cached --quiet || (
-            git commit -m "bot: atualizar odds G%/A% dos jogadores [skip ci]" &&
+            git commit -m "bot: atualizar odds GA% dos jogadores [skip ci]" &&
             git push
           )

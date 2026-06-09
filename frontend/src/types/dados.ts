@@ -117,15 +117,12 @@ export interface LinhaClassificacao {
 
 export type ClassificacaoGrupos = Record<string, LinhaClassificacao[]>;
 
-/** Odds de jogador para mercados de prop (goalscorer / assist). */
+/** Odds de jogador — mercado marcar ou assistir (Player To Score or Assist). */
 export interface OddsJogadorEntry {
   event_id: number;
-  g_pct:  number | null;
-  casa_g: string | null;
-  odds_g: number | null;
-  a_pct:  number | null;
-  casa_a: string | null;
-  odds_a: number | null;
+  ga_pct:  number | null;
+  casa_ga: string | null;
+  odds_ga: number | null;
 }
 
 export interface OddsJogadoresData {

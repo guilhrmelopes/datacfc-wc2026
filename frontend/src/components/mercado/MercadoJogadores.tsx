@@ -68,13 +68,18 @@ function PctOdds({
   pct,
   casa,
   odds,
+  tooltipPrefix = "Probabilidade",
 }: {
   pct: number | null | undefined;
   casa: string | null | undefined;
   odds: number | null | undefined;
+  tooltipPrefix?: string;
 }) {
   if (pct === null || pct === undefined) return <Dash />;
-  const tooltip = casa && odds ? `${casa} — odds ${odds.toFixed(2)}` : undefined;
+  const tooltip =
+    casa && odds
+      ? `${tooltipPrefix} (${casa} - odd ${odds.toFixed(2)})`
+      : undefined;
   const cor =
     pct >= 40
       ? "text-green-400"
@@ -148,22 +153,18 @@ const COL_ADV: ColDef = {
     ),
 };
 
-// Colunas de odds de jogadores
-const COL_G_PCT: ColDef = {
-  key: "g_pct",
-  header: "⚽",
-  title: "Probabilidade de marcar a qualquer momento (Anytime Goalscorer) — melhor odd disponível",
+// Coluna de odds — marcar ou assistir
+const COL_GA_PCT: ColDef = {
+  key: "ga_pct",
+  header: "GA%",
+  title: "Probabilidade de marcar ou assistir — melhor odd disponível",
   render: (_j, _ced, odds) => (
-    <PctOdds pct={odds?.g_pct} casa={odds?.casa_g} odds={odds?.odds_g} />
-  ),
-};
-
-const COL_A_PCT: ColDef = {
-  key: "a_pct",
-  header: "🅰️",
-  title: "Probabilidade de dar assistência a qualquer momento (Player To Assist) — melhor odd disponível",
-  render: (_j, _ced, odds) => (
-    <PctOdds pct={odds?.a_pct} casa={odds?.casa_a} odds={odds?.odds_a} />
+    <PctOdds
+      pct={odds?.ga_pct}
+      casa={odds?.casa_ga}
+      odds={odds?.odds_ga}
+      tooltipPrefix="Probabilidade de marcar ou assistir"
+    />
   ),
 };
 
@@ -203,25 +204,25 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
   ZAG: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_INT, COL_C, COL_BR, COL_FD,
-    COL_G_PCT, COL_A_PCT,
+    COL_GA_PCT,
     COL_CED, COL_ADV,
   ],
   LAT: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_G, COL_A, COL_XGXA90, COL_GCC, COL_FD, COL_BR,
-    COL_G_PCT, COL_A_PCT,
+    COL_GA_PCT,
     COL_CED, COL_ADV,
   ],
   MEI: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_GCC, COL_XG, COL_XA, COL_XGXA90, COL_FD, COL_DS,
-    COL_G_PCT, COL_A_PCT,
+    COL_GA_PCT,
     COL_CED, COL_ADV,
   ],
   ATA: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_FD, COL_XG, COL_XA, COL_XGXA90,
-    COL_G_PCT, COL_A_PCT,
+    COL_GA_PCT,
     COL_CED, COL_ADV,
   ],
 };

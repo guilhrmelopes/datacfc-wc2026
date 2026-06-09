@@ -4,19 +4,18 @@ Scraper de odds de jogadores — hub.oddsnotifier.io × Cartola WC 2026.
 Arquitetura (corrigida após diagnóstico):
   Os dados de odds NÃO estão em /api/odds/{eventId}.
   Estão embutidos no HTML inicial como RSC (__next_f) — React Server Components.
-  O browser carrega os scripts inline, e após clicar "Player" → "Anytime Goalscorer"
-  o DOM expõe os dados. Mas os dados já estão no __next_f mesmo sem clicar.
+  O browser carrega os scripts inline, e após clicar "Player" → "Player To Score or Assist"
+  o RSC expõe odds combinadas de marcar ou assistir.
 
 Fluxo:
   [1] Carrega jogadores_mercado.json → índice por selecao
-  [2] Busca eventos via API (fallback: lista fixa se API indisponível):
+  [2] Fixtures rodada 1 via world-cup-2026 + cache eventos_odds_rodada1.json:
       a. Playwright navega → /football/international-world-cup/{eventId}
-      b. Clica "Player" → "Anytime Goalscorer" (ativa RSC completo)
-      c. Extrai todos os <script> __next_f do DOM
-      d. Parseia RSC para mercados "Anytime Goalscorer" e "Player To Assist"
-      e. Pega melhor odd por jogador entre todas as casas
+      b. Clica "Player" → "Player To Score or Assist"
+      c. Extrai RSC (__next_f) e parseia bloco bookmakers
+      d. Pega melhor odd por jogador entre todas as casas
   [3] Matching POR EQUIPE: fuzzy restrito às equipes do jogo
-  [4] Salva odds_jogadores.json com atleta_id como chave
+  [4] Salva odds_jogadores.json com atleta_id como chave (ga_pct)
 
 Anti-ban: delays 20-40s, headless configurável via ODDSNOTIFIER_HEADLESS
 """
@@ -66,8 +65,7 @@ CAMINHO_SAIDA:   Path = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores
 POSICOES_LINHA: frozenset[int] = frozenset({2, 3, 4, 5})
 
 MERCADOS_RSC: dict[str, str] = {
-    "Anytime Goalscorer": "g",
-    "Player To Assist":   "a",
+    "Player To Score or Assist": "ga",
 }
 
 # Nomes de mercados conhecidos (para não confundir com nomes de bookmakers)
@@ -447,9 +445,9 @@ def _melhor_odd(
 def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
     """
     Parseia o bloco "bookmakers":{ "Bet365":[{markets}...], ... } no RSC.
-    Retorna melhor odd por jogador em goalscorer (g) e assist (a).
+    Retorna melhor odd por jogador em marcar ou assistir (ga).
     """
-    resultado: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}}
+    resultado: dict[str, dict[str, tuple[float, str]]] = {"ga": {}}
     bookmakers = _extrair_json_object(rsc_conteudo, "bookmakers")
     if not bookmakers:
         logger.debug("Bloco bookmakers nao encontrado — fallback regex.")
@@ -481,21 +479,20 @@ def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]
                     resultado[sufixo].get(label), odds_val, str(bk_name)
                 )
 
-    logger.info("RSC parseado: %d goalscorer, %d assist", len(resultado["g"]), len(resultado["a"]))
+    logger.info("RSC parseado: %d marcar ou assistir", len(resultado["ga"]))
     return resultado
 
 
 def _extrair_odds_rsc_regex(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
     """Fallback legado quando bookmakers JSON não está disponível."""
-    resultado: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}}
+    resultado: dict[str, dict[str, tuple[float, str]]] = {"ga": {}}
     pat_bk_mkt = re.compile(
-        r'"([^"]{2,40})"\s*:\s*\[(?:[^\[\]]|\[[^\]]*\])*?"name"\s*:\s*"(Anytime Goalscorer|Player To Assist)"'
+        r'"([^"]{2,40})"\s*:\s*\[(?:[^\[\]]|\[[^\]]*\])*?"name"\s*:\s*"Player To Score or Assist"'
         r'\s*,\s*"updatedAt"\s*:\s*"[^"]+"\s*,\s*"odds"\s*:\s*(\[[^\]]+\])',
         re.DOTALL,
     )
     for match in pat_bk_mkt.finditer(rsc_conteudo):
-        bk_name, nome_mercado, odds_raw = match.group(1), match.group(2), match.group(3)
-        sufixo = MERCADOS_RSC[nome_mercado]
+        bk_name, odds_raw = match.group(1), match.group(2)
         for player_match in _PAT_LABEL_OVER.finditer(odds_raw):
             player_nome = player_match.group(1)
             try:
@@ -504,8 +501,8 @@ def _extrair_odds_rsc_regex(rsc_conteudo: str) -> dict[str, dict[str, tuple[floa
                 continue
             if odds_val <= 1.0:
                 continue
-            resultado[sufixo][player_nome] = _melhor_odd(
-                resultado[sufixo].get(player_nome), odds_val, bk_name
+            resultado["ga"][player_nome] = _melhor_odd(
+                resultado["ga"].get(player_nome), odds_val, bk_name
             )
     return resultado
 
@@ -692,7 +689,7 @@ def _prob(odds: float) -> float:
 
 
 def _navegar_clicar_player(pagina: Page) -> None:
-    """Player → Anytime Goalscorer + Player To Assist para RSC completo."""
+    """Player → Player To Score or Assist para RSC completo."""
     for seletor in ["button:has-text('Player')", "a:has-text('Player')",
                     "[role='tab']:has-text('Player')"]:
         try:
@@ -704,17 +701,18 @@ def _navegar_clicar_player(pagina: Page) -> None:
         except Exception:
             pass
 
-    for label in ("Anytime Goalscorer", "Player To Assist"):
-        for seletor in [f"button:has-text('{label}')", f"a:has-text('{label}')",
-                        f"[role='tab']:has-text('{label}')"]:
-            try:
-                el = pagina.locator(seletor).first
-                if el.is_visible(timeout=2500):
-                    el.click(timeout=3000)
-                    pagina.wait_for_timeout(random.randint(1200, 2000))
-                    break
-            except Exception:
-                pass
+    for seletor in ["button:has-text('Player To Score or Assist')",
+                    "a:has-text('Player To Score or Assist')",
+                    "[role='tab']:has-text('Player To Score or Assist')",
+                    "text=Player To Score or Assist"]:
+        try:
+            el = pagina.locator(seletor).first
+            if el.is_visible(timeout=3000):
+                el.click(timeout=3000)
+                pagina.wait_for_timeout(random.randint(1500, 2500))
+                break
+        except Exception:
+            pass
 
 
 def processar_evento(
@@ -769,14 +767,13 @@ def processar_evento(
 
     # Parseia odds
     odds_bruto = extrair_odds_rsc(rsc)
-    odds_g = consolidar_nomes_odds(odds_bruto["g"])
-    odds_a = consolidar_nomes_odds(odds_bruto["a"])
+    odds_ga = consolidar_nomes_odds(odds_bruto["ga"])
 
-    if not odds_g and not odds_a:
+    if not odds_ga:
         logger.warning("Nenhuma odd extraida para %s.", desc)
         return 0
 
-    logger.info("  %s: %d goalscorer, %d assist", desc, len(odds_g), len(odds_a))
+    logger.info("  %s: %d marcar ou assistir", desc, len(odds_ga))
 
     # Pools de jogadores das duas equipes
     pool_home = jogadores_da_equipe(jogadores, _mapear_selecao(home))
@@ -786,11 +783,9 @@ def processar_evento(
                 _mapear_selecao(home), len(pool_home),
                 _mapear_selecao(away), len(pool_away))
 
-    # Reúne todos os nomes dos jogadores (union de goalscorer + assist)
-    todos_nomes = set(odds_g) | set(odds_a)
     adicionados = 0
 
-    for nome_bk in sorted(todos_nomes):
+    for nome_bk in sorted(odds_ga):
         # Decide qual pool usar baseando-se em qual tem melhor match
         melhor_j: dict | None = None
         melhor_score = 0
@@ -816,25 +811,10 @@ def processar_evento(
 
         entrada: dict[str, Any] = {"event_id": eid}
 
-        if nome_bk in odds_g:
-            g_odd, g_bk = odds_g[nome_bk]
-            entrada["g_pct"]  = _prob(g_odd)
-            entrada["casa_g"] = g_bk
-            entrada["odds_g"] = g_odd
-        else:
-            entrada["g_pct"]  = None
-            entrada["casa_g"] = None
-            entrada["odds_g"] = None
-
-        if nome_bk in odds_a:
-            a_odd, a_bk = odds_a[nome_bk]
-            entrada["a_pct"]  = _prob(a_odd)
-            entrada["casa_a"] = a_bk
-            entrada["odds_a"] = a_odd
-        else:
-            entrada["a_pct"]  = None
-            entrada["casa_a"] = None
-            entrada["odds_a"] = None
+        ga_odd, ga_bk = odds_ga[nome_bk]
+        entrada["ga_pct"]  = _prob(ga_odd)
+        entrada["casa_ga"] = ga_bk
+        entrada["odds_ga"] = ga_odd
 
         resultado[atleta_id_str] = entrada
         adicionados += 1
