@@ -396,6 +396,7 @@ def _mapear_selecao(nome: str) -> str:
 
 
 def carregar_jogadores(caminho: Path) -> list[dict]:
+    """Jogadores de linha (ZAG/LAT/MEI/ATA) — usados no matching GA."""
     if not caminho.exists():
         logger.error("jogadores_mercado.json nao encontrado: %s", caminho)
         return []
@@ -404,6 +405,22 @@ def carregar_jogadores(caminho: Path) -> list[dict]:
     linha = [j for j in dados if j.get("posicao_id") in POSICOES_LINHA]
     logger.info("Banco: %d total, %d de linha", len(dados), len(linha))
     return linha
+
+
+def carregar_todos_jogadores(caminho: Path) -> list[dict]:
+    """Elenco completo (inclui GOL) — usado para SG em defensores."""
+    if not caminho.exists():
+        return []
+    with caminho.open(encoding="utf-8") as f:
+        return json.load(f)
+
+
+def pool_defensores(jogadores: list[dict], selecao_upper: str) -> list[dict]:
+    return [
+        j for j in jogadores
+        if j.get("selecao", "").upper() == selecao_upper
+        and j.get("posicao_id") in POSICOES_SG
+    ]
 
 
 def jogadores_da_equipe(jogadores: list[dict], selecao_upper: str) -> list[dict]:
@@ -551,22 +568,20 @@ def _aplicar_sg_evento(
     sg_home: tuple[float, str] | None,
     sg_away: tuple[float, str] | None,
 ) -> int:
-    """Preenche sg_pct para GOL/LAT/ZAG de cada equipe."""
+    """Preenche sg_pct para GOL/LAT/ZAG de cada equipe (probabilidade do time)."""
     aplicados = 0
     for pool, sg_data in ((pool_home, sg_home), (pool_away, sg_away)):
-        if not sg_data:
+        if not sg_data or not pool:
             continue
         odd, bk = sg_data
         for jog in pool:
             if jog.get("posicao_id") not in POSICOES_SG:
                 continue
             aid = str(jog["atleta_id"])
-            existente = resultado.get(aid)
-            if existente and existente.get("event_id") != eid:
-                continue
             if aid not in resultado:
                 resultado[aid] = {"event_id": eid}
-            elif "event_id" not in resultado[aid]:
+            else:
+                # SG é por seleção — corrige event_id se GA veio de match errado
                 resultado[aid]["event_id"] = eid
             resultado[aid]["sg_pct"] = _prob(odd)
             resultado[aid]["casa_sg"] = bk
@@ -807,10 +822,26 @@ def _navegar_clicar_player(pagina: Page) -> None:
             pass
 
 
+def _rsc_tem_bookmakers(rsc: str) -> bool:
+    bks = _extrair_json_object(rsc, "bookmakers")
+    return bool(bks and len(bks) >= 2)
+
+
+def _coletar_rsc_evento(
+    pagina: Page,
+    rsc_acumulado: list[str],
+    tamanho_antes: int,
+) -> str:
+    rsc_rede = "\n".join(rsc_acumulado[tamanho_antes:])
+    rsc_dom = _rsc_de_pagina(pagina)
+    return rsc_rede + "\n" + rsc_dom
+
+
 def processar_evento(
     evento: dict,
     pagina: Page,
     jogadores: list[dict],
+    jogadores_todos: list[dict],
     resultado: dict[str, dict],
     relatorio: Relatorio,
     rsc_acumulado: list[str],
@@ -834,42 +865,50 @@ def processar_evento(
     pagina.wait_for_timeout(random.randint(4000, 7000))
     _navegar_clicar_player(pagina)
 
-    # Aguarda o RSC de odds chegar (via ?_rsc= responses)
-    # O click dispara o fetch; precisamos esperar a resposta
-    for _ in range(6):  # até ~18s
-        pagina.wait_for_timeout(3000)
-        novos = rsc_acumulado[tamanho_antes:]
-        total_novos = sum(len(c) for c in novos)
-        if total_novos > 50_000:  # recebeu dados substanciais
-            logger.info("RSC via network: %d chunks, %d chars", len(novos), total_novos)
-            break
-    else:
-        logger.debug("RSC network incompleto, tentando via DOM...")
+    rsc = ""
+    for tentativa in range(3):
+        for _ in range(6):
+            pagina.wait_for_timeout(3000)
+            novos = rsc_acumulado[tamanho_antes:]
+            if sum(len(c) for c in novos) > 50_000:
+                logger.info("RSC via network: %d chunks", len(novos))
+                break
 
-    # Une: RSC da rede + scripts inline do DOM
-    rsc_rede = "\n".join(rsc_acumulado[tamanho_antes:])
-    rsc_dom  = _rsc_de_pagina(pagina)
-    rsc      = rsc_rede + "\n" + rsc_dom
+        rsc = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
+        if _rsc_tem_bookmakers(rsc):
+            break
+        if tentativa < 2:
+            logger.warning("RSC incompleto (%d chars), recarregando...", len(rsc))
+            try:
+                pagina.reload(timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+            except Exception:
+                pagina.goto(url, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+            pagina.wait_for_timeout(random.randint(5000, 8000))
+            _navegar_clicar_player(pagina)
 
     if not rsc.strip():
         logger.warning("RSC vazio para %s — nenhum dado extraido.", desc)
         return 0
 
-    logger.info("RSC total: %d chars (rede=%d, dom=%d)", len(rsc), len(rsc_rede), len(rsc_dom))
+    logger.info("RSC total: %d chars", len(rsc))
 
     # Parseia odds (GA jogadores + SG times)
     odds_bruto = extrair_odds_rsc(rsc)
     odds_ga = consolidar_nomes_odds(odds_bruto["ga"])
     sg_home, sg_away = extrair_sg_times(rsc)
 
-    pool_home = jogadores_da_equipe(jogadores, _mapear_selecao(home))
-    pool_away = jogadores_da_equipe(jogadores, _mapear_selecao(away))
+    sel_home = _mapear_selecao(home)
+    sel_away = _mapear_selecao(away)
+    pool_home = jogadores_da_equipe(jogadores, sel_home)
+    pool_away = jogadores_da_equipe(jogadores, sel_away)
+    pool_home_sg = pool_defensores(jogadores_todos, sel_home)
+    pool_away_sg = pool_defensores(jogadores_todos, sel_away)
 
-    logger.info("  Pools: %s=%d | %s=%d",
-                _mapear_selecao(home), len(pool_home),
-                _mapear_selecao(away), len(pool_away))
+    logger.info("  Pools GA: %s=%d | %s=%d | SG: %d + %d",
+                sel_home, len(pool_home), sel_away, len(pool_away),
+                len(pool_home_sg), len(pool_away_sg))
 
-    n_sg = _aplicar_sg_evento(resultado, eid, pool_home, pool_away, sg_home, sg_away)
+    n_sg = _aplicar_sg_evento(resultado, eid, pool_home_sg, pool_away_sg, sg_home, sg_away)
 
     if not odds_ga and not n_sg:
         logger.warning("Nenhuma odd extraida para %s.", desc)
@@ -932,6 +971,7 @@ def executar() -> None:
     logger.info("=== Scraper Odds WC2026 iniciado ===")
 
     jogadores = carregar_jogadores(CAMINHO_MERCADO)
+    jogadores_todos = carregar_todos_jogadores(CAMINHO_MERCADO)
     if not jogadores:
         return
 
@@ -1000,7 +1040,10 @@ def executar() -> None:
             for idx, evento in enumerate(eventos, start=1):
                 logger.info("[%d/%d] %s vs %s", idx, len(eventos),
                             evento["home"], evento["away"])
-                n = processar_evento(evento, pagina, jogadores, resultado, relatorio, rsc_acumulado)
+                n = processar_evento(
+                    evento, pagina, jogadores, jogadores_todos,
+                    resultado, relatorio, rsc_acumulado,
+                )
                 total_add += n
 
                 if idx < len(eventos):
