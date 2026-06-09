@@ -15,7 +15,7 @@ Fluxo:
       c. Extrai RSC (__next_f) e parseia bloco bookmakers
       d. Pega melhor odd por jogador entre todas as casas
   [3] Matching POR EQUIPE: fuzzy restrito às equipes do jogo
-  [4] Salva odds_jogadores.json com atleta_id como chave (ga_pct)
+  [4] Salva odds_jogadores.json com atleta_id como chave (ga_pct, sg_pct)
 
 Anti-ban: delays 20-40s, headless configurável via ODDSNOTIFIER_HEADLESS
 """
@@ -63,10 +63,15 @@ CAMINHO_SAIDA:   Path = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores
 # ──────────────────────────────────── Config ──────────────────────────────────
 
 POSICOES_LINHA: frozenset[int] = frozenset({2, 3, 4, 5})
+POSICOES_SG: frozenset[int] = frozenset({1, 2, 3})  # GOL, LAT, ZAG
 
 MERCADOS_RSC: dict[str, str] = {
     "Player To Score or Assist": "ga",
 }
+
+MKT_TEAM_TOTAL_HOME = "Team Total Home"
+MKT_TEAM_TOTAL_AWAY = "Team Total Away"
+HDP_CLEAN_SHEET = 0.5
 
 # Nomes de mercados conhecidos (para não confundir com nomes de bookmakers)
 NOMES_MERCADOS_CONHECIDOS: frozenset[str] = frozenset({
@@ -483,6 +488,93 @@ def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]
     return resultado
 
 
+def _parse_odd_under(val: Any) -> float | None:
+    if val is None or val in ("N/A", "-", ""):
+        return None
+    try:
+        odd = float(val)
+    except (TypeError, ValueError):
+        return None
+    return odd if odd > 1.0 else None
+
+
+def extrair_sg_times(rsc_conteudo: str) -> tuple[tuple[float, str] | None, tuple[float, str] | None]:
+    """
+    Probabilidade de clean sheet por time via Team Total Under 0.5:
+      • mandante não sofre  → Team Total Away under 0.5
+      • visitante não sofre → Team Total Home under 0.5
+    Retorna (sg_home, sg_away) como (odd_decimal, bookmaker).
+    """
+    bookmakers = _extrair_json_object(rsc_conteudo, "bookmakers")
+    if not bookmakers:
+        return None, None
+
+    sg_home: tuple[float, str] | None = None
+    sg_away: tuple[float, str] | None = None
+
+    for bk_name, mercados in bookmakers.items():
+        if not isinstance(mercados, list):
+            continue
+        for mercado in mercados:
+            if not isinstance(mercado, dict):
+                continue
+            nome = mercado.get("name")
+            if nome not in (MKT_TEAM_TOTAL_HOME, MKT_TEAM_TOTAL_AWAY):
+                continue
+            for item in mercado.get("odds") or []:
+                if not isinstance(item, dict):
+                    continue
+                if item.get("hdp") != HDP_CLEAN_SHEET:
+                    continue
+                odd_under = _parse_odd_under(item.get("under"))
+                if odd_under is None:
+                    continue
+                if nome == MKT_TEAM_TOTAL_AWAY:
+                    sg_home = _melhor_odd(sg_home, odd_under, str(bk_name))
+                else:
+                    sg_away = _melhor_odd(sg_away, odd_under, str(bk_name))
+
+    if sg_home or sg_away:
+        logger.info(
+            "SG parseado: home=%s away=%s",
+            f"{sg_home[0]:.2f}@{sg_home[1]}" if sg_home else "—",
+            f"{sg_away[0]:.2f}@{sg_away[1]}" if sg_away else "—",
+        )
+    return sg_home, sg_away
+
+
+def _aplicar_sg_evento(
+    resultado: dict[str, dict],
+    eid: int,
+    pool_home: list[dict],
+    pool_away: list[dict],
+    sg_home: tuple[float, str] | None,
+    sg_away: tuple[float, str] | None,
+) -> int:
+    """Preenche sg_pct para GOL/LAT/ZAG de cada equipe."""
+    aplicados = 0
+    for pool, sg_data in ((pool_home, sg_home), (pool_away, sg_away)):
+        if not sg_data:
+            continue
+        odd, bk = sg_data
+        for jog in pool:
+            if jog.get("posicao_id") not in POSICOES_SG:
+                continue
+            aid = str(jog["atleta_id"])
+            existente = resultado.get(aid)
+            if existente and existente.get("event_id") != eid:
+                continue
+            if aid not in resultado:
+                resultado[aid] = {"event_id": eid}
+            elif "event_id" not in resultado[aid]:
+                resultado[aid]["event_id"] = eid
+            resultado[aid]["sg_pct"] = _prob(odd)
+            resultado[aid]["casa_sg"] = bk
+            resultado[aid]["odds_sg"] = odd
+            aplicados += 1
+    return aplicados
+
+
 def _extrair_odds_rsc_regex(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
     """Fallback legado quando bookmakers JSON não está disponível."""
     resultado: dict[str, dict[str, tuple[float, str]]] = {"ga": {}}
@@ -765,17 +857,11 @@ def processar_evento(
 
     logger.info("RSC total: %d chars (rede=%d, dom=%d)", len(rsc), len(rsc_rede), len(rsc_dom))
 
-    # Parseia odds
+    # Parseia odds (GA jogadores + SG times)
     odds_bruto = extrair_odds_rsc(rsc)
     odds_ga = consolidar_nomes_odds(odds_bruto["ga"])
+    sg_home, sg_away = extrair_sg_times(rsc)
 
-    if not odds_ga:
-        logger.warning("Nenhuma odd extraida para %s.", desc)
-        return 0
-
-    logger.info("  %s: %d marcar ou assistir", desc, len(odds_ga))
-
-    # Pools de jogadores das duas equipes
     pool_home = jogadores_da_equipe(jogadores, _mapear_selecao(home))
     pool_away = jogadores_da_equipe(jogadores, _mapear_selecao(away))
 
@@ -783,7 +869,16 @@ def processar_evento(
                 _mapear_selecao(home), len(pool_home),
                 _mapear_selecao(away), len(pool_away))
 
-    adicionados = 0
+    n_sg = _aplicar_sg_evento(resultado, eid, pool_home, pool_away, sg_home, sg_away)
+
+    if not odds_ga and not n_sg:
+        logger.warning("Nenhuma odd extraida para %s.", desc)
+        return 0
+
+    if odds_ga:
+        logger.info("  %s: %d marcar ou assistir", desc, len(odds_ga))
+
+    adicionados = n_sg
 
     for nome_bk in sorted(odds_ga):
         # Decide qual pool usar baseando-se em qual tem melhor match
@@ -809,7 +904,8 @@ def processar_evento(
         if existente and existente.get("event_id") != eid:
             continue
 
-        entrada: dict[str, Any] = {"event_id": eid}
+        entrada: dict[str, Any] = resultado.get(atleta_id_str) or {"event_id": eid}
+        entrada["event_id"] = eid
 
         ga_odd, ga_bk = odds_ga[nome_bk]
         entrada["ga_pct"]  = _prob(ga_odd)
@@ -819,7 +915,7 @@ def processar_evento(
         resultado[atleta_id_str] = entrada
         adicionados += 1
 
-    logger.info("  %d atletas adicionados.", adicionados)
+    logger.info("  %d atletas (GA+SG).", adicionados)
     return adicionados
 
 

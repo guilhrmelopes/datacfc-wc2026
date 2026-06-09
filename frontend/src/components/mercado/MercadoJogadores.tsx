@@ -168,6 +168,21 @@ const COL_GA_PCT: ColDef = {
   ),
 };
 
+// Coluna de odds — sem sofrer gol (clean sheet, Team Total Under 0.5)
+const COL_SG_PCT: ColDef = {
+  key: "sg_pct",
+  header: "SG%",
+  title: "Probabilidade de não sofrer gol — melhor odd disponível",
+  render: (_j, _ced, odds) => (
+    <PctOdds
+      pct={odds?.sg_pct}
+      casa={odds?.casa_sg}
+      odds={odds?.odds_sg}
+      tooltipPrefix="Probabilidade de não sofrer gol"
+    />
+  ),
+};
+
 // Colunas de métricas da Copa (ainda sem dados — Copa não iniciou)
 function copaDash(header: string, title: string): ColDef {
   return { key: header.toLowerCase().replace(/[^a-z0-9]/g, "_"), header, title, render: () => <Dash /> };
@@ -198,19 +213,20 @@ const COL_XGXA90  = copaDash("xG+xA/90'", "xG + xA por 90 minutos");
 const COLUNAS: Record<BucketPos, ColDef[]> = {
   GOL: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
+    COL_SG_PCT,
     COL_SG, COL_DE, COL_DE_PCT, COL_GE, COL_GS,
     COL_CED, COL_ADV,
   ],
   ZAG: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_INT, COL_C, COL_BR, COL_FD,
-    COL_GA_PCT,
+    COL_SG_PCT, COL_GA_PCT,
     COL_CED, COL_ADV,
   ],
   LAT: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_G, COL_A, COL_XGXA90, COL_GCC, COL_FD, COL_BR,
-    COL_GA_PCT,
+    COL_SG_PCT, COL_GA_PCT,
     COL_CED, COL_ADV,
   ],
   MEI: [
