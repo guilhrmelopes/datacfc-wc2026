@@ -23,7 +23,7 @@ As odds dos jogadores são raspadas **localmente** (Playwright + Chromium) e com
 
 ```powershell
 cd C:\caminho\para\datacfc_wc2026
-py -3.12 -m venv .venv
+py -3.12 -m venv .venv   # ou py -3 se 3.12 não estiver instalado
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements-odds.txt
 playwright install chromium
@@ -36,8 +36,6 @@ powershell -ExecutionPolicy Bypass -File automation\atualizar_odds.ps1
 ```
 
 ### Agendar 6×/dia (Agendador de Tarefas)
-
-Execute **como Administrador**:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File automation\registrar_tarefa_odds.ps1

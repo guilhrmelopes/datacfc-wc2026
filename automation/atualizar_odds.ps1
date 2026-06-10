@@ -35,7 +35,7 @@ function Invoke-Git {
 }
 
 function Find-Python {
-    foreach ($cmd in @("py -3.12", "py -3", "python")) {
+    foreach ($cmd in @("py -3", "py -3.12", "python")) {
         $parts = $cmd -split " "
         $exe = $parts[0]
         $pyArgs = @()
