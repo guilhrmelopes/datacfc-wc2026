@@ -1,6 +1,6 @@
 # ──────────────────────────────────────────────
 # Pipeline Python (uso local apenas)
-# Exceções: scraper de odds usado pelo GitHub Actions
+# Exceções: scraper de odds + scripts de automação local
 # ──────────────────────────────────────────────
 /src/**
 !/src/__init__.py
@@ -10,6 +10,7 @@
 /exports/
 /logs/
 /scripts/
+!/automation/
 /app.py
 /requirements.txt
 

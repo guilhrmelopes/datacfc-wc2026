@@ -93,10 +93,27 @@ BOOKMAKERS_T2: list[str] = ["bet365", "betano", "unibet", "william hill", "bwin"
 
 MAX_EVENTOS: int = int(os.environ.get("ODDS_MAX_EVENTOS", "24"))
 RODADA_ALVO: int = int(os.environ.get("ODDS_RODADA", "1"))
-TIMEOUT_PAGINA: int = 35_000
+IS_CI: bool = os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+CI_WAIT_MULT: float = float(os.environ.get("ODDS_CI_WAIT_MULT", "2.0" if IS_CI else "1.0"))
+TIMEOUT_PAGINA: int = int(os.environ.get("ODDS_TIMEOUT_MS", "55000" if IS_CI else "35000"))
+ODDS_MERGE: bool = os.environ.get("ODDS_MERGE", "1").strip().lower() not in ("0", "false", "no", "off")
 
-DELAY_MIN: float = float(os.environ.get("ODDS_DELAY_MIN", "12"))
-DELAY_MAX: float = float(os.environ.get("ODDS_DELAY_MAX", "22"))
+DELAY_MIN: float = float(os.environ.get("ODDS_DELAY_MIN", "14" if IS_CI else "12"))
+DELAY_MAX: float = float(os.environ.get("ODDS_DELAY_MAX", "24" if IS_CI else "22"))
+
+STEALTH_INIT_SCRIPT = """
+Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+window.chrome = { runtime: {}, loadTimes: () => ({}), csi: () => ({}) };
+Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
+Object.defineProperty(navigator, 'languages', { get: () => ['pt-BR', 'pt', 'en-US', 'en'] });
+Object.defineProperty(navigator, 'platform', { get: () => 'Win32' });
+Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 8 });
+Object.defineProperty(navigator, 'deviceMemory', { get: () => 8 });
+"""
+
+
+def _wait_ms(base_ms: int) -> int:
+    return int(base_ms * CI_WAIT_MULT)
 
 # Threshold fuzzy matching
 THRESHOLD_AUTO:   int = 85
@@ -264,6 +281,51 @@ def _fixtures_rodada_do_rsc(rsc: str, rodada: int) -> list[dict]:
     return resultado
 
 
+def _carregar_eventos_arquivo() -> list[dict]:
+    """Lista versionada de eventos da rodada (fonte primária no CI)."""
+    if not CAMINHO_EVENTOS.exists():
+        return []
+    try:
+        with CAMINHO_EVENTOS.open(encoding="utf-8") as f:
+            bruto = json.load(f)
+    except (json.JSONDecodeError, OSError):
+        return []
+
+    if bruto.get("rodada", RODADA_ALVO) != RODADA_ALVO:
+        return []
+
+    eventos: list[dict] = []
+    for ev in bruto.get("eventos", []):
+        if not isinstance(ev, dict) or "id" not in ev:
+            continue
+        eventos.append({
+            "id": int(ev["id"]),
+            "home": ev.get("home", ""),
+            "away": ev.get("away", ""),
+            "date": ev.get("date", ""),
+            "fixture_id": ev.get("fixture_id"),
+        })
+    eventos.sort(key=lambda e: e.get("date", str(e["id"])))
+    return eventos[:MAX_EVENTOS]
+
+
+def _carregar_odds_existentes() -> dict[str, dict]:
+    if not CAMINHO_SAIDA.is_file():
+        return {}
+    try:
+        with CAMINHO_SAIDA.open(encoding="utf-8") as f:
+            bruto = json.load(f)
+        odds = bruto.get("odds", {})
+        return {str(k): v for k, v in odds.items() if isinstance(v, dict)}
+    except (json.JSONDecodeError, OSError, ValueError):
+        return {}
+
+
+def _purge_evento_odds(resultado: dict[str, dict], eid: int) -> None:
+    for aid in [k for k, v in resultado.items() if v.get("event_id") == eid]:
+        del resultado[aid]
+
+
 def _carregar_cache_eventos() -> dict[tuple[str, str], int]:
     if not CAMINHO_EVENTOS.exists():
         return {}
@@ -352,9 +414,14 @@ def _mapear_ids_eventos(pagina: Page, fixtures: list[dict], cache: dict[tuple[st
 
 def buscar_eventos(pagina: Page, rsc_wc2026: str = "") -> list[dict]:
     """
-    Fonte primária: fixtures da página world-cup-2026 cruzadas com grupos_wc2026.
-    Fallback mínimo: cache eventos_odds_rodada1.json.
+    Fonte primária: eventos_odds_rodada1.json (confiável no CI).
+    Fallback: fixtures world-cup-2026 + cache de IDs.
     """
+    eventos_arquivo = _carregar_eventos_arquivo()
+    if len(eventos_arquivo) >= min(MAX_EVENTOS, 20):
+        logger.info("Eventos via arquivo versionado: %d partidas", len(eventos_arquivo))
+        return eventos_arquivo
+
     fixtures = _fixtures_rodada_do_rsc(rsc_wc2026, RODADA_ALVO) if rsc_wc2026 else []
     cache = _carregar_cache_eventos()
 
@@ -364,13 +431,27 @@ def buscar_eventos(pagina: Page, rsc_wc2026: str = "") -> list[dict]:
         if eventos:
             return eventos
 
+    if eventos_arquivo:
+        logger.info("Eventos via arquivo (parcial): %d partidas", len(eventos_arquivo))
+        return eventos_arquivo
+
     if cache:
         confrontos = _carregar_confrontos_rodada(RODADA_ALVO)
         chaves = {(c["mandante"], c["visitante"]) for c in confrontos}
         eventos = []
-        for chave, eid in cache.items():
+        for ev in _carregar_eventos_arquivo() or []:
+            chave = _chave_confronto(ev.get("home", ""), ev.get("away", ""))
             if chave in chaves:
-                eventos.append({"id": eid, "home": chave[0], "away": chave[1], "date": ""})
+                eventos.append(ev)
+        if not eventos:
+            for chave, eid in cache.items():
+                if chave in chaves:
+                    eventos.append({
+                        "id": eid,
+                        "home": chave[0],
+                        "away": chave[1],
+                        "date": "",
+                    })
         if eventos:
             logger.info("Eventos via cache: %d partidas", len(eventos))
             return sorted(eventos, key=lambda e: e.get("date", str(e["id"])))[:MAX_EVENTOS]
@@ -797,13 +878,22 @@ def _prob(odds: float) -> float:
 
 def _navegar_clicar_player(pagina: Page) -> None:
     """Player → Player To Score or Assist para RSC completo."""
+    vis_timeout = _wait_ms(6000 if IS_CI else 4000)
+    click_timeout = _wait_ms(8000 if IS_CI else 5000)
+
+    try:
+        pagina.evaluate("window.scrollTo(0, 0)")
+    except Exception:
+        pass
+
     for seletor in ["button:has-text('Player')", "a:has-text('Player')",
                     "[role='tab']:has-text('Player')"]:
         try:
             el = pagina.locator(seletor).first
-            if el.is_visible(timeout=3000):
-                el.click(timeout=3000)
-                pagina.wait_for_timeout(random.randint(1500, 2500))
+            if el.is_visible(timeout=vis_timeout):
+                el.scroll_into_view_if_needed(timeout=vis_timeout)
+                el.click(timeout=click_timeout)
+                pagina.wait_for_timeout(_wait_ms(2500))
                 break
         except Exception:
             pass
@@ -814,12 +904,43 @@ def _navegar_clicar_player(pagina: Page) -> None:
                     "text=Player To Score or Assist"]:
         try:
             el = pagina.locator(seletor).first
-            if el.is_visible(timeout=3000):
-                el.click(timeout=3000)
-                pagina.wait_for_timeout(random.randint(1500, 2500))
+            if el.is_visible(timeout=vis_timeout):
+                el.scroll_into_view_if_needed(timeout=vis_timeout)
+                el.click(timeout=click_timeout)
+                pagina.wait_for_timeout(_wait_ms(2500))
                 break
         except Exception:
-            pass
+            if IS_CI:
+                try:
+                    pagina.get_by_text("Player To Score or Assist", exact=False).first.click(
+                        timeout=click_timeout, force=True,
+                    )
+                    pagina.wait_for_timeout(_wait_ms(2500))
+                except Exception:
+                    pass
+
+
+def _screenshot_falha(pagina: Page, eid: int) -> None:
+    if not IS_CI:
+        return
+    pasta = _RAIZ / "logs" / "odds_failures"
+    pasta.mkdir(parents=True, exist_ok=True)
+    try:
+        path = pasta / f"evento_{eid}.png"
+        pagina.screenshot(path=str(path), full_page=True)
+        logger.info("Screenshot salvo: %s", path)
+    except Exception as e:
+        logger.debug("Screenshot falhou: %s", e)
+
+
+def _pagina_parece_bloqueada(pagina: Page) -> bool:
+    try:
+        html = pagina.content().lower()
+        titulo = pagina.title().lower()
+    except Exception:
+        return True
+    sinais = ("just a moment", "cloudflare", "cf-challenge", "access denied", "captcha")
+    return any(s in html or s in titulo for s in sinais)
 
 
 def _rsc_tem_bookmakers(rsc: str) -> bool:
@@ -857,18 +978,29 @@ def processar_evento(
 
     url = _url_evento(eid)
     try:
-        pagina.goto(url, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+        pagina.goto(url, timeout=TIMEOUT_PAGINA, wait_until="load")
     except Exception as e:
         logger.warning("Navegacao falhou para %s: %s", desc, e)
         return 0
 
-    pagina.wait_for_timeout(random.randint(4000, 7000))
+    pagina.wait_for_timeout(_wait_ms(random.randint(5000, 9000)))
+
+    if _pagina_parece_bloqueada(pagina):
+        logger.warning("Pagina bloqueada/antibot em %s — aguardando retry...", desc)
+        pagina.wait_for_timeout(_wait_ms(8000))
+        try:
+            pagina.reload(timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+        except Exception:
+            pass
+        pagina.wait_for_timeout(_wait_ms(6000))
+
     _navegar_clicar_player(pagina)
 
     rsc = ""
-    for tentativa in range(3):
-        for _ in range(6):
-            pagina.wait_for_timeout(3000)
+    max_tentativas = 4 if IS_CI else 3
+    for tentativa in range(max_tentativas):
+        for _ in range(8 if IS_CI else 6):
+            pagina.wait_for_timeout(_wait_ms(3000))
             novos = rsc_acumulado[tamanho_antes:]
             if sum(len(c) for c in novos) > 50_000:
                 logger.info("RSC via network: %d chunks", len(novos))
@@ -877,17 +1009,22 @@ def processar_evento(
         rsc = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
         if _rsc_tem_bookmakers(rsc):
             break
-        if tentativa < 2:
-            logger.warning("RSC incompleto (%d chars), recarregando...", len(rsc))
+        if tentativa < max_tentativas - 1:
+            logger.warning(
+                "RSC incompleto (%d chars, next_f=%s), recarregando...",
+                len(rsc),
+                "__next_f" in rsc,
+            )
             try:
                 pagina.reload(timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
             except Exception:
                 pagina.goto(url, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
-            pagina.wait_for_timeout(random.randint(5000, 8000))
+            pagina.wait_for_timeout(_wait_ms(random.randint(7000, 11000)))
             _navegar_clicar_player(pagina)
 
     if not rsc.strip():
         logger.warning("RSC vazio para %s — nenhum dado extraido.", desc)
+        _screenshot_falha(pagina, eid)
         return 0
 
     logger.info("RSC total: %d chars", len(rsc))
@@ -908,11 +1045,13 @@ def processar_evento(
                 sel_home, len(pool_home), sel_away, len(pool_away),
                 len(pool_home_sg), len(pool_away_sg))
 
-    n_sg = _aplicar_sg_evento(resultado, eid, pool_home_sg, pool_away_sg, sg_home, sg_away)
-
-    if not odds_ga and not n_sg:
+    if not odds_ga and not sg_home and not sg_away:
         logger.warning("Nenhuma odd extraida para %s.", desc)
+        _screenshot_falha(pagina, eid)
         return 0
+
+    _purge_evento_odds(resultado, eid)
+    n_sg = _aplicar_sg_evento(resultado, eid, pool_home_sg, pool_away_sg, sg_home, sg_away)
 
     if odds_ga:
         logger.info("  %s: %d marcar ou assistir", desc, len(odds_ga))
@@ -968,7 +1107,7 @@ def _headless() -> bool:
 
 
 def executar() -> None:
-    logger.info("=== Scraper Odds WC2026 iniciado ===")
+    logger.info("=== Scraper Odds WC2026 iniciado (CI=%s, merge=%s) ===", IS_CI, ODDS_MERGE)
 
     jogadores = carregar_jogadores(CAMINHO_MERCADO)
     jogadores_todos = carregar_todos_jogadores(CAMINHO_MERCADO)
@@ -976,21 +1115,32 @@ def executar() -> None:
         logger.error("Nenhum jogador em %s — abortando.", CAMINHO_MERCADO)
         sys.exit(1)
 
-    # Rescrape completo da rodada (sem merge de execuções anteriores)
-    resultado: dict[str, dict] = {}
+    resultado: dict[str, dict] = _carregar_odds_existentes() if ODDS_MERGE else {}
+    base_total = len(resultado)
+    if base_total:
+        logger.info("Merge ativo: %d atletas carregados do arquivo anterior.", base_total)
 
     relatorio = Relatorio()
     total_add = 0
+    eventos_ok: list[int] = []
+    eventos_falha: list[dict] = []
+    num_eventos = 0
+    falhas = 0
 
     with sync_playwright() as pw:
+        launch_args = [
+            "--disable-blink-features=AutomationControlled",
+            "--no-sandbox",
+            "--disable-dev-shm-usage",
+            "--window-size=1440,900",
+            "--disable-gpu",
+        ]
+        if IS_CI:
+            launch_args.append("--headless=new")
+
         browser = pw.chromium.launch(
             headless=_headless(),
-            args=[
-                "--disable-blink-features=AutomationControlled",
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-                "--window-size=1440,900",
-            ],
+            args=launch_args,
         )
         ctx = browser.new_context(
             user_agent=(
@@ -1000,26 +1150,24 @@ def executar() -> None:
             viewport={"width": 1440, "height": 900},
             locale="pt-BR",
             timezone_id="America/Sao_Paulo",
+            extra_http_headers={
+                "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            },
         )
-        ctx.add_init_script(
-            "Object.defineProperty(navigator, 'webdriver', { get: () => undefined });"
-            "window.chrome = { runtime: {}, loadTimes: () => ({}), csi: () => ({}) };"
-            "Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });"
-        )
+        ctx.add_init_script(STEALTH_INIT_SCRIPT)
         pagina = ctx.new_page()
 
-        # Intercepta respostas ?_rsc= (RSC flight chunks via HTTP)
         rsc_acumulado: list[str] = []
 
         def _capturar_rsc(resp) -> None:
             if "oddsnotifier" not in resp.url:
                 return
-            ct = resp.headers.get("content-type", "")
-            if "x-component" not in ct:
+            ct = (resp.headers.get("content-type") or "").lower()
+            if "x-component" not in ct and "text/html" not in ct and "javascript" not in ct:
                 return
             try:
                 texto = resp.text()
-                if texto:
+                if texto and ("__next_f" in texto or "bookmakers" in texto):
                     rsc_acumulado.append(texto)
                     logger.debug("RSC resp %d chars: %s", len(texto), resp.url[:80])
             except Exception:
@@ -1028,29 +1176,68 @@ def executar() -> None:
         pagina.on("response", _capturar_rsc)
 
         try:
-            # Warm-up + fixtures WC2026
-            logger.info("Warm-up: %s", URL_WC2026)
-            pagina.goto(URL_WC2026, timeout=30_000, wait_until="domcontentloaded")
-            pagina.wait_for_timeout(random.randint(5000, 8000))
-            rsc_wc2026 = _rsc_de_pagina(pagina) + "\n".join(rsc_acumulado)
+            eventos_arquivo = _carregar_eventos_arquivo()
+            skip_warmup = (
+                len(eventos_arquivo) >= min(MAX_EVENTOS, 20)
+                or os.environ.get("ODDS_SKIP_WARMUP", "1" if IS_CI else "0") == "1"
+            )
 
-            eventos = buscar_eventos(pagina, rsc_wc2026)
+            if skip_warmup and eventos_arquivo:
+                eventos = eventos_arquivo
+                logger.info("Warm-up omitido — %d eventos do arquivo versionado.", len(eventos))
+                if IS_CI:
+                    logger.info("Sessao CI: visita rapida a %s", URL_WC2026)
+                    try:
+                        pagina.goto(URL_WC2026, timeout=TIMEOUT_PAGINA, wait_until="load")
+                        pagina.wait_for_timeout(_wait_ms(6000))
+                    except Exception as e:
+                        logger.warning("Warm-up rapido falhou (continuando): %s", e)
+            else:
+                logger.info("Warm-up: %s", URL_WC2026)
+                pagina.goto(URL_WC2026, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+                pagina.wait_for_timeout(_wait_ms(random.randint(5000, 8000)))
+                rsc_wc2026 = _rsc_de_pagina(pagina) + "\n".join(rsc_acumulado)
+                eventos = buscar_eventos(pagina, rsc_wc2026)
+
             if not eventos:
                 logger.error("Abortando: nenhum evento para rodada %d.", RODADA_ALVO)
                 sys.exit(1)
+
             for idx, evento in enumerate(eventos, start=1):
                 logger.info("[%d/%d] %s vs %s", idx, len(eventos),
-                            evento["home"], evento["away"])
+                            evento.get("home", "?"), evento.get("away", "?"))
+                antes = len(resultado)
                 n = processar_evento(
                     evento, pagina, jogadores, jogadores_todos,
                     resultado, relatorio, rsc_acumulado,
                 )
-                total_add += n
+                if n > 0:
+                    eventos_ok.append(int(evento["id"]))
+                    total_add += n
+                else:
+                    eventos_falha.append(evento)
+                delta_evento = len(resultado) - antes
+                logger.info("  delta atletas neste evento: %+d", delta_evento)
 
                 if idx < len(eventos):
                     delay = random.uniform(DELAY_MIN, DELAY_MAX)
                     logger.info("Aguardando %.0fs...", delay)
                     time.sleep(delay)
+
+            if eventos_falha:
+                logger.info("Retry de %d eventos com falha...", len(eventos_falha))
+                for idx, evento in enumerate(eventos_falha, start=1):
+                    time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                    n = processar_evento(
+                        evento, pagina, jogadores, jogadores_todos,
+                        resultado, relatorio, rsc_acumulado,
+                    )
+                    if n > 0:
+                        eventos_ok.append(int(evento["id"]))
+                        total_add += n
+
+            num_eventos = len(eventos)
+            falhas = num_eventos - len(set(eventos_ok))
 
         finally:
             try:
@@ -1059,10 +1246,30 @@ def executar() -> None:
             except Exception:
                 pass
 
-    logger.info("Scraping concluido: %d atletas total", len(resultado))
+    novos = len(resultado) - base_total
+    logger.info(
+        "Scraping concluido: %d atletas total (+%d) | eventos OK: %d | falhas: %d",
+        len(resultado),
+        novos,
+        len(set(eventos_ok)),
+        falhas,
+    )
 
     relatorio.imprimir()
+
+    if total_add == 0 and base_total >= MIN_JOGADORES_SALVAR:
+        logger.warning(
+            "Nenhuma odd nova nesta execucao — preservando arquivo anterior (%d atletas).",
+            base_total,
+        )
+        if IS_CI and falhas > 0:
+            sys.exit(1)
+        return
+
     _salvar(resultado)
+
+    if IS_CI and total_add == 0 and falhas > 0:
+        sys.exit(1)
 
 
 def _salvar(odds: dict[str, dict]) -> None:
