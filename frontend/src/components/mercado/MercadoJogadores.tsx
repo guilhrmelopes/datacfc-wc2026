@@ -58,6 +58,22 @@ const STATUS_MAP: Record<number, { label: string; cor: string }> = {
 
 const STATUS_ORDEM = [6, 2, 5, 3, 7] as const;
 
+function EscudoSelecao({ j }: { j: JogadorMercado }) {
+  if (!j.url_escudo) return null;
+  return (
+    <span
+      className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-sm border border-[var(--color-border)] bg-[var(--color-card)] p-0.5"
+      title={traduzirSelecao(j.selecao)}
+    >
+      <img
+        src={j.url_escudo}
+        alt={j.sigla ?? j.selecao}
+        className="h-full w-full object-contain"
+      />
+    </span>
+  );
+}
+
 function StatusDot({ statusId }: { statusId: number }) {
   const s = STATUS_MAP[statusId];
   if (!s) return null;
@@ -510,14 +526,9 @@ export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
                           alt={j.apelido}
                           className="h-8 w-8 shrink-0 rounded-full object-cover"
                         />
-                      ) : j.url_escudo ? (
-                        <img
-                          src={j.url_escudo}
-                          alt={j.sigla}
-                          className="h-8 w-8 shrink-0 object-contain"
-                        />
                       ) : null}
                       <StatusDot statusId={j.status_id} />
+                      <EscudoSelecao j={j} />
                       <span className="font-medium">{j.apelido}</span>
                     </div>
                   </td>

@@ -1,0 +1,4 @@
+# Dependências mínimas do scraper de odds (GitHub Actions: update-odds.yml)
+playwright>=1.44.0
+thefuzz>=0.22.0
+python-Levenshtein>=0.25.0

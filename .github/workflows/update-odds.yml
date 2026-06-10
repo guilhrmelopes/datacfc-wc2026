@@ -23,6 +23,7 @@ jobs:
       contents: write
 
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       ODDSNOTIFIER_HEADLESS: "true"
       PYTHONPATH: ${{ github.workspace }}
       ODDS_DELAY_MIN: "10"
@@ -37,10 +38,10 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-odds.txt
 
       - name: Instalar dependências Python
-        run: |
-          pip install playwright>=1.44.0 thefuzz python-Levenshtein
+        run: pip install -r requirements-odds.txt
 
       - name: Instalar Playwright + Chromium
         run: playwright install chromium --with-deps
