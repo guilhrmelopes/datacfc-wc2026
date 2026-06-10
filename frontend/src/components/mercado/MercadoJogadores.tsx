@@ -370,7 +370,11 @@ export function MercadoJogadores({ jogadores, oddsJogadores }: Props) {
     () =>
       [...new Set(jogadores.map((j) => j.selecao))]
         .filter(Boolean)
-        .sort((a, b) => a.localeCompare(b)),
+        .sort((a, b) =>
+          traduzirSelecao(a).localeCompare(traduzirSelecao(b), "pt-BR", {
+            sensitivity: "base",
+          }),
+        ),
     [jogadores],
   );
 
