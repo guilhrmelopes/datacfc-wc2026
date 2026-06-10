@@ -60,7 +60,7 @@ CAMINHO_GRUPOS:  Path = _RAIZ / "frontend" / "public" / "data" / "grupos_wc2026.
 CAMINHO_EVENTOS: Path = _RAIZ / "frontend" / "public" / "data" / "eventos_odds_rodada1.json"
 CAMINHO_SAIDA:   Path = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
 
-# ──────────────────────────────────── Config ──────────────────────────────────
+MIN_JOGADORES_SALVAR = 500
 
 POSICOES_LINHA: frozenset[int] = frozenset({2, 3, 4, 5})
 POSICOES_SG: frozenset[int] = frozenset({1, 2, 3})  # GOL, LAT, ZAG
@@ -973,7 +973,8 @@ def executar() -> None:
     jogadores = carregar_jogadores(CAMINHO_MERCADO)
     jogadores_todos = carregar_todos_jogadores(CAMINHO_MERCADO)
     if not jogadores:
-        return
+        logger.error("Nenhum jogador em %s — abortando.", CAMINHO_MERCADO)
+        sys.exit(1)
 
     # Rescrape completo da rodada (sem merge de execuções anteriores)
     resultado: dict[str, dict] = {}
@@ -1036,7 +1037,7 @@ def executar() -> None:
             eventos = buscar_eventos(pagina, rsc_wc2026)
             if not eventos:
                 logger.error("Abortando: nenhum evento para rodada %d.", RODADA_ALVO)
-                return
+                sys.exit(1)
             for idx, evento in enumerate(eventos, start=1):
                 logger.info("[%d/%d] %s vs %s", idx, len(eventos),
                             evento["home"], evento["away"])
@@ -1065,6 +1066,31 @@ def executar() -> None:
 
 
 def _salvar(odds: dict[str, dict]) -> None:
+    n = len(odds)
+    if n < MIN_JOGADORES_SALVAR:
+        anterior = 0
+        if CAMINHO_SAIDA.is_file():
+            try:
+                with CAMINHO_SAIDA.open(encoding="utf-8") as f:
+                    anterior = len(json.load(f).get("odds", {}))
+            except Exception:
+                pass
+        if anterior >= MIN_JOGADORES_SALVAR:
+            logger.error(
+                "Scrape insuficiente (%d atletas; minimo %d). "
+                "Preservando arquivo anterior (%d atletas).",
+                n,
+                MIN_JOGADORES_SALVAR,
+                anterior,
+            )
+        else:
+            logger.error(
+                "Scrape insuficiente (%d atletas; minimo %d) e sem backup valido.",
+                n,
+                MIN_JOGADORES_SALVAR,
+            )
+        sys.exit(1)
+
     CAMINHO_SAIDA.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "atualizado_em": datetime.now(tz=timezone.utc).isoformat(),

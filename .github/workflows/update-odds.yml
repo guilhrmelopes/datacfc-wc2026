@@ -49,6 +49,26 @@ jobs:
       - name: Raspar odds GA% e SG% (rodada 1)
         run: python -m src.scrapers.scraper_odds_jogadores
 
+      - name: Validar cobertura minima antes do commit
+        run: |
+          python3 - << 'PYEOF'
+          import json
+          import sys
+          from pathlib import Path
+
+          path = Path("frontend/public/data/odds_jogadores.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          odds = data.get("odds", {})
+          total = len(odds)
+          ga = sum(1 for v in odds.values() if v.get("ga_pct"))
+          sg = sum(1 for v in odds.values() if v.get("sg_pct"))
+
+          print(f"total={total} ga={ga} sg={sg}")
+          if total < 500 or ga < 400 or sg < 400:
+              print("Cobertura insuficiente — abortando commit.")
+              sys.exit(1)
+          PYEOF
+
       - name: Commitar se houver mudanças
         run: |
           git config user.name  "github-actions[bot]"
