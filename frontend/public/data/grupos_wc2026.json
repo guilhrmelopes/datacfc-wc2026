@@ -109,8 +109,8 @@
       "hora": "16:00:00",
       "utc": "2026-06-12T19:00:00.000Z",
       "match_id": "4667757",
-      "finalizada": false,
-      "placar": "0 - 1"
+      "finalizada": true,
+      "placar": "1 - 1"
     },
     {
       "grupo": "D",
