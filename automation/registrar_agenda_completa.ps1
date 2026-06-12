@@ -27,7 +27,7 @@ $acaoCopa = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProf
 $triggerCopa = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Minutes 30) -RepetitionDuration (New-TimeSpan -Days 60)
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
 Register-ScheduledTask -TaskName $NomeCopa -Action $acaoCopa -Trigger $triggerCopa -Settings $settings -Force | Out-Null
-Write-Host "Tarefa '$NomeCopa' — a cada 30 min (Copa + deploy)."
+Write-Host "Tarefa '$NomeCopa' - a cada 30 min (Copa + deploy)."
 
 # Odds + Copa + status 6×/dia
 $TaskPrefix = "DataCFC-AtualizarTudo"
@@ -36,9 +36,9 @@ $ActionTudo = "powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hi
 
 foreach ($h in $Horarios) {
     $suffix = $h.Replace(":", "")
-    $name = if ($h -eq "06:00") { $TaskPrefix } else { "$TaskPrefix-$suffix" }
+    $name = if ($h -eq "06:00") { $TaskPrefix } else { "${TaskPrefix}-$suffix" }
     schtasks /Create /TN $name /TR $ActionTudo /SC DAILY /ST $h /F | Out-Null
-    Write-Host "Tarefa registrada: $name ($h) — Copa + status + odds + deploy."
+    Write-Host "Tarefa registrada: $name ($h) - Copa + status + odds + deploy."
 }
 
 Write-Host ""
