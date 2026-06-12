@@ -19,8 +19,9 @@ import {
 } from "@/lib/copaJogador";
 import {
   calcularRatingJogador,
-  construirEscalasRating,
+  construirContextoRating,
   tooltipRating,
+  type ConfrontoCopa,
 } from "@/lib/ratingJogador";
 import {
   amostraScoutPorPosicao,
@@ -34,6 +35,7 @@ import type {
   OddsJogadoresData,
   OddsJogadorEntry,
   PontuacaoCedida,
+  Selecao,
 } from "@/types/dados";
 
 // ---------------------------------------------------------------------------
@@ -65,6 +67,9 @@ const COLUNAS_NAO_ORDENAVEIS = new Set(["adv"]);
 
 interface Props {
   jogadores: JogadorMercado[];
+  selecoes: Selecao[];
+  confrontosCopa: ConfrontoCopa[];
+  partidasProcessadas: string[];
   oddsJogadores?: OddsJogadoresData | null;
   pontuacaoCedida: PontuacaoCedida;
 }
@@ -155,7 +160,7 @@ function PctOdds({
 const COL_RATING: ColDef = {
   key: "rating",
   header: "Rating",
-  title: "Nível de atuação do jogador durante a Copa",
+  title: "Nível de atuação na Copa ponderado pelo nível dos adversários enfrentados",
   render: () => null,
 };
 
@@ -355,7 +360,7 @@ function classeCelulaHub(
   ced: number | null,
   jogadores: JogadorMercado[],
   odds: OddsJogadorEntry | null,
-  escalas: ReturnType<typeof construirEscalasRating>,
+  escalas: ReturnType<typeof construirContextoRating>,
 ): string {
   if (colKey === "adv") {
     return j.proximo_adversario_escudo ? "bg-sky-500/20" : "";
@@ -443,7 +448,7 @@ function valorOrdenacao(
   j: JogadorMercado,
   colKey: string,
   odds: OddsJogadorEntry | null,
-  escalas: ReturnType<typeof construirEscalasRating>,
+  escalas: ReturnType<typeof construirContextoRating>,
 ): number | null {
   switch (colKey) {
     case "rating":
@@ -521,9 +526,19 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
 // ---------------------------------------------------------------------------
 // Componente
 // ---------------------------------------------------------------------------
-export function MercadoJogadores({ jogadores, oddsJogadores, pontuacaoCedida }: Props) {
+export function MercadoJogadores({
+  jogadores,
+  selecoes,
+  confrontosCopa,
+  partidasProcessadas,
+  oddsJogadores,
+  pontuacaoCedida,
+}: Props) {
   const oddsMap = oddsJogadores?.odds ?? null;
-  const escalasRating = useMemo(() => construirEscalasRating(jogadores), [jogadores]);
+  const escalasRating = useMemo(
+    () => construirContextoRating(selecoes, confrontosCopa, partidasProcessadas),
+    [selecoes, confrontosCopa, partidasProcessadas],
+  );
   const [posicao,       setPosicao]       = useState<BucketPos>("ATA");
   const [selecaoFiltro, setSelecaoFiltro] = useState<string>("TODAS");
   const [statusFiltro,  setStatusFiltro]  = useState<string>("TODOS");

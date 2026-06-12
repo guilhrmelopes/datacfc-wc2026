@@ -86,6 +86,9 @@ export default function App() {
           {mercado.dados && (
             <MercadoJogadores
               jogadores={mercado.dados.jogadores as JogadorMercado[]}
+              selecoes={mercado.dados.selecoes as Selecao[]}
+              confrontosCopa={mercado.dados.confrontosCopa}
+              partidasProcessadas={mercado.dados.partidasProcessadas}
               oddsJogadores={mercado.dados.oddsJogadores}
               pontuacaoCedida={mercado.dados.pontuacaoCedida as PontuacaoCedida}
             />

@@ -6,6 +6,7 @@ import type {
   PontuacaoCedida,
   Selecao,
 } from "@/types/dados";
+import type { ConfrontoCopa } from "@/lib/ratingJogador";
 import {
   parseClassificacaoGrupos,
   type ClassificacaoGruposParseada,
@@ -39,6 +40,8 @@ export interface DadosMercado {
   selecoes: Selecao[];
   pontuacaoCedida: PontuacaoCedida;
   oddsJogadores: OddsJogadoresData | null;
+  confrontosCopa: ConfrontoCopa[];
+  partidasProcessadas: string[];
 }
 
 /** Dados da aba Radar (selecoes + pontuacao_cedida). */
@@ -54,16 +57,25 @@ export async function carregarDadosRadar(): Promise<
 
 /** Dados da aba Mercado (jogadores_mercado + selecoes + pontuacao_cedida + odds). */
 export async function carregarDadosMercado(): Promise<DadosMercado> {
-  const [jogadores, selecoes, pontuacaoCedida, oddsResult] = await Promise.all([
+  const [jogadores, selecoes, pontuacaoCedida, oddsResult, grupos, copaEstado] =
+    await Promise.all([
     carregarJson<JogadorMercado[]>("/data/jogadores_mercado.json"),
     carregarJson<Selecao[]>("/data/selecoes.json"),
     carregarJson<PontuacaoCedida>("/data/pontuacao_cedida.json"),
-    // Odds são opcionais — arquivo pode não existir antes do primeiro scraping
     fetch("/data/odds_jogadores.json")
       .then((r) => (r.ok ? (r.json() as Promise<OddsJogadoresData>) : null))
       .catch(() => null),
+    carregarJson<{ confrontos: ConfrontoCopa[] }>("/data/grupos_wc2026.json"),
+    carregarJson<{ partidas_processadas?: string[] }>("/data/copa_estado.json"),
   ]);
-  return { jogadores, selecoes, pontuacaoCedida, oddsJogadores: oddsResult };
+  return {
+    jogadores,
+    selecoes,
+    pontuacaoCedida,
+    oddsJogadores: oddsResult,
+    confrontosCopa: grupos.confrontos ?? [],
+    partidasProcessadas: copaEstado.partidas_processadas ?? [],
+  };
 }
 
 /** Dados da aba Fase de Grupos (classificação). */
