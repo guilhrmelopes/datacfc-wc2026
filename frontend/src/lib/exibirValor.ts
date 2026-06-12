@@ -4,7 +4,7 @@ export function formatarValorMetrica(
   inteiro = false
 ): string {
   if (valor === null || valor === undefined || Number.isNaN(Number(valor))) {
-    return "N/D";
+    return "N/A";
   }
   if (inteiro) {
     return String(Math.round(Number(valor)));

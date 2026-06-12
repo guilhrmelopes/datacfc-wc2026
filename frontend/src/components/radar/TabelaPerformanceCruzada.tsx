@@ -4,8 +4,8 @@ import type { PerformancePorSigla } from "@/types/dados";
 
 const BUCKETS = ["GOL", "LAT", "ZAG", "MEI", "ATA"] as const;
 
-// Torneio ainda não iniciado — congela a exibição em N/D até os dados estarem disponíveis.
-const DADOS_CONGELADOS = true;
+// Exibe valores quando há pontuação cedida/conquistada (Copa em andamento).
+const DADOS_CONGELADOS = false;
 
 interface Props {
   titulo: string;
@@ -53,7 +53,7 @@ export function TabelaPerformanceCruzada({ titulo, sigla, escudo, performance }:
                       key={bucket}
                       className="border border-[var(--color-border)] bg-gray-300 px-1 py-1.5 text-gray-500"
                     >
-                      N/D
+                      N/A
                     </td>
                   );
                 }
@@ -68,7 +68,7 @@ export function TabelaPerformanceCruzada({ titulo, sigla, escudo, performance }:
                       key={bucket}
                       className={`border border-[var(--color-border)] px-1 py-1.5 ${classeCelulaNeutra()}`}
                     >
-                      N/D
+                      N/A
                     </td>
                   );
                 }

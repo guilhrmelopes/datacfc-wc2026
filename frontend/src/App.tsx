@@ -10,7 +10,7 @@ import {
   carregarDadosFase,
   type DadosMercado,
 } from "@/lib/data";
-import type { ClassificacaoGrupos, JogadorMercado, PontuacaoCedida, Selecao } from "@/types/dados";
+import type { JogadorMercado, PontuacaoCedida, Selecao } from "@/types/dados";
 
 type AbaAtiva = "radar" | "fase" | "mercado";
 
@@ -65,7 +65,7 @@ export default function App() {
           {fase.carregando && SPINNER}
           {fase.erro && ERRO(fase.erro)}
           {fase.dados && (
-            <FaseGrupos classificacao={fase.dados.classificacao as ClassificacaoGrupos} />
+            <FaseGrupos classificacao={fase.dados.classificacao} />
           )}
         </TabsContent>
 
@@ -87,6 +87,7 @@ export default function App() {
             <MercadoJogadores
               jogadores={mercado.dados.jogadores as JogadorMercado[]}
               oddsJogadores={mercado.dados.oddsJogadores}
+              pontuacaoCedida={mercado.dados.pontuacaoCedida as PontuacaoCedida}
             />
           )}
         </TabsContent>

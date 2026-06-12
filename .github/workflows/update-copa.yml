@@ -1,0 +1,51 @@
+name: Atualizar dados Copa (FotMob)
+
+on:
+  schedule:
+    # A cada 30 min — processa partidas finalizadas e atualiza JSONs
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update-copa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    permissions:
+      contents: write
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pipeline Copa (FotMob)
+        run: python automation/atualizar_copa_fotmob.py
+
+      - name: Status e fotos dos jogadores
+        run: python automation/atualizar_status_jogadores.py
+
+      - name: Commitar se houver mudanças
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            frontend/public/data/copa_estado.json \
+            frontend/public/data/grupos_wc2026.json \
+            frontend/public/data/classificacao_grupos.json \
+            frontend/public/data/pontuacao_cedida.json \
+            frontend/public/data/selecoes.json \
+            frontend/public/data/jogadores_mercado.json
+
+          git diff --cached --quiet || (
+            git commit -m "bot: atualizar Copa, scouts e pontuações [skip ci]" &&
+            git push
+          )

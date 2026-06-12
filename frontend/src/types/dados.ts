@@ -34,7 +34,7 @@ export interface Selecao {
   selecao_id: number;
   clube_id: number;
   grupo: string;
-  competicao: string;
+  competicao: string | null;
   rating_elo_100: number | null;
   url_escudo: string | null;
   metricas_coletivas: MetricasColetivas;
@@ -78,6 +78,27 @@ export interface JogadorMercado {
   proximo_adversario_sigla: string | null;
   proximo_adversario_escudo: string | null;
   proximo_adversario_data: string | null;
+  /** Métricas acumuladas na fase de grupos (Cartola Copa). */
+  copa_jogos_num?: number;
+  copa_mins_played?: number;
+  copa_goals?: number;
+  copa_goal_assist?: number;
+  copa_clean_sheet?: number;
+  copa_pontos_total?: number;
+  copa_media_geral?: number | null;
+  copa_media_base?: number | null;
+  copa_fd?: number;
+  copa_ds?: number;
+  copa_de?: number;
+  copa_gs?: number;
+  copa_gcc?: number;
+  copa_xg?: number;
+  copa_xa?: number;
+  copa_int?: number;
+  copa_c?: number;
+  copa_br?: number;
+  copa_ge?: number;
+  copa_de_pct?: number | null;
 }
 
 export interface CelulaPontuacao {
@@ -94,8 +115,8 @@ export interface PerformanceBucket {
 export type PerformancePorSigla = Record<string, PerformanceBucket>;
 
 /**
- * Pontuação cruzada indexada pela SIGLA em maiúsculas (ex.: "BRA", "ARG").
- * Valor `null` quando não há histórico de eliminatórias.
+ * Pontuação cruzada cedido/conquistado — somente Copa do Mundo 2026.
+ * Valor `null` quando a seleção ainda não estreou.
  */
 export type PontuacaoCedida = Record<string, PerformancePorSigla | null>;
 

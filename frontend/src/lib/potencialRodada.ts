@@ -1,21 +1,13 @@
+import { temCopa } from "@/lib/copaJogador";
+import { calcularRatingJogador, type EscalasRating } from "@/lib/ratingJogador";
 import type { JogadorMercado, OddsJogadorEntry } from "@/types/dados";
 
 /**
- * Potencial para Rodada (coluna ⓘ) — índice híbrido 0–100.
- *
- * Combina o melhor sinal histórico individual (Rating das eliminatórias)
- * com o sinal de mercado da rodada (GA%/SG%), calibrado por posição.
- *
- * P_bruto = α·R + (1−α)·O   (com odds)
- * P       = P_bruto × f(status)
- *
- * α = 0,65 — o Rating captura forma/rol na seleção; odds refletem o confronto.
- * Sem odds, P_bruto = R (cadeia de fallbacks em ratingBase).
+ * Potencial para Rodada (coluna ⓘ) — índice híbrido 0–100 (somente após estreia na Copa).
  */
 
 export const POTENCIAL_ALPHA = 0.65;
 
-/** Pesos SG/GA no sinal de odds O — alinhados aos mercados disponíveis e ao perfil Cartola. */
 export const PESOS_ODDS: Record<
   string,
   { sg: number; ga: number; descricao: string }
@@ -27,23 +19,16 @@ export const PESOS_ODDS: Record<
   ATA: { sg: 0, ga: 1, descricao: "GA% (marcar ou assistir)" },
 };
 
-/** Escala de disponibilidade para a rodada — essencial para “potencial” vs “talento”. */
 export const FATOR_STATUS: Record<number, number> = {
-  6: 1.0, // Provável
-  2: 0.85, // Dúvida
-  7: 0.72, // Nulo (reserva)
-  5: 0, // Suspenso
-  3: 0, // Lesionado
+  6: 1.0,
+  2: 0.85,
+  7: 0.72,
+  5: 0,
+  3: 0,
 };
 
 const FATOR_STATUS_PADRAO = 0.72;
 
-/**
- * Sinal de odds 0–100 por posição.
- * GA% = prob. individual marcar ou assistir; SG% = prob. time não sofrer gol.
- * SG% é por equipe (mesmo valor para todos do time) — por isso ZAG/LAT
- * misturam GA% individual para diferenciar titulares.
- */
 export function sinalOddsRodada(
   bucket: string,
   odds: OddsJogadorEntry | null | undefined,
@@ -63,37 +48,24 @@ export function sinalOddsRodada(
   return sg ?? ga;
 }
 
-/** Rating histórico com fallbacks para garantir índice em todo elenco. */
-export function ratingBase(j: JogadorMercado): number {
-  if (j.rating_recomendacao > 0) return j.rating_recomendacao;
-
-  if (j.media_geral != null && j.media_geral > 0) {
-    return Math.min(100, Math.round((j.media_geral / 12) * 1000) / 10);
-  }
-
-  if (j.media_base != null && j.media_base > 0) {
-    return Math.min(100, Math.round((j.media_base / 12) * 1000) / 10);
-  }
-
-  const jogos = Math.max(j.jogos_num, 1);
-  let pts = j.goals * 8 + j.goal_assist * 5;
-  if (j.bucket_posicao === "GOL" || j.bucket_posicao === "LAT" || j.bucket_posicao === "ZAG") {
-    pts += j.clean_sheet * 5;
-  }
-  const proxy = (pts / jogos / 12) * 100;
-  return Math.min(100, Math.max(1, Math.round(proxy * 10) / 10));
+export function ratingBase(j: JogadorMercado, escalas: EscalasRating): number {
+  return calcularRatingJogador(j, escalas);
 }
 
 export function fatorStatus(statusId: number): number {
   return FATOR_STATUS[statusId] ?? FATOR_STATUS_PADRAO;
 }
 
-/** Potencial bruto antes do ajuste de status (0–100). */
 export function calcularPotencialBruto(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
-): number {
-  const r = ratingBase(j);
+  escalas: EscalasRating,
+): number | null {
+  if (!temCopa(j)) return null;
+
+  const r = ratingBase(j, escalas);
+  if (r <= 0) return null;
+
   const o = sinalOddsRodada(j.bucket_posicao, odds);
   if (o !== null) {
     return Math.round((POTENCIAL_ALPHA * r + (1 - POTENCIAL_ALPHA) * o) * 10) / 10;
@@ -101,15 +73,13 @@ export function calcularPotencialBruto(
   return Math.round(r * 10) / 10;
 }
 
-/**
- * Potencial para Rodada 1 (0–100):
- * combina Rating + odds por posição, penalizado por status.
- */
 export function calcularPotencialRodada(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
-): number {
-  const bruto = calcularPotencialBruto(j, odds);
+  escalas: EscalasRating,
+): number | null {
+  const bruto = calcularPotencialBruto(j, odds, escalas);
+  if (bruto === null) return null;
   const fator = fatorStatus(j.status_id);
   return Math.round(bruto * fator * 10) / 10;
 }
@@ -117,11 +87,16 @@ export function calcularPotencialRodada(
 export function tooltipPotencialRodada(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
-  potencial: number,
+  potencial: number | null,
+  escalas: EscalasRating,
 ): string {
-  const r = ratingBase(j);
+  if (!temCopa(j) || potencial === null) {
+    return "Sem partidas na Copa 2026";
+  }
+
+  const r = ratingBase(j, escalas);
   const o = sinalOddsRodada(j.bucket_posicao, odds);
-  const bruto = calcularPotencialBruto(j, odds);
+  const bruto = calcularPotencialBruto(j, odds, escalas) ?? 0;
   const fator = fatorStatus(j.status_id);
   const pesos = PESOS_ODDS[j.bucket_posicao];
 

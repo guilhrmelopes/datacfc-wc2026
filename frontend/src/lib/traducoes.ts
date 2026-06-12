@@ -73,11 +73,4 @@ export const TOOLTIPS_METRICAS: Record<string, string> = {
   CV: "Cartões vermelhos por 90 minutos",
 };
 
-export const COMPETICOES_FILTRO = [
-  "UEFA + NL",
-  "CONMEBOL",
-  "CONCACAF",
-  "OFC",
-  "CAF + AFCON",
-  "AFC",
-] as const;
+export const COMPETICOES_FILTRO = ["Copa 2026"] as const;

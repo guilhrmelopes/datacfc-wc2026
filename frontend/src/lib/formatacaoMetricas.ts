@@ -43,10 +43,10 @@ export const METRICAS_DEFENSIVAS: ReadonlySet<ChaveMetricaScouts> = new Set([
 export type FaixaMetrica = "excelente" | "acima" | "abaixo" | "critico";
 
 const CLASSES_FAIXA: Record<FaixaMetrica, string> = {
-  excelente: "bg-green-500/20",
-  acima: "bg-yellow-500/20",
-  abaixo: "bg-orange-500/20",
-  critico: "bg-red-500/20",
+  excelente: "bg-green-500/15",
+  acima: "bg-yellow-500/15",
+  abaixo: "bg-orange-500/15",
+  critico: "bg-red-500/15",
 };
 
 /** Limites estáticos (excelente, acima, abaixo) quando há poucos dados para quartis. */

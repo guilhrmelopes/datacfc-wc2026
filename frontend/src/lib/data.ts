@@ -6,6 +6,10 @@ import type {
   PontuacaoCedida,
   Selecao,
 } from "@/types/dados";
+import {
+  parseClassificacaoGrupos,
+  type ClassificacaoGruposParseada,
+} from "@/lib/classificacaoGrupos";
 
 // Cache em memória para evitar re-fetch ao trocar de aba
 const _cache = new Map<string, unknown>();
@@ -63,23 +67,24 @@ export async function carregarDadosMercado(): Promise<DadosMercado> {
 }
 
 /** Dados da aba Fase de Grupos (classificação). */
-export async function carregarDadosFase(): Promise<
-  Pick<DadosAplicacao, "classificacao">
-> {
-  const classificacao = await carregarJson<ClassificacaoGrupos>(
-    "/data/classificacao_grupos.json"
+export async function carregarDadosFase(): Promise<{
+  classificacao: ClassificacaoGruposParseada;
+}> {
+  const raw = await carregarJson<Record<string, unknown>>(
+    "/data/classificacao_grupos.json",
   );
-  return { classificacao };
+  return { classificacao: parseClassificacaoGrupos(raw) };
 }
 
 /** Carrega todos os dados de uma vez (compatibilidade). */
 export async function carregarDados(): Promise<DadosAplicacao> {
-  const [selecoes, jogadores, pontuacaoCedida, classificacao] =
+  const [selecoes, jogadores, pontuacaoCedida, classificacaoRaw] =
     await Promise.all([
       carregarJson<Selecao[]>("/data/selecoes.json"),
       carregarJson<Jogador[]>("/data/jogadores.json"),
       carregarJson<PontuacaoCedida>("/data/pontuacao_cedida.json"),
-      carregarJson<ClassificacaoGrupos>("/data/classificacao_grupos.json"),
+      carregarJson<Record<string, unknown>>("/data/classificacao_grupos.json"),
     ]);
+  const classificacao = parseClassificacaoGrupos(classificacaoRaw).grupos;
   return { selecoes, jogadores, pontuacaoCedida, classificacao };
 }

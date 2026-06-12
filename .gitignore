@@ -1,11 +1,20 @@
 # ──────────────────────────────────────────────
-# Pipeline Python (uso local apenas)
-# Exceções: scraper de odds + scripts de automação local
+# Pipeline Python
+# Exceções: scrapers de odds + pipeline Copa (FotMob) + automação
 # ──────────────────────────────────────────────
 /src/**
 !/src/__init__.py
+!/src/pipeline/
+!/src/pipeline/**
+!/src/scoring/
+!/src/scoring/**
+!/src/scrapers/
+/src/scrapers/**
 !/src/scrapers/__init__.py
 !/src/scrapers/scraper_odds_jogadores.py
+!/src/scrapers/fotmob_copa.py
+!/src/scrapers/fotmob_fixtures.py
+!/src/scrapers/fotmob_mapa.py
 /data/
 /exports/
 /logs/

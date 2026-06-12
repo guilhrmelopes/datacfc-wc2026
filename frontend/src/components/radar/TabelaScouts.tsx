@@ -6,6 +6,7 @@ import {
   classeCelulaNeutra,
 } from "@/lib/formatacaoMetricas";
 import { formatarValorMetrica, valorNumericoOuNull } from "@/lib/exibirValor";
+import { estreouCopa, calcularRatingSelecaoCopa } from "@/lib/ratingSelecao";
 import { TOOLTIPS_METRICAS, traduzirSelecao } from "@/lib/traducoes";
 import type { Selecao } from "@/types/dados";
 
@@ -58,7 +59,8 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
     const mapa = new Map<ChaveMetricaScouts, number[]>();
     for (const col of COLUNAS) {
       const valores = linhasFiltradas
-        .map((s) => valorNumericoOuNull(s.metricas_coletivas[col.campo]))
+        .filter(estreouCopa)
+        .map((s) => valorNumericoOuNull(s.metricas_coletivas[col.campo] ?? 0))
         .filter((v): v is number => v !== null);
       mapa.set(col.chave, valores);
     }
@@ -85,8 +87,8 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
       }
       if (ordenarPor === "rating_elo_100") {
         return compararNumero(
-          valorNumericoOuNull(a.rating_elo_100),
-          valorNumericoOuNull(b.rating_elo_100)
+          calcularRatingSelecaoCopa(a, linhasFiltradas),
+          calcularRatingSelecaoCopa(b, linhasFiltradas),
         );
       }
       if (ordenarPor === "J") {
@@ -168,30 +170,44 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
                   </div>
                 </div>
               </td>
-              <td className="px-2 py-2">{s.competicao ?? "N/D"}</td>
               <td className="px-2 py-2">
-                {formatarValorMetrica(s.metricas_coletivas.J, 0, true)}
+                {estreouCopa(s) ? s.competicao : "N/A"}
               </td>
               <td className="px-2 py-2">
-                {valorNumericoOuNull(s.rating_elo_100) === null ? (
-                  <span className="text-[var(--color-muted)]">N/D</span>
-                ) : (
-                  <div className="mx-auto flex max-w-[100px] items-center gap-2">
-                    <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-700">
-                      <div
-                        className="h-full rounded-full bg-sky-500"
-                        style={{
-                          width: `${Math.min(100, s.rating_elo_100 ?? 0)}%`,
-                        }}
-                      />
-                    </div>
-                    <span className="w-8 text-xs">{s.rating_elo_100}</span>
-                  </div>
+                {formatarValorMetrica(
+                  estreouCopa(s) ? s.metricas_coletivas.J : null,
+                  0,
+                  true,
                 )}
               </td>
+              <td className="px-2 py-2">
+                {(() => {
+                  const rating = calcularRatingSelecaoCopa(s, selecoes);
+                  if (rating === null) {
+                    return <span className="text-[var(--color-muted)]">N/A</span>;
+                  }
+                  return (
+                    <div className="mx-auto flex max-w-[100px] items-center gap-2">
+                      <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-700">
+                        <div
+                          className="h-full rounded-full bg-sky-500"
+                          style={{ width: `${Math.min(100, rating)}%` }}
+                        />
+                      </div>
+                      <span className="w-8 text-xs">{rating}</span>
+                    </div>
+                  );
+                })()}
+              </td>
               {COLUNAS.map((col) => {
-                const valor = s.metricas_coletivas[col.campo];
-                const numerico = valorNumericoOuNull(valor);
+                const valorBruto = estreouCopa(s)
+                  ? s.metricas_coletivas[col.campo]
+                  : null;
+                const valorExibir =
+                  estreouCopa(s) && (valorBruto === null || valorBruto === undefined)
+                    ? 0
+                    : valorBruto;
+                const numerico = estreouCopa(s) ? valorNumericoOuNull(valorExibir ?? 0) : null;
                 const valoresColuna = valoresPorMetrica.get(col.chave) ?? [];
                 const classeCelula =
                   numerico === null
@@ -200,9 +216,9 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
                         classificarFaixaMetrica(col.chave, numerico, valoresColuna)
                       );
                 const texto = formatarValorMetrica(
-                  valor,
+                  valorExibir,
                   2,
-                  col.campo === "clean_sheet_team"
+                  col.campo === "clean_sheet_team",
                 );
                 return (
                   <td key={col.chave} className={`px-2 py-2 ${classeCelula}`}>
@@ -220,8 +236,8 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
         </p>
       )}
     </div>
-    <div className="mt-4 p-4 border border-gray-200 bg-gray-50 rounded-md text-xs text-gray-500 text-center">
-      <p>As métricas de xG e xGA não estão disponíveis para as partidas eliminatórias da AFC, OFC e CAF.</p>
+    <div className="mt-4 rounded-md border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-500">
+      <p>Métricas coletivas e scouts refletem somente a Copa do Mundo 2026 (FotMob).</p>
     </div>
     </>
   );

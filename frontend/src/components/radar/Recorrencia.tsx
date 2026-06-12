@@ -18,6 +18,15 @@ interface ConfrontoWC {
   mandante: string;
   visitante: string;
   data: string;
+  hora?: string;
+  finalizada?: boolean;
+  placar?: string | null;
+}
+
+interface CopaEstado {
+  rodada_cartola_atual: number;
+  partidas_processadas: string[];
+  atualizado_em: string | null;
 }
 
 interface Props {
@@ -34,31 +43,45 @@ function formatarDataExibicao(data: string): string {
 export function Recorrencia({ selecoes, pontuacaoCedida }: Props) {
   const [ativa, setAtiva] = useState<string | null>(null);
   const [confrontosWC, setConfrontosWC] = useState<ConfrontoWC[]>([]);
+  const [rodadaCartola, setRodadaCartola] = useState(1);
   const [diaAtual, setDiaAtual] = useState<string>("");
 
   useEffect(() => {
-    fetch("/data/grupos_wc2026.json")
-      .then((r) => r.json())
-      .then((dados: { confrontos: ConfrontoWC[] }) => {
-        setConfrontosWC(dados.confrontos);
+    Promise.all([
+      fetch("/data/grupos_wc2026.json").then((r) => r.json()),
+      fetch("/data/copa_estado.json").then((r) => r.json()).catch(() => null),
+    ])
+      .then(([grupos, estado]: [{ confrontos: ConfrontoWC[] }, CopaEstado | null]) => {
+        const confrontos = grupos.confrontos ?? [];
+        setConfrontosWC(confrontos);
+
+        const rodada = estado?.rodada_cartola_atual ?? 1;
+        setRodadaCartola(rodada);
+
+        const daRodada = confrontos.filter((c) => c.rodada === rodada);
         const hoje = new Date().toISOString().slice(0, 10);
-        const datas = [...new Set(dados.confrontos.map((c) => c.data))].sort();
+        const datas = [...new Set(daRodada.map((c) => c.data))].sort();
         const inicial = datas.find((d) => d >= hoje) ?? datas[0] ?? "";
         setDiaAtual(inicial);
       })
       .catch(console.error);
   }, []);
 
+  const confrontosRodada = useMemo(
+    () => confrontosWC.filter((c) => c.rodada === rodadaCartola),
+    [confrontosWC, rodadaCartola],
+  );
+
   const datasDisponiveis = useMemo(
-    () => [...new Set(confrontosWC.map((c) => c.data))].sort(),
-    [confrontosWC]
+    () => [...new Set(confrontosRodada.map((c) => c.data))].sort(),
+    [confrontosRodada],
   );
 
   const idxDia = datasDisponiveis.indexOf(diaAtual);
 
   const jogosDoDia = useMemo(
-    () => confrontosWC.filter((c) => c.data === diaAtual),
-    [confrontosWC, diaAtual]
+    () => confrontosRodada.filter((c) => c.data === diaAtual),
+    [confrontosRodada, diaAtual],
   );
 
   const selecoesUnicas = useMemo(() => {
@@ -228,7 +251,8 @@ export function Recorrencia({ selecoes, pontuacaoCedida }: Props) {
             </button>
 
             <h3 className="text-sm font-bold uppercase tracking-wide">
-              Jogos do Dia &mdash; {formatarDataExibicao(diaAtual)}
+              Jogos do Dia &mdash; Rodada {rodadaCartola} &mdash;{" "}
+              {formatarDataExibicao(diaAtual)}
             </h3>
 
             <button
@@ -285,7 +309,9 @@ export function Recorrencia({ selecoes, pontuacaoCedida }: Props) {
                       </div>
                     </div>
                     <span className="text-[10px] text-[var(--color-muted)]">
+                      {jogo.hora ? `${jogo.hora.slice(0, 5)} · ` : ""}
                       {formatarDataExibicao(jogo.data)}
+                      {jogo.finalizada && jogo.placar ? ` · ${jogo.placar}` : ""}
                     </span>
                   </div>
                 );
