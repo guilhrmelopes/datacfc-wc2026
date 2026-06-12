@@ -7,7 +7,7 @@
     "MOROCCO",
     "NORWAY",
     "PORTUGAL",
-    "QATAR"
+    "SPAIN"
   ],
   "A": [
     {
@@ -77,33 +77,18 @@
       "selecao": "BOSNIA AND HERZEGOVINA",
       "sigla": "BOS",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BOS/60x60.png",
-      "P": 0,
-      "J": 0,
-      "V": 0,
+      "P": 3,
+      "J": 1,
+      "V": 1,
       "E": 0,
       "D": 0,
-      "GM": 0,
+      "GM": 1,
       "GS": 0,
-      "SG": 0,
-      "aprov": 0.0
+      "SG": 1,
+      "aprov": 100.0
     },
     {
       "posicao": 2,
-      "selecao": "CANADA",
-      "sigla": "CAN",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
-      "P": 0,
-      "J": 0,
-      "V": 0,
-      "E": 0,
-      "D": 0,
-      "GM": 0,
-      "GS": 0,
-      "SG": 0,
-      "aprov": 0.0
-    },
-    {
-      "posicao": 3,
       "selecao": "QATAR",
       "sigla": "CAT",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAT/60x60.png",
@@ -118,7 +103,7 @@
       "aprov": 0.0
     },
     {
-      "posicao": 4,
+      "posicao": 3,
       "selecao": "SWITZERLAND",
       "sigla": "SUI",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
@@ -130,6 +115,21 @@
       "GM": 0,
       "GS": 0,
       "SG": 0,
+      "aprov": 0.0
+    },
+    {
+      "posicao": 4,
+      "selecao": "CANADA",
+      "sigla": "CAN",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
+      "P": 0,
+      "J": 1,
+      "V": 0,
+      "E": 0,
+      "D": 1,
+      "GM": 0,
+      "GS": 1,
+      "SG": -1,
       "aprov": 0.0
     }
   ],
