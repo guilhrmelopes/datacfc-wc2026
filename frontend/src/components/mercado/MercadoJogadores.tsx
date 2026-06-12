@@ -29,6 +29,7 @@ import {
   classeCelulaScoutJogador,
 } from "@/lib/formatacaoJogadorCopa";
 import { classeCorPerformance } from "@/lib/cores";
+import { classeCelulaIndice100 } from "@/lib/formatacaoMetricas";
 import { traduzirSelecao } from "@/lib/traducoes";
 import type {
   JogadorMercado,
@@ -346,20 +347,13 @@ const COL_XGXA90 = copaCol(
   2,
 );
 
-function classeCelulaProbabilidade(pct: number | null | undefined): string {
-  if (pct === null || pct === undefined) return "";
-  if (pct <= 0) return "bg-red-500/15";
-  if (pct >= 40) return "bg-green-500/15";
-  if (pct >= 25) return "bg-yellow-500/15";
-  return "bg-orange-500/15";
-}
-
 function classeCelulaHub(
   colKey: string,
   j: JogadorMercado,
   ced: number | null,
   jogadores: JogadorMercado[],
   odds: OddsJogadorEntry | null,
+  oddsMap: Record<string, OddsJogadorEntry> | null,
   escalas: ReturnType<typeof construirContextoRating>,
 ): string {
   if (colKey === "adv") {
@@ -370,24 +364,45 @@ function classeCelulaHub(
     return ced != null ? classeCorPerformance(ced) : "";
   }
 
+  const pos = j.bucket_posicao;
+
+  const oddsDe = (atletaId: number) =>
+    oddsMap ? (oddsMap[String(atletaId)] ?? null) : null;
+
   if (colKey === "ga_pct") {
-    return temCopa(j) ? classeCelulaProbabilidade(odds?.ga_pct) : "";
+    if (!temCopa(j) || odds?.ga_pct == null) return "";
+    const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
+      oddsDe(x.atleta_id)?.ga_pct ?? null,
+    );
+    return classeCelulaIndice100(odds.ga_pct, amostra);
   }
   if (colKey === "sg_pct") {
-    return temCopa(j) ? classeCelulaProbabilidade(odds?.sg_pct) : "";
+    if (!temCopa(j) || odds?.sg_pct == null) return "";
+    const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
+      oddsDe(x.atleta_id)?.sg_pct ?? null,
+    );
+    return classeCelulaIndice100(odds.sg_pct, amostra);
   }
   if (colKey === "potencial_r1") {
     const valor = calcularPotencialRodada(j, odds, escalas);
-    return valor != null ? classeCelulaCartola(valor) : "";
+    if (valor == null) return "";
+    const amostra = jogadores
+      .filter((x) => x.bucket_posicao === pos && temCopa(x))
+      .map((x) => calcularPotencialRodada(x, oddsDe(x.atleta_id), escalas))
+      .filter((v): v is number => v !== null);
+    return classeCelulaIndice100(valor, amostra);
   }
 
   if (!temCopa(j)) return "";
 
-  const pos = j.bucket_posicao;
-
   if (colKey === "rating") {
-    const mg = mediaGeralCopa(j);
-    return mg != null ? classeCelulaCartola(mg) : "";
+    const valor = calcularRatingJogador(j, escalas);
+    if (valor <= 0) return "";
+    const amostra = amostraScoutPorPosicao(jogadores, pos, (x) => {
+      const r = calcularRatingJogador(x, escalas);
+      return r > 0 ? r : null;
+    });
+    return classeCelulaIndice100(valor, amostra);
   }
   if (colKey === "mg") {
     const mg = mediaGeralCopa(j);
@@ -775,6 +790,7 @@ export function MercadoJogadores({
                       ced,
                       jogadores,
                       odds,
+                      oddsMap,
                       escalasRating,
                     );
                     return (

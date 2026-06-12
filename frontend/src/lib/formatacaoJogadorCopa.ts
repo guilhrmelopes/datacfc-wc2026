@@ -1,46 +1,60 @@
 import { classeCorPerformance } from "@/lib/cores";
 import {
-  calcularQuartis,
   classificarFaixaMetrica,
+  classificarFaixaRelativa,
   classeCelulaMetrica,
+  classeCelulaNeutra,
   type ChaveMetricaScouts,
+  type FaixaMetrica,
 } from "@/lib/formatacaoMetricas";
 import type { JogadorMercado } from "@/types/dados";
 import { temCopa } from "@/lib/copaJogador";
 
-/** Colunas Cartola (MG/MB) — faixas absolutas de pontuação por jogo. */
+/** Colunas Cartola (MG/MB/CED) — faixas absolutas de pontuação por jogo. */
 export function classeCelulaCartola(valor: number): string {
   return classeCorPerformance(valor);
 }
 
-/** Colunas numéricas de scouts — quartis entre pares da mesma posição na Copa. */
+const CHAVE_METRICA_POR_COLUNA: Partial<Record<string, ChaveMetricaScouts>> = {
+  g: "GM",
+  fd: "FD",
+  gcc: "GCC",
+  ds: "DS",
+  de: "DE",
+  sg: "SG",
+  xg: "xG",
+  xa: "xG",
+  xgx_a90: "xG",
+  gs: "GS",
+};
+
+function chaveMetricaScout(colKey: string, invertido: boolean): ChaveMetricaScouts {
+  if (invertido) return "GS";
+  return CHAVE_METRICA_POR_COLUNA[colKey] ?? "GM";
+}
+
+/** Colunas numéricas de scouts — quartis entre pares da mesma posição (Wyscout). */
 export function classeCelulaScoutJogador(
-  chave: string,
+  colKey: string,
   valor: number,
   amostra: number[],
 ): string {
-  const invertido = chave === "gs";
-  if (!invertido && valor <= 0) return "bg-red-500/15";
+  const invertido = colKey === "gs";
 
-  if (amostra.length < 4) {
-    if (invertido) {
-      if (valor <= 0) return "bg-green-500/15";
-      if (valor >= 2) return "bg-red-500/15";
-      return "bg-yellow-500/15";
-    }
-    if (valor >= 3) return "bg-green-500/15";
-    if (valor >= 1) return "bg-yellow-500/15";
-    return "bg-orange-500/15";
+  if (!invertido && valor <= 0) {
+    return classeCelulaMetrica("critico");
+  }
+  if (invertido && valor <= 0) {
+    return classeCelulaMetrica("excelente");
   }
 
-  const quartis = calcularQuartis(amostra);
-  if (!quartis) return "bg-slate-700/25";
+  if (amostra.length >= 4) {
+    const faixa = classificarFaixaRelativa(valor, amostra, invertido);
+    return classeCelulaMetrica(faixa);
+  }
 
-  const faixa = classificarFaixaMetrica(
-    (invertido ? "GS" : "GM") as ChaveMetricaScouts,
-    valor,
-    amostra,
-  );
+  const metrica = chaveMetricaScout(colKey, invertido);
+  const faixa = classificarFaixaMetrica(metrica, valor, amostra);
   return classeCelulaMetrica(faixa);
 }
 
@@ -62,3 +76,5 @@ export function amostraMgMbPorPosicao(
 ): number[] {
   return amostraScoutPorPosicao(jogadores, posicao, extrair);
 }
+
+export { classeCelulaNeutra, type FaixaMetrica };

@@ -42,11 +42,16 @@ export const METRICAS_DEFENSIVAS: ReadonlySet<ChaveMetricaScouts> = new Set([
 
 export type FaixaMetrica = "excelente" | "acima" | "abaixo" | "critico";
 
+/**
+ * Paleta inspirada em heatmaps Wyscout / InStat:
+ * vermelho (Q1) → laranja (Q2) → amarelo-verde (Q3) → verde (Q4).
+ * Opacidade baixa para leitura confortável em tabelas densas.
+ */
 const CLASSES_FAIXA: Record<FaixaMetrica, string> = {
-  excelente: "bg-green-500/15",
-  acima: "bg-yellow-500/15",
-  abaixo: "bg-orange-500/15",
-  critico: "bg-red-500/15",
+  excelente: "bg-emerald-600/22 text-[var(--color-fg)]",
+  acima: "bg-lime-500/18 text-[var(--color-fg)]",
+  abaixo: "bg-amber-500/18 text-[var(--color-fg)]",
+  critico: "bg-rose-600/20 text-[var(--color-fg)]",
 };
 
 /** Limites estáticos (excelente, acima, abaixo) quando há poucos dados para quartis. */
@@ -155,5 +160,43 @@ export function classeCelulaMetrica(faixa: FaixaMetrica): string {
 }
 
 export function classeCelulaNeutra(): string {
-  return "bg-slate-700/40 text-[var(--color-muted)]";
+  return "bg-slate-700/30 text-[var(--color-muted)]";
+}
+
+/** Faixa absoluta para índices 0–100 (Rating, Potencial). */
+export function classificarFaixaIndice100(valor: number): FaixaMetrica {
+  if (valor >= 75) return "excelente";
+  if (valor >= 50) return "acima";
+  if (valor >= 25) return "abaixo";
+  return "critico";
+}
+
+/** Faixa absoluta para pontuação Cartola por jogo (MG, MB, CED). */
+export function classificarFaixaCartola(valor: number): FaixaMetrica {
+  if (valor <= 2.5) return "critico";
+  if (valor <= 3.99) return "abaixo";
+  if (valor <= 5.5) return "acima";
+  return "excelente";
+}
+
+/** Quartis relativos ao grupo (estilo Wyscout — comparação entre pares). */
+export function classificarFaixaRelativa(
+  valor: number,
+  amostra: number[],
+  invertido = false,
+): FaixaMetrica {
+  const quartis = calcularQuartis(amostra);
+  if (quartis && amostra.length >= 4) {
+    return faixaPorQuartis(valor, quartis, invertido);
+  }
+  return invertido ? "acima" : "abaixo";
+}
+
+/** Célula para índice 0–100: quartis entre pares quando possível, senão faixas absolutas. */
+export function classeCelulaIndice100(valor: number, amostra?: number[]): string {
+  const faixa =
+    amostra && amostra.length >= 4
+      ? classificarFaixaRelativa(valor, amostra, false)
+      : classificarFaixaIndice100(valor);
+  return classeCelulaMetrica(faixa);
 }
