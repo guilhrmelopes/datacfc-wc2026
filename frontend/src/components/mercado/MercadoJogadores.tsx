@@ -14,7 +14,7 @@ import {
   cedidoAdversarioCopa,
   mediaBaseCopa,
   mediaGeralCopa,
-  oddsProximoAdversario,
+  oddsVigentes,
   temCopa,
   xgXaPor90Copa,
 } from "@/lib/copaJogador";
@@ -225,18 +225,47 @@ const COL_POTENCIAL_RODADA: ColDef = {
   render: () => null,
 };
 
-// Coluna de odds — marcar ou assistir
+const COL_G_PCT: ColDef = {
+  key: "g_pct",
+  header: "G%",
+  title: "Probabilidade de marcar",
+  render: (j, _ced, odds) => (
+    <PctOdds
+      pct={odds?.g_pct}
+      casa={odds?.casa_g}
+      odds={odds?.odds_g}
+      tooltipPrefix="Probabilidade de marcar"
+      ativo={oddsVigentes(j, odds)}
+    />
+  ),
+};
+
+const COL_A_PCT: ColDef = {
+  key: "a_pct",
+  header: "A%",
+  title: "Probabilidade de assistir",
+  render: (j, _ced, odds) => (
+    <PctOdds
+      pct={odds?.a_pct}
+      casa={odds?.casa_a}
+      odds={odds?.odds_a}
+      tooltipPrefix="Probabilidade de assistir"
+      ativo={oddsVigentes(j, odds)}
+    />
+  ),
+};
+
 const COL_GA_PCT: ColDef = {
   key: "ga_pct",
   header: "GA%",
-  title: "Probabilidade de participar de gol",
+  title: "Probabilidade de marcar ou assistir",
   render: (j, _ced, odds) => (
     <PctOdds
       pct={odds?.ga_pct}
       casa={odds?.casa_ga}
       odds={odds?.odds_ga}
       tooltipPrefix="Probabilidade de marcar ou assistir"
-      ativo={oddsProximoAdversario(j, odds)}
+      ativo={oddsVigentes(j, odds)}
     />
   ),
 };
@@ -251,7 +280,7 @@ const COL_SG_PCT: ColDef = {
       casa={odds?.casa_sg}
       odds={odds?.odds_sg}
       tooltipPrefix="Probabilidade de não sofrer gol"
-      ativo={oddsProximoAdversario(j, odds)}
+      ativo={oddsVigentes(j, odds)}
     />
   ),
 };
@@ -370,15 +399,29 @@ function classeCelulaHub(
   const oddsDe = (atletaId: number) =>
     oddsMap ? (oddsMap[String(atletaId)] ?? null) : null;
 
+  if (colKey === "g_pct") {
+    if (!oddsVigentes(j, odds) || odds?.g_pct == null) return "";
+    const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
+      oddsDe(x.atleta_id)?.g_pct ?? null,
+    );
+    return classeCelulaIndice100(odds.g_pct, amostra);
+  }
+  if (colKey === "a_pct") {
+    if (!oddsVigentes(j, odds) || odds?.a_pct == null) return "";
+    const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
+      oddsDe(x.atleta_id)?.a_pct ?? null,
+    );
+    return classeCelulaIndice100(odds.a_pct, amostra);
+  }
   if (colKey === "ga_pct") {
-    if (!oddsProximoAdversario(j, odds) || odds?.ga_pct == null) return "";
+    if (!oddsVigentes(j, odds) || odds?.ga_pct == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       oddsDe(x.atleta_id)?.ga_pct ?? null,
     );
     return classeCelulaIndice100(odds.ga_pct, amostra);
   }
   if (colKey === "sg_pct") {
-    if (!oddsProximoAdversario(j, odds) || odds?.sg_pct == null) return "";
+    if (!oddsVigentes(j, odds) || odds?.sg_pct == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       oddsDe(x.atleta_id)?.sg_pct ?? null,
     );
@@ -473,10 +516,14 @@ function valorOrdenacao(
       return mediaGeralCopa(j);
     case "mb":
       return mediaBaseCopa(j);
+    case "g_pct":
+      return oddsVigentes(j, odds) ? (odds?.g_pct ?? null) : null;
+    case "a_pct":
+      return oddsVigentes(j, odds) ? (odds?.a_pct ?? null) : null;
     case "ga_pct":
-      return oddsProximoAdversario(j, odds) ? (odds?.ga_pct ?? null) : null;
+      return oddsVigentes(j, odds) ? (odds?.ga_pct ?? null) : null;
     case "sg_pct":
-      return oddsProximoAdversario(j, odds) ? (odds?.sg_pct ?? null) : null;
+      return oddsVigentes(j, odds) ? (odds?.sg_pct ?? null) : null;
     case "potencial_r1":
       return calcularPotencialRodada(j, odds, escalas);
     case "j":
@@ -516,25 +563,25 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
   ZAG: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_INT, COL_C, COL_BR, COL_FD,
-    COL_SG_PCT, COL_GA_PCT,
+    COL_SG_PCT, COL_G_PCT, COL_A_PCT, COL_GA_PCT,
     COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
   LAT: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_G, COL_A, COL_XGXA90, COL_GCC, COL_FD, COL_BR,
-    COL_SG_PCT, COL_GA_PCT,
+    COL_SG_PCT, COL_G_PCT, COL_A_PCT, COL_GA_PCT,
     COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
   MEI: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_GCC, COL_XG, COL_XA, COL_XGXA90, COL_FD, COL_DS,
-    COL_GA_PCT,
+    COL_G_PCT, COL_A_PCT, COL_GA_PCT,
     COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
   ATA: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_FD, COL_XG, COL_XA, COL_XGXA90,
-    COL_GA_PCT,
+    COL_G_PCT, COL_A_PCT, COL_GA_PCT,
     COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
   ],
 };

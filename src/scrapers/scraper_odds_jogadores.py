@@ -15,7 +15,7 @@ Fluxo:
       c. Extrai RSC (__next_f) e parseia bloco bookmakers
       d. Pega melhor odd por jogador entre todas as casas
   [3] Matching POR EQUIPE: fuzzy restrito às equipes do jogo
-  [4] Salva odds_jogadores.json com atleta_id como chave (ga_pct, sg_pct)
+  [4] Salva odds_jogadores.json com atleta_id como chave (g_pct, a_pct, ga_pct, sg_pct)
 
 Anti-ban: delays 20-40s, headless configurável via ODDSNOTIFIER_HEADLESS
 """
@@ -68,7 +68,17 @@ POSICOES_SG: frozenset[int] = frozenset({1, 2, 3})  # GOL, LAT, ZAG
 
 MERCADOS_RSC: dict[str, str] = {
     "Player To Score or Assist": "ga",
+    "Anytime Goalscorer": "g",
+    "Player To Score": "g",
+    "Player To Assist": "a",
 }
+
+MERCADOS_PLAYER_UI: list[tuple[str, str]] = [
+    ("Player To Score", "g"),
+    ("Anytime Goalscorer", "g"),
+    ("Player To Assist", "a"),
+    ("Player To Score or Assist", "ga"),
+]
 
 MKT_TEAM_TOTAL_HOME = "Team Total Home"
 MKT_TEAM_TOTAL_AWAY = "Team Total Away"
@@ -337,6 +347,54 @@ def _adversario_sigla_jogador(
     if time == sel_away:
         return selecao_sigla.get(sel_home)
     return None
+
+
+def _deve_atualizar_odds(jogador: dict, adversario_sigla: str | None) -> bool:
+    """
+    Só sobrescreve odds se o evento corresponde ao ADV do jogador no mercado.
+    Quem ainda não estreou mantém odds da rodada atual; quem já jogou só atualiza
+    quando o confronto raspado é o próximo adversário.
+    """
+    prox = (jogador.get("proximo_adversario_sigla") or "").upper()
+    adv = (adversario_sigla or "").upper()
+    if not prox:
+        return True
+    if not adv:
+        return False
+    return prox == adv
+
+
+def _rodada_odds_alvo(jogadores: list[dict]) -> int:
+    """Rodada a raspar por completo quando há jogadores aguardando próximo jogo."""
+    confrontos_prox = _confrontos_proximo_adversario(jogadores)
+    if confrontos_prox:
+        return max(int(c.get("rodada") or 1) for c in confrontos_prox)
+    return _rodada_efetiva()
+
+
+def buscar_eventos_rodada_completa(
+    pagina: Page,
+    rodada: int,
+    rsc_wc2026: str = "",
+) -> list[dict]:
+    """Todos os confrontos de uma rodada no OddsNotifier."""
+    fixtures_rsc = _fixtures_rodada_do_rsc(rsc_wc2026, rodada) if rsc_wc2026 else []
+    if fixtures_rsc:
+        fixtures = fixtures_rsc
+    else:
+        fixtures = _fixtures_de_confrontos(_carregar_confrontos_rodada(rodada))
+    if not fixtures:
+        logger.warning("Nenhum fixture calendario para rodada %d.", rodada)
+        return []
+    cache = _carregar_cache_eventos()
+    eventos = _mapear_ids_eventos(pagina, fixtures, cache)
+    logger.info(
+        "Rodada %d completa: %d eventos mapeados (%d no calendario)",
+        rodada,
+        len(eventos),
+        len(fixtures),
+    )
+    return eventos
 
 
 def buscar_eventos_proximo_adversario(
@@ -700,13 +758,15 @@ def _melhor_odd(
 def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
     """
     Parseia o bloco "bookmakers":{ "Bet365":[{markets}...], ... } no RSC.
-    Retorna melhor odd por jogador em marcar ou assistir (ga).
+    Retorna melhor odd por jogador em marcar (g), assistir (a) e marcar ou assistir (ga).
     """
-    resultado: dict[str, dict[str, tuple[float, str]]] = {"ga": {}}
+    resultado: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}, "ga": {}}
     bookmakers = _extrair_json_object(rsc_conteudo, "bookmakers")
     if not bookmakers:
         logger.debug("Bloco bookmakers nao encontrado — fallback regex.")
-        return _extrair_odds_rsc_regex(rsc_conteudo)
+        legado = _extrair_odds_rsc_regex(rsc_conteudo)
+        resultado["ga"] = legado.get("ga", {})
+        return resultado
 
     for bk_name, mercados in bookmakers.items():
         if not isinstance(mercados, list):
@@ -734,7 +794,12 @@ def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]
                     resultado[sufixo].get(label), odds_val, str(bk_name)
                 )
 
-    logger.info("RSC parseado: %d marcar ou assistir", len(resultado["ga"]))
+    logger.info(
+        "RSC parseado: %d marcar | %d assistir | %d marcar ou assistir",
+        len(resultado["g"]),
+        len(resultado["a"]),
+        len(resultado["ga"]),
+    )
     return resultado
 
 
@@ -813,8 +878,10 @@ def _aplicar_sg_evento(
         for jog in pool:
             if jog.get("posicao_id") not in POSICOES_SG:
                 continue
-            aid = str(jog["atleta_id"])
             adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
+            if not _deve_atualizar_odds(jog, adv):
+                continue
+            aid = str(jog["atleta_id"])
             if aid not in resultado:
                 resultado[aid] = {"event_id": eid}
             else:
@@ -1034,8 +1101,29 @@ def _prob(odds: float) -> float:
     return round(100.0 / odds, 2) if odds > 1.0 else 0.0
 
 
+def _clicar_mercado_player(pagina: Page, rotulo: str) -> bool:
+    vis_timeout = _wait_ms(6000 if IS_CI else 4000)
+    click_timeout = _wait_ms(8000 if IS_CI else 5000)
+    for seletor in [
+        f"button:has-text('{rotulo}')",
+        f"a:has-text('{rotulo}')",
+        f"[role='tab']:has-text('{rotulo}')",
+        f"text={rotulo}",
+    ]:
+        try:
+            el = pagina.locator(seletor).first
+            if el.is_visible(timeout=vis_timeout):
+                el.scroll_into_view_if_needed(timeout=vis_timeout)
+                el.click(timeout=click_timeout)
+                pagina.wait_for_timeout(_wait_ms(2500))
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def _navegar_clicar_player(pagina: Page) -> None:
-    """Player → Player To Score or Assist para RSC completo."""
+    """Abre aba Player e percorre mercados G / A / GA para carregar RSC."""
     vis_timeout = _wait_ms(6000 if IS_CI else 4000)
     click_timeout = _wait_ms(8000 if IS_CI else 5000)
 
@@ -1056,26 +1144,27 @@ def _navegar_clicar_player(pagina: Page) -> None:
         except Exception:
             pass
 
-    for seletor in ["button:has-text('Player To Score or Assist')",
-                    "a:has-text('Player To Score or Assist')",
-                    "[role='tab']:has-text('Player To Score or Assist')",
-                    "text=Player To Score or Assist"]:
-        try:
-            el = pagina.locator(seletor).first
-            if el.is_visible(timeout=vis_timeout):
-                el.scroll_into_view_if_needed(timeout=vis_timeout)
-                el.click(timeout=click_timeout)
+    vistos: set[str] = set()
+    for rotulo, _suf in MERCADOS_PLAYER_UI:
+        if rotulo in vistos:
+            continue
+        vistos.add(rotulo)
+        if not _clicar_mercado_player(pagina, rotulo) and IS_CI and rotulo == "Player To Score or Assist":
+            try:
+                pagina.get_by_text(rotulo, exact=False).first.click(
+                    timeout=click_timeout, force=True,
+                )
                 pagina.wait_for_timeout(_wait_ms(2500))
-                break
-        except Exception:
-            if IS_CI:
-                try:
-                    pagina.get_by_text("Player To Score or Assist", exact=False).first.click(
-                        timeout=click_timeout, force=True,
-                    )
-                    pagina.wait_for_timeout(_wait_ms(2500))
-                except Exception:
-                    pass
+            except Exception:
+                pass
+
+
+def _mesclar_odds_rsc(acumulado: dict[str, dict], novo: dict[str, dict]) -> None:
+    for mercado in ("g", "a", "ga"):
+        for nome, par in novo.get(mercado, {}).items():
+            acumulado.setdefault(mercado, {})[nome] = _melhor_odd(
+                acumulado.get(mercado, {}).get(nome), par[0], par[1],
+            )
 
 
 def _screenshot_falha(pagina: Page, eid: int) -> None:
@@ -1154,18 +1243,25 @@ def processar_evento(
 
     _navegar_clicar_player(pagina)
 
+    odds_bruto_acum: dict[str, dict] = {"g": {}, "a": {}, "ga": {}}
     rsc = ""
     max_tentativas = 4 if IS_CI else 3
     for tentativa in range(max_tentativas):
-        for _ in range(8 if IS_CI else 6):
-            pagina.wait_for_timeout(_wait_ms(3000))
-            novos = rsc_acumulado[tamanho_antes:]
-            if sum(len(c) for c in novos) > 50_000:
-                logger.info("RSC via network: %d chunks", len(novos))
-                break
+        for passo_mercado, (rotulo, _suf) in enumerate(MERCADOS_PLAYER_UI):
+            if passo_mercado > 0:
+                _clicar_mercado_player(pagina, rotulo)
+            for _ in range(6 if IS_CI else 4):
+                pagina.wait_for_timeout(_wait_ms(2500))
+                novos = rsc_acumulado[tamanho_antes:]
+                if sum(len(c) for c in novos) > 50_000:
+                    break
+
+            rsc_parcial = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
+            if rsc_parcial.strip():
+                _mesclar_odds_rsc(odds_bruto_acum, extrair_odds_rsc(rsc_parcial))
 
         rsc = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
-        if _rsc_tem_bookmakers(rsc):
+        if _rsc_tem_bookmakers(rsc) or any(odds_bruto_acum[m] for m in ("g", "a", "ga")):
             break
         if tentativa < max_tentativas - 1:
             logger.warning(
@@ -1180,16 +1276,19 @@ def processar_evento(
             pagina.wait_for_timeout(_wait_ms(random.randint(7000, 11000)))
             _navegar_clicar_player(pagina)
 
-    if not rsc.strip():
+    if not rsc.strip() and not any(odds_bruto_acum[m] for m in ("g", "a", "ga")):
         logger.warning("RSC vazio para %s — nenhum dado extraido.", desc)
         _screenshot_falha(pagina, eid)
         return 0
 
     logger.info("RSC total: %d chars", len(rsc))
 
-    # Parseia odds (GA jogadores + SG times)
-    odds_bruto = extrair_odds_rsc(rsc)
-    odds_ga = consolidar_nomes_odds(odds_bruto["ga"])
+    if not any(odds_bruto_acum[m] for m in ("g", "a", "ga")) and rsc.strip():
+        _mesclar_odds_rsc(odds_bruto_acum, extrair_odds_rsc(rsc))
+
+    odds_g = consolidar_nomes_odds(odds_bruto_acum["g"])
+    odds_a = consolidar_nomes_odds(odds_bruto_acum["a"])
+    odds_ga = consolidar_nomes_odds(odds_bruto_acum["ga"])
     sg_home, sg_away = extrair_sg_times(rsc)
 
     sel_home = _mapear_selecao(home)
@@ -1200,62 +1299,79 @@ def processar_evento(
     pool_home_sg = pool_defensores(jogadores_todos, sel_home)
     pool_away_sg = pool_defensores(jogadores_todos, sel_away)
 
-    logger.info("  Pools GA: %s=%d | %s=%d | SG: %d + %d",
+    logger.info("  Pools linha: %s=%d | %s=%d | SG: %d + %d",
                 sel_home, len(pool_home), sel_away, len(pool_away),
                 len(pool_home_sg), len(pool_away_sg))
 
-    if not odds_ga and not sg_home and not sg_away:
+    if not odds_g and not odds_a and not odds_ga and not sg_home and not sg_away:
         logger.warning("Nenhuma odd extraida para %s.", desc)
         _screenshot_falha(pagina, eid)
         return 0
 
-    _purge_evento_odds(resultado, eid)
     n_sg = _aplicar_sg_evento(
         resultado, eid, pool_home_sg, pool_away_sg, sg_home, sg_away,
         sel_home, sel_away, selecao_sigla,
     )
 
-    if odds_ga:
-        logger.info("  %s: %d marcar ou assistir", desc, len(odds_ga))
+    if odds_g or odds_a or odds_ga:
+        logger.info(
+            "  %s: %d marcar | %d assistir | %d marcar ou assistir",
+            desc, len(odds_g), len(odds_a), len(odds_ga),
+        )
 
     adicionados = n_sg
 
-    for nome_bk in sorted(odds_ga):
-        # Decide qual pool usar baseando-se em qual tem melhor match
-        melhor_j: dict | None = None
-        melhor_score = 0
-        melhor_top3: list = []
+    def _aplicar_mercado(
+        odds_map: dict[str, tuple[float, str]],
+        sufixo: str,
+    ) -> None:
+        nonlocal adicionados
+        pct_key = f"{sufixo}_pct" if sufixo != "ga" else "ga_pct"
+        casa_key = f"casa_{sufixo}" if sufixo != "ga" else "casa_ga"
+        odds_key = f"odds_{sufixo}" if sufixo != "ga" else "odds_ga"
 
-        for pool in (pool_home, pool_away):
-            if not pool:
+        for nome_bk in sorted(odds_map):
+            melhor_j: dict | None = None
+            melhor_score = 0
+            melhor_top3: list = []
+
+            for pool in (pool_home, pool_away):
+                if not pool:
+                    continue
+                j, s, t3 = casar_jogador_na_equipe(nome_bk, pool)
+                if j is not None and s > melhor_score:
+                    melhor_j, melhor_score, melhor_top3 = j, s, t3
+
+            if melhor_j is None:
+                relatorio.no_match(nome_bk, melhor_score, melhor_top3, desc)
                 continue
-            j, s, t3 = casar_jogador_na_equipe(nome_bk, pool)
-            if j is not None and s > melhor_score:
-                melhor_j, melhor_score, melhor_top3 = j, s, t3
 
-        if melhor_j is None:
-            relatorio.no_match(nome_bk, melhor_score, melhor_top3, desc)
-            continue
+            adv = _adversario_sigla_jogador(melhor_j, sel_home, sel_away, selecao_sigla)
+            if not _deve_atualizar_odds(melhor_j, adv):
+                continue
 
-        relatorio.match(nome_bk, melhor_j, melhor_score, desc)
+            relatorio.match(nome_bk, melhor_j, melhor_score, desc)
 
-        atleta_id_str = str(melhor_j["atleta_id"])
-        adv = _adversario_sigla_jogador(melhor_j, sel_home, sel_away, selecao_sigla)
-        entrada: dict[str, Any] = resultado.get(atleta_id_str) or {"event_id": eid}
-        entrada["event_id"] = eid
-        entrada["rodada"] = _RODADA_ATUAL
-        if adv:
-            entrada["adversario_sigla"] = adv
+            atleta_id_str = str(melhor_j["atleta_id"])
+            entrada: dict[str, Any] = resultado.get(atleta_id_str) or {"event_id": eid}
+            entrada["event_id"] = eid
+            entrada["rodada"] = _RODADA_ATUAL
+            if adv:
+                entrada["adversario_sigla"] = adv
 
-        ga_odd, ga_bk = odds_ga[nome_bk]
-        entrada["ga_pct"]  = _prob(ga_odd)
-        entrada["casa_ga"] = ga_bk
-        entrada["odds_ga"] = ga_odd
+            odd_val, odd_bk = odds_map[nome_bk]
+            entrada[pct_key] = _prob(odd_val)
+            entrada[casa_key] = odd_bk
+            entrada[odds_key] = odd_val
 
-        resultado[atleta_id_str] = entrada
-        adicionados += 1
+            resultado[atleta_id_str] = entrada
+            adicionados += 1
 
-    logger.info("  %d atletas (GA+SG).", adicionados)
+    _aplicar_mercado(odds_g, "g")
+    _aplicar_mercado(odds_a, "a")
+    _aplicar_mercado(odds_ga, "ga")
+
+    logger.info("  %d atletas (G+A+GA+SG).", adicionados)
     return adicionados
 
 
@@ -1270,19 +1386,22 @@ def _headless() -> bool:
 
 def executar() -> None:
     global _RODADA_ATUAL
-    _RODADA_ATUAL = _rodada_efetiva()
-    logger.info(
-        "=== Scraper Odds WC2026 iniciado (CI=%s, merge=%s, rodada=%d) ===",
-        IS_CI,
-        ODDS_MERGE,
-        _RODADA_ATUAL,
-    )
 
     jogadores = carregar_jogadores(CAMINHO_MERCADO)
     jogadores_todos = carregar_todos_jogadores(CAMINHO_MERCADO)
     if not jogadores:
         logger.error("Nenhum jogador em %s — abortando.", CAMINHO_MERCADO)
         sys.exit(1)
+
+    _RODADA_ATUAL = _rodada_odds_alvo(jogadores_todos)
+    confrontos_prox = _confrontos_proximo_adversario(jogadores_todos)
+    logger.info(
+        "=== Scraper Odds WC2026 iniciado (CI=%s, merge=%s, rodada=%d, prox=%d) ===",
+        IS_CI,
+        ODDS_MERGE,
+        _RODADA_ATUAL,
+        len(confrontos_prox),
+    )
 
     resultado: dict[str, dict] = _carregar_odds_existentes() if ODDS_MERGE else {}
     base_total = len(resultado)
@@ -1348,25 +1467,25 @@ def executar() -> None:
             confrontos_prox = _confrontos_proximo_adversario(jogadores_todos)
             eventos_arquivo = _carregar_eventos_arquivo()
             skip_warmup = (
-                (not confrontos_prox and len(eventos_arquivo) >= min(MAX_EVENTOS, 20))
+                (_RODADA_ATUAL <= 1 and not confrontos_prox and len(eventos_arquivo) >= min(MAX_EVENTOS, 20))
                 or os.environ.get("ODDS_SKIP_WARMUP", "1" if IS_CI else "0") == "1"
             )
 
             rsc_wc2026 = ""
-            if confrontos_prox:
+            if _RODADA_ATUAL > 1 or confrontos_prox:
                 logger.info(
-                    "Modo proximo adversario: %d confrontos (jogadores que ja atuaram)",
+                    "Modo rodada %d completa (%d confrontos com jogadores que ja atuaram)",
+                    _RODADA_ATUAL,
                     len(confrontos_prox),
                 )
                 logger.info("Warm-up: %s", URL_WC2026)
                 pagina.goto(URL_WC2026, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
                 pagina.wait_for_timeout(_wait_ms(random.randint(5000, 8000)))
                 rsc_wc2026 = _rsc_de_pagina(pagina) + "\n".join(rsc_acumulado)
-                eventos = buscar_eventos_proximo_adversario(pagina, jogadores_todos, rsc_wc2026)
+                eventos = buscar_eventos_rodada_completa(pagina, _RODADA_ATUAL, rsc_wc2026)
                 if not eventos:
                     logger.error(
-                        "Nenhum evento mapeado para proximo adversario (rodada %d). "
-                        "Odds da rodada anterior preservadas via merge.",
+                        "Nenhum evento mapeado para rodada %d — odds anteriores preservadas via merge.",
                         _RODADA_ATUAL,
                     )
             elif skip_warmup and eventos_arquivo:

@@ -138,16 +138,22 @@ export interface LinhaClassificacao {
 
 export type ClassificacaoGrupos = Record<string, LinhaClassificacao[]>;
 
-/** Odds de jogador — GA (marcar ou assistir) e SG (clean sheet, defensores). */
+/** Odds de jogador — marcar, assistir, marcar ou assistir e clean sheet. */
 export interface OddsJogadorEntry {
   event_id: number;
   /** Sigla Cartola do adversário na partida das odds (ex.: CAT = Qatar). */
   adversario_sigla?: string | null;
   rodada?: number | null;
-  ga_pct?:  number | null;
+  g_pct?: number | null;
+  casa_g?: string | null;
+  odds_g?: number | null;
+  a_pct?: number | null;
+  casa_a?: string | null;
+  odds_a?: number | null;
+  ga_pct?: number | null;
   casa_ga?: string | null;
   odds_ga?: number | null;
-  sg_pct?:  number | null;
+  sg_pct?: number | null;
   casa_sg?: string | null;
   odds_sg?: number | null;
 }

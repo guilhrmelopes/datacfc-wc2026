@@ -1,4 +1,4 @@
-import { oddsProximoAdversario, temCopa } from "@/lib/copaJogador";
+import { oddsVigentes, temCopa } from "@/lib/copaJogador";
 import { calcularRatingJogador, type EscalasRating } from "@/lib/ratingJogador";
 import type { JogadorMercado, OddsJogadorEntry } from "@/types/dados";
 
@@ -66,7 +66,7 @@ export function calcularPotencialBruto(
   const r = ratingBase(j, escalas);
   if (r <= 0) return null;
 
-  const oddsValidas = oddsProximoAdversario(j, odds) ? odds : null;
+  const oddsValidas = oddsVigentes(j, odds) ? odds : null;
   const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
   if (o !== null) {
     return Math.round((POTENCIAL_ALPHA * r + (1 - POTENCIAL_ALPHA) * o) * 10) / 10;
@@ -96,7 +96,7 @@ export function tooltipPotencialRodada(
   }
 
   const r = ratingBase(j, escalas);
-  const oddsValidas = oddsProximoAdversario(j, odds) ? odds : null;
+  const oddsValidas = oddsVigentes(j, odds) ? odds : null;
   const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
   const bruto = calcularPotencialBruto(j, odds, escalas) ?? 0;
   const fator = fatorStatus(j.status_id);

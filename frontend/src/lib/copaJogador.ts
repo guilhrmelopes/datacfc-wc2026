@@ -27,18 +27,25 @@ export function xgXaPor90Copa(j: JogadorMercado): number | null {
   return ((xg + xa) / j.copa_mins_played) * 90;
 }
 
-/** Odds válidas para a próxima partida (ADV no mercado). */
-export function oddsProximoAdversario(
+/**
+ * Odds vigentes para exibição:
+ * - quem ainda não estreou: odds atuais (próximo jogo);
+ * - quem já jogou: só odds do ADV listado no mercado.
+ */
+export function oddsVigentes(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
 ): boolean {
-  if (!odds || !temCopa(j)) return false;
-  const adv = j.proximo_adversario_sigla?.trim().toUpperCase();
-  if (!adv) return false;
+  if (!odds) return false;
+  const prox = j.proximo_adversario_sigla?.trim().toUpperCase();
+  if (!prox) return true;
   const oddsAdv = odds.adversario_sigla?.trim().toUpperCase();
-  if (!oddsAdv) return false;
-  return oddsAdv === adv;
+  if (!oddsAdv) return !temCopa(j);
+  return oddsAdv === prox;
 }
+
+/** @deprecated use oddsVigentes */
+export const oddsProximoAdversario = oddsVigentes;
 
 /** Cedido pelo adversário no bucket do jogador (Recorrência — HUB Seleções). */
 export function cedidoAdversarioCopa(
