@@ -1,4 +1,9 @@
-import type { JogadorMercado, PerformancePorSigla, PontuacaoCedida } from "@/types/dados";
+import type {
+  JogadorMercado,
+  OddsJogadorEntry,
+  PerformancePorSigla,
+  PontuacaoCedida,
+} from "@/types/dados";
 
 /** Jogador com pelo menos 1 partida na Copa 2026 (fase de grupos). */
 export function temCopa(j: JogadorMercado): boolean {
@@ -20,6 +25,19 @@ export function xgXaPor90Copa(j: JogadorMercado): number | null {
   const xg = j.copa_xg ?? 0;
   const xa = j.copa_xa ?? 0;
   return ((xg + xa) / j.copa_mins_played) * 90;
+}
+
+/** Odds válidas para a próxima partida (ADV no mercado). */
+export function oddsProximoAdversario(
+  j: JogadorMercado,
+  odds: OddsJogadorEntry | null | undefined,
+): boolean {
+  if (!odds || !temCopa(j)) return false;
+  const adv = j.proximo_adversario_sigla?.trim().toUpperCase();
+  if (!adv) return false;
+  const oddsAdv = odds.adversario_sigla?.trim().toUpperCase();
+  if (!oddsAdv) return false;
+  return oddsAdv === adv;
 }
 
 /** Cedido pelo adversário no bucket do jogador (Recorrência — HUB Seleções). */

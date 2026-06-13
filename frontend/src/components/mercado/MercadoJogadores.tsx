@@ -14,6 +14,7 @@ import {
   cedidoAdversarioCopa,
   mediaBaseCopa,
   mediaGeralCopa,
+  oddsProximoAdversario,
   temCopa,
   xgXaPor90Copa,
 } from "@/lib/copaJogador";
@@ -235,7 +236,7 @@ const COL_GA_PCT: ColDef = {
       casa={odds?.casa_ga}
       odds={odds?.odds_ga}
       tooltipPrefix="Probabilidade de marcar ou assistir"
-      ativo={temCopa(j)}
+      ativo={oddsProximoAdversario(j, odds)}
     />
   ),
 };
@@ -250,7 +251,7 @@ const COL_SG_PCT: ColDef = {
       casa={odds?.casa_sg}
       odds={odds?.odds_sg}
       tooltipPrefix="Probabilidade de não sofrer gol"
-      ativo={temCopa(j)}
+      ativo={oddsProximoAdversario(j, odds)}
     />
   ),
 };
@@ -370,14 +371,14 @@ function classeCelulaHub(
     oddsMap ? (oddsMap[String(atletaId)] ?? null) : null;
 
   if (colKey === "ga_pct") {
-    if (!temCopa(j) || odds?.ga_pct == null) return "";
+    if (!oddsProximoAdversario(j, odds) || odds?.ga_pct == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       oddsDe(x.atleta_id)?.ga_pct ?? null,
     );
     return classeCelulaIndice100(odds.ga_pct, amostra);
   }
   if (colKey === "sg_pct") {
-    if (!temCopa(j) || odds?.sg_pct == null) return "";
+    if (!oddsProximoAdversario(j, odds) || odds?.sg_pct == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       oddsDe(x.atleta_id)?.sg_pct ?? null,
     );
@@ -473,9 +474,9 @@ function valorOrdenacao(
     case "mb":
       return mediaBaseCopa(j);
     case "ga_pct":
-      return temCopa(j) ? (odds?.ga_pct ?? null) : null;
+      return oddsProximoAdversario(j, odds) ? (odds?.ga_pct ?? null) : null;
     case "sg_pct":
-      return temCopa(j) ? (odds?.sg_pct ?? null) : null;
+      return oddsProximoAdversario(j, odds) ? (odds?.sg_pct ?? null) : null;
     case "potencial_r1":
       return calcularPotencialRodada(j, odds, escalas);
     case "j":

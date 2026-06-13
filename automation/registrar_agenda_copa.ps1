@@ -5,7 +5,9 @@
 
 .DESCRIPTION
   Execute uma vez como administrador. A tarefa chama automation/atualizar_copa.ps1,
-  que processa partidas finalizadas e faz push (deploy Vercel).
+  que roda Cartola (/copa/), FotMob, odds GA%/SG% e push (deploy Vercel).
+
+  Para agenda completa (status jogadores + 6×/dia), use registrar_agenda_completa.ps1.
 #>
 
 Set-StrictMode -Version Latest
@@ -25,5 +27,6 @@ $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoi
 
 Register-ScheduledTask -TaskName $NomeTarefa -Action $acao -Trigger $trigger -Settings $settings -Force | Out-Null
 
-Write-Host "Tarefa '$NomeTarefa' registrada — executa a cada 30 min por 60 dias."
+Write-Host "Tarefa '$NomeTarefa' registrada — a cada 30 min por 60 dias."
+Write-Host "Fluxo: Cartola + FotMob + odds + commit/push."
 Write-Host "Para remover: Unregister-ScheduledTask -TaskName '$NomeTarefa' -Confirm:`$false"

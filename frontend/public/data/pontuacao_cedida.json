@@ -334,7 +334,7 @@
     },
     "ZAG": {
       "cedido": {
-        "valor": 1.73,
+        "valor": 2.07,
         "cor": "bg-red-500"
       },
       "conquistado": {
@@ -358,7 +358,7 @@
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 8.3,
+        "valor": 7.7,
         "cor": "bg-green-500"
       }
     }
@@ -390,7 +390,7 @@
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 1.73,
+        "valor": 2.07,
         "cor": "bg-red-500"
       }
     },
@@ -406,7 +406,7 @@
     },
     "ATA": {
       "cedido": {
-        "valor": 8.3,
+        "valor": 7.7,
         "cor": "bg-green-500"
       },
       "conquistado": {

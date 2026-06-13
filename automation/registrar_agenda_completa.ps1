@@ -21,7 +21,7 @@ $ScriptTudo = Join-Path $Raiz "automation\atualizar_tudo.ps1"
 if (-not (Test-Path $ScriptCopa)) { throw "Não encontrado: $ScriptCopa" }
 if (-not (Test-Path $ScriptTudo)) { throw "Não encontrado: $ScriptTudo" }
 
-# Copa a cada 30 min (sem odds — mais rápido pós-jogo)
+# Copa a cada 30 min (Cartola + FotMob + odds próximo adversário)
 $NomeCopa = "DataCFC_AtualizarCopa_30min"
 $acaoCopa = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$ScriptCopa`""
 $triggerCopa = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Minutes 30) -RepetitionDuration (New-TimeSpan -Days 60)

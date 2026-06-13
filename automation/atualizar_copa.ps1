@@ -1,12 +1,12 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-  Atualiza dados da Copa (FotMob) e commita/push se houver mudanças.
+  Atualiza dados da Copa (Cartola + FotMob + odds) e commita/push se houver mudanças.
 
 .DESCRIPTION
   Pensado para Agendador de Tarefas do Windows — executar a cada 30 min
   durante a fase de grupos (ou após cada jogo + ~2h).
-  Processa apenas partidas finalizadas ainda não registradas em copa_estado.json.
+  Ordem: git pull → Cartola /copa/ → pipeline FotMob → odds GA%/SG% → commit → push.
 #>
 
 Set-StrictMode -Version Latest
@@ -49,13 +49,27 @@ function Find-Python {
     throw "Python não encontrado. Instale Python 3.12+."
 }
 
+function Invoke-PythonScript {
+    param(
+        [string]$Python,
+        [string]$Script
+    )
+    $env:PYTHONPATH = Join-Path $Raiz "src"
+    $out = & $Python $Script 2>&1
+    $exit = $LASTEXITCODE
+    $out | ForEach-Object { Write-Log "$_" }
+    if ($exit -ne 0) { throw "Script falhou: $Script (exit $exit)" }
+}
+
 $ArquivosCommit = @(
     "frontend/public/data/copa_estado.json",
     "frontend/public/data/grupos_wc2026.json",
     "frontend/public/data/classificacao_grupos.json",
     "frontend/public/data/pontuacao_cedida.json",
     "frontend/public/data/selecoes.json",
-    "frontend/public/data/jogadores_mercado.json"
+    "frontend/public/data/jogadores_mercado.json",
+    "frontend/public/data/odds_jogadores.json",
+    "frontend/public/data/eventos_odds_rodada1.json"
 )
 
 try {
@@ -75,12 +89,43 @@ try {
     Write-Log "git pull --rebase"
     Invoke-Git @("pull", "--rebase", "--autostash")
 
-    Write-Log "Executando pipeline FotMob..."
-    $env:PYTHONPATH = Join-Path $Raiz "src"
-    $pipeOut = & $python (Join-Path $Raiz "automation\atualizar_copa_fotmob.py") 2>&1
-    $pipeExit = $LASTEXITCODE
-    $pipeOut | ForEach-Object { Write-Log "$_" }
-    if ($pipeExit -ne 0) { throw "Pipeline falhou (exit $pipeExit)" }
+    Write-Log "--- [1/3] API oficial Cartola Copa (/copa/) ---"
+    Invoke-PythonScript -Python $python -Script (Join-Path $Raiz "automation\atualizar_cartola_copa.py")
+
+    Write-Log "--- [2/3] Pipeline Copa (FotMob + integração Cartola) ---"
+    Invoke-PythonScript -Python $python -Script (Join-Path $Raiz "automation\atualizar_copa_fotmob.py")
+
+    Write-Log "--- [3/3] Odds GA% / SG% (próximo adversário) ---"
+    $req = Join-Path $Raiz "requirements-odds.txt"
+    Write-Log "pip install -r requirements-odds.txt"
+    & $python -m pip install -q -r $req
+    if ($LASTEXITCODE -ne 0) { throw "pip install falhou" }
+
+    $playwrightMarker = Join-Path $Raiz ".playwright\chromium_installed"
+    if (-not (Test-Path $playwrightMarker)) {
+        Write-Log "playwright install chromium (primeira execução)"
+        & $python -m playwright install chromium
+        if ($LASTEXITCODE -ne 0) { throw "playwright install falhou" }
+        New-Item -ItemType File -Force -Path $playwrightMarker | Out-Null
+    }
+
+    $env:PYTHONPATH = $Raiz
+    $env:ODDS_MERGE = "1"
+    $env:ODDSNOTIFIER_HEADLESS = "true"
+
+    $scrapeOut = & $python -m src.scrapers.scraper_odds_jogadores 2>&1
+    $scrapeExit = $LASTEXITCODE
+    $scrapeOut | ForEach-Object { Write-Log "$_" }
+
+    $validOut = & $python (Join-Path $Raiz "automation\validar_odds.py") 2>&1
+    $validExit = $LASTEXITCODE
+    $validOut | ForEach-Object { Write-Log "$_" }
+    if ($validExit -ne 0) {
+        throw "Validação de odds falhou (scrape exit=$scrapeExit) — commit abortado"
+    }
+    if ($scrapeExit -ne 0) {
+        Write-Log "AVISO: scraper de odds exit $scrapeExit, mas validação OK."
+    }
 
     Push-Location $Raiz
     try {
@@ -89,7 +134,11 @@ try {
         if ($LASTEXITCODE -eq 0) {
             Write-Log "Nenhuma mudança para commitar."
         } else {
-            $msg = "bot: atualizar dados Copa (recorrência, hub, classificação) [skip ci]"
+            $msg = @"
+bot: atualizar Copa, scouts, pontuações e odds [skip ci]
+
+Cartola oficial, FotMob (classificação, hub, xG) e odds GA%/SG% do próximo adversário.
+"@
             git commit -m $msg
             if ($LASTEXITCODE -ne 0) { throw "git commit falhou" }
             Write-Log "git push"

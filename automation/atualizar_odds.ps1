@@ -80,7 +80,6 @@ try {
 
     $env:PYTHONPATH = $Raiz
     $env:ODDS_MERGE = "1"
-    $env:ODDS_SKIP_WARMUP = "1"
     $env:ODDSNOTIFIER_HEADLESS = "true"
 
     Write-Log "Executando scraper..."

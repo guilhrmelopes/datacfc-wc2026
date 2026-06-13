@@ -58,6 +58,7 @@ _RAIZ = Path(__file__).resolve().parents[2]
 CAMINHO_MERCADO: Path = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 CAMINHO_GRUPOS:  Path = _RAIZ / "frontend" / "public" / "data" / "grupos_wc2026.json"
 CAMINHO_EVENTOS: Path = _RAIZ / "frontend" / "public" / "data" / "eventos_odds_rodada1.json"
+CAMINHO_ESTADO:  Path = _RAIZ / "frontend" / "public" / "data" / "copa_estado.json"
 CAMINHO_SAIDA:   Path = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
 
 MIN_JOGADORES_SALVAR = 500
@@ -93,6 +94,7 @@ BOOKMAKERS_T2: list[str] = ["bet365", "betano", "unibet", "william hill", "bwin"
 
 MAX_EVENTOS: int = int(os.environ.get("ODDS_MAX_EVENTOS", "24"))
 RODADA_ALVO: int = int(os.environ.get("ODDS_RODADA", "1"))
+_RODADA_ATUAL: int = RODADA_ALVO
 IS_CI: bool = os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
 CI_WAIT_MULT: float = float(os.environ.get("ODDS_CI_WAIT_MULT", "2.0" if IS_CI else "1.0"))
 TIMEOUT_PAGINA: int = int(os.environ.get("ODDS_TIMEOUT_MS", "55000" if IS_CI else "35000"))
@@ -250,6 +252,133 @@ def _chave_confronto(home: str, away: str) -> tuple[str, str]:
     return (_mapear_selecao(home.upper()), _mapear_selecao(away.upper()))
 
 
+def _rodada_efetiva() -> int:
+    env = os.environ.get("ODDS_RODADA", "").strip()
+    if env.isdigit():
+        return int(env)
+    if CAMINHO_ESTADO.is_file():
+        try:
+            estado = json.loads(CAMINHO_ESTADO.read_text(encoding="utf-8"))
+            rodada = int(estado.get("rodada_cartola_atual") or 0)
+            if rodada > 0:
+                return rodada
+        except (json.JSONDecodeError, OSError, TypeError, ValueError):
+            pass
+    return RODADA_ALVO
+
+
+def _mapas_sigla(jogadores: list[dict]) -> dict[str, str]:
+    """Seleção Cartola (upper) → sigla."""
+    out: dict[str, str] = {}
+    for j in jogadores:
+        sel = (j.get("selecao") or "").upper()
+        sig = (j.get("sigla") or "").upper()
+        if sel and sig:
+            out[sel] = sig
+    return out
+
+
+def _confrontos_proximo_adversario(jogadores: list[dict]) -> list[dict]:
+    """Calendário: partidas cujo ADV bate com proximo_adversario_sigla (jogadores que já atuaram)."""
+    if not CAMINHO_GRUPOS.exists():
+        return []
+    with CAMINHO_GRUPOS.open(encoding="utf-8") as f:
+        dados = json.load(f)
+    confrontos = dados.get("confrontos") or []
+    selecao_sigla = _mapas_sigla(jogadores)
+
+    pares: set[tuple[str, str]] = set()
+    for j in jogadores:
+        if int(j.get("copa_jogos_num") or 0) <= 0:
+            continue
+        adv = (j.get("proximo_adversario_sigla") or "").upper()
+        sig = (j.get("sigla") or "").upper()
+        if adv and sig:
+            pares.add(tuple(sorted((sig, adv))))
+
+    if not pares:
+        return []
+
+    resultado: list[dict] = []
+    for c in confrontos:
+        if c.get("finalizada"):
+            continue
+        sig_m = selecao_sigla.get((c.get("mandante") or "").upper())
+        sig_v = selecao_sigla.get((c.get("visitante") or "").upper())
+        if not sig_m or not sig_v:
+            continue
+        if tuple(sorted((sig_m, sig_v))) in pares:
+            resultado.append(c)
+    return resultado
+
+
+def _fixtures_de_confrontos(confrontos: list[dict]) -> list[dict]:
+    fixtures: list[dict] = []
+    for c in confrontos:
+        fixtures.append({
+            "fixture_id": c.get("match_id"),
+            "home": c.get("mandante", ""),
+            "away": c.get("visitante", ""),
+            "date": c.get("utc") or c.get("data", ""),
+            "grupo": c.get("grupo", ""),
+        })
+    return fixtures
+
+
+def _adversario_sigla_jogador(
+    jogador: dict,
+    sel_home: str,
+    sel_away: str,
+    selecao_sigla: dict[str, str],
+) -> str | None:
+    time = (jogador.get("selecao") or "").upper()
+    if time == sel_home:
+        return selecao_sigla.get(sel_away)
+    if time == sel_away:
+        return selecao_sigla.get(sel_home)
+    return None
+
+
+def buscar_eventos_proximo_adversario(
+    pagina: Page,
+    jogadores: list[dict],
+    rsc_wc2026: str = "",
+) -> list[dict]:
+    confrontos = _confrontos_proximo_adversario(jogadores)
+    if not confrontos:
+        return []
+
+    cache = _carregar_cache_eventos()
+    eventos: list[dict] = []
+    rodadas = sorted({int(c["rodada"]) for c in confrontos if c.get("rodada")})
+
+    for rodada in rodadas:
+        chaves = {
+            _chave_confronto(c["mandante"], c["visitante"])
+            for c in confrontos
+            if int(c.get("rodada") or 0) == rodada
+        }
+        fixtures_rsc = _fixtures_rodada_do_rsc(rsc_wc2026, rodada) if rsc_wc2026 else []
+        fixtures = [
+            f for f in fixtures_rsc
+            if _chave_confronto(f["home"], f["away"]) in chaves
+        ]
+        if not fixtures:
+            fixtures = _fixtures_de_confrontos([
+                c for c in confrontos if int(c.get("rodada") or 0) == rodada
+            ])
+        if fixtures:
+            eventos.extend(_mapear_ids_eventos(pagina, fixtures, cache))
+
+    if eventos:
+        logger.info(
+            "Eventos proximo adversario: %d partidas (%d no calendario)",
+            len(eventos),
+            len(confrontos),
+        )
+    return eventos
+
+
 def _carregar_confrontos_rodada(rodada: int) -> list[dict]:
     if not CAMINHO_GRUPOS.exists():
         logger.error("grupos_wc2026.json nao encontrado")
@@ -291,7 +420,8 @@ def _carregar_eventos_arquivo() -> list[dict]:
     except (json.JSONDecodeError, OSError):
         return []
 
-    if bruto.get("rodada", RODADA_ALVO) != RODADA_ALVO:
+    arquivo_rodada = int(bruto.get("rodada") or _RODADA_ATUAL)
+    if arquivo_rodada != _RODADA_ATUAL:
         return []
 
     eventos: list[dict] = []
@@ -344,14 +474,36 @@ def _carregar_cache_eventos() -> dict[tuple[str, str], int]:
 
 def _salvar_cache_eventos(eventos: list[dict]) -> None:
     CAMINHO_EVENTOS.parent.mkdir(parents=True, exist_ok=True)
+    existentes: list[dict] = []
+    if CAMINHO_EVENTOS.exists():
+        try:
+            with CAMINHO_EVENTOS.open(encoding="utf-8") as f:
+                bruto = json.load(f)
+            existentes = [
+                e for e in (bruto.get("eventos") or [])
+                if isinstance(e, dict) and "id" in e
+            ]
+        except (json.JSONDecodeError, OSError):
+            existentes = []
+
+    por_id: dict[int, dict] = {int(e["id"]): e for e in existentes}
+    for ev in eventos:
+        por_id[int(ev["id"])] = {
+            "id": int(ev["id"]),
+            "home": ev.get("home", ""),
+            "away": ev.get("away", ""),
+            "date": ev.get("date", ""),
+            "fixture_id": ev.get("fixture_id"),
+        }
+
     payload = {
         "atualizado_em": datetime.now(tz=timezone.utc).isoformat(),
-        "rodada": RODADA_ALVO,
-        "eventos": eventos,
+        "rodada": _RODADA_ATUAL,
+        "eventos": sorted(por_id.values(), key=lambda e: e.get("date", str(e["id"]))),
     }
     with CAMINHO_EVENTOS.open("w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
-    logger.info("Cache eventos salvo: %d partidas -> %s", len(eventos), CAMINHO_EVENTOS)
+    logger.info("Cache eventos salvo: %d partidas -> %s", len(por_id), CAMINHO_EVENTOS)
 
 
 def _mapear_ids_eventos(pagina: Page, fixtures: list[dict], cache: dict[tuple[str, str], int]) -> list[dict]:
@@ -422,11 +574,11 @@ def buscar_eventos(pagina: Page, rsc_wc2026: str = "") -> list[dict]:
         logger.info("Eventos via arquivo versionado: %d partidas", len(eventos_arquivo))
         return eventos_arquivo
 
-    fixtures = _fixtures_rodada_do_rsc(rsc_wc2026, RODADA_ALVO) if rsc_wc2026 else []
+    fixtures = _fixtures_rodada_do_rsc(rsc_wc2026, _RODADA_ATUAL) if rsc_wc2026 else []
     cache = _carregar_cache_eventos()
 
     if fixtures:
-        logger.info("Fixtures rodada %d no RSC: %d jogos", RODADA_ALVO, len(fixtures))
+        logger.info("Fixtures rodada %d no RSC: %d jogos", _RODADA_ATUAL, len(fixtures))
         eventos = _mapear_ids_eventos(pagina, fixtures, cache)
         if eventos:
             return eventos
@@ -436,7 +588,7 @@ def buscar_eventos(pagina: Page, rsc_wc2026: str = "") -> list[dict]:
         return eventos_arquivo
 
     if cache:
-        confrontos = _carregar_confrontos_rodada(RODADA_ALVO)
+        confrontos = _carregar_confrontos_rodada(_RODADA_ATUAL)
         chaves = {(c["mandante"], c["visitante"]) for c in confrontos}
         eventos = []
         for ev in _carregar_eventos_arquivo() or []:
@@ -456,7 +608,7 @@ def buscar_eventos(pagina: Page, rsc_wc2026: str = "") -> list[dict]:
             logger.info("Eventos via cache: %d partidas", len(eventos))
             return sorted(eventos, key=lambda e: e.get("date", str(e["id"])))[:MAX_EVENTOS]
 
-    logger.error("Nenhum evento encontrado para rodada %d.", RODADA_ALVO)
+    logger.error("Nenhum evento encontrado para rodada %d.", _RODADA_ATUAL)
     return []
 
 
@@ -648,6 +800,9 @@ def _aplicar_sg_evento(
     pool_away: list[dict],
     sg_home: tuple[float, str] | None,
     sg_away: tuple[float, str] | None,
+    sel_home: str,
+    sel_away: str,
+    selecao_sigla: dict[str, str],
 ) -> int:
     """Preenche sg_pct para GOL/LAT/ZAG de cada equipe (probabilidade do time)."""
     aplicados = 0
@@ -659,14 +814,17 @@ def _aplicar_sg_evento(
             if jog.get("posicao_id") not in POSICOES_SG:
                 continue
             aid = str(jog["atleta_id"])
+            adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
             if aid not in resultado:
                 resultado[aid] = {"event_id": eid}
             else:
-                # SG é por seleção — corrige event_id se GA veio de match errado
                 resultado[aid]["event_id"] = eid
             resultado[aid]["sg_pct"] = _prob(odd)
             resultado[aid]["casa_sg"] = bk
             resultado[aid]["odds_sg"] = odd
+            if adv:
+                resultado[aid]["adversario_sigla"] = adv
+            resultado[aid]["rodada"] = _RODADA_ATUAL
             aplicados += 1
     return aplicados
 
@@ -1036,6 +1194,7 @@ def processar_evento(
 
     sel_home = _mapear_selecao(home)
     sel_away = _mapear_selecao(away)
+    selecao_sigla = _mapas_sigla(jogadores_todos)
     pool_home = jogadores_da_equipe(jogadores, sel_home)
     pool_away = jogadores_da_equipe(jogadores, sel_away)
     pool_home_sg = pool_defensores(jogadores_todos, sel_home)
@@ -1051,7 +1210,10 @@ def processar_evento(
         return 0
 
     _purge_evento_odds(resultado, eid)
-    n_sg = _aplicar_sg_evento(resultado, eid, pool_home_sg, pool_away_sg, sg_home, sg_away)
+    n_sg = _aplicar_sg_evento(
+        resultado, eid, pool_home_sg, pool_away_sg, sg_home, sg_away,
+        sel_home, sel_away, selecao_sigla,
+    )
 
     if odds_ga:
         logger.info("  %s: %d marcar ou assistir", desc, len(odds_ga))
@@ -1078,12 +1240,12 @@ def processar_evento(
         relatorio.match(nome_bk, melhor_j, melhor_score, desc)
 
         atleta_id_str = str(melhor_j["atleta_id"])
-        existente = resultado.get(atleta_id_str)
-        if existente and existente.get("event_id") != eid:
-            continue
-
+        adv = _adversario_sigla_jogador(melhor_j, sel_home, sel_away, selecao_sigla)
         entrada: dict[str, Any] = resultado.get(atleta_id_str) or {"event_id": eid}
         entrada["event_id"] = eid
+        entrada["rodada"] = _RODADA_ATUAL
+        if adv:
+            entrada["adversario_sigla"] = adv
 
         ga_odd, ga_bk = odds_ga[nome_bk]
         entrada["ga_pct"]  = _prob(ga_odd)
@@ -1107,7 +1269,14 @@ def _headless() -> bool:
 
 
 def executar() -> None:
-    logger.info("=== Scraper Odds WC2026 iniciado (CI=%s, merge=%s) ===", IS_CI, ODDS_MERGE)
+    global _RODADA_ATUAL
+    _RODADA_ATUAL = _rodada_efetiva()
+    logger.info(
+        "=== Scraper Odds WC2026 iniciado (CI=%s, merge=%s, rodada=%d) ===",
+        IS_CI,
+        ODDS_MERGE,
+        _RODADA_ATUAL,
+    )
 
     jogadores = carregar_jogadores(CAMINHO_MERCADO)
     jogadores_todos = carregar_todos_jogadores(CAMINHO_MERCADO)
@@ -1176,13 +1345,31 @@ def executar() -> None:
         pagina.on("response", _capturar_rsc)
 
         try:
+            confrontos_prox = _confrontos_proximo_adversario(jogadores_todos)
             eventos_arquivo = _carregar_eventos_arquivo()
             skip_warmup = (
-                len(eventos_arquivo) >= min(MAX_EVENTOS, 20)
+                (not confrontos_prox and len(eventos_arquivo) >= min(MAX_EVENTOS, 20))
                 or os.environ.get("ODDS_SKIP_WARMUP", "1" if IS_CI else "0") == "1"
             )
 
-            if skip_warmup and eventos_arquivo:
+            rsc_wc2026 = ""
+            if confrontos_prox:
+                logger.info(
+                    "Modo proximo adversario: %d confrontos (jogadores que ja atuaram)",
+                    len(confrontos_prox),
+                )
+                logger.info("Warm-up: %s", URL_WC2026)
+                pagina.goto(URL_WC2026, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+                pagina.wait_for_timeout(_wait_ms(random.randint(5000, 8000)))
+                rsc_wc2026 = _rsc_de_pagina(pagina) + "\n".join(rsc_acumulado)
+                eventos = buscar_eventos_proximo_adversario(pagina, jogadores_todos, rsc_wc2026)
+                if not eventos:
+                    logger.error(
+                        "Nenhum evento mapeado para proximo adversario (rodada %d). "
+                        "Odds da rodada anterior preservadas via merge.",
+                        _RODADA_ATUAL,
+                    )
+            elif skip_warmup and eventos_arquivo:
                 eventos = eventos_arquivo
                 logger.info("Warm-up omitido — %d eventos do arquivo versionado.", len(eventos))
                 if IS_CI:
@@ -1200,7 +1387,7 @@ def executar() -> None:
                 eventos = buscar_eventos(pagina, rsc_wc2026)
 
             if not eventos:
-                logger.error("Abortando: nenhum evento para rodada %d.", RODADA_ALVO)
+                logger.error("Abortando: nenhum evento para rodada %d.", _RODADA_ATUAL)
                 sys.exit(1)
 
             for idx, evento in enumerate(eventos, start=1):

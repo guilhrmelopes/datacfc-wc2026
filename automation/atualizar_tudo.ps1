@@ -124,12 +124,11 @@ try {
             New-Item -ItemType File -Force -Path $playwrightMarker | Out-Null
         }
 
-        $env:PYTHONPATH = $Raiz
-        $env:ODDS_MERGE = "1"
-        $env:ODDS_SKIP_WARMUP = "1"
-        $env:ODDSNOTIFIER_HEADLESS = "true"
+    $env:PYTHONPATH = $Raiz
+    $env:ODDS_MERGE = "1"
+    $env:ODDSNOTIFIER_HEADLESS = "true"
 
-        $scrapeOut = & $python -m src.scrapers.scraper_odds_jogadores 2>&1
+    $scrapeOut = & $python -m src.scrapers.scraper_odds_jogadores 2>&1
         $scrapeExit = $LASTEXITCODE
         $scrapeOut | ForEach-Object { Write-Log "$_" }
 
