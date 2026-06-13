@@ -135,7 +135,11 @@ export function Recorrencia({ selecoes, pontuacaoCedida }: Props) {
       <div className="grid grid-cols-4 gap-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12">
         {selecoesUnicas
           .slice()
-          .sort((a, b) => a.selecao.localeCompare(b.selecao))
+          .sort((a, b) =>
+            traduzirSelecao(a.selecao).localeCompare(traduzirSelecao(b.selecao), "pt-BR", {
+              sensitivity: "base",
+            }),
+          )
           .map((s) => (
             <button
               key={s.selecao}
