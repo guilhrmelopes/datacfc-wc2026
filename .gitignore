@@ -16,6 +16,8 @@
 !/src/scrapers/fotmob_fixtures.py
 !/src/scrapers/fotmob_mapa.py
 !/src/scrapers/cartola_copa.py
+!/src/utils/
+!/src/utils/**
 !/src/pipeline/cartola_copa_sync.py
 /data/
 /exports/
