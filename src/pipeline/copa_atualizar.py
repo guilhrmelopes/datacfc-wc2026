@@ -6,18 +6,11 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-from scoring.cartola import (
-    AcumuladorCedidoConquistado,
-    ScoutsPartida,
-    calcular_cedido_conquistado_partida,
-    calcular_medias_copa,
-    somar_scouts,
-)
 from scrapers.fotmob_copa import (
-    agrupar_pontos_por_bucket,
     buscar_metricas_coletivas_time,
-    processar_partida,
 )
+from pipeline.cartola_copa_sync import aplicar_dados_cartola, rebuild_extras_fotmob
+from scrapers.cartola_copa import buscar_dados_cartola_copa
 from scrapers.fotmob_fixtures import (
     PartidaCalendario,
     extrair_classificacao_grupos,
@@ -50,30 +43,6 @@ METRICAS_COPA_VAZIAS = {
     "total_red_card_team": None,
     "J": None,
 }
-
-COPA_CAMPOS_JOGADOR = (
-    "copa_jogos_num",
-    "copa_mins_played",
-    "copa_goals",
-    "copa_goal_assist",
-    "copa_clean_sheet",
-    "copa_pontos_total",
-    "copa_media_geral",
-    "copa_media_base",
-    "copa_fd",
-    "copa_ds",
-    "copa_de",
-    "copa_gs",
-    "copa_gcc",
-    "copa_xg",
-    "copa_xa",
-    "copa_int",
-    "copa_c",
-    "copa_br",
-    "copa_ge",
-    "copa_de_pct",
-)
-
 
 def _carregar_json(caminho: Path):
     return json.loads(caminho.read_text(encoding="utf-8"))
@@ -261,132 +230,6 @@ def atualizar_proximo_adversario(
     _salvar_json(caminho_mercado, mercado)
 
 
-def _reprocessar_pontuacao(
-    partidas_ids: list[str],
-    caminho_mercado: Path,
-    caminho_pontuacao: Path,
-    selecoes: list[dict],
-) -> set[str]:
-    sigla_map = _sigla_por_selecao(selecoes)
-    partidas_idx = {p.match_id: p for p in listar_partidas_grupos()}
-    acumuladores: dict[str, AcumuladorCedidoConquistado] = {}
-
-    for match_id in partidas_ids:
-        meta = partidas_idx.get(match_id)
-        if not meta:
-            continue
-        sig_m = sigla_map.get(meta.mandante)
-        sig_v = sigla_map.get(meta.visitante)
-        if not sig_m or not sig_v:
-            continue
-
-        resultado = processar_partida(match_id, caminho_mercado, sig_m, sig_v)
-        agrupado = agrupar_pontos_por_bucket(resultado.jogadores)
-        conquistado, cedido = calcular_cedido_conquistado_partida(agrupado, sig_m, sig_v)
-
-        acumuladores.setdefault(sig_m, AcumuladorCedidoConquistado())
-        acumuladores.setdefault(sig_v, AcumuladorCedidoConquistado())
-        acumuladores[sig_m].registrar_partida(conquistado[sig_m], cedido[sig_m])
-        acumuladores[sig_v].registrar_partida(conquistado[sig_v], cedido[sig_v])
-
-    pontuacao: dict[str, dict] = {}
-    for sigla, acc in acumuladores.items():
-        pontuacao[sigla] = acc.exportar()
-    _salvar_json(caminho_pontuacao, pontuacao)
-    return set(acumuladores.keys())
-
-
-def _zerar_copa_mercado(mercado: list[dict]) -> None:
-    for j in mercado:
-        for campo in COPA_CAMPOS_JOGADOR:
-            if campo in ("copa_media_geral", "copa_media_base", "copa_de_pct"):
-                j[campo] = None
-            else:
-                j[campo] = 0
-
-
-def _rebuild_copa_mercado(
-    partidas_ids: list[str],
-    caminho_mercado: Path,
-    selecoes: list[dict],
-) -> None:
-    mercado = _carregar_json(caminho_mercado)
-    sigla_map = _sigla_por_selecao(selecoes)
-    _zerar_copa_mercado(mercado)
-
-    scouts_acum: dict[int, ScoutsPartida] = {}
-    partidas_idx = {p.match_id: p for p in listar_partidas_grupos()}
-
-    for match_id in partidas_ids:
-        p_meta = partidas_idx.get(match_id)
-        if not p_meta:
-            continue
-        sig_m = sigla_map.get(p_meta.mandante)
-        sig_v = sigla_map.get(p_meta.visitante)
-        if not sig_m or not sig_v:
-            continue
-        resultado = processar_partida(match_id, caminho_mercado, sig_m, sig_v)
-        por_atleta = {j["atleta_id"]: j for j in mercado if j.get("atleta_id")}
-        for jogador in resultado.jogadores:
-            if jogador.atleta_id is None:
-                continue
-            entry = por_atleta.get(jogador.atleta_id)
-            if not entry:
-                continue
-            sc = jogador.scouts
-            aid = int(jogador.atleta_id)
-            entry["copa_jogos_num"] = int(entry.get("copa_jogos_num") or 0) + 1
-            entry["copa_mins_played"] = int(entry.get("copa_mins_played") or 0) + sc.minutos
-            entry["copa_goals"] = int(entry.get("copa_goals") or 0) + sc.G
-            entry["copa_goal_assist"] = int(entry.get("copa_goal_assist") or 0) + sc.A
-            entry["copa_fd"] = int(entry.get("copa_fd") or 0) + sc.FD
-            entry["copa_ds"] = int(entry.get("copa_ds") or 0) + sc.DS
-            entry["copa_de"] = int(entry.get("copa_de") or 0) + sc.DE
-            entry["copa_gs"] = int(entry.get("copa_gs") or 0) + sc.GS
-            entry["copa_gcc"] = int(entry.get("copa_gcc") or 0) + sc.GCC
-            entry["copa_int"] = int(entry.get("copa_int") or 0) + sc.INT
-            entry["copa_c"] = int(entry.get("copa_c") or 0) + sc.C
-            entry["copa_br"] = int(entry.get("copa_br") or 0) + sc.BR
-            entry["copa_ge"] = round(float(entry.get("copa_ge") or 0) + sc.GE, 2)
-            entry["copa_xg"] = round(float(entry.get("copa_xg") or 0) + jogador.xg, 2)
-            entry["copa_xa"] = round(float(entry.get("copa_xa") or 0) + jogador.xa, 2)
-            entry["copa_pontos_total"] = round(
-                float(entry.get("copa_pontos_total") or 0) + jogador.pontos,
-                2,
-            )
-            if sc.SG:
-                entry["copa_clean_sheet"] = int(entry.get("copa_clean_sheet") or 0) + 1
-            if aid not in scouts_acum:
-                scouts_acum[aid] = ScoutsPartida()
-            somar_scouts(scouts_acum[aid], sc)
-
-    for entry in mercado:
-        if not entry.get("copa_jogos_num"):
-            continue
-        bucket = entry.get("bucket_posicao")
-        if bucket not in {"GOL", "LAT", "ZAG", "MEI", "ATA"}:
-            continue
-        aid = entry.get("atleta_id")
-        acc = scouts_acum.get(int(aid), ScoutsPartida()) if aid else ScoutsPartida()
-        mg, mb = calcular_medias_copa(
-            float(entry.get("copa_pontos_total") or 0),
-            int(entry.get("copa_jogos_num") or 0),
-            acc,
-            bucket,
-        )
-        entry["copa_media_geral"] = mg
-        entry["copa_media_base"] = mb
-        if bucket == "GOL" and entry.get("copa_mins_played"):
-            entry["copa_de_pct"] = round(
-                (float(entry.get("copa_de") or 0) / int(entry["copa_mins_played"])) * 90,
-                2,
-            )
-        else:
-            entry["copa_de_pct"] = None
-
-    _salvar_json(caminho_mercado, mercado)
-
-
 def limpar_metricas_selecoes_copa(
     caminho_selecoes: Path,
     caminho_classificacao: Path,
@@ -462,23 +305,22 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     selecoes = _carregar_json(caminho_selecoes)
     estrearam = limpar_metricas_selecoes_copa(caminho_selecoes, caminho_classificacao)
 
+    dados_cartola = buscar_dados_cartola_copa()
+    resumo_cartola = aplicar_dados_cartola(pasta_dados, dados_cartola, estado)
+
     if processadas:
-        siglas_partidas = _reprocessar_pontuacao(
-            processadas, caminho_mercado, caminho_pontuacao, selecoes
-        )
-        _rebuild_copa_mercado(processadas, caminho_mercado, selecoes)
+        rebuild_extras_fotmob(processadas, caminho_mercado, selecoes)
+        siglas_partidas = set(resumo_cartola.get("siglas_cedido") or [])
         atualizar_metricas_selecoes(
             siglas_partidas | estrearam,
             caminho_selecoes,
             caminho_classificacao,
         )
     else:
-        _salvar_json(caminho_pontuacao, {})
-        mercado = _carregar_json(caminho_mercado)
-        _zerar_copa_mercado(mercado)
-        _salvar_json(caminho_mercado, mercado)
+        if not resumo_cartola.get("partidas_encerradas"):
+            _salvar_json(caminho_pontuacao, {})
 
-    rodada = _rodada_efetiva(partidas, estado)
+    rodada = int(estado.get("rodada_cartola_atual") or _rodada_efetiva(partidas, estado))
     estado["rodada_cartola_atual"] = rodada
     estado["partidas_processadas"] = processadas
     estado["atualizado_em"] = datetime.now(timezone.utc).isoformat()
@@ -491,4 +333,5 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         "partidas_processadas": len(processadas),
         "novas_partidas": novas,
         "total_calendario": len(partidas),
+        "cartola": resumo_cartola,
     }

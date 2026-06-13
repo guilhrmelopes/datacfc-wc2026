@@ -100,14 +100,17 @@ try {
     Write-Log "git pull --rebase"
     Invoke-Git @("pull", "--rebase", "--autostash")
 
-    Write-Log "--- [1/3] Pipeline Copa (FotMob) ---"
+    Write-Log "--- [1/4] API oficial Cartola Copa (/copa/) ---"
+    Invoke-PythonScript -Python $python -Script (Join-Path $Raiz "automation\atualizar_cartola_copa.py")
+
+    Write-Log "--- [2/4] Pipeline Copa (FotMob + integração Cartola) ---"
     Invoke-PythonScript -Python $python -Script (Join-Path $Raiz "automation\atualizar_copa_fotmob.py")
 
-    Write-Log "--- [2/3] Status e fotos dos jogadores ---"
+    Write-Log "--- [3/4] Status e fotos dos jogadores ---"
     Invoke-PythonScript -Python $python -Script (Join-Path $Raiz "automation\atualizar_status_jogadores.py")
 
     if (-not $SkipOdds) {
-        Write-Log "--- [3/3] Odds GA% / SG% ---"
+        Write-Log "--- [4/4] Odds GA% / SG% ---"
         $req = Join-Path $Raiz "requirements-odds.txt"
         Write-Log "pip install -r requirements-odds.txt"
         & $python -m pip install -q -r $req
@@ -140,7 +143,7 @@ try {
             Write-Log "AVISO: scraper de odds exit $scrapeExit, mas validação OK."
         }
     } else {
-        Write-Log "--- [3/3] Odds ignoradas (-SkipOdds) ---"
+        Write-Log "--- [4/4] Odds ignoradas (-SkipOdds) ---"
     }
 
     if ($SkipPush) {
@@ -159,7 +162,7 @@ try {
             $msg = @"
 bot: atualizar Copa, scouts, pontuações e odds [skip ci]
 
-Pipeline FotMob (classificação, hub, cedido/conquistado), status Cartola e odds GA%/SG%.
+Pipeline Cartola oficial (/copa/), FotMob (classificação, hub, xG) e odds GA%/SG%.
 "@
             git commit -m $msg
             if ($LASTEXITCODE -ne 0) { throw "git commit falhou" }

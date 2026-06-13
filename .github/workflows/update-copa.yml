@@ -26,7 +26,10 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Pipeline Copa (FotMob)
+      - name: API oficial Cartola Copa
+        run: python automation/atualizar_cartola_copa.py
+
+      - name: Pipeline Copa (FotMob + Cartola)
         run: python automation/atualizar_copa_fotmob.py
 
       - name: Status e fotos dos jogadores
