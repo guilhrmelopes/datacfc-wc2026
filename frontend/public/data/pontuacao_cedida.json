@@ -220,7 +220,7 @@
     },
     "LAT": {
       "cedido": {
-        "valor": 7.15,
+        "valor": 5.65,
         "cor": "bg-green-500"
       },
       "conquistado": {
@@ -240,7 +240,7 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 1.09,
+        "valor": 1.27,
         "cor": "bg-red-500"
       },
       "conquistado": {
@@ -276,7 +276,7 @@
         "cor": "bg-green-500"
       },
       "conquistado": {
-        "valor": 7.15,
+        "valor": 5.65,
         "cor": "bg-green-500"
       }
     },
@@ -296,7 +296,7 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 1.09,
+        "valor": 1.27,
         "cor": "bg-red-500"
       }
     },
