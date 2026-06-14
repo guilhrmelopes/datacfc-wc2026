@@ -99,6 +99,8 @@ def _tokens_expandidos(texto: str) -> set[str]:
 _ALIAS_FOTMOB_ATLETA: dict[str, int] = {
     "yassine bounou": 80951,
     "bounou": 80951,
+    "patrick beach": 151039,
+    "patrick thomas beach": 151039,
 }
 
 

@@ -211,6 +211,100 @@ def _agrupar_pontos_partida(
     return saida
 
 
+def _meta_por_clube(selecoes: list[dict]) -> dict[int, dict]:
+    return {int(s["clube_id"]): s for s in selecoes if s.get("clube_id")}
+
+
+def _referencia_por_sigla(mercado: list[dict]) -> dict[str, dict]:
+    refs: dict[str, dict] = {}
+    for jogador in mercado:
+        sigla = jogador.get("sigla")
+        if sigla and sigla not in refs:
+            refs[sigla] = jogador
+    return refs
+
+
+def _novo_jogador_mercado(api: dict, meta: dict, referencia: dict | None) -> dict:
+    posicao_id = int(api.get("posicao_id") or 0)
+    bucket = bucket_de_posicao(posicao_id)
+    ref = referencia or {}
+    entry: dict[str, Any] = {
+        "atleta_id": int(api["atleta_id"]),
+        "apelido": api.get("apelido") or api.get("nome") or "—",
+        "posicao_id": posicao_id,
+        "bucket_posicao": bucket,
+        "status_id": api.get("status_id", 7),
+        "clube_id": int(api.get("clube_id") or meta.get("clube_id") or 0),
+        "selecao": meta.get("selecao"),
+        "sigla": meta.get("sigla"),
+        "grupo": meta.get("grupo"),
+        "url_escudo": meta.get("url_escudo"),
+        "rating_recomendacao": 0.0,
+        "mins_played": None,
+        "jogos_num": int(api.get("jogos_num") or 0),
+        "goals": None,
+        "goal_assist": None,
+        "clean_sheet": None,
+        "media_geral": None,
+        "media_base": None,
+        "proximo_adversario_sigla": ref.get("proximo_adversario_sigla"),
+        "proximo_adversario_escudo": ref.get("proximo_adversario_escudo"),
+        "proximo_adversario_data": ref.get("proximo_adversario_data"),
+        "foto_url": api.get("foto"),
+        "preco_num": api.get("preco_num"),
+        "pontos_num": api.get("pontos_num"),
+        "media_num": api.get("media_num"),
+        "variacao_num": api.get("variacao_num"),
+    }
+    for campo in COPA_CAMPOS_JOGADOR:
+        if campo in ("copa_media_geral", "copa_media_base", "copa_de_pct"):
+            entry[campo] = None
+        else:
+            entry[campo] = 0
+    return entry
+
+
+def incorporar_atletas_ausentes_mercado(
+    mercado: list[dict],
+    dados: DadosCartolaCopa,
+    selecoes: list[dict],
+) -> int:
+    """Inclui convocados que pontuaram no Cartola mas não estavam no JSON base."""
+    ids_existentes = {int(j["atleta_id"]) for j in mercado if j.get("atleta_id")}
+    api_por_id = {
+        int(a["atleta_id"]): a
+        for a in dados.mercado.get("atletas") or []
+        if a.get("atleta_id")
+    }
+    meta_clube = _meta_por_clube(selecoes)
+    ref_sigla = _referencia_por_sigla(mercado)
+    inseridos = 0
+
+    candidatos: set[int] = set()
+    for aid, row in (dados.pontuados.get("atletas") or {}).items():
+        if row.get("posicao_id") == 6:
+            continue
+        if not row.get("entrou_em_campo"):
+            continue
+        candidatos.add(int(aid))
+
+    for aid in sorted(candidatos):
+        if aid in ids_existentes:
+            continue
+        api = api_por_id.get(aid)
+        if not api:
+            continue
+        clube_id = int(api.get("clube_id") or 0)
+        meta = meta_clube.get(clube_id)
+        if not meta:
+            continue
+        sigla = meta.get("sigla")
+        mercado.append(_novo_jogador_mercado(api, meta, ref_sigla.get(sigla)))
+        ids_existentes.add(aid)
+        inseridos += 1
+    return inseridos
+
+
 def sincronizar_mercado_cartola(
     mercado: list[dict],
     dados: DadosCartolaCopa,
@@ -439,6 +533,7 @@ def aplicar_dados_cartola(
     estado["cartola_atualizado_em"] = dados.obtido_em
 
     mercado_atualizados = sincronizar_mercado_cartola(mercado, dados)
+    mercado_inseridos = incorporar_atletas_ausentes_mercado(mercado, dados, selecoes)
     rebuild_copa_oficial(mercado, estado, dados)
 
     encerradas = len(_partidas_encerradas(dados))
@@ -456,6 +551,7 @@ def aplicar_dados_cartola(
         "mercado_api": len(dados.mercado.get("atletas") or []),
         "partidas_encerradas": encerradas,
         "mercado_campos_atualizados": mercado_atualizados,
+        "mercado_inseridos": mercado_inseridos,
         "siglas_cedido": sorted(siglas),
         "avisos": dados.avisos,
     }
