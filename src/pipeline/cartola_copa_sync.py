@@ -250,7 +250,7 @@ def _novo_jogador_mercado(api: dict, meta: dict, referencia: dict | None) -> dic
         "proximo_adversario_sigla": ref.get("proximo_adversario_sigla"),
         "proximo_adversario_escudo": ref.get("proximo_adversario_escudo"),
         "proximo_adversario_data": ref.get("proximo_adversario_data"),
-        "foto_url": api.get("foto"),
+        "foto_url": None,
         "preco_num": api.get("preco_num"),
         "pontos_num": api.get("pontos_num"),
         "media_num": api.get("media_num"),
@@ -303,6 +303,61 @@ def incorporar_atletas_ausentes_mercado(
         ids_existentes.add(aid)
         inseridos += 1
     return inseridos
+
+
+_FOTO_GLOBO_HOST = "s.sde.globo.com"
+_URL_FOTOS_PROVAVEIS = "https://provaveisdocartola.com.br/api/copa/fotos-atletas"
+
+
+def _carregar_fotos_provaveis() -> dict[int, str]:
+    import urllib.request
+
+    try:
+        req = urllib.request.Request(_URL_FOTOS_PROVAVEIS, headers={"User-Agent": "Mozilla/5.0"})
+        payload = json.loads(urllib.request.urlopen(req, timeout=30).read())
+        return {
+            int(aid): str(d["url"])
+            for aid, d in (payload.get("atletas") or {}).items()
+            if d.get("url")
+        }
+    except OSError:
+        return {}
+
+
+def sincronizar_fotos_mercado(
+    mercado: list[dict],
+    dados: DadosCartolaCopa,
+) -> int:
+    """Atualiza foto_url: CDN Prováveis (preferido) ou foto oficial do /copa/atletas/mercado."""
+    api_por_id = {
+        int(a["atleta_id"]): a
+        for a in dados.mercado.get("atletas") or []
+        if a.get("atleta_id")
+    }
+    fotos_provaveis = _carregar_fotos_provaveis()
+    atualizados = 0
+
+    for jogador in mercado:
+        aid = int(jogador.get("atleta_id") or 0)
+        if not aid:
+            continue
+
+        nova = fotos_provaveis.get(aid)
+        if not nova:
+            api = api_por_id.get(aid)
+            cartola_foto = api.get("foto") if api else None
+            if cartola_foto:
+                nova = str(cartola_foto)
+        if not nova:
+            continue
+
+        atual = jogador.get("foto_url")
+        if not atual or _FOTO_GLOBO_HOST in str(atual) or atual != nova:
+            if atual != nova:
+                jogador["foto_url"] = nova
+                atualizados += 1
+
+    return atualizados
 
 
 def sincronizar_mercado_cartola(
@@ -534,6 +589,7 @@ def aplicar_dados_cartola(
 
     mercado_atualizados = sincronizar_mercado_cartola(mercado, dados)
     mercado_inseridos = incorporar_atletas_ausentes_mercado(mercado, dados, selecoes)
+    fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
     rebuild_copa_oficial(mercado, estado, dados)
 
     encerradas = len(_partidas_encerradas(dados))
@@ -552,6 +608,7 @@ def aplicar_dados_cartola(
         "partidas_encerradas": encerradas,
         "mercado_campos_atualizados": mercado_atualizados,
         "mercado_inseridos": mercado_inseridos,
+        "fotos_atualizadas": fotos_atualizadas,
         "siglas_cedido": sorted(siglas),
         "avisos": dados.avisos,
     }

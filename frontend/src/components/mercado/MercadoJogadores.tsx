@@ -538,6 +538,32 @@ function valorOrdenacao(
       return temCopa(j) ? (j.copa_goal_assist ?? 0) : null;
     case "sg":
       return temCopa(j) ? (j.copa_clean_sheet ?? 0) : null;
+    case "de":
+      return temCopa(j) ? (j.copa_de ?? 0) : null;
+    case "de_pct":
+      return temCopa(j) ? (j.copa_de_pct ?? null) : null;
+    case "ge":
+      return temCopa(j) ? (j.copa_ge ?? 0) : null;
+    case "gs":
+      return temCopa(j) ? (j.copa_gs ?? 0) : null;
+    case "ds":
+      return temCopa(j) ? (j.copa_ds ?? 0) : null;
+    case "int":
+      return temCopa(j) ? (j.copa_int ?? 0) : null;
+    case "c":
+      return temCopa(j) ? (j.copa_c ?? 0) : null;
+    case "br":
+      return temCopa(j) ? (j.copa_br ?? 0) : null;
+    case "fd":
+      return temCopa(j) ? (j.copa_fd ?? 0) : null;
+    case "gcc":
+      return temCopa(j) ? (j.copa_gcc ?? 0) : null;
+    case "xg":
+      return temCopa(j) ? (j.copa_xg ?? 0) : null;
+    case "xa":
+      return temCopa(j) ? (j.copa_xa ?? 0) : null;
+    case "xgx_a90":
+      return temCopa(j) ? xgXaPor90Copa(j) : null;
     default:
       return null;
   }
@@ -646,11 +672,13 @@ export function MercadoJogadores({
     dados.sort((a, b) => {
       const oddsA = oddsMap ? (oddsMap[String(a.atleta_id)] ?? null) : null;
       const oddsB = oddsMap ? (oddsMap[String(b.atleta_id)] ?? null) : null;
-      return compararValores(
+      const cmp = compararValores(
         valorOrdenacao(a, ordenarPor, oddsA, escalasRating),
         valorOrdenacao(b, ordenarPor, oddsB, escalasRating),
         ordem,
       );
+      if (cmp !== 0) return cmp;
+      return a.apelido.localeCompare(b.apelido, "pt-BR", { sensitivity: "base" });
     });
     return dados.slice(0, 500);
   }, [jogadores, posicao, selecaoFiltro, statusFiltro, ordenarPor, ordem, oddsMap, escalasRating]);

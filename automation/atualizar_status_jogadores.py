@@ -13,6 +13,8 @@ CAMINHO = RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 
 SIT_PARA_STATUS = {"provavel": 6, "duvida": 2}
 CARTOLA_ACEITOS_FORA_LINEUP = {2, 3, 5}
+FOTO_GLOBO_HOST = "s.sde.globo.com"
+URL_MERCADO_CARTOLA = "https://api.cartola.globo.com/copa/atletas/mercado"
 
 
 def _fetch(url: str) -> dict:
@@ -56,6 +58,18 @@ def main() -> int:
     except OSError as exc:
         print(f"Aviso: fotos-atletas indisponível — {exc}", file=sys.stderr)
 
+    cartola_fotos: dict[int, str] = {}
+    try:
+        mercado_cartola = _fetch(URL_MERCADO_CARTOLA)
+        cartola_fotos = {
+            int(a["atleta_id"]): a["foto"]
+            for a in mercado_cartola.get("atletas") or []
+            if a.get("atleta_id") and a.get("foto")
+        }
+        print(f"cartola-mercado fotos: {len(cartola_fotos)}")
+    except OSError as exc:
+        print(f"Aviso: cartola mercado indisponível — {exc}", file=sys.stderr)
+
     jogadores = json.loads(CAMINHO.read_text(encoding="utf-8"))
     status_ok = fotos_ok = 0
 
@@ -71,8 +85,13 @@ def main() -> int:
             j["status_id"] = novo_status
             status_ok += 1
 
-        nova_foto = foto_map.get(aid)
-        if nova_foto and j.get("foto_url") != nova_foto:
+        nova_foto = foto_map.get(aid) or cartola_fotos.get(aid)
+        atual_foto = j.get("foto_url")
+        if nova_foto and (
+            not atual_foto
+            or FOTO_GLOBO_HOST in str(atual_foto)
+            or atual_foto != nova_foto
+        ):
             j["foto_url"] = nova_foto
             fotos_ok += 1
 
