@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { PontuacaoCedida, Selecao } from "@/types/dados";
+import type { ClassificacaoGruposParseada } from "@/lib/classificacaoGrupos";
 import { FiltrosScouts } from "./FiltrosScouts";
 import { Recorrencia } from "./Recorrencia";
 import { TabelaScouts } from "./TabelaScouts";
@@ -8,9 +9,10 @@ import { TabelaScouts } from "./TabelaScouts";
 interface Props {
   selecoes: Selecao[];
   pontuacaoCedida: PontuacaoCedida;
+  classificacao: ClassificacaoGruposParseada;
 }
 
-export function RadarSelecoes({ selecoes, pontuacaoCedida }: Props) {
+export function RadarSelecoes({ selecoes, pontuacaoCedida, classificacao }: Props) {
   const [aba, setAba] = useState("scouts");
   const [competicao, setCompeticao] = useState("TODAS");
   const [grupo, setGrupo] = useState("TODOS");
@@ -40,7 +42,11 @@ export function RadarSelecoes({ selecoes, pontuacaoCedida }: Props) {
         <TabelaScouts selecoes={selecoes} competicao={competicao} grupo={grupo} />
       </TabsContent>
       <TabsContent value="recorrencia">
-        <Recorrencia selecoes={selecoes} pontuacaoCedida={pontuacaoCedida} />
+        <Recorrencia
+          selecoes={selecoes}
+          pontuacaoCedida={pontuacaoCedida}
+          classificacao={classificacao}
+        />
       </TabsContent>
     </Tabs>
   );

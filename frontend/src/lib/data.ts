@@ -44,15 +44,22 @@ export interface DadosMercado {
   partidasProcessadas: string[];
 }
 
-/** Dados da aba Radar (selecoes + pontuacao_cedida). */
+/** Dados da aba Radar (selecoes + pontuacao_cedida + classificação). */
 export async function carregarDadosRadar(): Promise<
-  Pick<DadosAplicacao, "selecoes" | "pontuacaoCedida">
+  Pick<DadosAplicacao, "selecoes" | "pontuacaoCedida"> & {
+    classificacao: ClassificacaoGruposParseada;
+  }
 > {
-  const [selecoes, pontuacaoCedida] = await Promise.all([
+  const [selecoes, pontuacaoCedida, classificacaoRaw] = await Promise.all([
     carregarJson<Selecao[]>("/data/selecoes.json"),
     carregarJson<PontuacaoCedida>("/data/pontuacao_cedida.json"),
+    carregarJson<Record<string, unknown>>("/data/classificacao_grupos.json"),
   ]);
-  return { selecoes, pontuacaoCedida };
+  return {
+    selecoes,
+    pontuacaoCedida,
+    classificacao: parseClassificacaoGrupos(classificacaoRaw),
+  };
 }
 
 /** Dados da aba Mercado (jogadores_mercado + selecoes + pontuacao_cedida + odds). */

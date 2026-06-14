@@ -76,6 +76,7 @@ export default function App() {
             <RadarSelecoes
               selecoes={radar.dados.selecoes as Selecao[]}
               pontuacaoCedida={radar.dados.pontuacaoCedida as PontuacaoCedida}
+              classificacao={radar.dados.classificacao}
             />
           )}
         </TabsContent>
