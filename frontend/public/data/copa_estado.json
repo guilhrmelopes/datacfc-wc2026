@@ -11,7 +11,7 @@
     "4667772",
     "4667777"
   ],
-  "atualizado_em": "2026-06-14T19:03:15.103755+00:00",
+  "atualizado_em": "2026-06-14T19:24:11.419315+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100098": {
@@ -219,12 +219,13 @@
         "clube_id": 2352
       },
       "103898": {
-        "pontuacao": 16.4,
+        "pontuacao": 18.2,
         "scout": {
           "DS": 3,
           "FC": 1,
-          "FD": 2,
+          "FD": 1,
           "FF": 1,
+          "FT": 1,
           "G": 1,
           "PS": 1
         },
@@ -1267,9 +1268,9 @@
         "clube_id": 2361
       },
       "126865": {
-        "pontuacao": 3.3,
+        "pontuacao": 4.8,
         "scout": {
-          "DS": 1,
+          "DS": 2,
           "FC": 5,
           "FD": 1,
           "FF": 2,
@@ -1802,8 +1803,9 @@
         "clube_id": 3221
       },
       "150878": {
-        "pontuacao": 0.8,
+        "pontuacao": 2.3,
         "scout": {
+          "DS": 1,
           "FF": 1
         },
         "posicao_id": 5,
@@ -1845,8 +1847,9 @@
         "clube_id": 2374
       },
       "150929": {
-        "pontuacao": 0.7,
+        "pontuacao": 2.2,
         "scout": {
+          "DS": 1,
           "FC": 1,
           "FS": 2
         },
@@ -2215,8 +2218,9 @@
         "clube_id": 2354
       },
       "89161": {
-        "pontuacao": 1.8,
+        "pontuacao": 3.3,
         "scout": {
+          "DS": 1,
           "FC": 1,
           "FF": 2,
           "FS": 1
@@ -2638,6 +2642,6 @@
     }
   },
   "status_mercado": 2,
-  "bola_rolando": true,
-  "cartola_atualizado_em": "2026-06-14T19:02:54.381147+00:00"
+  "bola_rolando": false,
+  "cartola_atualizado_em": "2026-06-14T19:23:57.320496+00:00"
 }
