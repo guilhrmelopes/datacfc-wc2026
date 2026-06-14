@@ -25,6 +25,7 @@
 /scripts/
 !/automation/
 /app.py
+/config/analytics.local.env
 
 # ──────────────────────────────────────────────
 # Ambientes Python
@@ -49,6 +50,8 @@ frontend/node_modules/
 frontend/dist/
 frontend/.vite/
 frontend/tsconfig.tsbuildinfo
+frontend/.env
+frontend/.env.local
 
 # ──────────────────────────────────────────────
 # Sistema operacional

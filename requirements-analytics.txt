@@ -1,0 +1,3 @@
+# Relatório privado de mídia kit (automation/relatorio_analytics.py)
+google-analytics-data>=0.18.0
+google-auth>=2.29.0

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { Cabecalho } from "@/components/layout/Cabecalho";
 import { FaseGrupos } from "@/components/fase-grupos/FaseGrupos";
 import { MercadoJogadores } from "@/components/mercado/MercadoJogadores";
 import { RadarSelecoes } from "@/components/radar/RadarSelecoes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { registrarVisualizacao } from "@/lib/ga4";
 import {
   carregarDadosRadar,
   carregarDadosMercado,
@@ -46,6 +48,10 @@ function useAbaDados<T>(aba: AbaAtiva, abaAlvo: AbaAtiva, loader: () => Promise<
 
 export default function App() {
   const [aba, setAba] = useState<AbaAtiva>("radar");
+
+  useEffect(() => {
+    registrarVisualizacao(aba);
+  }, [aba]);
 
   const radar = useAbaDados(aba, "radar", carregarDadosRadar);
   const fase = useAbaDados(aba, "fase", carregarDadosFase);
@@ -96,6 +102,7 @@ export default function App() {
           )}
         </TabsContent>
       </Tabs>
+      <Analytics />
     </div>
   );
 }
