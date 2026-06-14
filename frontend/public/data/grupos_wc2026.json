@@ -119,7 +119,7 @@
       "visitante": "PARAGUAY",
       "data": "2026-06-12",
       "hora": "22:00:00",
-      "utc": "2026-06-13T01:00:00.000Z",
+      "utc": "2026-06-13T01:00:00Z",
       "match_id": "4667771",
       "finalizada": true,
       "placar": "4 - 1"
@@ -131,7 +131,7 @@
       "visitante": "SWITZERLAND",
       "data": "2026-06-13",
       "hora": "16:00:00",
-      "utc": "2026-06-13T19:00:00.000Z",
+      "utc": "2026-06-13T19:00:00Z",
       "match_id": "4667758",
       "finalizada": true,
       "placar": "1 - 1"
@@ -143,9 +143,9 @@
       "visitante": "MOROCCO",
       "data": "2026-06-13",
       "hora": "19:00:00",
-      "utc": "2026-06-13T22:00:00.000Z",
+      "utc": "2026-06-13T22:00:00Z",
       "match_id": "4667764",
-      "finalizada": false,
+      "finalizada": true,
       "placar": "1 - 1"
     },
     {
@@ -155,10 +155,10 @@
       "visitante": "SCOTLAND",
       "data": "2026-06-13",
       "hora": "22:00:00",
-      "utc": "2026-06-14T01:00:00Z",
+      "utc": "2026-06-14T01:00:00.000Z",
       "match_id": "4667765",
       "finalizada": false,
-      "placar": null
+      "placar": "0 - 1"
     },
     {
       "grupo": "D",
@@ -167,7 +167,7 @@
       "visitante": "TURKIYE",
       "data": "2026-06-14",
       "hora": "01:00:00",
-      "utc": "2026-06-14T04:00:00Z",
+      "utc": "2026-06-14T04:00:00.000Z",
       "match_id": "4667772",
       "finalizada": false,
       "placar": null
@@ -179,7 +179,7 @@
       "visitante": "CURACAO",
       "data": "2026-06-14",
       "hora": "14:00:00",
-      "utc": "2026-06-14T17:00:00Z",
+      "utc": "2026-06-14T17:00:00.000Z",
       "match_id": "4667777",
       "finalizada": false,
       "placar": null
@@ -191,7 +191,7 @@
       "visitante": "JAPAN",
       "data": "2026-06-14",
       "hora": "17:00:00",
-      "utc": "2026-06-14T20:00:00Z",
+      "utc": "2026-06-14T20:00:00.000Z",
       "match_id": "4667783",
       "finalizada": false,
       "placar": null
@@ -203,7 +203,7 @@
       "visitante": "ECUADOR",
       "data": "2026-06-14",
       "hora": "20:00:00",
-      "utc": "2026-06-14T23:00:00Z",
+      "utc": "2026-06-14T23:00:00.000Z",
       "match_id": "4667778",
       "finalizada": false,
       "placar": null
