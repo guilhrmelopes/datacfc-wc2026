@@ -13,9 +13,13 @@ SOFT_FAIL = os.environ.get("ODDS_SOFT_FAIL", "").strip().lower() in ("1", "true"
 
 
 def main() -> int:
+    env = os.environ.copy()
+    src = str(RAIZ / "src")
+    env["PYTHONPATH"] = src if not env.get("PYTHONPATH") else f"{src}{os.pathsep}{env['PYTHONPATH']}"
     scrape = subprocess.run(
-        [sys.executable, "-m", "src.scrapers.scraper_odds_jogadores"],
+        [sys.executable, "-m", "scrapers.scraper_odds_jogadores"],
         cwd=RAIZ,
+        env=env,
         check=False,
     )
     validar = subprocess.run(

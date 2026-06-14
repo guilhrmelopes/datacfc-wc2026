@@ -4,16 +4,17 @@ Scraper de odds de jogadores — hub.oddsnotifier.io × Cartola WC 2026.
 Arquitetura (corrigida após diagnóstico):
   Os dados de odds NÃO estão em /api/odds/{eventId}.
   Estão embutidos no HTML inicial como RSC (__next_f) — React Server Components.
-  O browser carrega os scripts inline, e após clicar "Player" → "Player To Score or Assist"
-  o RSC expõe odds combinadas de marcar ou assistir.
+  O browser carrega os scripts inline. Mercados de jogador vêm no RSC (__next_f):
+    • Player → Player To Score or Assist → Score / Assist / Score Or Assist
+    • Player → Anytime Goalscorer (complemento G% em partidas distantes)
 
 Fluxo (hub oddsnotifier):
   [1] Carrega jogadores_mercado.json → índice por selecao
   [2] Por evento:
       a. Playwright navega → /football/international-world-cup/{eventId}
-      b. Clica Player → Player To Score or Assist
-      c. Percorre sub-filtros Score (G%), Assist (A%), Score Or Assist (GA%)
-      d. Extrai RSC (__next_f) e parseia labels "(Score)/(Assist)/(Score Or Assist)"
+      b. Clica Player → Player To Score or Assist → sub-filtros G%/A%/GA%
+      c. Complemento: Player → Anytime Goalscorer (preenche G% quando Score indisponível)
+      d. Extrai RSC (__next_f) e parseia labels ou mercado "Anytime Goalscorer"
   [3] Matching POR EQUIPE: fuzzy restrito às equipes do jogo
   [4] Salva odds_jogadores.json com atleta_id como chave (g_pct, a_pct, ga_pct, sg_pct)
 
@@ -79,6 +80,7 @@ POSICOES_LINHA: frozenset[int] = frozenset({2, 3, 4, 5})
 POSICOES_SG: frozenset[int] = frozenset({1, 2, 3})  # GOL, LAT, ZAG
 
 MERCADO_PLAYER_PAI = "Player To Score or Assist"
+MERCADO_ANYTIME_GOALSCORER = "Anytime Goalscorer"
 
 MERCADOS_RSC: dict[str, str] = {
     "Player To Score or Assist": "ga",  # fallback se label sem sufixo
@@ -981,8 +983,12 @@ def extrair_odds_rsc(
     bookmakers = _extrair_json_object(rsc_conteudo, "bookmakers")
     if not bookmakers:
         logger.debug("Bloco bookmakers nao encontrado — fallback regex.")
-        legado = _extrair_odds_rsc_regex(rsc_conteudo)
-        resultado["ga"] = legado.get("ga", {})
+        legado = _extrair_odds_rsc_regex(rsc_conteudo, sufixo_alvo=sufixo_alvo)
+        for mercado in ("g", "a", "ga"):
+            if sufixo_alvo and mercado != sufixo_alvo:
+                continue
+            for nome, par in legado.get(mercado, {}).items():
+                _registrar_odd_jogador(resultado, mercado, nome, par[0], par[1])
         return resultado
 
     for bk_name, mercados in bookmakers.items():
@@ -1134,27 +1140,39 @@ def _aplicar_sg_evento(
     return aplicados
 
 
-def _extrair_odds_rsc_regex(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
+def _extrair_odds_rsc_regex(
+    rsc_conteudo: str,
+    sufixo_alvo: str | None = None,
+) -> dict[str, dict[str, tuple[float, str]]]:
     """Fallback legado quando bookmakers JSON não está disponível."""
-    resultado: dict[str, dict[str, tuple[float, str]]] = {"ga": {}}
-    pat_bk_mkt = re.compile(
-        r'"([^"]{2,40})"\s*:\s*\[(?:[^\[\]]|\[[^\]]*\])*?"name"\s*:\s*"Player To Score or Assist"'
-        r'\s*,\s*"updatedAt"\s*:\s*"[^"]+"\s*,\s*"odds"\s*:\s*(\[[^\]]+\])',
-        re.DOTALL,
-    )
-    for match in pat_bk_mkt.finditer(rsc_conteudo):
-        bk_name, odds_raw = match.group(1), match.group(2)
-        for player_match in _PAT_LABEL_OVER.finditer(odds_raw):
-            player_nome = player_match.group(1)
-            try:
-                odds_val = float(player_match.group(2))
-            except ValueError:
-                continue
-            if odds_val <= 1.0:
-                continue
-            resultado["ga"][player_nome] = _melhor_odd(
-                resultado["ga"].get(player_nome), odds_val, bk_name
-            )
+    resultado: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}, "ga": {}}
+    mercados_regex: list[tuple[str, str]] = [
+        ("Player To Score or Assist", "ga"),
+        (MERCADO_ANYTIME_GOALSCORER, "g"),
+    ]
+    for nome_mercado, sufixo in mercados_regex:
+        if sufixo_alvo and sufixo != sufixo_alvo:
+            continue
+        pat_bk_mkt = re.compile(
+            rf'"([^"]{{2,40}})"\s*:\s*\[(?:[^\[\]]|\[[^\]]*\])*?"name"\s*:\s*"{re.escape(nome_mercado)}"'
+            r'\s*,\s*"updatedAt"\s*:\s*"[^"]+"\s*,\s*"odds"\s*:\s*(\[[^\]]+\])',
+            re.DOTALL,
+        )
+        for match in pat_bk_mkt.finditer(rsc_conteudo):
+            bk_name, odds_raw = match.group(1), match.group(2)
+            for player_match in _PAT_LABEL_OVER.finditer(odds_raw):
+                player_nome = player_match.group(1)
+                try:
+                    odds_val = float(player_match.group(2))
+                except ValueError:
+                    continue
+                if odds_val <= 1.0:
+                    continue
+                resultado[sufixo][player_nome] = _melhor_odd(
+                    resultado[sufixo].get(player_nome), odds_val, bk_name
+                )
+    if sufixo_alvo:
+        return {sufixo_alvo: resultado.get(sufixo_alvo, {})}
     return resultado
 
 
@@ -1298,6 +1316,72 @@ def _raspar_mercados_ptsoa(
         logger.info("  Filtro %s: %d jogadores", rotulo, len(mercado))
 
     return odds_por
+
+
+def _navegar_clicar_anytime_goalscorer(pagina: Page) -> bool:
+    """
+    Abre Player → Anytime Goalscorer.
+    Mercado alternativo disponível em partidas distantes quando PTSOA não expõe Score.
+    """
+    vis_timeout = _wait_ms(6000 if IS_CI else 4000)
+    click_timeout = _wait_ms(8000 if IS_CI else 5000)
+
+    try:
+        pagina.evaluate("window.scrollTo(0, 0)")
+    except Exception:
+        pass
+
+    clicou_player = False
+    for seletor in [
+        "button:has-text('Player')",
+        "a:has-text('Player')",
+        "[role='tab']:has-text('Player')",
+    ]:
+        try:
+            el = pagina.locator(seletor).first
+            if el.is_visible(timeout=vis_timeout):
+                el.scroll_into_view_if_needed(timeout=vis_timeout)
+                el.click(timeout=click_timeout)
+                pagina.wait_for_timeout(_wait_ms(2500))
+                clicou_player = True
+                break
+        except Exception:
+            continue
+
+    if not clicou_player:
+        return False
+
+    if not _clicar_mercado_player(pagina, MERCADO_ANYTIME_GOALSCORER):
+        return False
+
+    # Sub-aba interna quando o hub repete o rótulo (Player → AG → AG)
+    _clicar_filtro_ptsoa(pagina, MERCADO_ANYTIME_GOALSCORER)
+    return True
+
+
+def _raspar_anytime_goalscorer(
+    pagina: Page,
+    rsc_acumulado: list[str],
+    tamanho_antes: int,
+    desc: str,
+) -> dict[str, tuple[float, str]]:
+    """Raspa G% via Player → Anytime Goalscorer (complemento para partidas distantes)."""
+    if not _navegar_clicar_anytime_goalscorer(pagina):
+        logger.info("  Anytime Goalscorer indisponivel em %s", desc)
+        return {}
+
+    slice_start = len(rsc_acumulado)
+    for _ in range(8 if IS_CI else 6):
+        pagina.wait_for_timeout(_wait_ms(2500))
+        novos = rsc_acumulado[slice_start:]
+        if sum(len(c) for c in novos) > 40_000:
+            break
+
+    rsc = _coletar_rsc_evento(pagina, rsc_acumulado, slice_start)
+    extraido = extrair_odds_rsc(rsc, sufixo_alvo="g")
+    mercado = extraido.get("g") or {}
+    logger.info("  Anytime Goalscorer: %d jogadores", len(mercado))
+    return mercado
 
 
 def _aplicar_mercado_evento(
@@ -1664,6 +1748,19 @@ def processar_evento(
                 len(odds_bruto_acum["ga"]),
             )
 
+    g_antes_ag = len(odds_bruto_acum["g"])
+    odds_ag = _raspar_anytime_goalscorer(pagina, rsc_acumulado, tamanho_antes, desc)
+    if odds_ag:
+        _mesclar_odds_rsc(odds_bruto_acum, {"g": odds_ag, "a": {}, "ga": {}})
+        rsc_ag = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
+        if rsc_ag.strip():
+            rsc = f"{rsc}\n{rsc_ag}" if rsc.strip() else rsc_ag
+        logger.info(
+            "  Anytime Goalscorer mesclado: g %d → %d",
+            g_antes_ag,
+            len(odds_bruto_acum["g"]),
+        )
+
     if not rsc.strip() and not any(odds_bruto_acum[m] for m in ("g", "a", "ga")):
         logger.warning("RSC vazio para %s — nenhum dado extraido.", desc)
         _screenshot_falha(pagina, eid)
@@ -1808,6 +1905,19 @@ def executar() -> None:
             if "oddsnotifier" not in resp.url:
                 return
             ct = (resp.headers.get("content-type") or "").lower()
+            try:
+                if "json" in ct and "/anytime-goalscorer" in resp.url:
+                    corpo = resp.text()
+                    if corpo and "bookmakers" in corpo:
+                        rsc_acumulado.append(corpo)
+                        logger.debug(
+                            "API anytime-goalscorer %d chars: %s",
+                            len(corpo),
+                            resp.url[:80],
+                        )
+                    return
+            except Exception:
+                pass
             if "x-component" not in ct and "text/html" not in ct and "javascript" not in ct:
                 return
             try:
