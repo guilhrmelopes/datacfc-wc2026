@@ -1,140 +1,67 @@
-name: Atualizar status e fotos dos jogadores
-
-on:
-  schedule:
-    - cron: '0 12 * * *'   # 09h BRT (UTC-3)
-    - cron: '0 17 * * *'   # 14h BRT
-    - cron: '0 0  * * *'   # 21h BRT
-  workflow_dispatch:         # permite execução manual pelo painel do GitHub
-
-concurrency:
-  group: update-status-${{ github.ref }}
-  cancel-in-progress: false
-
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Atualizar status_id e foto_url dos jogadores
-        run: |
-          cat > /tmp/update.py << 'PYEOF'
-          import json, urllib.request, time, sys
-
-          # sit do lineups → status_id
-          SIT_PARA_STATUS = {"provavel": 6, "duvida": 2}
-
-          # Únicos status do cartola aceitos para quem NÃO está no lineup
-          # status 6 (Provável) do cartola significa "saudável/disponível",
-          # mas sem estar escalado é reserva → Nulo (7)
-          CARTOLA_ACEITOS_FORA_LINEUP = {2, 3, 5}  # Dúvida, Lesionado, Suspenso
-
-          def fetch(url):
-              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-              with urllib.request.urlopen(req, timeout=30) as r:
-                  return json.loads(r.read())
-
-          # cartola-mercado — base para statuses de suspensão/lesão/dúvida
-          try:
-              mercado = fetch(
-                  "https://provaveisdocartola.com.br/api/copa/cartola-mercado?_="
-                  + str(int(time.time() * 1000))
-              )
-              status_map = {a["atleta_id"]: a["status_id"] for a in mercado.get("atletas", [])}
-              print(f"cartola-mercado: {len(status_map)} jogadores")
-          except Exception as e:
-              print(f"Aviso: cartola-mercado indisponivel — {e}", file=sys.stderr)
-              status_map = {}
-
-          # lineups — fonte primária para titulares
-          try:
-              lineups = fetch("https://provaveisdocartola.com.br/api/copa/lineups")
-              lineup_status = {}
-              for team in lineups.get("teams", {}).values():
-                  for t in team.get("titulares", []):
-                      sit = t.get("sit")
-                      if sit in SIT_PARA_STATUS:
-                          lineup_status[t["id"]] = SIT_PARA_STATUS[sit]
-              print(f"lineups: {len(lineup_status)} titulares mapeados")
-          except Exception as e:
-              print(f"Aviso: lineups indisponivel — {e}", file=sys.stderr)
-              lineup_status = {}
-
-          # fotos-atletas
-          try:
-              fotos_data = fetch("https://provaveisdocartola.com.br/api/copa/fotos-atletas")
-              foto_map = {int(aid): d["url"] for aid, d in fotos_data.get("atletas", {}).items()}
-              print(f"fotos-atletas: {len(foto_map)} fotos")
-          except Exception as e:
-              print(f"Aviso: fotos-atletas indisponivel — {e}", file=sys.stderr)
-              foto_map = {}
-
-          # atualizar JSON
-          path = "frontend/public/data/jogadores_mercado.json"
-          with open(path, encoding="utf-8") as f:
-              jogadores = json.load(f)
-
-          status_ok = fotos_ok = 0
-          for j in jogadores:
-              aid = j["atleta_id"]
-
-              if aid in lineup_status:
-                  # Titular: status vem do lineup (Provável ou Dúvida)
-                  novo_status = lineup_status[aid]
-              else:
-                  # Não escalado: só preserva Suspenso/Lesionado/Dúvida do cartola
-                  # status 6 (Provável) sem estar no lineup = reserva = Nulo (7)
-                  s = status_map.get(aid, 7)
-                  novo_status = s if s in CARTOLA_ACEITOS_FORA_LINEUP else 7
-
-              if j.get("status_id") != novo_status:
-                  j["status_id"] = novo_status
-                  status_ok += 1
-
-              nova_foto = foto_map.get(aid)
-              if nova_foto and j.get("foto_url") != nova_foto:
-                  j["foto_url"] = nova_foto
-                  fotos_ok += 1
-
-          with open(path, "w", encoding="utf-8") as f:
-              json.dump(jogadores, f, ensure_ascii=False, separators=(",", ":"))
-
-          print(f"Status atualizados: {status_ok} | Fotos atualizadas: {fotos_ok}")
-          PYEOF
-          python3 /tmp/update.py
-
-      - name: Commitar se houver mudanças
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add frontend/public/data/jogadores_mercado.json
-
-          if git diff --cached --quiet; then
-            echo "Nenhuma mudança em status/fotos."
-            exit 0
-          fi
-
-          git commit -m "bot: atualizar status e fotos dos jogadores [skip ci]"
-
-          pushed=0
-          for attempt in 1 2 3 4 5; do
-            if git pull --rebase origin main && git push origin HEAD:main; then
-              pushed=1
-              break
-            fi
-            echo "Push falhou (tentativa ${attempt}/5) — aguardando..."
-            sleep $((attempt * 3))
-          done
-
-          if [ "$pushed" -ne 1 ]; then
-            echo "::error::git push falhou após 5 tentativas."
-            exit 1
-          fi
+name: Atualizar status e fotos dos jogadores
+
+on:
+  schedule:
+    - cron: '0 12 * * *'   # 09h BRT (UTC-3)
+    - cron: '0 17 * * *'   # 14h BRT
+    - cron: '0 0  * * *'   # 21h BRT
+  workflow_dispatch:
+
+concurrency:
+  group: update-status-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}/src
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Atualizar status, fotos e timestamp do dashboard
+        run: python automation/atualizar_status_jogadores.py
+
+      - name: Commitar se houver mudanças
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            frontend/public/data/jogadores_mercado.json \
+            frontend/public/data/copa_estado.json
+
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudança em status/fotos."
+            exit 0
+          fi
+
+          git commit -m "bot: atualizar status e fotos dos jogadores [skip ci]"
+
+          pushed=0
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            echo "Push falhou (tentativa ${attempt}/5) — aguardando..."
+            sleep $((attempt * 3))
+          done
+
+          if [ "$pushed" -ne 1 ]; then
+            echo "::error::git push falhou após 5 tentativas."
+            exit 1
+          fi
+

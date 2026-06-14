@@ -630,8 +630,8 @@
         "cor": "bg-green-500"
       },
       "conquistado": {
-        "valor": 2.9,
-        "cor": "bg-orange-500"
+        "valor": 1.6,
+        "cor": "bg-red-500"
       }
     },
     "LAT": {
@@ -678,8 +678,8 @@
   "ESC": {
     "GOL": {
       "cedido": {
-        "valor": 2.9,
-        "cor": "bg-orange-500"
+        "valor": 1.6,
+        "cor": "bg-red-500"
       },
       "conquistado": {
         "valor": 8.9,
