@@ -1,32 +1,11 @@
-/** Coleta privada via Google Analytics 4 — só ativa com VITE_GA_MEASUREMENT_ID. */
+/** Pageviews por aba — gtag carregado em index.html. */
 
 const MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID?.trim();
 
 declare global {
   interface Window {
-    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
   }
-}
-
-let inicializado = false;
-
-export function initGA4(): void {
-  if (inicializado || !MEASUREMENT_ID || typeof window === "undefined") return;
-
-  window.dataLayer = window.dataLayer ?? [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer!.push(args);
-  };
-  window.gtag("js", new Date());
-  window.gtag("config", MEASUREMENT_ID, { send_page_view: false });
-
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
-  document.head.appendChild(script);
-
-  inicializado = true;
 }
 
 const ROTULOS_ABA: Record<string, string> = {
