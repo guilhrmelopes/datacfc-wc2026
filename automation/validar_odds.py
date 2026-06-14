@@ -8,7 +8,7 @@ from pathlib import Path
 
 MIN_TOTAL = 500
 MIN_G = 0
-MIN_A = 0
+MIN_A = 200
 MIN_GA = 400
 MIN_SG = 400
 MIN_VIGENTES_PCT = 0.85

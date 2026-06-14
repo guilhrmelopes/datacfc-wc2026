@@ -7,13 +7,13 @@ Arquitetura (corrigida após diagnóstico):
   O browser carrega os scripts inline, e após clicar "Player" → "Player To Score or Assist"
   o RSC expõe odds combinadas de marcar ou assistir.
 
-Fluxo:
+Fluxo (hub oddsnotifier):
   [1] Carrega jogadores_mercado.json → índice por selecao
-  [2] Fixtures rodada 1 via world-cup-2026 + cache eventos_odds_rodada1.json:
+  [2] Por evento:
       a. Playwright navega → /football/international-world-cup/{eventId}
-      b. Clica "Player" → "Player To Score or Assist"
-      c. Extrai RSC (__next_f) e parseia bloco bookmakers
-      d. Pega melhor odd por jogador entre todas as casas
+      b. Clica Player → Player To Score or Assist
+      c. Percorre sub-filtros Score (G%), Assist (A%), Score Or Assist (GA%)
+      d. Extrai RSC (__next_f) e parseia labels "(Score)/(Assist)/(Score Or Assist)"
   [3] Matching POR EQUIPE: fuzzy restrito às equipes do jogo
   [4] Salva odds_jogadores.json com atleta_id como chave (g_pct, a_pct, ga_pct, sg_pct)
 
@@ -68,19 +68,24 @@ MIN_JOGADORES_SALVAR = 500
 POSICOES_LINHA: frozenset[int] = frozenset({2, 3, 4, 5})
 POSICOES_SG: frozenset[int] = frozenset({1, 2, 3})  # GOL, LAT, ZAG
 
+MERCADO_PLAYER_PAI = "Player To Score or Assist"
+
 MERCADOS_RSC: dict[str, str] = {
-    "Player To Score or Assist": "ga",
+    "Player To Score or Assist": "ga",  # fallback se label sem sufixo
     "Anytime Goalscorer": "g",
     "Player To Score": "g",
     "Player To Assist": "a",
 }
 
-MERCADOS_PLAYER_UI: list[tuple[str, str]] = [
-    ("Player To Score", "g"),
-    ("Anytime Goalscorer", "g"),
-    ("Player To Assist", "a"),
-    ("Player To Score or Assist", "ga"),
+# Sub-filtros dentro de Player To Score or Assist (hub: Score / Assist / Score Or Assist)
+MERCADOS_PLAYER_SUB_UI: list[tuple[str, str]] = [
+    ("Score", "g"),
+    ("Assist", "a"),
+    ("Score Or Assist", "ga"),
 ]
+
+# Legado — não usar como mercados de topo; mantido só para compatibilidade interna
+MERCADOS_PLAYER_UI: list[tuple[str, str]] = MERCADOS_PLAYER_SUB_UI
 
 MKT_TEAM_TOTAL_HOME = "Team Total Home"
 MKT_TEAM_TOTAL_AWAY = "Team Total Away"
@@ -921,6 +926,48 @@ def _melhor_odd(
     return atual
 
 
+_PAT_LABEL_PTSOA = re.compile(
+    r"^(.+?)\s*\((Score\s+[Oo]r\s+[Aa]ssist|Score|Assist)\)\s*(?:\(\d+\))?\s*$",
+    re.IGNORECASE,
+)
+
+
+def _classificar_label_ptsoa(label: str) -> tuple[str, str] | None:
+    """
+    Player To Score or Assist no hub usa labels como:
+      'Patrik Schick (Score) (1)' -> g
+      'Patrik Schick (Assist) (2)' -> a
+      'Patrik Schick (Score Or Assist) (1)' -> ga
+    """
+    bruto = (label or "").strip()
+    if not bruto:
+        return None
+    m = _PAT_LABEL_PTSOA.match(bruto)
+    if not m:
+        return None
+    nome = m.group(1).strip()
+    tipo = m.group(2).lower().replace("  ", " ")
+    if "or assist" in tipo:
+        return nome, "ga"
+    if tipo == "assist":
+        return nome, "a"
+    if tipo == "score":
+        return nome, "g"
+    return None
+
+
+def _registrar_odd_jogador(
+    resultado: dict[str, dict[str, tuple[float, str]]],
+    sufixo: str,
+    nome: str,
+    odds_val: float,
+    bk_name: str,
+) -> None:
+    resultado[sufixo][nome] = _melhor_odd(
+        resultado[sufixo].get(nome), odds_val, bk_name,
+    )
+
+
 def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
     """
     Parseia o bloco "bookmakers":{ "Bet365":[{markets}...], ... } no RSC.
@@ -940,9 +987,8 @@ def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]
         for mercado in mercados:
             if not isinstance(mercado, dict):
                 continue
-            sufixo = MERCADOS_RSC.get(mercado.get("name", ""))
-            if sufixo is None:
-                continue
+            nome_mercado = mercado.get("name", "")
+
             for item in mercado.get("odds") or []:
                 if not isinstance(item, dict):
                     continue
@@ -956,8 +1002,25 @@ def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]
                     continue
                 if odds_val <= 1.0:
                     continue
-                resultado[sufixo][label] = _melhor_odd(
-                    resultado[sufixo].get(label), odds_val, str(bk_name)
+
+                if nome_mercado == MERCADO_PLAYER_PAI:
+                    classificado = _classificar_label_ptsoa(str(label))
+                    if classificado:
+                        nome_jog, sufixo = classificado
+                        _registrar_odd_jogador(
+                            resultado, sufixo, nome_jog, odds_val, str(bk_name),
+                        )
+                        continue
+                    sufixo = "ga"
+                    chave = str(label)
+                else:
+                    sufixo = MERCADOS_RSC.get(nome_mercado)
+                    if sufixo is None:
+                        continue
+                    chave = str(label)
+
+                _registrar_odd_jogador(
+                    resultado, sufixo, chave, odds_val, str(bk_name),
                 )
 
     logger.info(
@@ -1288,8 +1351,40 @@ def _clicar_mercado_player(pagina: Page, rotulo: str) -> bool:
     return False
 
 
+def _clicar_filtro_ptsoa(pagina: Page, rotulo: str) -> bool:
+    """
+    Sub-filtro dentro de Player To Score or Assist: 'Score (44)', 'Assist (44)', etc.
+    """
+    vis_timeout = _wait_ms(6000 if IS_CI else 4000)
+    click_timeout = _wait_ms(8000 if IS_CI else 5000)
+    padrao = re.compile(rf"^{re.escape(rotulo)}\s*(\(\d+\))?\s*$", re.IGNORECASE)
+
+    try:
+        botoes = pagina.locator("button")
+        total = min(botoes.count(), 120)
+        for idx in range(total):
+            try:
+                texto = botoes.nth(idx).inner_text(timeout=1500).strip()
+            except Exception:
+                continue
+            linha = texto.split("\n")[0].strip()
+            if not padrao.match(linha):
+                continue
+            btn = botoes.nth(idx)
+            if not btn.is_visible(timeout=vis_timeout):
+                continue
+            btn.scroll_into_view_if_needed(timeout=vis_timeout)
+            btn.click(timeout=click_timeout)
+            pagina.wait_for_timeout(_wait_ms(2500))
+            return True
+    except Exception:
+        pass
+
+    return _clicar_mercado_player(pagina, rotulo)
+
+
 def _navegar_clicar_player(pagina: Page) -> None:
-    """Abre aba Player e percorre mercados G / A / GA para carregar RSC."""
+    """Player → Player To Score or Assist → Score / Assist / Score Or Assist."""
     vis_timeout = _wait_ms(6000 if IS_CI else 4000)
     click_timeout = _wait_ms(8000 if IS_CI else 5000)
 
@@ -1310,12 +1405,17 @@ def _navegar_clicar_player(pagina: Page) -> None:
         except Exception:
             pass
 
-    vistos: set[str] = set()
-    for rotulo, _suf in MERCADOS_PLAYER_UI:
-        if rotulo in vistos:
-            continue
-        vistos.add(rotulo)
-        if not _clicar_mercado_player(pagina, rotulo) and IS_CI and rotulo == "Player To Score or Assist":
+    if not _clicar_mercado_player(pagina, MERCADO_PLAYER_PAI) and IS_CI:
+        try:
+            pagina.get_by_text(MERCADO_PLAYER_PAI, exact=False).first.click(
+                timeout=click_timeout, force=True,
+            )
+            pagina.wait_for_timeout(_wait_ms(2500))
+        except Exception:
+            pass
+
+    for rotulo, _suf in MERCADOS_PLAYER_SUB_UI:
+        if not _clicar_filtro_ptsoa(pagina, rotulo) and IS_CI:
             try:
                 pagina.get_by_text(rotulo, exact=False).first.click(
                     timeout=click_timeout, force=True,
@@ -1413,9 +1513,12 @@ def processar_evento(
     rsc = ""
     max_tentativas = 4 if IS_CI else 3
     for tentativa in range(max_tentativas):
-        for passo_mercado, (rotulo, _suf) in enumerate(MERCADOS_PLAYER_UI):
-            if passo_mercado > 0:
-                _clicar_mercado_player(pagina, rotulo)
+        if tentativa > 0:
+            _clicar_mercado_player(pagina, MERCADO_PLAYER_PAI)
+
+        for passo_mercado, (rotulo, _suf) in enumerate(MERCADOS_PLAYER_SUB_UI):
+            if passo_mercado > 0 or tentativa > 0:
+                _clicar_filtro_ptsoa(pagina, rotulo)
             for _ in range(6 if IS_CI else 4):
                 pagina.wait_for_timeout(_wait_ms(2500))
                 novos = rsc_acumulado[tamanho_antes:]
