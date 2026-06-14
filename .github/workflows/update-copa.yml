@@ -5,6 +5,16 @@ on:
     # A cada 30 min — processa partidas finalizadas e atualiza JSONs
     - cron: "*/30 * * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/scrapers/**"
+      - "automation/executar_odds.py"
+      - "automation/validar_odds.py"
+      - "automation/preparar_mercado_odds.py"
+      - "automation/avaliar_matching_odds.py"
+      - ".github/workflows/update-copa.yml"
+      - "requirements*.txt"
 
 concurrency:
   group: update-copa-${{ github.ref }}
