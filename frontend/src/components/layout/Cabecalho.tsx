@@ -49,6 +49,15 @@ export function Cabecalho() {
     };
   }, [atualizar]);
 
+  const textoTimestamp =
+    carregando && !atualizadoEm
+      ? "Verificando atualização…"
+      : atualizadoEm
+        ? `Atualizado em ${formatarTimestampDashboard(atualizadoEm)}`
+        : "Atualização indisponível";
+
+  const servidorOnline = Boolean(atualizadoEm) || carregando;
+
   return (
     <header className="mb-6 border-b border-[var(--color-border)] pb-4">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -73,14 +82,16 @@ export function Cabecalho() {
 
         <div className="flex shrink-0 items-center gap-2.5">
           <p
-            className="text-right text-xs text-[var(--color-muted)]"
+            className="flex items-center justify-end gap-2 text-right text-xs text-[var(--color-muted)]"
             title="Horário de Brasília — atualiza automaticamente após cada rotina"
           >
-            {carregando && !atualizadoEm
-              ? "Verificando atualização…"
-              : atualizadoEm
-                ? `Atualizado em ${formatarTimestampDashboard(atualizadoEm)}`
-                : "Atualização indisponível"}
+            {servidorOnline && (
+              <span
+                className="indicador-online h-2 w-2 shrink-0 rounded-full bg-emerald-400"
+                aria-hidden="true"
+              />
+            )}
+            <span>{textoTimestamp}</span>
           </p>
           <a
             href={PERFIL_X}
