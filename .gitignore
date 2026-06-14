@@ -12,6 +12,7 @@
 /src/scrapers/**
 !/src/scrapers/__init__.py
 !/src/scrapers/scraper_odds_jogadores.py
+!/src/scrapers/matching_cartola.py
 !/src/scrapers/fotmob_copa.py
 !/src/scrapers/fotmob_fixtures.py
 !/src/scrapers/fotmob_mapa.py

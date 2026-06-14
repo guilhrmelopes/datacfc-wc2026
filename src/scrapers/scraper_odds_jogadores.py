@@ -35,7 +35,14 @@ from pathlib import Path
 from typing import Any
 
 from playwright.sync_api import sync_playwright, Page
-from thefuzz import fuzz
+
+from scrapers.matching_cartola import (
+    MIN_SCORE_ATRIBUICAO,
+    MIN_SCORE_LACUNA,
+    atribuir_nomes_a_jogadores,
+    limpar_nome_fonte,
+    melhor_jogador_para_nome,
+)
 
 # ─────────────────────────────────── Logging ─────────────────────────────────
 
@@ -137,18 +144,9 @@ Object.defineProperty(navigator, 'deviceMemory', { get: () => 8 });
 def _wait_ms(base_ms: int) -> int:
     return int(base_ms * CI_WAIT_MULT)
 
-# Threshold fuzzy matching
+# Threshold legado — matching em matching_cartola.py
 THRESHOLD_AUTO:   int = 85
-THRESHOLD_REVIEW: int = 72
-
-# Mapa de nomes exatos do oddsnotifier → apelido no Cartola (para casos borderline)
-# Formato: nome_normalizado_oddsnotifier → atleta_id no Cartola
-ALIAS_JOGADORES: dict[str, int] = {
-    "lira e":           128559,   # Érik Lira (LIRA E. → score 77%)
-    "chavez garcia m":  146414,   # Mateo Chávez García
-    "mora zambrano g":  141486,   # Gilberto Mora Zambrano
-    "reyes romero":     132767,   # Israel Reyes Romero
-}
+THRESHOLD_REVIEW: int = MIN_SCORE_ATRIBUICAO
 
 # Mapa oddsnotifier → seleção Cartola (campo upper)
 ALIAS_TIMES: dict[str, str] = {
@@ -971,10 +969,13 @@ def _registrar_odd_jogador(
     )
 
 
-def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]]]:
+def extrair_odds_rsc(
+    rsc_conteudo: str,
+    sufixo_alvo: str | None = None,
+) -> dict[str, dict[str, tuple[float, str]]]:
     """
-    Parseia o bloco "bookmakers":{ "Bet365":[{markets}...], ... } no RSC.
-    Retorna melhor odd por jogador em marcar (g), assistir (a) e marcar ou assistir (ga).
+    Parseia o bloco "bookmakers" no RSC.
+    sufixo_alvo: se informado (g/a/ga), ignora labels de outros mercados.
     """
     resultado: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}, "ga": {}}
     bookmakers = _extrair_json_object(rsc_conteudo, "bookmakers")
@@ -1010,9 +1011,13 @@ def extrair_odds_rsc(rsc_conteudo: str) -> dict[str, dict[str, tuple[float, str]
                     classificado = _classificar_label_ptsoa(str(label))
                     if classificado:
                         nome_jog, sufixo = classificado
+                        if sufixo_alvo and sufixo != sufixo_alvo:
+                            continue
                         _registrar_odd_jogador(
                             resultado, sufixo, nome_jog, odds_val, str(bk_name),
                         )
+                        continue
+                    if sufixo_alvo and sufixo_alvo != "ga":
                         continue
                     sufixo = "ga"
                     chave = str(label)
@@ -1233,45 +1238,135 @@ def consolidar_nomes_odds(
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-# [4] MATCHING POR EQUIPE
+# [4] MATCHING POR EQUIPE (matching_cartola.py)
 # ══════════════════════════════════════════════════════════════════════════════
-
-
-def _score_fuzzy(a: str, b: str) -> int:
-    na, nb = _norm(a), _norm(b)
-    sort_r = fuzz.token_sort_ratio(na, nb)
-    set_r  = fuzz.token_set_ratio(na, nb)
-    # partial_ratio é muito agressivo para nomes compostos/abreviados;
-    # só usamos se o resultado das outras métricas já for razoável
-    partial = fuzz.partial_ratio(na, nb)
-    base = max(sort_r, set_r)
-    # Aplica partial_ratio apenas como bônus moderado
-    return int(base * 0.7 + partial * 0.3) if base >= 50 else base
 
 
 def casar_jogador_na_equipe(
     nome_bk: str,
     pool: list[dict],
+    excluir_ids: set[int] | None = None,
 ) -> tuple[dict | None, int, list[tuple[int, dict]]]:
-    chave = _norm(nome_bk)
-    if chave in ALIAS_JOGADORES:
-        alvo_id = ALIAS_JOGADORES[chave]
-        for j in pool:
-            if j.get("atleta_id") == alvo_id:
-                return j, 100, [(100, j)]
+    """Compatibilidade com relatório — delega ao matching compartilhado."""
+    jog, score = melhor_jogador_para_nome(
+        nome_bk,
+        pool,
+        excluir_ids=excluir_ids,
+        min_score=MIN_SCORE_ATRIBUICAO,
+    )
+    top3: list[tuple[int, dict]] = []
+    if jog:
+        top3.append((score, jog))
+    return jog, score, top3
 
-    # 2. Fuzzy matching
-    scores = [(max(_score_fuzzy(nome_bk, j.get("apelido", "")),
-                   _score_fuzzy(nome_bk, j.get("nome", ""))), j)
-              for j in pool]
-    scores.sort(key=lambda x: x[0], reverse=True)
-    top3 = scores[:3]
-    if not top3:
-        return None, 0, []
-    melhor_score, melhor_j = top3[0]
-    if melhor_score >= THRESHOLD_REVIEW:
-        return melhor_j, melhor_score, top3
-    return None, melhor_score, top3
+
+def _raspar_mercados_ptsoa(
+    pagina: Page,
+    rsc_acumulado: list[str],
+    tamanho_antes: int,
+    desc: str,
+) -> dict[str, dict[str, tuple[float, str]]]:
+    """
+    Raspa G%, A% e GA% em passagens separadas (Score / Assist / Score Or Assist).
+    Cada filtro gera RSC próprio — evita misturar mercados no merge acumulado.
+    """
+    odds_por: dict[str, dict[str, tuple[float, str]]] = {"g": {}, "a": {}, "ga": {}}
+    _navegar_clicar_player(pagina)
+
+    for rotulo, sufixo in MERCADOS_PLAYER_SUB_UI:
+        if not _clicar_filtro_ptsoa(pagina, rotulo):
+            logger.warning("  Filtro %s indisponivel em %s", rotulo, desc)
+            continue
+
+        slice_start = len(rsc_acumulado)
+        for _ in range(8 if IS_CI else 6):
+            pagina.wait_for_timeout(_wait_ms(2500))
+            novos = rsc_acumulado[slice_start:]
+            if sum(len(c) for c in novos) > 40_000:
+                break
+
+        rsc = _coletar_rsc_evento(pagina, rsc_acumulado, slice_start)
+        rsc_dom = _rsc_de_pagina(pagina)
+        extraido = extrair_odds_rsc(f"{rsc}\n{rsc_dom}", sufixo_alvo=sufixo)
+        mercado = extraido.get(sufixo) or {}
+
+        for nome, par in mercado.items():
+            odds_por[sufixo][nome] = _melhor_odd(
+                odds_por[sufixo].get(nome), par[0], par[1],
+            )
+
+        logger.info("  Filtro %s: %d jogadores", rotulo, len(mercado))
+
+    return odds_por
+
+
+def _aplicar_mercado_evento(
+    odds_map: dict[str, tuple[float, str]],
+    sufixo: str,
+    pools: list[list[dict]],
+    eid: int,
+    sel_home: str,
+    sel_away: str,
+    selecao_sigla: dict[str, str],
+    resultado: dict[str, dict],
+    relatorio: Relatorio,
+    desc: str,
+) -> int:
+    """Atribui odds do mercado (g/a/ga) ao elenco com matching um-a-um."""
+    if not odds_map:
+        return 0
+
+    candidatos: list[dict] = []
+    for pool in pools:
+        candidatos.extend(pool)
+
+    atrib = atribuir_nomes_a_jogadores(
+        list(odds_map.keys()),
+        candidatos,
+        min_score=MIN_SCORE_ATRIBUICAO,
+    )
+    adicionados = 0
+    matched: set[str] = set()
+
+    for nome_bk, (jog, score) in atrib.items():
+        adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
+        if not _deve_atualizar_odds(jog, adv):
+            continue
+        relatorio.match(nome_bk, jog, score, desc)
+        odd_val, odd_bk = odds_map[nome_bk]
+        if _aplicar_pct_jogador(resultado, eid, jog, adv, sufixo, odd_val, odd_bk):
+            adicionados += 1
+        matched.add(nome_bk)
+
+    nomes_lacuna = [n for n in odds_map if n not in matched]
+    if nomes_lacuna:
+        pct_key, _, _ = _chaves_mercado(sufixo)
+        sem_campo = [
+            j for j in candidatos
+            if not (resultado.get(str(j["atleta_id"])) or {}).get(pct_key)
+        ]
+        lacunas = atribuir_nomes_a_jogadores(
+            nomes_lacuna,
+            sem_campo,
+            min_score=MIN_SCORE_LACUNA,
+        )
+        for nome_bk, (jog, score) in lacunas.items():
+            adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
+            if not _deve_atualizar_odds(jog, adv):
+                continue
+            relatorio.match(f"{nome_bk} [lacuna]", jog, score, desc)
+            odd_val, odd_bk = odds_map[nome_bk]
+            if _aplicar_pct_jogador(resultado, eid, jog, adv, sufixo, odd_val, odd_bk):
+                adicionados += 1
+            matched.add(nome_bk)
+
+    for nome_bk in odds_map:
+        if nome_bk in matched:
+            continue
+        _, score, top3 = casar_jogador_na_equipe(nome_bk, candidatos)
+        relatorio.no_match(nome_bk, score, top3, desc)
+
+    return adicionados
 
 
 def _adv_para_entrada(jog: dict, adv: str | None) -> str | None:
@@ -1314,30 +1409,6 @@ def _aplicar_pct_jogador(
     entrada[odds_key] = odd_val
     resultado[aid] = entrada
     return True
-
-
-def _melhor_odd_para_jogador(
-    jog: dict,
-    odds_map: dict[str, tuple[float, str]],
-) -> tuple[str, tuple[float, str], int] | None:
-    melhor_nome: str | None = None
-    melhor_par: tuple[float, str] | None = None
-    melhor_score = 0
-    for nome_bk, par in odds_map.items():
-        chave = _norm(nome_bk)
-        if chave in ALIAS_JOGADORES and jog.get("atleta_id") == ALIAS_JOGADORES[chave]:
-            return nome_bk, par, 100
-        score = max(
-            _score_fuzzy(nome_bk, jog.get("apelido", "")),
-            _score_fuzzy(nome_bk, jog.get("nome", "")),
-        )
-        if score > melhor_score:
-            melhor_score = score
-            melhor_nome = nome_bk
-            melhor_par = par
-    if melhor_nome and melhor_par and melhor_score >= THRESHOLD_REVIEW:
-        return melhor_nome, melhor_par, melhor_score
-    return None
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1388,42 +1459,6 @@ class Relatorio:
         for m in self.matched:
             print(m)
         print(sep + "\n")
-
-
-def _preencher_odds_elenco(
-    resultado: dict[str, dict],
-    eid: int,
-    pools: list[list[dict]],
-    odds_maps: dict[str, dict[str, tuple[float, str]]],
-    sel_home: str,
-    sel_away: str,
-    selecao_sigla: dict[str, str],
-    relatorio: Relatorio,
-    desc: str,
-) -> int:
-    """Segunda passagem: elenco inteiro (todos os status) × odds do bookmaker."""
-    adicionados = 0
-    for sufixo in ("g", "a", "ga"):
-        odds_map = odds_maps.get(sufixo) or {}
-        if not odds_map:
-            continue
-        pct_key, _, _ = _chaves_mercado(sufixo)
-        for pool in pools:
-            for jog in pool:
-                adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
-                if not _deve_atualizar_odds(jog, adv):
-                    continue
-                aid = str(jog["atleta_id"])
-                if (resultado.get(aid) or {}).get(pct_key):
-                    continue
-                match = _melhor_odd_para_jogador(jog, odds_map)
-                if not match:
-                    continue
-                nome_bk, (odd_val, odd_bk), score = match
-                if _aplicar_pct_jogador(resultado, eid, jog, adv, sufixo, odd_val, odd_bk):
-                    relatorio.match(f"{nome_bk} [elenco]", jog, score, desc)
-                    adicionados += 1
-    return adicionados
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -1609,36 +1644,25 @@ def processar_evento(
     max_tentativas = 4 if IS_CI else 3
     for tentativa in range(max_tentativas):
         if tentativa > 0:
-            _clicar_mercado_player(pagina, MERCADO_PLAYER_PAI)
-
-        for passo_mercado, (rotulo, _suf) in enumerate(MERCADOS_PLAYER_SUB_UI):
-            if not _clicar_filtro_ptsoa(pagina, rotulo):
-                logger.warning("Filtro %s indisponivel em %s", rotulo, desc)
-            for _ in range(6 if IS_CI else 4):
-                pagina.wait_for_timeout(_wait_ms(2500))
-                novos = rsc_acumulado[tamanho_antes:]
-                if sum(len(c) for c in novos) > 50_000:
-                    break
-
-            rsc_parcial = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
-            if rsc_parcial.strip():
-                _mesclar_odds_rsc(odds_bruto_acum, extrair_odds_rsc(rsc_parcial))
-
-        rsc = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
-        if _rsc_tem_bookmakers(rsc) or any(odds_bruto_acum[m] for m in ("g", "a", "ga")):
-            break
-        if tentativa < max_tentativas - 1:
-            logger.warning(
-                "RSC incompleto (%d chars, next_f=%s), recarregando...",
-                len(rsc),
-                "__next_f" in rsc,
-            )
             try:
                 pagina.reload(timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
             except Exception:
                 pagina.goto(url, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
             pagina.wait_for_timeout(_wait_ms(random.randint(7000, 11000)))
-            _navegar_clicar_player(pagina)
+
+        odds_bruto_acum = _raspar_mercados_ptsoa(pagina, rsc_acumulado, tamanho_antes, desc)
+        rsc = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
+
+        if _rsc_tem_bookmakers(rsc) or any(odds_bruto_acum[m] for m in ("g", "a", "ga")):
+            break
+        if tentativa < max_tentativas - 1:
+            logger.warning(
+                "RSC incompleto (%d chars, g=%d a=%d ga=%d), recarregando...",
+                len(rsc),
+                len(odds_bruto_acum["g"]),
+                len(odds_bruto_acum["a"]),
+                len(odds_bruto_acum["ga"]),
+            )
 
     if not rsc.strip() and not any(odds_bruto_acum[m] for m in ("g", "a", "ga")):
         logger.warning("RSC vazio para %s — nenhum dado extraido.", desc)
@@ -1684,53 +1708,25 @@ def processar_evento(
         )
 
     adicionados = n_sg
+    pools_linha = [pool_home, pool_away]
 
-    def _aplicar_mercado(
-        odds_map: dict[str, tuple[float, str]],
-        sufixo: str,
-    ) -> None:
-        nonlocal adicionados
-        for nome_bk in sorted(odds_map):
-            melhor_j: dict | None = None
-            melhor_score = 0
-            melhor_top3: list = []
-
-            for pool in (pool_home, pool_away):
-                if not pool:
-                    continue
-                j, s, t3 = casar_jogador_na_equipe(nome_bk, pool)
-                if j is not None and s > melhor_score:
-                    melhor_j, melhor_score, melhor_top3 = j, s, t3
-
-            if melhor_j is None:
-                relatorio.no_match(nome_bk, melhor_score, melhor_top3, desc)
-                continue
-
-            adv = _adversario_sigla_jogador(melhor_j, sel_home, sel_away, selecao_sigla)
-            if not _deve_atualizar_odds(melhor_j, adv):
-                continue
-
-            relatorio.match(nome_bk, melhor_j, melhor_score, desc)
-
-            odd_val, odd_bk = odds_map[nome_bk]
-            if _aplicar_pct_jogador(resultado, eid, melhor_j, adv, sufixo, odd_val, odd_bk):
-                adicionados += 1
-
-    _aplicar_mercado(odds_g, "g")
-    _aplicar_mercado(odds_a, "a")
-    _aplicar_mercado(odds_ga, "ga")
-
-    adicionados += _preencher_odds_elenco(
-        resultado,
-        eid,
-        [pool_home, pool_away],
-        {"g": odds_g, "a": odds_a, "ga": odds_ga},
-        sel_home,
-        sel_away,
-        selecao_sigla,
-        relatorio,
-        desc,
-    )
+    for sufixo, odds_map in (
+        ("g", odds_g),
+        ("a", odds_a),
+        ("ga", odds_ga),
+    ):
+        adicionados += _aplicar_mercado_evento(
+            odds_map,
+            sufixo,
+            pools_linha,
+            eid,
+            sel_home,
+            sel_away,
+            selecao_sigla,
+            resultado,
+            relatorio,
+            desc,
+        )
 
     logger.info("  %d atletas (G+A+GA+SG).", adicionados)
     return adicionados
