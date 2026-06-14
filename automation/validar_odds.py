@@ -7,11 +7,14 @@ import sys
 from pathlib import Path
 
 MIN_TOTAL = 500
-MIN_G = 0
+MIN_G = 200
 MIN_A = 200
 MIN_GA = 400
 MIN_SG = 400
 MIN_VIGENTES_PCT = 0.85
+
+POS_LINHA = frozenset({2, 3, 4, 5, 6})
+POS_SG = frozenset({1, 2, 3})
 
 _RAIZ = Path(__file__).resolve().parents[1]
 CAMINHO = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
@@ -33,14 +36,33 @@ def validar(caminho: Path | None = None) -> tuple[int, int, int, int, int]:
     return total, g, a, ga, sg
 
 
+def _entrada_vigente(jog: dict, entrada: dict) -> bool:
+    prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
+    if not prox:
+        return bool(
+            entrada.get("ga_pct")
+            or entrada.get("g_pct")
+            or entrada.get("a_pct")
+            or entrada.get("sg_pct")
+        )
+    odds_adv = (entrada.get("adversario_sigla") or "").strip().upper()
+    if odds_adv != prox:
+        return False
+    pos = int(jog.get("posicao_id") or 0)
+    if pos in POS_LINHA:
+        return bool(entrada.get("ga_pct") or entrada.get("g_pct") or entrada.get("a_pct"))
+    if pos in POS_SG:
+        return bool(entrada.get("sg_pct"))
+    return False
+
+
 def validar_odds_vigentes(
     caminho_odds: Path | None = None,
     caminho_mercado: Path | None = None,
 ) -> tuple[int, int, int]:
     """
-    Jogadores que já estrearam e têm ADV no mercado precisam de odds com
-    adversario_sigla alinhado (regra do hub oddsVigentes).
-    Retorna (total_alvo, vigentes, sem_odd).
+    Jogadores com ADV no mercado (qualquer status) precisam de odds alinhadas
+    ao próximo adversário — GA/G/A para linha, SG para GOL/LAT/ZAG.
     """
     path_odds = caminho_odds or CAMINHO
     path_mercado = caminho_mercado or CAMINHO_MERCADO
@@ -55,20 +77,18 @@ def validar_odds_vigentes(
     sem_odd = 0
 
     for jog in mercado:
-        if int(jog.get("copa_jogos_num") or 0) <= 0:
-            continue
         prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
         if not prox:
+            continue
+        pos = int(jog.get("posicao_id") or 0)
+        if pos not in POS_LINHA and pos not in POS_SG:
             continue
         alvo += 1
         entrada = odds.get(str(jog.get("atleta_id")))
         if not isinstance(entrada, dict):
             sem_odd += 1
             continue
-        odds_adv = (entrada.get("adversario_sigla") or "").strip().upper()
-        if odds_adv != prox:
-            continue
-        if entrada.get("ga_pct") or entrada.get("g_pct") or entrada.get("a_pct") or entrada.get("sg_pct"):
+        if _entrada_vigente(jog, entrada):
             vigentes += 1
 
     return alvo, vigentes, sem_odd
@@ -95,7 +115,7 @@ def main() -> None:
     if alvo > 0 and vigentes / alvo < MIN_VIGENTES_PCT:
         print(
             f"Odds vigentes abaixo de {MIN_VIGENTES_PCT:.0%} "
-            f"para jogadores que ja estrearam ({vigentes}/{alvo}). "
+            f"para jogadores com ADV ({vigentes}/{alvo}). "
             "Abortando commit."
         )
         sys.exit(1)
