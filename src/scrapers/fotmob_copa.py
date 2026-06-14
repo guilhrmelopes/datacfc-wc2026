@@ -77,6 +77,48 @@ def _tokens(texto: str) -> list[str]:
     return normalizar_texto(texto).split()
 
 
+# Expansão de tokens equivalentes (abreviações / apelidos comuns no FotMob vs Cartola).
+_SINONIMOS_TOKEN: dict[str, str] = {
+    "jr": "junior",
+    "junior": "jr",
+    "vini": "vinicius",
+    "vinicius": "vini",
+}
+
+
+def _tokens_expandidos(texto: str) -> set[str]:
+    tokens = set(_tokens(texto))
+    for token in list(tokens):
+        par = _SINONIMOS_TOKEN.get(token)
+        if par:
+            tokens.add(par)
+    return tokens
+
+
+# Nome FotMob normalizado → atleta_id Cartola (casos onde fuzzy/token falha).
+_ALIAS_FOTMOB_ATLETA: dict[str, int] = {
+    "yassine bounou": 80951,
+    "bounou": 80951,
+}
+
+
+def _score_fuzzy_nome(a: str, b: str) -> int:
+    from difflib import SequenceMatcher
+
+    na, nb = normalizar_texto(a), normalizar_texto(b)
+    if not na or not nb:
+        return 0
+    sort_ratio = int(SequenceMatcher(None, na, nb).ratio() * 100)
+    set_a, set_b = _tokens_expandidos(a), _tokens_expandidos(b)
+    if set_a and set_b:
+        inter = len(set_a & set_b)
+        union = len(set_a | set_b)
+        set_ratio = int((inter / union) * 100) if union else 0
+    else:
+        set_ratio = 0
+    return max(sort_ratio, set_ratio)
+
+
 def carregar_mercado_por_sigla(caminho: Path, siglas: set[str]) -> dict[str, list[dict]]:
     dados = json.loads(caminho.read_text(encoding="utf-8"))
     por_sigla: dict[str, list[dict]] = {s: [] for s in siglas}
@@ -92,19 +134,29 @@ def associar_jogador_mercado(
     mercado: list[dict],
     *,
     is_goleiro: bool = False,
+    excluir_ids: set[int] | None = None,
 ) -> dict | None:
     candidatos = mercado
     if is_goleiro:
         candidatos = [j for j in mercado if j.get("bucket_posicao") == "GOL"] or mercado
+    if excluir_ids:
+        candidatos = [j for j in candidatos if int(j.get("atleta_id") or 0) not in excluir_ids]
+
+    chave_alias = normalizar_texto(nome_fotmob)
+    alvo_id = _ALIAS_FOTMOB_ATLETA.get(chave_alias)
+    if alvo_id:
+        for jogador in candidatos:
+            if int(jogador.get("atleta_id") or 0) == alvo_id:
+                return jogador
 
     nome_norm = normalizar_texto(nome_fotmob)
-    tokens_fotmob = set(_tokens(nome_fotmob))
+    tokens_fotmob = _tokens_expandidos(nome_fotmob)
 
-    melhor: tuple[int, dict] | None = None
+    melhor: tuple[int, int, dict] | None = None
     for jogador in candidatos:
         apelido = jogador.get("apelido", "")
         ap_norm = normalizar_texto(apelido)
-        tokens_ap = set(_tokens(apelido))
+        tokens_ap = _tokens_expandidos(apelido)
 
         score = 0
         if ap_norm and ap_norm in nome_norm:
@@ -120,10 +172,43 @@ def associar_jogador_mercado(
         if len(_tokens(apelido)) == 1 and sobrenome_fotmob == _tokens(apelido)[0]:
             score = max(score, 70)
 
-        if score > 0 and (melhor is None or score > melhor[0]):
-            melhor = (score, jogador)
+        fuzzy = _score_fuzzy_nome(nome_fotmob, apelido)
+        if fuzzy >= 85:
+            score = max(score, fuzzy)
 
-    return melhor[1] if melhor else None
+        if score <= 0:
+            continue
+
+        # Desempate: quem já estreou na Copa (Cartola) vs reserva sem minutos.
+        jogos_copa = int(jogador.get("copa_jogos_num") or 0)
+        chave = (score, jogos_copa)
+        if melhor is None or chave > (melhor[0], melhor[1]):
+            melhor = (score, jogos_copa, jogador)
+
+    return melhor[2] if melhor else None
+
+
+def _mapa_nomes_lineup(lineup: dict) -> dict[int, str]:
+    """FotMob playerStats usa nomes curtos; o lineup traz nomes completos."""
+    nomes: dict[int, str] = {}
+    for side in ("homeTeam", "awayTeam"):
+        team = lineup.get(side) or {}
+        for grupo in ("starters", "subs", "unavailable"):
+            for pl in team.get(grupo) or []:
+                pid = pl.get("id")
+                nome = pl.get("name")
+                if pid and nome:
+                    nomes[int(pid)] = str(nome)
+    return nomes
+
+
+def _nome_para_matching(player: dict, nomes_lineup: dict[int, str]) -> str:
+    nome_stats = str(player.get("name") or "")
+    pid = int(player.get("id") or 0)
+    nome_lineup = nomes_lineup.get(pid, "")
+    if nome_lineup and len(normalizar_texto(nome_lineup)) > len(normalizar_texto(nome_stats)):
+        return nome_lineup
+    return nome_stats or nome_lineup
 
 
 def _stat_int(player: dict, label: str) -> int:
@@ -257,6 +342,8 @@ def processar_partida(
 
     siglas = {sigla_mandante, sigla_visitante}
     mercado_por_sigla = carregar_mercado_por_sigla(caminho_mercado, siglas)
+    nomes_lineup = _mapa_nomes_lineup(lineup)
+    usados_por_sigla: dict[str, set[int]] = {s: set() for s in siglas}
 
     jogadores: list[JogadorPartida] = []
 
@@ -277,13 +364,19 @@ def processar_partida(
         if minutos <= 0:
             continue
 
+        nome_match = _nome_para_matching(player, nomes_lineup)
         mercado = associar_jogador_mercado(
-            player["name"],
+            nome_match,
             mercado_por_sigla[sigla],
             is_goleiro=bool(player.get("isGoalkeeper")),
+            excluir_ids=usados_por_sigla[sigla],
         )
         if mercado is None:
             continue
+
+        atleta_id = int(mercado.get("atleta_id") or 0)
+        if atleta_id:
+            usados_por_sigla[sigla].add(atleta_id)
 
         bucket = mercado["bucket_posicao"]
         if bucket not in BUCKETS:
