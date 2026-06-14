@@ -11,9 +11,11 @@ MIN_G = 0
 MIN_A = 0
 MIN_GA = 400
 MIN_SG = 400
+MIN_VIGENTES_PCT = 0.85
 
 _RAIZ = Path(__file__).resolve().parents[1]
 CAMINHO = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
+CAMINHO_MERCADO = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 
 
 def validar(caminho: Path | None = None) -> tuple[int, int, int, int, int]:
@@ -31,9 +33,55 @@ def validar(caminho: Path | None = None) -> tuple[int, int, int, int, int]:
     return total, g, a, ga, sg
 
 
+def validar_odds_vigentes(
+    caminho_odds: Path | None = None,
+    caminho_mercado: Path | None = None,
+) -> tuple[int, int, int]:
+    """
+    Jogadores que já estrearam e têm ADV no mercado precisam de odds com
+    adversario_sigla alinhado (regra do hub oddsVigentes).
+    Retorna (total_alvo, vigentes, sem_odd).
+    """
+    path_odds = caminho_odds or CAMINHO
+    path_mercado = caminho_mercado or CAMINHO_MERCADO
+    if not path_odds.is_file() or not path_mercado.is_file():
+        return 0, 0, 0
+
+    odds = json.loads(path_odds.read_text(encoding="utf-8")).get("odds", {})
+    mercado = json.loads(path_mercado.read_text(encoding="utf-8"))
+
+    alvo = 0
+    vigentes = 0
+    sem_odd = 0
+
+    for jog in mercado:
+        if int(jog.get("copa_jogos_num") or 0) <= 0:
+            continue
+        prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
+        if not prox:
+            continue
+        alvo += 1
+        entrada = odds.get(str(jog.get("atleta_id")))
+        if not isinstance(entrada, dict):
+            sem_odd += 1
+            continue
+        odds_adv = (entrada.get("adversario_sigla") or "").strip().upper()
+        if odds_adv != prox:
+            continue
+        if entrada.get("ga_pct") or entrada.get("g_pct") or entrada.get("a_pct") or entrada.get("sg_pct"):
+            vigentes += 1
+
+    return alvo, vigentes, sem_odd
+
+
 def main() -> None:
     total, g, a, ga, sg = validar()
+    alvo, vigentes, sem_odd = validar_odds_vigentes()
+    pct_vig = (vigentes / alvo * 100) if alvo else 100.0
+
     print(f"total={total} g={g} a={a} ga={ga} sg={sg}")
+    print(f"vigentes={vigentes}/{alvo} ({pct_vig:.0f}%) sem_odd={sem_odd}")
+
     if (
         total < MIN_TOTAL
         or g < MIN_G
@@ -42,6 +90,14 @@ def main() -> None:
         or sg < MIN_SG
     ):
         print("Cobertura insuficiente — abortando commit.")
+        sys.exit(1)
+
+    if alvo > 0 and vigentes / alvo < MIN_VIGENTES_PCT:
+        print(
+            f"Odds vigentes abaixo de {MIN_VIGENTES_PCT:.0%} "
+            f"para jogadores que ja estrearam ({vigentes}/{alvo}). "
+            "Abortando commit."
+        )
         sys.exit(1)
 
 

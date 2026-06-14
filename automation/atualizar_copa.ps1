@@ -112,19 +112,13 @@ try {
     $env:PYTHONPATH = $Raiz
     $env:ODDS_MERGE = "1"
     $env:ODDSNOTIFIER_HEADLESS = "true"
+    $env:ODDS_SKIP_WARMUP = "0"
 
-    $scrapeOut = & $python -m src.scrapers.scraper_odds_jogadores 2>&1
+    $scrapeOut = & $python (Join-Path $Raiz "automation\executar_odds.py") 2>&1
     $scrapeExit = $LASTEXITCODE
     $scrapeOut | ForEach-Object { Write-Log "$_" }
-
-    $validOut = & $python (Join-Path $Raiz "automation\validar_odds.py") 2>&1
-    $validExit = $LASTEXITCODE
-    $validOut | ForEach-Object { Write-Log "$_" }
-    if ($validExit -ne 0) {
-        throw "Validação de odds falhou (scrape exit=$scrapeExit) — commit abortado"
-    }
     if ($scrapeExit -ne 0) {
-        Write-Log "AVISO: scraper de odds exit $scrapeExit, mas validação OK."
+        throw "Validação de odds falhou (exit=$scrapeExit) — commit abortado"
     }
 
     Push-Location $Raiz

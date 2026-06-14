@@ -9,13 +9,21 @@ on:
 jobs:
   update-copa:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 120
 
     permissions:
       contents: write
 
     env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       PYTHONPATH: ${{ github.workspace }}/src
+      ODDSNOTIFIER_HEADLESS: "true"
+      ODDS_MERGE: "1"
+      ODDS_SKIP_WARMUP: "0"
+      ODDS_CI_WAIT_MULT: "2.5"
+      ODDS_DELAY_MIN: "12"
+      ODDS_DELAY_MAX: "20"
+      ODDS_TIMEOUT_MS: "60000"
 
     steps:
       - name: Checkout
@@ -25,6 +33,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-odds.txt
+
+      - name: Instalar dependências Python
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-odds.txt
+
+      - name: Instalar Playwright + Chromium
+        run: playwright install chromium --with-deps
 
       - name: API oficial Cartola Copa
         run: python automation/atualizar_cartola_copa.py
@@ -34,6 +54,13 @@ jobs:
 
       - name: Status e fotos dos jogadores
         run: python automation/atualizar_status_jogadores.py
+
+      - name: Odds GA% / SG% (próximo adversário)
+        id: odds
+        continue-on-error: true
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python automation/executar_odds.py
 
       - name: Commitar se houver mudanças
         run: |
@@ -46,9 +73,15 @@ jobs:
             frontend/public/data/classificacao_grupos.json \
             frontend/public/data/pontuacao_cedida.json \
             frontend/public/data/selecoes.json \
-            frontend/public/data/jogadores_mercado.json
+            frontend/public/data/jogadores_mercado.json \
+            frontend/public/data/odds_jogadores.json \
+            frontend/public/data/eventos_odds_rodada1.json
 
           git diff --cached --quiet || (
-            git commit -m "bot: atualizar Copa, scouts e pontuações [skip ci]" &&
+            git commit -m "bot: atualizar Copa, scouts, pontuações e odds [skip ci]" &&
             git push
           )
+
+      - name: Aviso se odds falharam
+        if: failure() && steps.odds.outcome == 'failure'
+        run: echo "::warning::Scraper de odds falhou — commit de Copa pode ter sido abortado."
