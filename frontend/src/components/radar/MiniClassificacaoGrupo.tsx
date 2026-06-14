@@ -29,7 +29,7 @@ export function MiniClassificacaoGrupo({ grupo, classificacao, selecoesDestaque 
             <th className="px-1 py-1.5 text-left">Seleção</th>
             <th className="px-1 py-1.5">P</th>
             <th className="px-1 py-1.5">J</th>
-            <th className="px-1 py-1.5">SG</th>
+            <th className="px-1 py-1.5">SALDO</th>
           </tr>
         </thead>
         <tbody>

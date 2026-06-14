@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import type { ClassificacaoGruposParseada } from "@/lib/classificacaoGrupos";
 import {
   chaveConfronto,
+  confrontosDoFiltroRodada,
   formatarDataExibicao,
+  labelFiltroRodada,
   obterPerformance,
 } from "@/lib/recorrenciaHelpers";
 import { traduzirSelecao } from "@/lib/traducoes";
@@ -43,17 +45,6 @@ interface Props {
   classificacao: ClassificacaoGruposParseada;
 }
 
-function LegendaRecorrencia() {
-  return (
-    <span
-      className="inline-flex h-5 w-5 cursor-help items-center justify-center rounded-full border border-[var(--color-border)] text-[10px] font-serif italic"
-      title="Pontuação cedido/conquistado — média Cartola por posição (Copa 2026). Cores: BOM (verde) · MEDIANO (âmbar) · RUIM (vermelho). Conquistado: maior é melhor. Cedido: menor é melhor."
-    >
-      i
-    </span>
-  );
-}
-
 function linhaClassificacao(
   classificacao: ClassificacaoGruposParseada,
   selecaoNome: string,
@@ -67,10 +58,9 @@ function linhaClassificacao(
 
 export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props) {
   const [confrontosWC, setConfrontosWC] = useState<ConfrontoWC[]>([]);
-  const [rodadaCartola, setRodadaCartola] = useState(1);
+  const [rodadaFiltro, setRodadaFiltro] = useState("1");
   const [diaAtual, setDiaAtual] = useState("");
   const [grupoFiltro, setGrupoFiltro] = useState("TODOS");
-  const [somenteJogosDia, setSomenteJogosDia] = useState(false);
   const [busca, setBusca] = useState("");
   const [confrontoAtivo, setConfrontoAtivo] = useState<string | null>(null);
   const [selecaoAtiva, setSelecaoAtiva] = useState<string | null>(null);
@@ -84,9 +74,10 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
       .then(([grupos, estado]: [{ confrontos: ConfrontoWC[] }, CopaEstado | null]) => {
         const confrontos = grupos.confrontos ?? [];
         setConfrontosWC(confrontos);
-        const rodada = estado?.rodada_cartola_atual ?? 1;
-        setRodadaCartola(rodada);
-        const daRodada = confrontos.filter((c) => c.rodada === rodada);
+        const rodada = Math.min(3, Math.max(1, estado?.rodada_cartola_atual ?? 1));
+        const filtroInicial = String(rodada);
+        setRodadaFiltro(filtroInicial);
+        const daRodada = confrontosDoFiltroRodada(confrontos, filtroInicial);
         const hoje = new Date().toISOString().slice(0, 10);
         const datas = [...new Set(daRodada.map((c) => c.data))].sort();
         const inicial = datas.find((d) => d >= hoje) ?? datas[0] ?? "";
@@ -95,14 +86,9 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
       .catch(console.error);
   }, []);
 
-  const rodadasDisponiveis = useMemo(
-    () => [...new Set(confrontosWC.map((c) => c.rodada))].sort((a, b) => a - b),
-    [confrontosWC],
-  );
-
   const confrontosRodada = useMemo(
-    () => confrontosWC.filter((c) => c.rodada === rodadaCartola),
-    [confrontosWC, rodadaCartola],
+    () => confrontosDoFiltroRodada(confrontosWC, rodadaFiltro),
+    [confrontosWC, rodadaFiltro],
   );
 
   const datasDisponiveis = useMemo(
@@ -111,10 +97,29 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
   );
 
   useEffect(() => {
-    if (datasDisponiveis.length && !datasDisponiveis.includes(diaAtual)) {
-      setDiaAtual(datasDisponiveis[0]);
+    if (!datasDisponiveis.length) {
+      if (diaAtual) setDiaAtual("");
+      return;
+    }
+    if (!datasDisponiveis.includes(diaAtual)) {
+      const hoje = new Date().toISOString().slice(0, 10);
+      setDiaAtual(datasDisponiveis.find((d) => d >= hoje) ?? datasDisponiveis[0]);
     }
   }, [datasDisponiveis, diaAtual]);
+
+  function handleRodadaChange(id: string) {
+    setRodadaFiltro(id);
+    setConfrontoAtivo(null);
+    setSelecaoAtiva(null);
+    const daRodada = confrontosDoFiltroRodada(confrontosWC, id);
+    const datas = [...new Set(daRodada.map((c) => c.data))].sort();
+    if (!datas.length) {
+      setDiaAtual("");
+      return;
+    }
+    const hoje = new Date().toISOString().slice(0, 10);
+    setDiaAtual(datas.find((d) => d >= hoje) ?? datas[0]);
+  }
 
   const selecoesUnicas = useMemo(() => {
     const mapa = new Map<string, Selecao>();
@@ -170,9 +175,6 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
     if (grupoFiltro !== "TODOS") {
       lista = lista.filter((s) => s.grupo === grupoFiltro);
     }
-    if (somenteJogosDia) {
-      lista = lista.filter((s) => siglasDoDia.has(s.selecao));
-    }
     if (busca.trim()) {
       const q = busca.trim().toLowerCase();
       lista = lista.filter(
@@ -187,7 +189,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
         sensitivity: "base",
       }),
     );
-  }, [selecoesUnicas, grupoFiltro, somenteJogosDia, siglasDoDia, busca]);
+  }, [selecoesUnicas, grupoFiltro, busca]);
 
   const selecaoDetalhe = selecaoAtiva ? mapaSelecao.get(selecaoAtiva) : null;
 
@@ -309,37 +311,30 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <FiltrosRecorrencia
-          rodada={rodadaCartola}
-          rodadasDisponiveis={rodadasDisponiveis}
-          diaAtual={diaAtual}
-          datasDisponiveis={datasDisponiveis}
-          grupo={grupoFiltro}
-          somenteJogosDia={somenteJogosDia}
-          busca={busca}
-          onRodadaChange={(r) => {
-            setRodadaCartola(r);
-            setConfrontoAtivo(null);
-            setSelecaoAtiva(null);
-          }}
-          onDiaChange={setDiaAtual}
-          onGrupoChange={setGrupoFiltro}
-          onSomenteJogosDiaChange={setSomenteJogosDia}
-          onBuscaChange={setBusca}
-        />
-        <LegendaRecorrencia />
-      </div>
+      <FiltrosRecorrencia
+        rodadaFiltro={rodadaFiltro}
+        diaAtual={diaAtual}
+        datasDisponiveis={datasDisponiveis}
+        grupo={grupoFiltro}
+        busca={busca}
+        onRodadaChange={handleRodadaChange}
+        onDiaChange={setDiaAtual}
+        onGrupoChange={setGrupoFiltro}
+        onBuscaChange={setBusca}
+      />
 
       {/* Confrontos da rodada/dia — visão principal */}
       <section className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4">
         <h3 className="mb-3 text-sm font-bold uppercase tracking-wide text-[var(--color-muted)]">
-          Confrontos — Rodada {rodadaCartola} · {formatarDataExibicao(diaAtual)}
+          Confrontos — {labelFiltroRodada(rodadaFiltro)}
+          {diaAtual ? ` · ${formatarDataExibicao(diaAtual)}` : ""}
         </h3>
 
         {jogosFiltrados.length === 0 ? (
           <p className="py-6 text-center text-sm text-[var(--color-muted)]">
-            Nenhum jogo para os filtros selecionados.
+            {confrontosRodada.length === 0
+              ? "Nenhum jogo cadastrado para esta fase."
+              : "Nenhum jogo para os filtros selecionados."}
           </p>
         ) : (
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -451,7 +446,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
                 key={s.selecao}
                 type="button"
                 onClick={() => selecionarTime(s.selecao)}
-                className={`flex flex-col items-center rounded-lg border p-2 transition ${
+                className={`flex flex-col items-center gap-1 rounded-lg border p-2 transition ${
                   selecaoAtiva === s.selecao
                     ? "border-sky-400 bg-[var(--color-accent)]"
                     : siglasDoDia.has(s.selecao)
@@ -462,14 +457,11 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
                 {s.url_escudo && (
                   <img src={s.url_escudo} alt={s.sigla} className="h-9 w-9 object-contain" />
                 )}
-                <span className="mt-1 text-[10px] font-bold">{s.sigla.toUpperCase()}</span>
                 {classif && classif.J > 0 && (
-                  <span className="text-[9px] text-[var(--color-muted)]">
-                    {classif.P}pts · J{classif.J}
-                  </span>
+                  <span className="text-[10px] font-semibold tabular-nums">{classif.P} pts</span>
                 )}
                 {proxAdv && (
-                  <span className="text-[9px] text-sky-500">vs {proxAdv.adversario_sigla}</span>
+                  <span className="text-[10px] text-sky-500">vs {proxAdv.adversario_sigla}</span>
                 )}
               </button>
             );
