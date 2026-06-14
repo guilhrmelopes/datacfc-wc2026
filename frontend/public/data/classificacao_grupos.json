@@ -2,10 +2,10 @@
   "melhores_terceiros": [
     "BRAZIL",
     "QATAR",
+    "IVORY COAST",
     "AUSTRIA",
     "GHANA",
     "IRAN",
-    "IVORY COAST",
     "NORWAY",
     "PORTUGAL"
   ],
@@ -278,30 +278,30 @@
       "selecao": "ECUADOR",
       "sigla": "EQU",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
-      "P": 0,
-      "J": 0,
+      "P": 1,
+      "J": 1,
       "V": 0,
-      "E": 0,
+      "E": 1,
       "D": 0,
       "GM": 0,
       "GS": 0,
       "SG": 0,
-      "aprov": 0.0
+      "aprov": 33.3
     },
     {
       "posicao": 3,
       "selecao": "IVORY COAST",
       "sigla": "CDM",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CDM/60x60.png",
-      "P": 0,
-      "J": 0,
+      "P": 1,
+      "J": 1,
       "V": 0,
-      "E": 0,
+      "E": 1,
       "D": 0,
       "GM": 0,
       "GS": 0,
       "SG": 0,
-      "aprov": 0.0
+      "aprov": 33.3
     },
     {
       "posicao": 4,
