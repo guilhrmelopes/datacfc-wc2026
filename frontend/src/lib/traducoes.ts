@@ -71,6 +71,9 @@ export const TOOLTIPS_METRICAS: Record<string, string> = {
   FS: "Faltas sofridas por 90 minutos",
   CA: "Cartões amarelos por 90 minutos",
   CV: "Cartões vermelhos por 90 minutos",
+  Rating: "Nível de atuação coletiva na competição",
+  CEDIDO: "Pontuação média que a seleção cede ao adversário, por posição",
+  CONQUISTADO: "Pontuação média que a seleção conquista sobre o adversário, por posição",
 };
 
 export const COMPETICOES_FILTRO = ["Copa 2026"] as const;

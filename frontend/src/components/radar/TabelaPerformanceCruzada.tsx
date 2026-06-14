@@ -2,9 +2,9 @@ import {
   classificarFaixaCartolaSelecao,
   classeCelulaMetricaSelecao,
   classeCelulaNeutra,
-  descricaoLimiarCartolaRecorrencia,
 } from "@/lib/formatacaoMetricas";
 import { formatarValorMetrica } from "@/lib/exibirValor";
+import { TOOLTIPS_METRICAS } from "@/lib/traducoes";
 import type { PerformancePorSigla } from "@/types/dados";
 
 const BUCKETS = ["GOL", "LAT", "ZAG", "MEI", "ATA"] as const;
@@ -50,9 +50,11 @@ export function TabelaPerformanceCruzada({ titulo, sigla, escudo, performance }:
             <tr key={linha}>
               <td
                 className="border border-[var(--color-border)] px-1 py-1.5 text-left text-[10px] font-semibold"
-                title={descricaoLimiarCartolaRecorrencia(
-                  linha === "CEDIDO" ? "cedido" : "conquistado",
-                )}
+                title={
+                  linha === "CEDIDO"
+                    ? TOOLTIPS_METRICAS.CEDIDO
+                    : TOOLTIPS_METRICAS.CONQUISTADO
+                }
               >
                 {linha}
               </td>

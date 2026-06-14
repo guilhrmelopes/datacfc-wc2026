@@ -1,4 +1,4 @@
-import { mediaGeralCopa, temCopa } from "@/lib/copaJogador";
+import { mediaBaseCopa, mediaGeralCopa, temCopa } from "@/lib/copaJogador";
 import { calcularRatingSelecaoCopa } from "@/lib/ratingSelecao";
 import type { JogadorMercado, Selecao } from "@/types/dados";
 
@@ -99,12 +99,21 @@ function fatorPonderacaoAdversarios(mediaNivel: number): number {
   return 1 + PONDERACAO_MAX * ((mediaNivel - NIVEL_NEUTRO) / NIVEL_NEUTRO);
 }
 
+/** MG (75%) + MB (25%) quando MB disponível — equilibra bônus e consistência de scouts. */
+function mediaPerformanceCopa(j: JogadorMercado): number | null {
+  const mg = mediaGeralCopa(j);
+  if (mg === null) return null;
+  const mb = mediaBaseCopa(j);
+  if (mb === null) return mg;
+  return Math.round((0.75 * mg + 0.25 * mb) * 100) / 100;
+}
+
 export function calcularRatingJogador(j: JogadorMercado, ctx: ContextoRating): number {
   if (!temCopa(j)) return 0;
-  const mg = mediaGeralCopa(j);
-  if (mg === null) return 0;
+  const media = mediaPerformanceCopa(j);
+  if (media === null) return 0;
 
-  const base = mgParaRating(mg);
+  const base = mgParaRating(media);
   const mediaAdv = mediaNivelAdversarios(j, ctx);
   if (mediaAdv === null) return base;
 
@@ -117,19 +126,21 @@ export function tooltipRating(
   rating: number,
   ctx: ContextoRating,
 ): string {
-  const mg = mediaGeralCopa(j);
-  if (mg === null) return "Nível de atuação do jogador durante a Copa";
+  const media = mediaPerformanceCopa(j);
+  if (media === null) {
+    return "Nível de atuação do jogador durante a Copa";
+  }
 
-  const base = mgParaRating(mg);
+  const base = mgParaRating(media);
   const mediaAdv = mediaNivelAdversarios(j, ctx);
   if (mediaAdv === null) {
-    return `Nível de atuação na Copa (MG ${mg.toFixed(2)})`;
+    return `Nível de atuação na Copa (MG/MB ${media.toFixed(2)})`;
   }
 
   const siglas = ctx.adversariosPorSelecao.get(j.selecao) ?? [];
   return (
     `Nível de atuação na Copa ponderado pelo nível dos adversários ` +
     `(${siglas.join(", ") || "—"} · média ${mediaAdv.toFixed(0)}). ` +
-    `MG ${mg.toFixed(2)} → ${base.toFixed(1)} → ${rating.toFixed(1)}`
+    `Performance ${media.toFixed(2)} → ${base.toFixed(1)} → ${rating.toFixed(1)}`
   );
 }

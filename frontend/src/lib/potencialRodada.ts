@@ -35,15 +35,23 @@ export function sinalOddsRodada(
 ): number | null {
   const ga = odds?.ga_pct ?? null;
   const sg = odds?.sg_pct ?? null;
+  const g = odds?.g_pct ?? null;
+  const a = odds?.a_pct ?? null;
   const pesos = PESOS_ODDS[bucket];
 
   if (!pesos) return ga ?? sg;
 
   if (pesos.ga === 0) return sg;
-  if (pesos.sg === 0) return ga;
+
+  if (pesos.sg === 0) {
+    if (g !== null && a !== null) {
+      return Math.round((0.55 * g + 0.45 * a) * 10) / 10;
+    }
+    return ga ?? g ?? a;
+  }
 
   if (sg !== null && ga !== null) {
-    return pesos.sg * sg + pesos.ga * ga;
+    return Math.round((pesos.sg * sg + pesos.ga * ga) * 10) / 10;
   }
   return sg ?? ga;
 }

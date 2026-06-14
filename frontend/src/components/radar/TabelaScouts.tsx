@@ -4,7 +4,6 @@ import {
   classificarFaixaMetricaSelecao,
   classeCelulaMetricaSelecao,
   classeCelulaNeutra,
-  descricaoLimiarMetrica,
   MIN_JOGOS_RECALIBRACAO,
   valorNormalizadoMetricaSelecao,
 } from "@/lib/formatacaoMetricas";
@@ -155,9 +154,11 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
                 key={col.id}
                 className="cursor-pointer px-2 py-3 hover:text-white"
                 title={
-                  col.id in TOOLTIPS_METRICAS
-                    ? `${TOOLTIPS_METRICAS[col.id as ChaveMetricaScouts]}\n${descricaoLimiarMetrica(col.id as ChaveMetricaScouts, contextoMetricas.recalibAtiva)}`
-                    : undefined
+                  col.id === "rating_elo_100"
+                    ? TOOLTIPS_METRICAS.Rating
+                    : col.id in TOOLTIPS_METRICAS
+                      ? TOOLTIPS_METRICAS[col.id as ChaveMetricaScouts]
+                      : undefined
                 }
                 onClick={() => alternarOrdenacao(col.id)}
               >
