@@ -193,8 +193,8 @@
       "hora": "17:00:00",
       "utc": "2026-06-14T20:00:00.000Z",
       "match_id": "4667783",
-      "finalizada": false,
-      "placar": "2 - 1"
+      "finalizada": true,
+      "placar": "2 - 2"
     },
     {
       "grupo": "E",
