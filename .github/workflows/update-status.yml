@@ -7,6 +7,10 @@ on:
     - cron: '0 0  * * *'   # 21h BRT
   workflow_dispatch:         # permite execução manual pelo painel do GitHub
 
+concurrency:
+  group: update-status-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -16,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Atualizar status_id e foto_url dos jogadores
         run: |
@@ -108,8 +114,27 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git diff --quiet frontend/public/data/jogadores_mercado.json || (
-            git add frontend/public/data/jogadores_mercado.json &&
-            git commit -m "bot: atualizar status e fotos dos jogadores [skip ci]" &&
-            git push
-          )
+
+          git add frontend/public/data/jogadores_mercado.json
+
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudança em status/fotos."
+            exit 0
+          fi
+
+          git commit -m "bot: atualizar status e fotos dos jogadores [skip ci]"
+
+          pushed=0
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            echo "Push falhou (tentativa ${attempt}/5) — aguardando..."
+            sleep $((attempt * 3))
+          done
+
+          if [ "$pushed" -ne 1 ]; then
+            echo "::error::git push falhou após 5 tentativas."
+            exit 1
+          fi

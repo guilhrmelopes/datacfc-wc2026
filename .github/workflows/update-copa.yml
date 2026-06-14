@@ -6,6 +6,10 @@ on:
     - cron: "*/30 * * * *"
   workflow_dispatch:
 
+concurrency:
+  group: update-copa-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   update-copa:
     runs-on: ubuntu-latest
@@ -19,15 +23,18 @@ jobs:
       PYTHONPATH: ${{ github.workspace }}/src
       ODDSNOTIFIER_HEADLESS: "true"
       ODDS_MERGE: "1"
-      ODDS_SKIP_WARMUP: "0"
+      ODDS_SKIP_WARMUP: "1"
       ODDS_CI_WAIT_MULT: "2.5"
       ODDS_DELAY_MIN: "12"
       ODDS_DELAY_MAX: "20"
       ODDS_TIMEOUT_MS: "60000"
+      ODDS_SOFT_FAIL: "1"
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Python 3.12
         uses: actions/setup-python@v5
@@ -53,14 +60,8 @@ jobs:
       - name: Status e fotos dos jogadores
         run: python automation/atualizar_status_jogadores.py
 
-      - name: Odds GA% / SG% (próximo adversário)
-        id: odds
-        continue-on-error: true
-        env:
-          PYTHONPATH: ${{ github.workspace }}
-        run: python automation/executar_odds.py
-
-      - name: Commitar se houver mudanças
+      - name: Commitar Copa e scouts
+        id: commit_copa
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -71,15 +72,82 @@ jobs:
             frontend/public/data/classificacao_grupos.json \
             frontend/public/data/pontuacao_cedida.json \
             frontend/public/data/selecoes.json \
-            frontend/public/data/jogadores_mercado.json \
+            frontend/public/data/jogadores_mercado.json
+
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudança em Copa/scouts."
+            exit 0
+          fi
+
+          git commit -m "bot: atualizar Copa, scouts e pontuações [skip ci]"
+
+          pushed=0
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            echo "Push Copa falhou (tentativa ${attempt}/5) — aguardando..."
+            sleep $((attempt * 3))
+          done
+
+          if [ "$pushed" -ne 1 ]; then
+            echo "::error::git push de Copa/scouts falhou após 5 tentativas."
+            exit 1
+          fi
+
+      - name: Odds GA% / SG% (próximo adversário)
+        id: odds
+        continue-on-error: true
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: python automation/executar_odds.py
+
+      - name: Commitar odds se houver mudanças
+        id: commit_odds
+        if: always() && steps.odds.outcome != 'cancelled'
+        continue-on-error: true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            frontend/public/data/copa_estado.json \
             frontend/public/data/odds_jogadores.json \
             frontend/public/data/eventos_odds_rodada1.json
 
-          git diff --cached --quiet || (
-            git commit -m "bot: atualizar Copa, scouts, pontuações e odds [skip ci]" &&
-            git push
-          )
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudança em odds."
+            exit 0
+          fi
 
-      - name: Aviso se odds falharam
-        if: failure() && steps.odds.outcome == 'failure'
-        run: echo "::warning::Scraper de odds falhou — commit de Copa pode ter sido abortado."
+          git commit -m "bot: atualizar odds GA%/SG% [skip ci]"
+
+          pushed=0
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            echo "Push odds falhou (tentativa ${attempt}/5) — aguardando..."
+            sleep $((attempt * 3))
+          done
+
+          if [ "$pushed" -ne 1 ]; then
+            echo "::warning::git push de odds falhou — dados locais da run descartados."
+            exit 1
+          fi
+
+      - name: Resumo de falhas
+        if: always()
+        run: |
+          if [ "${{ steps.odds.outcome }}" = "failure" ]; then
+            echo "::warning::Scraper de odds falhou — arquivo anterior preservado via merge."
+          fi
+          if [ "${{ steps.commit_odds.outcome }}" = "failure" ]; then
+            echo "::warning::Commit de odds falhou (push rejeitado ou sem mudanças válidas)."
+          fi
+          if [ "${{ steps.commit_copa.outcome }}" = "failure" ]; then
+            echo "::error::Commit de Copa/scouts falhou."
+            exit 1
+          fi

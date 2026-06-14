@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
+
+SOFT_FAIL = os.environ.get("ODDS_SOFT_FAIL", "").strip().lower() in ("1", "true", "yes")
 
 
 def main() -> int:
@@ -23,10 +26,13 @@ def main() -> int:
     if validar.returncode != 0:
         return validar.returncode
     if scrape.returncode != 0:
-        print(
-            f"AVISO: scraper exit {scrape.returncode}, mas validacao OK.",
-            file=sys.stderr,
+        msg = (
+            f"AVISO: scraper exit {scrape.returncode}, mas validacao OK "
+            "(dados anteriores preservados)."
         )
+        print(msg, file=sys.stderr)
+        if SOFT_FAIL:
+            return 0
         return scrape.returncode
     return 0
 

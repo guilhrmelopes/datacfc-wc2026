@@ -1910,14 +1910,9 @@ def executar() -> None:
             "Nenhuma odd nova nesta execucao — preservando arquivo anterior (%d atletas).",
             base_total,
         )
-        if IS_CI and falhas > 0:
-            sys.exit(1)
         return
 
     _salvar(resultado)
-
-    if IS_CI and total_add == 0 and falhas > 0:
-        sys.exit(1)
 
 
 def _garantir_adversario_vigente(

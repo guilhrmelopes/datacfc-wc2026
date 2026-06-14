@@ -6,6 +6,10 @@ name: Atualizar odds GA% e SG% dos jogadores
 on:
   workflow_dispatch:
 
+concurrency:
+  group: update-odds-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   scrape-odds:
     runs-on: ubuntu-latest
@@ -28,6 +32,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Configurar Python 3.12
         uses: actions/setup-python@v5
@@ -68,10 +74,27 @@ jobs:
             frontend/public/data/odds_jogadores.json \
             frontend/public/data/eventos_odds_rodada1.json
 
-          git diff --cached --quiet || (
-            git commit -m "bot: atualizar mercado e odds GA%/SG% [skip ci]" &&
-            git push
-          )
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudança para commitar."
+            exit 0
+          fi
+
+          git commit -m "bot: atualizar mercado e odds GA%/SG% [skip ci]"
+
+          pushed=0
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              pushed=1
+              break
+            fi
+            echo "Push falhou (tentativa ${attempt}/5) — aguardando..."
+            sleep $((attempt * 3))
+          done
+
+          if [ "$pushed" -ne 1 ]; then
+            echo "::error::git push falhou após 5 tentativas."
+            exit 1
+          fi
 
       - name: Falhar job se scrape nao extraiu dados
         if: steps.scrape.outcome == 'failure'

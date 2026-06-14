@@ -13,7 +13,7 @@ MIN_GA = 400
 MIN_SG = 400
 MIN_VIGENTES_PCT = 0.85
 
-POS_LINHA = frozenset({2, 3, 4, 5, 6})
+POS_LINHA = frozenset({2, 3, 4, 5})
 POS_SG = frozenset({1, 2, 3})
 
 _RAIZ = Path(__file__).resolve().parents[1]
