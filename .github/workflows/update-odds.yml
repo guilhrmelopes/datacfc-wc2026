@@ -39,9 +39,7 @@ jobs:
             requirements-odds.txt
 
       - name: Instalar dependências Python
-        run: |
-          pip install -r requirements.txt
-          pip install -r requirements-odds.txt
+        run: pip install -r requirements.txt
 
       - name: Instalar Playwright + Chromium
         run: playwright install chromium --with-deps

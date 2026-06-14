@@ -59,7 +59,7 @@ export const TOOLTIPS_METRICAS: Record<string, string> = {
   GM: "Gols marcados por 90 minutos",
   GS: "Gols sofridos por 90 minutos",
   "POS%": "Posse de bola por 90 minutos",
-  SG: "Jogos sem sofrer gol",
+  SG: "Jogos sem sofrer gols",
   xG: "Gols esperados (Expected goals) por 90 minutos",
   xGA: "Gols esperados contra (Expected goals against) por 90 minutos",
   FD: "Finalizações defendidas por 90 minutos",

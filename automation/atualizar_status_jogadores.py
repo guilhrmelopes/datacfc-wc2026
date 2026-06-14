@@ -10,6 +10,10 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
 CAMINHO = RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
+CAMINHO_ESTADO = RAIZ / "frontend" / "public" / "data" / "copa_estado.json"
+
+sys.path.insert(0, str(RAIZ / "src"))
+from pipeline.timestamp_dashboard import marcar_dashboard_atualizado  # noqa: E402
 
 SIT_PARA_STATUS = {"provavel": 6, "duvida": 2}
 CARTOLA_ACEITOS_FORA_LINEUP = {2, 3, 5}
@@ -100,6 +104,10 @@ def main() -> int:
         encoding="utf-8",
     )
     print(f"Status atualizados: {status_ok} | Fotos atualizadas: {fotos_ok}")
+
+    marcar_dashboard_atualizado(CAMINHO_ESTADO)
+    print(f"Timestamp dashboard: {CAMINHO_ESTADO.name}")
+
     return 0
 
 

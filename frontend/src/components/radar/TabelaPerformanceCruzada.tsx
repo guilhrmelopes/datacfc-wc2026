@@ -1,4 +1,9 @@
-import { classeCelulaNeutra } from "@/lib/formatacaoMetricas";
+import {
+  classificarFaixaCartolaSelecao,
+  classeCelulaMetricaSelecao,
+  classeCelulaNeutra,
+  descricaoLimiarCartolaRecorrencia,
+} from "@/lib/formatacaoMetricas";
 import { formatarValorMetrica } from "@/lib/exibirValor";
 import type { PerformancePorSigla } from "@/types/dados";
 
@@ -43,7 +48,12 @@ export function TabelaPerformanceCruzada({ titulo, sigla, escudo, performance }:
         <tbody>
           {(["CEDIDO", "CONQUISTADO"] as const).map((linha) => (
             <tr key={linha}>
-              <td className="border border-[var(--color-border)] px-1 py-1.5 text-left text-[10px] font-semibold">
+              <td
+                className="border border-[var(--color-border)] px-1 py-1.5 text-left text-[10px] font-semibold"
+                title={descricaoLimiarCartolaRecorrencia(
+                  linha === "CEDIDO" ? "cedido" : "conquistado",
+                )}
+              >
                 {linha}
               </td>
               {BUCKETS.map((bucket) => {
@@ -73,13 +83,15 @@ export function TabelaPerformanceCruzada({ titulo, sigla, escudo, performance }:
                   );
                 }
 
-                const classeCor = metrica?.cor ?? classeCelulaNeutra();
-                const textoClaro = classeCor.includes("yellow") ? "text-slate-900" : "text-white";
+                const invertido = linha === "CEDIDO";
+                const classeCor = classeCelulaMetricaSelecao(
+                  classificarFaixaCartolaSelecao(valor, invertido),
+                );
 
                 return (
                   <td
                     key={bucket}
-                    className={`border border-[var(--color-border)] px-1 py-1.5 ${classeCor} ${textoClaro}`}
+                    className={`border border-[var(--color-border)] px-1 py-1.5 ${classeCor}`}
                   >
                     {formatarValorMetrica(valor)}
                   </td>

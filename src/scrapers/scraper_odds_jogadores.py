@@ -57,6 +57,9 @@ logger = logging.getLogger(__name__)
 # ─────────────────────────────────── Caminhos ─────────────────────────────────
 
 _RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(_RAIZ / "src"))
+from pipeline.timestamp_dashboard import marcar_dashboard_atualizado  # noqa: E402
+
 CAMINHO_MERCADO: Path = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 CAMINHO_GRUPOS:  Path = _RAIZ / "frontend" / "public" / "data" / "grupos_wc2026.json"
 CAMINHO_EVENTOS: Path = _RAIZ / "frontend" / "public" / "data" / "eventos_odds_rodada1.json"
@@ -1954,6 +1957,7 @@ def _salvar(odds: dict[str, dict]) -> None:
     }
     with CAMINHO_SAIDA.open("w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+    marcar_dashboard_atualizado(CAMINHO_ESTADO)
     logger.info("Salvo: %d atletas -> %s", len(odds), CAMINHO_SAIDA)
 
 

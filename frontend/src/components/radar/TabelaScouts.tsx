@@ -1,9 +1,12 @@
 import { useMemo, useState } from "react";
 import {
   type ChaveMetricaScouts,
-  classificarFaixaMetrica,
-  classeCelulaMetrica,
+  classificarFaixaMetricaSelecao,
+  classeCelulaMetricaSelecao,
   classeCelulaNeutra,
+  descricaoLimiarMetrica,
+  MIN_JOGOS_RECALIBRACAO,
+  valorNormalizadoMetricaSelecao,
 } from "@/lib/formatacaoMetricas";
 import { formatarValorMetrica, valorNumericoOuNull } from "@/lib/exibirValor";
 import { estreouCopa, calcularRatingSelecaoCopa } from "@/lib/ratingSelecao";
@@ -55,16 +58,33 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
     [selecoes, competicao, grupo]
   );
 
-  const valoresPorMetrica = useMemo(() => {
-    const mapa = new Map<ChaveMetricaScouts, number[]>();
+  const contextoMetricas = useMemo(() => {
+    const estreou = linhasFiltradas.filter(estreouCopa);
+    const maxJogosAmostra = Math.max(
+      0,
+      ...estreou.map((s) => valorNumericoOuNull(s.metricas_coletivas.J) ?? 0),
+    );
+    const recalibAtiva = maxJogosAmostra >= MIN_JOGOS_RECALIBRACAO;
+    const valoresPorMetrica = new Map<ChaveMetricaScouts, number[]>();
+
     for (const col of COLUNAS) {
-      const valores = linhasFiltradas
-        .filter(estreouCopa)
-        .map((s) => valorNumericoOuNull(s.metricas_coletivas[col.campo] ?? 0))
+      const valores = estreou
+        .filter(
+          (s) =>
+            !recalibAtiva ||
+            (valorNumericoOuNull(s.metricas_coletivas.J) ?? 0) >= MIN_JOGOS_RECALIBRACAO,
+        )
+        .map((s) => {
+          const bruto = valorNumericoOuNull(s.metricas_coletivas[col.campo] ?? 0);
+          if (bruto === null) return null;
+          const jogos = valorNumericoOuNull(s.metricas_coletivas.J) ?? 1;
+          return valorNormalizadoMetricaSelecao(col.chave, bruto, jogos);
+        })
         .filter((v): v is number => v !== null);
-      mapa.set(col.chave, valores);
+      valoresPorMetrica.set(col.chave, valores);
     }
-    return mapa;
+
+    return { valoresPorMetrica, maxJogosAmostra, recalibAtiva };
   }, [linhasFiltradas]);
 
   const linhas = useMemo(() => {
@@ -136,7 +156,7 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
                 className="cursor-pointer px-2 py-3 hover:text-white"
                 title={
                   col.id in TOOLTIPS_METRICAS
-                    ? TOOLTIPS_METRICAS[col.id as ChaveMetricaScouts]
+                    ? `${TOOLTIPS_METRICAS[col.id as ChaveMetricaScouts]}\n${descricaoLimiarMetrica(col.id as ChaveMetricaScouts, contextoMetricas.recalibAtiva)}`
                     : undefined
                 }
                 onClick={() => alternarOrdenacao(col.id)}
@@ -208,12 +228,17 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
                     ? 0
                     : valorBruto;
                 const numerico = estreouCopa(s) ? valorNumericoOuNull(valorExibir ?? 0) : null;
-                const valoresColuna = valoresPorMetrica.get(col.chave) ?? [];
+                const jogos = valorNumericoOuNull(s.metricas_coletivas.J) ?? undefined;
                 const classeCelula =
                   numerico === null
                     ? classeCelulaNeutra()
-                    : classeCelulaMetrica(
-                        classificarFaixaMetrica(col.chave, numerico, valoresColuna)
+                    : classeCelulaMetricaSelecao(
+                        classificarFaixaMetricaSelecao(col.chave, numerico, {
+                          jogos,
+                          amostraColuna: contextoMetricas.valoresPorMetrica.get(col.chave),
+                          maxJogosAmostra: contextoMetricas.maxJogosAmostra,
+                          recalibAtiva: contextoMetricas.recalibAtiva,
+                        }),
                       );
                 const texto = formatarValorMetrica(
                   valorExibir,
@@ -238,6 +263,15 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
     </div>
     <div className="mt-4 rounded-md border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-500">
       <p>Métricas coletivas e scouts refletem somente a Copa do Mundo 2026 (FotMob).</p>
+      <p className="mt-2">
+        Cores:{" "}
+        <span className="inline-block rounded px-1.5 py-0.5 bg-emerald-600/22">BOM</span>{" "}
+        <span className="inline-block rounded px-1.5 py-0.5 bg-amber-500/18">MEDIANO</span>{" "}
+        <span className="inline-block rounded px-1.5 py-0.5 bg-rose-600/20">RUIM</span>
+        {contextoMetricas.recalibAtiva
+          ? " — limiares recalibrados por quartis da Copa (seleções com J≥3)."
+          : " — benchmarks absolutos Wyscout/StatsBomb (recalibra com J≥3 por seleção)."}
+      </p>
     </div>
     </>
   );
