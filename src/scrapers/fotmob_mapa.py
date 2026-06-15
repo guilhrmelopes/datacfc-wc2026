@@ -110,3 +110,18 @@ SIGLA_PARA_FOTMOB_STATS: dict[str, str] = {
 
 def fotmob_para_selecao(nome_fotmob: str) -> str | None:
     return FOTMOB_PARA_SELECAO.get(nome_fotmob)
+
+
+def cartola_abrev_para_selecao(abrev: str) -> str | None:
+    """Abreviação Cartola (ex: SUE, TUN) → chave `selecao` do dashboard."""
+    nome_fotmob = SIGLA_PARA_FOTMOB_STATS.get((abrev or "").strip().upper())
+    if not nome_fotmob:
+        return None
+    return fotmob_para_selecao(nome_fotmob)
+
+
+def url_escudo_cartola(sigla: str) -> str:
+    return (
+        "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada"
+        f"/clubes_2026/escudos/{sigla.strip().upper()}/60x60.png"
+    )

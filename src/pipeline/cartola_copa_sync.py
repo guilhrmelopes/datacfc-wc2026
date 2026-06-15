@@ -15,6 +15,7 @@ from scoring.cartola import (
     calcular_cedido_conquistado_partida,
 )
 from scrapers.cartola_copa import DadosCartolaCopa, POSICAO_PARA_BUCKET
+from scrapers.fotmob_mapa import cartola_abrev_para_selecao, url_escudo_cartola
 from scrapers.fotmob_copa import processar_partida
 
 COPA_CAMPOS_JOGADOR = (
@@ -209,6 +210,87 @@ def _agrupar_pontos_partida(
         saida.setdefault(sigla, {b: [] for b in BUCKETS})
         saida[sigla][bucket].append(float(row.get("pontuacao") or 0))
     return saida
+
+
+def _clubes_cartola(dados: DadosCartolaCopa) -> dict[int, dict]:
+    """Mescla metadados de clubes/seleções dos payloads Cartola."""
+    por_id: dict[int, dict] = {}
+    for origem in (
+        dados.partidas.get("clubes") or {},
+        dados.pontuados.get("clubes") or {},
+        dados.mercado.get("clubes") or {},
+    ):
+        for chave, info in origem.items():
+            if not isinstance(info, dict):
+                continue
+            try:
+                cid = int(info.get("id", chave))
+            except (TypeError, ValueError):
+                continue
+            por_id[cid] = info
+    return por_id
+
+
+def sincronizar_selecoes_cartola(selecoes: list[dict], dados: DadosCartolaCopa) -> int:
+    """
+    Alinha sigla, clube_id e escudo de cada seleção com a API oficial Cartola.
+    Corrige trocas (ex.: Suécia/Tunísia) que distorcem bandeiras no dashboard.
+    """
+    por_selecao = {s["selecao"]: s for s in selecoes}
+    corrigidos = 0
+
+    for cid, info in _clubes_cartola(dados).items():
+        abrev = str(info.get("abreviacao") or "").strip().upper()
+        if not abrev:
+            continue
+        selecao_nome = cartola_abrev_para_selecao(abrev)
+        if not selecao_nome:
+            continue
+        registro = por_selecao.get(selecao_nome)
+        if not registro:
+            continue
+
+        novo = {
+            "sigla": abrev,
+            "clube_id": cid,
+            "url_escudo": url_escudo_cartola(abrev),
+        }
+        if any(registro.get(k) != v for k, v in novo.items()):
+            registro.update(novo)
+            corrigidos += 1
+
+    return corrigidos
+
+
+def sincronizar_mercado_metadados_selecao(
+    mercado: list[dict],
+    selecoes: list[dict],
+    dados: DadosCartolaCopa,
+) -> int:
+    """Propaga sigla/escudo/seleção corretos aos jogadores via clube_id Cartola."""
+    meta_clube = _meta_por_clube(selecoes)
+    api_por_id = {
+        int(a["atleta_id"]): a
+        for a in dados.mercado.get("atletas") or []
+        if a.get("atleta_id")
+    }
+    atualizados = 0
+
+    for jogador in mercado:
+        api = api_por_id.get(int(jogador.get("atleta_id") or 0))
+        clube_id = int((api or jogador).get("clube_id") or 0)
+        if not clube_id:
+            continue
+        meta = meta_clube.get(clube_id)
+        if not meta:
+            continue
+        for campo in ("selecao", "sigla", "grupo", "url_escudo"):
+            valor = meta.get(campo)
+            if valor and jogador.get(campo) != valor:
+                jogador[campo] = valor
+                atualizados += 1
+
+    return atualizados
 
 
 def _meta_por_clube(selecoes: list[dict]) -> dict[int, dict]:
@@ -577,6 +659,10 @@ def aplicar_dados_cartola(
 
     limpar_campos_legado(mercado)
 
+    selecoes_corrigidas = sincronizar_selecoes_cartola(selecoes, dados)
+    if selecoes_corrigidas:
+        _salvar_json(pasta_dados / "selecoes.json", selecoes)
+
     rodada, snapshot = _snapshot_pontuados(dados)
     por_rodada = estado.setdefault("pontuados_por_rodada", {})
     if snapshot:
@@ -588,6 +674,7 @@ def aplicar_dados_cartola(
     estado["cartola_atualizado_em"] = dados.obtido_em
 
     mercado_atualizados = sincronizar_mercado_cartola(mercado, dados)
+    meta_mercado = sincronizar_mercado_metadados_selecao(mercado, selecoes, dados)
     mercado_inseridos = incorporar_atletas_ausentes_mercado(mercado, dados, selecoes)
     fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
     rebuild_copa_oficial(mercado, estado, dados)
@@ -607,6 +694,8 @@ def aplicar_dados_cartola(
         "mercado_api": len(dados.mercado.get("atletas") or []),
         "partidas_encerradas": encerradas,
         "mercado_campos_atualizados": mercado_atualizados,
+        "mercado_meta_selecao": meta_mercado,
+        "selecoes_corrigidas": selecoes_corrigidas,
         "mercado_inseridos": mercado_inseridos,
         "fotos_atualizadas": fotos_atualizadas,
         "siglas_cedido": sorted(siglas),

@@ -323,16 +323,16 @@
     {
       "posicao": 1,
       "selecao": "SWEDEN",
-      "sigla": "TUN",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TUN/60x60.png",
+      "sigla": "SUE",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUE/60x60.png",
       "P": 3,
       "J": 1,
       "V": 1,
       "E": 0,
       "D": 0,
-      "GM": 3,
+      "GM": 5,
       "GS": 1,
-      "SG": 2,
+      "SG": 4,
       "aprov": 100.0
     },
     {
@@ -368,16 +368,16 @@
     {
       "posicao": 4,
       "selecao": "TUNISIA",
-      "sigla": "SUE",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUE/60x60.png",
+      "sigla": "TUN",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TUN/60x60.png",
       "P": 0,
       "J": 1,
       "V": 0,
       "E": 0,
       "D": 1,
       "GM": 1,
-      "GS": 3,
-      "SG": -2,
+      "GS": 5,
+      "SG": -4,
       "aprov": 0.0
     }
   ],
