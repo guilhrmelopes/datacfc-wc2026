@@ -155,7 +155,7 @@
       "visitante": "SCOTLAND",
       "data": "2026-06-13",
       "hora": "22:00:00",
-      "utc": "2026-06-14T01:00:00.000Z",
+      "utc": "2026-06-14T01:00:00Z",
       "match_id": "4667765",
       "finalizada": true,
       "placar": "0 - 1"
@@ -167,7 +167,7 @@
       "visitante": "TURKIYE",
       "data": "2026-06-14",
       "hora": "01:00:00",
-      "utc": "2026-06-14T04:00:00.000Z",
+      "utc": "2026-06-14T04:00:00Z",
       "match_id": "4667772",
       "finalizada": true,
       "placar": "2 - 0"
@@ -179,7 +179,7 @@
       "visitante": "CURACAO",
       "data": "2026-06-14",
       "hora": "14:00:00",
-      "utc": "2026-06-14T17:00:00.000Z",
+      "utc": "2026-06-14T17:00:00Z",
       "match_id": "4667777",
       "finalizada": true,
       "placar": "7 - 1"
@@ -191,7 +191,7 @@
       "visitante": "JAPAN",
       "data": "2026-06-14",
       "hora": "17:00:00",
-      "utc": "2026-06-14T20:00:00.000Z",
+      "utc": "2026-06-14T20:00:00Z",
       "match_id": "4667783",
       "finalizada": true,
       "placar": "2 - 2"
@@ -203,10 +203,10 @@
       "visitante": "ECUADOR",
       "data": "2026-06-14",
       "hora": "20:00:00",
-      "utc": "2026-06-14T23:00:00.000Z",
+      "utc": "2026-06-14T23:00:00Z",
       "match_id": "4667778",
-      "finalizada": false,
-      "placar": "0 - 0"
+      "finalizada": true,
+      "placar": "1 - 0"
     },
     {
       "grupo": "F",
@@ -215,10 +215,10 @@
       "visitante": "TUNISIA",
       "data": "2026-06-14",
       "hora": "23:00:00",
-      "utc": "2026-06-15T02:00:00Z",
+      "utc": "2026-06-15T02:00:00.000Z",
       "match_id": "4667784",
       "finalizada": false,
-      "placar": null
+      "placar": "3 - 1"
     },
     {
       "grupo": "H",
@@ -227,7 +227,7 @@
       "visitante": "CAPE VERDE",
       "data": "2026-06-15",
       "hora": "13:00:00",
-      "utc": "2026-06-15T16:00:00Z",
+      "utc": "2026-06-15T16:00:00.000Z",
       "match_id": "4667798",
       "finalizada": false,
       "placar": null
@@ -239,7 +239,7 @@
       "visitante": "EGYPT",
       "data": "2026-06-15",
       "hora": "16:00:00",
-      "utc": "2026-06-15T19:00:00Z",
+      "utc": "2026-06-15T19:00:00.000Z",
       "match_id": "4667790",
       "finalizada": false,
       "placar": null
@@ -251,7 +251,7 @@
       "visitante": "URUGUAY",
       "data": "2026-06-15",
       "hora": "19:00:00",
-      "utc": "2026-06-15T22:00:00Z",
+      "utc": "2026-06-15T22:00:00.000Z",
       "match_id": "4667799",
       "finalizada": false,
       "placar": null
