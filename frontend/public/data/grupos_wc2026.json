@@ -241,8 +241,8 @@
       "hora": "16:00:00",
       "utc": "2026-06-15T19:00:00.000Z",
       "match_id": "4667790",
-      "finalizada": false,
-      "placar": "0 - 1"
+      "finalizada": true,
+      "placar": "1 - 1"
     },
     {
       "grupo": "H",
@@ -254,7 +254,7 @@
       "utc": "2026-06-15T22:00:00.000Z",
       "match_id": "4667799",
       "finalizada": false,
-      "placar": null
+      "placar": "0 - 0"
     },
     {
       "grupo": "G",
