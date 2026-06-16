@@ -215,7 +215,7 @@
       "visitante": "TUNISIA",
       "data": "2026-06-14",
       "hora": "23:00:00",
-      "utc": "2026-06-15T02:00:00.000Z",
+      "utc": "2026-06-15T02:00:00Z",
       "match_id": "4667784",
       "finalizada": true,
       "placar": "5 - 1"
@@ -227,7 +227,7 @@
       "visitante": "CAPE VERDE",
       "data": "2026-06-15",
       "hora": "13:00:00",
-      "utc": "2026-06-15T16:00:00.000Z",
+      "utc": "2026-06-15T16:00:00Z",
       "match_id": "4667798",
       "finalizada": true,
       "placar": "0 - 0"
@@ -239,7 +239,7 @@
       "visitante": "EGYPT",
       "data": "2026-06-15",
       "hora": "16:00:00",
-      "utc": "2026-06-15T19:00:00.000Z",
+      "utc": "2026-06-15T19:00:00Z",
       "match_id": "4667790",
       "finalizada": true,
       "placar": "1 - 1"
@@ -251,10 +251,10 @@
       "visitante": "URUGUAY",
       "data": "2026-06-15",
       "hora": "19:00:00",
-      "utc": "2026-06-15T22:00:00.000Z",
+      "utc": "2026-06-15T22:00:00Z",
       "match_id": "4667799",
-      "finalizada": false,
-      "placar": "0 - 0"
+      "finalizada": true,
+      "placar": "1 - 1"
     },
     {
       "grupo": "G",
@@ -263,7 +263,7 @@
       "visitante": "NEW ZEALAND",
       "data": "2026-06-15",
       "hora": "22:00:00",
-      "utc": "2026-06-16T01:00:00Z",
+      "utc": "2026-06-16T01:00:00.000Z",
       "match_id": "4667791",
       "finalizada": false,
       "placar": null
@@ -275,7 +275,7 @@
       "visitante": "SENEGAL",
       "data": "2026-06-16",
       "hora": "16:00:00",
-      "utc": "2026-06-16T19:00:00Z",
+      "utc": "2026-06-16T19:00:00.000Z",
       "match_id": "4667804",
       "finalizada": false,
       "placar": null
@@ -287,7 +287,7 @@
       "visitante": "NORWAY",
       "data": "2026-06-16",
       "hora": "19:00:00",
-      "utc": "2026-06-16T22:00:00Z",
+      "utc": "2026-06-16T22:00:00.000Z",
       "match_id": "4667805",
       "finalizada": false,
       "placar": null
