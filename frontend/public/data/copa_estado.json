@@ -18,7 +18,7 @@
     "4667799",
     "4667791"
   ],
-  "atualizado_em": "2026-06-16T05:45:01.125204+00:00",
+  "atualizado_em": "2026-06-16T11:03:13.469422+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100098": {
@@ -4648,6 +4648,6 @@
     }
   },
   "status_mercado": 2,
-  "bola_rolando": false,
-  "cartola_atualizado_em": "2026-06-16T05:44:38.251711+00:00"
+  "bola_rolando": true,
+  "cartola_atualizado_em": "2026-06-16T11:02:59.345015+00:00"
 }
