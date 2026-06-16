@@ -76,6 +76,7 @@ SIGLA_PARA_FOTMOB_STATS: dict[str, str] = {
     "ALE": "Germany",
     "CUR": "Curacao",
     "CMF": "Ivory Coast",
+    "CDM": "Ivory Coast",  # abreviação Cartola (Costa do Marfim)
     "EQU": "Ecuador",
     "HOL": "Netherlands",
     "JAP": "Japan",
