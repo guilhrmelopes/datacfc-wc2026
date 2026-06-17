@@ -1908,8 +1908,8 @@
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 3.5,
-        "cor": "bg-orange-500"
+        "valor": 4.4,
+        "cor": "bg-yellow-500"
       }
     },
     "ATA": {
@@ -1956,8 +1956,8 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 3.5,
-        "cor": "bg-orange-500"
+        "valor": 4.4,
+        "cor": "bg-yellow-500"
       },
       "conquistado": {
         "valor": 2.12,
