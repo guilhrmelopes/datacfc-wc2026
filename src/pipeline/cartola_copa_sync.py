@@ -14,7 +14,7 @@ from scoring.cartola import (
     AcumuladorCedidoConquistado,
     calcular_cedido_conquistado_partida,
 )
-from scrapers.cartola_copa import DadosCartolaCopa, POSICAO_PARA_BUCKET
+from scrapers.cartola_copa import DadosCartolaCopa, POSICAO_PARA_BUCKET, payload_tem_selecoes
 from scrapers.fotmob_mapa import cartola_abrev_para_selecao, url_escudo_cartola
 from scrapers.fotmob_copa import processar_partida
 
@@ -465,6 +465,52 @@ def sincronizar_mercado_cartola(
                 jogador[campo] = valor
                 atualizados += 1
     return atualizados
+
+
+def sincronizar_status_fotos_cartola(
+    pasta_dados: Path,
+    *,
+    dados: DadosCartolaCopa | None = None,
+) -> dict[str, Any]:
+    """
+    Fonte primária de status_id e fotos: API oficial Cartola Copa (/copa/atletas/mercado).
+    Não usa Prováveis do Cartola para status (lineups desativados até correção).
+    """
+    from scrapers.cartola_copa import buscar_dados_cartola_copa
+
+    caminho_mercado = pasta_dados / "jogadores_mercado.json"
+    caminho_estado = pasta_dados / "copa_estado.json"
+
+    if dados is None:
+        dados = buscar_dados_cartola_copa()
+
+    if not payload_tem_selecoes(dados.mercado):
+        raise RuntimeError(
+            "Resposta de /copa/atletas/mercado não contém seleções — "
+            "abortando sync de status (possível endpoint Brasileirão)."
+        )
+
+    mercado = _carregar_json(caminho_mercado)
+    estado = _carregar_json(caminho_estado) if caminho_estado.is_file() else {}
+
+    status_atualizados = sincronizar_mercado_cartola(mercado, dados)
+    fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
+
+    rodada = int(dados.status.get("rodada_atual") or estado.get("rodada_cartola_atual") or 1)
+    estado["rodada_cartola_atual"] = rodada
+    estado["status_mercado"] = dados.status.get("status_mercado")
+    estado["bola_rolando"] = dados.status.get("bola_rolando")
+    estado["cartola_atualizado_em"] = dados.obtido_em
+
+    _salvar_json(caminho_mercado, mercado)
+    _salvar_json(caminho_estado, estado)
+
+    return {
+        "status_campos_atualizados": status_atualizados,
+        "fotos_atualizadas": fotos_atualizadas,
+        "mercado_api": len(dados.mercado.get("atletas") or []),
+        "rodada_cartola_atual": rodada,
+    }
 
 
 def rebuild_copa_oficial(

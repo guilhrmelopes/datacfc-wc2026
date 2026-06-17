@@ -64,8 +64,7 @@ jobs:
 
 
 
-      - name: Atualizar status, fotos e timestamp do dashboard
-
+      - name: Atualizar status e fotos (Cartola Copa oficial)
         run: python automation/atualizar_status_jogadores.py
 
 

@@ -67,9 +67,6 @@ jobs:
       - name: Pipeline Copa (FotMob + Cartola)
         run: python automation/atualizar_copa_fotmob.py
 
-      - name: Status e fotos dos jogadores
-        run: python automation/atualizar_status_jogadores.py
-
       - name: Commitar Copa e scouts
         id: commit_copa
         run: |
