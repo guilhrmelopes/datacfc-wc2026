@@ -190,7 +190,6 @@ const COL_CED: ColDef = {
   key: "ced",
   header: "CED",
   title: "Pontuação cedida pelo adversário",
-  sortable: false,
   render: (_j, ced) =>
     ced != null ? <span className="tabular-nums">{fmt(ced, 2)}</span> : <Dash />,
 };
@@ -508,6 +507,7 @@ function valorOrdenacao(
   colKey: string,
   odds: OddsJogadorEntry | null,
   escalas: ReturnType<typeof construirContextoRating>,
+  pontuacaoCedida: PontuacaoCedida,
 ): number | null {
   switch (colKey) {
     case "rating":
@@ -516,6 +516,8 @@ function valorOrdenacao(
       return mediaGeralCopa(j);
     case "mb":
       return mediaBaseCopa(j);
+    case "ced":
+      return cedidoAdversarioCopa(j, pontuacaoCedida);
     case "g_pct":
       return oddsVigentes(j, odds) ? (odds?.g_pct ?? null) : null;
     case "a_pct":
@@ -673,15 +675,15 @@ export function MercadoJogadores({
       const oddsA = oddsMap ? (oddsMap[String(a.atleta_id)] ?? null) : null;
       const oddsB = oddsMap ? (oddsMap[String(b.atleta_id)] ?? null) : null;
       const cmp = compararValores(
-        valorOrdenacao(a, ordenarPor, oddsA, escalasRating),
-        valorOrdenacao(b, ordenarPor, oddsB, escalasRating),
+        valorOrdenacao(a, ordenarPor, oddsA, escalasRating, pontuacaoCedida),
+        valorOrdenacao(b, ordenarPor, oddsB, escalasRating, pontuacaoCedida),
         ordem,
       );
       if (cmp !== 0) return cmp;
       return a.apelido.localeCompare(b.apelido, "pt-BR", { sensitivity: "base" });
     });
     return dados.slice(0, 500);
-  }, [jogadores, posicao, selecaoFiltro, statusFiltro, ordenarPor, ordem, oddsMap, escalasRating]);
+  }, [jogadores, posicao, selecaoFiltro, statusFiltro, ordenarPor, ordem, oddsMap, escalasRating, pontuacaoCedida]);
 
   const colunas = useMemo(() => {
     return COLUNAS[posicao].map((col) => {
