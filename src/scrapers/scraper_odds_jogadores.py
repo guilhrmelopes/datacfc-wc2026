@@ -1,24 +1,13 @@
 """
 Scraper de odds de jogadores — hub.oddsnotifier.io × Cartola WC 2026.
 
-Arquitetura (corrigida após diagnóstico):
-  Os dados de odds NÃO estão em /api/odds/{eventId}.
-  Estão embutidos no HTML inicial como RSC (__next_f) — React Server Components.
-  O browser carrega os scripts inline. Mercados de jogador vêm no RSC (__next_f):
-    • Player → Player To Score or Assist → Score / Assist / Score Or Assist
-    • Player → Anytime Goalscorer (complemento G% em partidas distantes)
+Arquitetura:
+  • Janela: hoje (America/Sao_Paulo) + 7 dias — calendário grupos_wc2026.json
+  • Armazenamento por evento: odds_eventos_armazenados.json
+  • Compilação: odds_jogadores.json (confronto atual por seleção)
+  • Hub: international-fifa-world-cup (+ fallback international-world-cup)
 
-Fluxo (hub oddsnotifier):
-  [1] Carrega jogadores_mercado.json → índice por selecao
-  [2] Por evento:
-      a. Playwright navega → /football/international-world-cup/{eventId}
-      b. Clica Player → Player To Score or Assist → sub-filtros G%/A%/GA%
-      c. Complemento: Player → Anytime Goalscorer (preenche G% quando Score indisponível)
-      d. Extrai RSC (__next_f) e parseia labels ou mercado "Anytime Goalscorer"
-  [3] Matching POR EQUIPE: fuzzy restrito às equipes do jogo
-  [4] Salva odds_jogadores.json com atleta_id como chave (g_pct, a_pct, ga_pct, sg_pct)
-
-Anti-ban: delays 20-40s, headless configurável via ODDSNOTIFIER_HEADLESS
+Mercados: PTSOA (G/A/GA), Anytime Goalscorer, Team Total (SG%).
 """
 
 from __future__ import annotations
@@ -43,6 +32,18 @@ from scrapers.matching_cartola import (
     atribuir_nomes_a_jogadores,
     limpar_nome_fonte,
     melhor_jogador_para_nome,
+)
+from scrapers.odds_armazenamento import (
+    carregar_armazenamento,
+    compilar_dashboard,
+    confrontos_na_janela,
+    enriquecer_confronto,
+    expurgar_passados,
+    janela_dias,
+    mapa_sigla_por_selecao,
+    montar_registro_evento,
+    referencia_hoje,
+    salvar_armazenamento,
 )
 
 # ─────────────────────────────────── Logging ─────────────────────────────────
@@ -121,7 +122,7 @@ BOOKMAKERS_T2: list[str] = ["bet365", "betano", "unibet", "william hill", "bwin"
                              "betway", "888sport", "betclic", "kambi", "ladbrokes",
                              "leovegas", "betmgm", "sisal", "paddy power"]
 
-MAX_EVENTOS: int = int(os.environ.get("ODDS_MAX_EVENTOS", "24"))
+MAX_EVENTOS: int = int(os.environ.get("ODDS_MAX_EVENTOS", "40"))
 RODADA_ALVO: int = int(os.environ.get("ODDS_RODADA", "1"))
 _RODADA_ATUAL: int = RODADA_ALVO
 IS_CI: bool = os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
@@ -188,11 +189,15 @@ _USER_AGENT = (
 # ══════════════════════════════════════════════════════════════════════════════
 
 URL_WC2026 = "https://hub.oddsnotifier.io/world-cup-2026"
-URL_API_EVENTOS = "https://hub.oddsnotifier.io/api/events/football/international-world-cup"
+URL_HUB_FIFA = "https://hub.oddsnotifier.io/football/international-fifa-world-cup"
+URLS_API_EVENTOS = (
+    "https://hub.oddsnotifier.io/api/events/football/international-fifa-world-cup",
+    "https://hub.oddsnotifier.io/api/events/football/international-world-cup",
+)
 
 
 def _url_evento(event_id: int) -> str:
-    return f"https://hub.oddsnotifier.io/football/international-world-cup/{event_id}"
+    return f"{URL_HUB_FIFA}/{event_id}"
 
 
 def _extrair_json_array(rsc: str, chave: str) -> list | None:
@@ -452,6 +457,48 @@ def buscar_eventos_proximo_adversario(
     return eventos
 
 
+def buscar_eventos_janela(
+    pagina: Page,
+    confrontos: list[dict],
+    selecao_sigla: dict[str, str],
+    rsc_wc2026: str = "",
+) -> list[dict]:
+    """Mapeia confrontos do calendário (janela de datas) → oddsEventId no hub."""
+    if not confrontos:
+        return []
+
+    enriquecidos = [enriquecer_confronto(c, selecao_sigla) for c in confrontos]
+    por_chave = {
+        _chave_confronto(c["mandante"], c["visitante"]): c
+        for c in enriquecidos
+    }
+    fixtures = _fixtures_de_confrontos(enriquecidos)
+    cache = _carregar_cache_eventos()
+    mapeados = _mapear_ids_eventos(pagina, fixtures, cache, rsc_wc2026)
+
+    eventos: list[dict] = []
+    for ev in mapeados:
+        chave = _chave_confronto(ev.get("home", ""), ev.get("away", ""))
+        conf = por_chave.get(chave)
+        if not conf:
+            continue
+        eventos.append({
+            **ev,
+            "data": conf.get("data") or ev.get("date", ""),
+            "hora": conf.get("hora", ""),
+            "rodada": conf.get("rodada"),
+            "grupo": conf.get("grupo", ""),
+            "confronto": conf,
+        })
+
+    logger.info(
+        "Janela calendario: %d confrontos -> %d eventos mapeados.",
+        len(confrontos),
+        len(eventos),
+    )
+    return eventos[:MAX_EVENTOS]
+
+
 def _carregar_confrontos_rodada(rodada: int) -> list[dict]:
     if not CAMINHO_GRUPOS.exists():
         logger.error("grupos_wc2026.json nao encontrado")
@@ -604,38 +651,45 @@ def _purge_evento_odds(resultado: dict[str, dict], eid: int) -> None:
 
 
 def _eventos_da_api_bruta() -> list[dict]:
-    """Lista eventos WC2026 via API pública (com retry em 429)."""
-    for tentativa in range(4):
-        try:
-            req = urllib.request.Request(
-                URL_API_EVENTOS,
-                headers={
-                    "User-Agent": _USER_AGENT,
-                    "Accept": "application/json",
-                    "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-                },
-            )
-            with urllib.request.urlopen(req, timeout=45) as resp:
-                bruto = json.loads(resp.read().decode("utf-8"))
-            if isinstance(bruto, list):
-                return [e for e in bruto if isinstance(e, dict)]
-            if isinstance(bruto, dict):
-                for chave in ("events", "data", "fixtures"):
-                    bloco = bruto.get(chave)
-                    if isinstance(bloco, list):
-                        return [e for e in bloco if isinstance(e, dict)]
-            return []
-        except urllib.error.HTTPError as exc:
-            if exc.code == 429 and tentativa < 3:
-                espera = 12 * (tentativa + 1)
-                logger.warning("API eventos 429 — aguardando %ds...", espera)
-                time.sleep(espera)
-                continue
-            logger.warning("API eventos HTTP %s", exc.code)
-            return []
-        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as exc:
-            logger.warning("API eventos indisponivel: %s", exc)
-            return []
+    """Lista eventos WC2026 via API pública (fifa-world-cup → fallback world-cup)."""
+    for url_api in URLS_API_EVENTOS:
+        for tentativa in range(4):
+            try:
+                req = urllib.request.Request(
+                    url_api,
+                    headers={
+                        "User-Agent": _USER_AGENT,
+                        "Accept": "application/json",
+                        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+                    },
+                )
+                with urllib.request.urlopen(req, timeout=45) as resp:
+                    bruto = json.loads(resp.read().decode("utf-8"))
+                if isinstance(bruto, list):
+                    lista = [e for e in bruto if isinstance(e, dict)]
+                elif isinstance(bruto, dict):
+                    lista = []
+                    for chave in ("events", "data", "fixtures"):
+                        bloco = bruto.get(chave)
+                        if isinstance(bloco, list):
+                            lista = [e for e in bloco if isinstance(e, dict)]
+                            break
+                else:
+                    lista = []
+                if lista:
+                    logger.info("API eventos (%s): %d fixtures.", url_api.rsplit("/", 1)[-1], len(lista))
+                    return lista
+            except urllib.error.HTTPError as exc:
+                if exc.code == 429 and tentativa < 3:
+                    espera = 12 * (tentativa + 1)
+                    logger.warning("API eventos 429 — aguardando %ds...", espera)
+                    time.sleep(espera)
+                    continue
+                logger.warning("API eventos HTTP %s (%s)", exc.code, url_api)
+                break
+            except (urllib.error.URLError, TimeoutError, json.JSONDecodeError, OSError) as exc:
+                logger.warning("API eventos indisponivel (%s): %s", url_api, exc)
+                break
     return []
 
 
@@ -684,11 +738,10 @@ def _carregar_cache_eventos() -> dict[tuple[str, str], int]:
                 if not isinstance(ev, dict) or "id" not in ev:
                     continue
                 cache[_chave_confronto(ev.get("home", ""), ev.get("away", ""))] = int(ev["id"])
-            if cache:
-                return cache
         except (json.JSONDecodeError, OSError, ValueError):
             pass
-    return _cache_eventos_da_api()
+    cache.update(_cache_eventos_da_api())
+    return cache
 
 
 def _salvar_cache_eventos(eventos: list[dict]) -> None:
@@ -1111,6 +1164,9 @@ def _aplicar_sg_evento(
     sel_home: str,
     sel_away: str,
     selecao_sigla: dict[str, str],
+    *,
+    modo_armazenamento: bool = False,
+    rodada_evento: int | None = None,
 ) -> int:
     """Preenche sg_pct para GOL/LAT/ZAG de cada equipe (probabilidade do time)."""
     aplicados = 0
@@ -1122,7 +1178,7 @@ def _aplicar_sg_evento(
             if jog.get("posicao_id") not in POSICOES_SG:
                 continue
             adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
-            if not _deve_atualizar_odds(jog, adv):
+            if not modo_armazenamento and not _deve_atualizar_odds(jog, adv):
                 continue
             aid = str(jog["atleta_id"])
             if aid not in resultado:
@@ -1132,10 +1188,11 @@ def _aplicar_sg_evento(
             resultado[aid]["sg_pct"] = _prob(odd)
             resultado[aid]["casa_sg"] = bk
             resultado[aid]["odds_sg"] = odd
-            adv_final = _adv_para_entrada(jog, adv)
+            adv_final = adv if modo_armazenamento else _adv_para_entrada(jog, adv)
             if adv_final:
                 resultado[aid]["adversario_sigla"] = adv_final
-            resultado[aid]["rodada"] = _RODADA_ATUAL
+            rodada_gravar = rodada_evento if rodada_evento is not None else _RODADA_ATUAL
+            resultado[aid]["rodada"] = rodada_gravar
             aplicados += 1
     return aplicados
 
@@ -1395,6 +1452,9 @@ def _aplicar_mercado_evento(
     resultado: dict[str, dict],
     relatorio: Relatorio,
     desc: str,
+    *,
+    modo_armazenamento: bool = False,
+    rodada_evento: int | None = None,
 ) -> int:
     """Atribui odds do mercado (g/a/ga) ao elenco com matching um-a-um."""
     if not odds_map:
@@ -1414,11 +1474,15 @@ def _aplicar_mercado_evento(
 
     for nome_bk, (jog, score) in atrib.items():
         adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
-        if not _deve_atualizar_odds(jog, adv):
+        if not modo_armazenamento and not _deve_atualizar_odds(jog, adv):
             continue
         relatorio.match(nome_bk, jog, score, desc)
         odd_val, odd_bk = odds_map[nome_bk]
-        if _aplicar_pct_jogador(resultado, eid, jog, adv, sufixo, odd_val, odd_bk):
+        if _aplicar_pct_jogador(
+            resultado, eid, jog, adv, sufixo, odd_val, odd_bk,
+            modo_armazenamento=modo_armazenamento,
+            rodada_evento=rodada_evento,
+        ):
             adicionados += 1
         matched.add(nome_bk)
 
@@ -1427,7 +1491,8 @@ def _aplicar_mercado_evento(
         pct_key, _, _ = _chaves_mercado(sufixo)
         sem_campo = [
             j for j in candidatos
-            if not (resultado.get(str(j["atleta_id"])) or {}).get(pct_key)
+            if modo_armazenamento
+            or not (resultado.get(str(j["atleta_id"])) or {}).get(pct_key)
         ]
         lacunas = atribuir_nomes_a_jogadores(
             nomes_lacuna,
@@ -1436,11 +1501,15 @@ def _aplicar_mercado_evento(
         )
         for nome_bk, (jog, score) in lacunas.items():
             adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
-            if not _deve_atualizar_odds(jog, adv):
+            if not modo_armazenamento and not _deve_atualizar_odds(jog, adv):
                 continue
             relatorio.match(f"{nome_bk} [lacuna]", jog, score, desc)
             odd_val, odd_bk = odds_map[nome_bk]
-            if _aplicar_pct_jogador(resultado, eid, jog, adv, sufixo, odd_val, odd_bk):
+            if _aplicar_pct_jogador(
+                resultado, eid, jog, adv, sufixo, odd_val, odd_bk,
+                modo_armazenamento=modo_armazenamento,
+                rodada_evento=rodada_evento,
+            ):
                 adicionados += 1
             matched.add(nome_bk)
 
@@ -1475,17 +1544,21 @@ def _aplicar_pct_jogador(
     sufixo: str,
     odd_val: float,
     odd_bk: str,
+    *,
+    modo_armazenamento: bool = False,
+    rodada_evento: int | None = None,
 ) -> bool:
-    if not _deve_atualizar_odds(jog, adv):
+    if not modo_armazenamento and not _deve_atualizar_odds(jog, adv):
         return False
     pct_key, casa_key, odds_key = _chaves_mercado(sufixo)
     aid = str(jog["atleta_id"])
     entrada: dict[str, Any] = resultado.get(aid) or {"event_id": eid}
-    if entrada.get(pct_key):
+    if not modo_armazenamento and entrada.get(pct_key):
         return False
     entrada["event_id"] = eid
-    entrada["rodada"] = _RODADA_ATUAL
-    adv_final = _adv_para_entrada(jog, adv)
+    rodada_gravar = rodada_evento if rodada_evento is not None else _RODADA_ATUAL
+    entrada["rodada"] = rodada_gravar
+    adv_final = adv if modo_armazenamento else _adv_para_entrada(jog, adv)
     if adv_final:
         entrada["adversario_sigla"] = adv_final
     entrada[pct_key] = _prob(odd_val)
@@ -1693,10 +1766,19 @@ def processar_evento(
     resultado: dict[str, dict],
     relatorio: Relatorio,
     rsc_acumulado: list[str],
+    *,
+    modo_armazenamento: bool = False,
 ) -> int:
     eid = evento["id"]
     home, away = evento.get("home", "?"), evento.get("away", "?")
     desc = f"{home} vs {away}"
+    confronto = evento.get("confronto") or {}
+    rodada_evento = evento.get("rodada") or confronto.get("rodada")
+    if rodada_evento is not None:
+        try:
+            rodada_evento = int(rodada_evento)
+        except (TypeError, ValueError):
+            rodada_evento = None
 
     logger.info("Processando: %s (id=%d)", desc, eid)
 
@@ -1796,6 +1878,8 @@ def processar_evento(
     n_sg = _aplicar_sg_evento(
         resultado, eid, pool_home_sg, pool_away_sg, sg_home, sg_away,
         sel_home, sel_away, selecao_sigla,
+        modo_armazenamento=modo_armazenamento,
+        rodada_evento=rodada_evento,
     )
 
     if odds_g or odds_a or odds_ga:
@@ -1823,6 +1907,8 @@ def processar_evento(
             resultado,
             relatorio,
             desc,
+            modo_armazenamento=modo_armazenamento,
+            rodada_evento=rodada_evento,
         )
 
     logger.info("  %d atletas (G+A+GA+SG).", adicionados)
@@ -1841,26 +1927,35 @@ def _headless() -> bool:
 def executar() -> None:
     global _RODADA_ATUAL
 
+    if os.environ.get("ODDS_ONLY_COMPILE", "").strip() in ("1", "true", "yes"):
+        from scrapers.odds_armazenamento import compilar_e_salvar
+        logger.info("Modo compilação apenas (sem scrape).")
+        compilar_e_salvar()
+        return
+
     jogadores = carregar_jogadores(CAMINHO_MERCADO)
     jogadores_todos = carregar_todos_jogadores(CAMINHO_MERCADO)
     if not jogadores:
         logger.error("Nenhum jogador em %s — abortando.", CAMINHO_MERCADO)
         sys.exit(1)
 
+    hoje = referencia_hoje()
+    dias = janela_dias()
+    selecao_sigla = mapa_sigla_por_selecao(jogadores_todos)
+    confrontos_janela = confrontos_na_janela(hoje, dias)
     _RODADA_ATUAL = _rodada_odds_alvo(jogadores_todos)
-    confrontos_prox = _confrontos_proximo_adversario(jogadores_todos)
+
     logger.info(
-        "=== Scraper Odds WC2026 iniciado (CI=%s, merge=%s, rodada=%d, prox=%d) ===",
+        "=== Scraper Odds WC2026 (janela %s + %d dias, %d confrontos, CI=%s) ===",
+        hoje.isoformat(),
+        dias,
+        len(confrontos_janela),
         IS_CI,
-        ODDS_MERGE,
-        _RODADA_ATUAL,
-        len(confrontos_prox),
     )
 
-    resultado: dict[str, dict] = _carregar_odds_existentes() if ODDS_MERGE else {}
-    base_total = len(resultado)
-    if base_total:
-        logger.info("Merge ativo: %d atletas carregados do arquivo anterior.", base_total)
+    armazenamento = carregar_armazenamento()
+    expurgar_passados(armazenamento, hoje)
+    eventos_store: dict[str, dict] = armazenamento.setdefault("eventos", {})
 
     relatorio = Relatorio()
     total_add = 0
@@ -1931,44 +2026,53 @@ def executar() -> None:
         pagina.on("response", _capturar_rsc)
 
         try:
-            confrontos_prox = _confrontos_proximo_adversario(jogadores_todos)
-            eventos_arquivo = _carregar_eventos_arquivo()
-            skip_warmup = (
-                (_RODADA_ATUAL <= 1 and not confrontos_prox and len(eventos_arquivo) >= min(MAX_EVENTOS, 20))
-                or (
-                    os.environ.get("ODDS_SKIP_WARMUP", "1" if IS_CI else "0") == "1"
-                    and not confrontos_prox
-                )
-            )
+            logger.info("Warm-up: %s", URL_HUB_FIFA)
+            pagina.goto(URL_HUB_FIFA, timeout=TIMEOUT_PAGINA, wait_until="domcontentloaded")
+            pagina.wait_for_timeout(_wait_ms(random.randint(4000, 7000)))
+            rsc_wc2026 = _rsc_de_pagina(pagina) + "\n".join(rsc_acumulado)
 
-            eventos, rsc_wc2026 = _resolver_eventos_scrape(
-                pagina,
-                jogadores_todos,
-                confrontos_prox,
-                eventos_arquivo,
-                skip_warmup,
-                rsc_acumulado,
+            eventos = buscar_eventos_janela(
+                pagina, confrontos_janela, selecao_sigla, rsc_wc2026,
             )
 
             if not eventos:
-                logger.error("Abortando: nenhum evento para rodada %d.", _RODADA_ATUAL)
+                logger.error(
+                    "Abortando: nenhum evento mapeado na janela %s..+%dd.",
+                    hoje.isoformat(),
+                    dias,
+                )
                 sys.exit(1)
 
             for idx, evento in enumerate(eventos, start=1):
-                logger.info("[%d/%d] %s vs %s", idx, len(eventos),
-                            evento.get("home", "?"), evento.get("away", "?"))
-                antes = len(resultado)
+                eid = int(evento["id"])
+                conf = evento.get("confronto") or {}
+                logger.info(
+                    "[%d/%d] %s vs %s (data=%s)",
+                    idx, len(eventos),
+                    evento.get("home", "?"), evento.get("away", "?"),
+                    evento.get("data", "?"),
+                )
+
+                chave = str(eid)
+                odds_evento: dict[str, dict] = {}
+                if chave in eventos_store:
+                    bruto = eventos_store[chave].get("odds") or {}
+                    odds_evento = {str(k): dict(v) for k, v in bruto.items() if isinstance(v, dict)}
+
+                antes = len(odds_evento)
                 n = processar_evento(
                     evento, pagina, jogadores, jogadores_todos,
-                    resultado, relatorio, rsc_acumulado,
+                    odds_evento, relatorio, rsc_acumulado,
+                    modo_armazenamento=True,
                 )
                 if n > 0:
-                    eventos_ok.append(int(evento["id"]))
+                    eventos_ok.append(eid)
                     total_add += n
+                    eventos_store[chave] = montar_registro_evento(evento, conf, odds_evento)
+                    eventos_store[chave]["raspar_em"] = datetime.now(tz=timezone.utc).isoformat()
                 else:
                     eventos_falha.append(evento)
-                delta_evento = len(resultado) - antes
-                logger.info("  delta atletas neste evento: %+d", delta_evento)
+                logger.info("  delta atletas neste evento: %+d", len(odds_evento) - antes)
 
                 if idx < len(eventos):
                     delay = random.uniform(DELAY_MIN, DELAY_MAX)
@@ -1977,15 +2081,25 @@ def executar() -> None:
 
             if eventos_falha:
                 logger.info("Retry de %d eventos com falha...", len(eventos_falha))
-                for idx, evento in enumerate(eventos_falha, start=1):
+                for evento in eventos_falha:
                     time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
+                    eid = int(evento["id"])
+                    conf = evento.get("confronto") or {}
+                    chave = str(eid)
+                    odds_evento = {}
+                    if chave in eventos_store:
+                        bruto = eventos_store[chave].get("odds") or {}
+                        odds_evento = {str(k): dict(v) for k, v in bruto.items() if isinstance(v, dict)}
                     n = processar_evento(
                         evento, pagina, jogadores, jogadores_todos,
-                        resultado, relatorio, rsc_acumulado,
+                        odds_evento, relatorio, rsc_acumulado,
+                        modo_armazenamento=True,
                     )
                     if n > 0:
-                        eventos_ok.append(int(evento["id"]))
+                        eventos_ok.append(eid)
                         total_add += n
+                        eventos_store[chave] = montar_registro_evento(evento, conf, odds_evento)
+                        eventos_store[chave]["raspar_em"] = datetime.now(tz=timezone.utc).isoformat()
 
             num_eventos = len(eventos)
             falhas = num_eventos - len(set(eventos_ok))
@@ -1997,28 +2111,45 @@ def executar() -> None:
             except Exception:
                 pass
 
-    novos = len(resultado) - base_total
+    expurgar_passados(armazenamento, hoje)
+    armazenamento["referencia_data"] = hoje.isoformat()
+    armazenamento["janela_dias"] = dias
+    armazenamento["atualizado_em"] = datetime.now(tz=timezone.utc).isoformat()
+    salvar_armazenamento(armazenamento)
+
+    resultado = compilar_dashboard(armazenamento, jogadores_todos, hoje)
+    base_total = len(resultado)
+
     logger.info(
-        "Scraping concluido: %d atletas total (+%d) | eventos OK: %d | falhas: %d",
-        len(resultado),
-        novos,
+        "Scraping concluido: %d eventos OK | %d falhas | +%d atletas raspados | dashboard=%d",
         len(set(eventos_ok)),
         falhas,
+        total_add,
+        base_total,
     )
 
     relatorio.imprimir()
 
-    _garantir_adversario_vigente(resultado, jogadores_todos)
-    _normalizar_odds_pos_estreia(resultado, jogadores_todos)
+    if total_add == 0 and base_total < MIN_JOGADORES_SALVAR:
+        anterior = 0
+        if CAMINHO_SAIDA.is_file():
+            try:
+                with CAMINHO_SAIDA.open(encoding="utf-8") as f:
+                    anterior = len(json.load(f).get("odds", {}))
+            except Exception:
+                pass
+        if anterior >= MIN_JOGADORES_SALVAR:
+            logger.warning(
+                "Nenhuma odd nova nesta execucao — recompilando armazenamento anterior."
+            )
+            resultado = compilar_dashboard(armazenamento, jogadores_todos, hoje)
+            if len(resultado) >= MIN_JOGADORES_SALVAR:
+                _salvar(resultado, referencia_data=hoje.isoformat())
+                return
+        logger.error("Scrape insuficiente e sem backup valido.")
+        sys.exit(1)
 
-    if total_add == 0 and base_total >= MIN_JOGADORES_SALVAR:
-        logger.warning(
-            "Nenhuma odd nova nesta execucao — preservando arquivo anterior (%d atletas).",
-            base_total,
-        )
-        return
-
-    _salvar(resultado)
+    _salvar(resultado, referencia_data=hoje.isoformat())
 
 
 def _garantir_adversario_vigente(
@@ -2145,7 +2276,7 @@ def _resolver_eventos_scrape(
     return buscar_eventos(pagina, rsc_wc2026), rsc_wc2026
 
 
-def _salvar(odds: dict[str, dict]) -> None:
+def _salvar(odds: dict[str, dict], *, referencia_data: str | None = None) -> None:
     n = len(odds)
     if n < MIN_JOGADORES_SALVAR:
         anterior = 0
@@ -2172,8 +2303,10 @@ def _salvar(odds: dict[str, dict]) -> None:
         sys.exit(1)
 
     CAMINHO_SAIDA.parent.mkdir(parents=True, exist_ok=True)
+    ref = referencia_data or referencia_hoje().isoformat()
     payload = {
         "atualizado_em": datetime.now(tz=timezone.utc).isoformat(),
+        "referencia_data": ref,
         "total_jogadores": len(odds),
         "odds": odds,
     }

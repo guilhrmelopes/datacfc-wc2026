@@ -1,0 +1,297 @@
+"""
+Armazenamento e compilação de odds por evento (calendário WC2026 como âncora).
+
+Janela de scrape: hoje (America/Sao_Paulo) + N dias.
+Classificação por seleção:
+  - data < hoje  → expurga do armazenamento
+  - data >= hoje → confronto "atual" = partida mais próxima; demais = futuro (guardadas)
+Compilação gera odds_jogadores.json só com confrontos atuais por seleção.
+"""
+
+from __future__ import annotations
+
+import json
+import logging
+import os
+from collections import defaultdict
+from datetime import date, datetime, timedelta
+from pathlib import Path
+from typing import Any
+from zoneinfo import ZoneInfo
+
+logger = logging.getLogger(__name__)
+
+_FUSO_CALENDARIO = ZoneInfo("America/Sao_Paulo")
+_JANELA_DIAS_PADRAO = 7
+
+_RAIZ = Path(__file__).resolve().parents[2]
+CAMINHO_ARMAZENAMENTO = _RAIZ / "frontend" / "public" / "data" / "odds_eventos_armazenados.json"
+CAMINHO_GRUPOS = _RAIZ / "frontend" / "public" / "data" / "grupos_wc2026.json"
+CAMINHO_MERCADO = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
+CAMINHO_SAIDA = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
+CAMINHO_ESTADO = _RAIZ / "frontend" / "public" / "data" / "copa_estado.json"
+
+
+def referencia_hoje() -> date:
+    """Data de referência (calendário). Override: ODDS_REFERENCIA_DATA=YYYY-MM-DD."""
+    bruto = os.environ.get("ODDS_REFERENCIA_DATA", "").strip()
+    if bruto:
+        return date.fromisoformat(bruto)
+    return datetime.now(tz=_FUSO_CALENDARIO).date()
+
+
+def janela_dias() -> int:
+    bruto = os.environ.get("ODDS_JANELA_DIAS", "").strip()
+    if bruto.isdigit():
+        return max(1, int(bruto))
+    return _JANELA_DIAS_PADRAO
+
+
+def parse_data_calendario(valor: str | None) -> date | None:
+    if not valor:
+        return None
+    bruto = str(valor).strip()[:10]
+    try:
+        return date.fromisoformat(bruto)
+    except ValueError:
+        return None
+
+
+def _carregar_json(caminho: Path) -> Any:
+    with caminho.open(encoding="utf-8") as f:
+        return json.load(f)
+
+
+def mapa_sigla_por_selecao(jogadores: list[dict]) -> dict[str, str]:
+    out: dict[str, str] = {}
+    for j in jogadores:
+        sel = (j.get("selecao") or "").upper()
+        sig = (j.get("sigla") or "").upper()
+        if sel and sig:
+            out[sel] = sig
+    return out
+
+
+def mapa_sigla_por_atleta(jogadores: list[dict]) -> dict[str, str]:
+    return {
+        str(j["atleta_id"]): (j.get("sigla") or "").upper()
+        for j in jogadores
+        if j.get("atleta_id") is not None
+    }
+
+
+def carregar_confrontos_calendario() -> list[dict]:
+    if not CAMINHO_GRUPOS.is_file():
+        return []
+    dados = _carregar_json(CAMINHO_GRUPOS)
+    return list(dados.get("confrontos") or [])
+
+
+def confrontos_na_janela(
+    hoje: date | None = None,
+    dias: int | None = None,
+    confrontos: list[dict] | None = None,
+) -> list[dict]:
+    """Partidas com data no intervalo [hoje, hoje+dias] (campo `data` do calendário)."""
+    ref = hoje or referencia_hoje()
+    limite = ref + timedelta(days=dias if dias is not None else janela_dias())
+    fonte = confrontos if confrontos is not None else carregar_confrontos_calendario()
+    resultado: list[dict] = []
+    for c in fonte:
+        if c.get("finalizada"):
+            continue
+        d = parse_data_calendario(c.get("data"))
+        if d is None or d < ref or d > limite:
+            continue
+        resultado.append(c)
+    resultado.sort(key=lambda c: (c.get("data", ""), c.get("hora", ""), c.get("match_id", "")))
+    return resultado
+
+
+def enriquecer_confronto(confronto: dict, selecao_sigla: dict[str, str]) -> dict[str, Any]:
+    mandante = (confronto.get("mandante") or "").upper()
+    visitante = (confronto.get("visitante") or "").upper()
+    return {
+        **confronto,
+        "sigla_mandante": selecao_sigla.get(mandante, ""),
+        "sigla_visitante": selecao_sigla.get(visitante, ""),
+    }
+
+
+def carregar_armazenamento() -> dict[str, Any]:
+    if not CAMINHO_ARMAZENAMENTO.is_file():
+        return {"eventos": {}}
+    try:
+        bruto = _carregar_json(CAMINHO_ARMAZENAMENTO)
+    except (json.JSONDecodeError, OSError):
+        return {"eventos": {}}
+    eventos = bruto.get("eventos")
+    if isinstance(eventos, list):
+        por_id = {
+            str(ev.get("event_id")): ev
+            for ev in eventos
+            if isinstance(ev, dict) and ev.get("event_id") is not None
+        }
+        return {**bruto, "eventos": por_id}
+    if not isinstance(eventos, dict):
+        return {**bruto, "eventos": {}}
+    return bruto
+
+
+def salvar_armazenamento(payload: dict[str, Any]) -> None:
+    CAMINHO_ARMAZENAMENTO.parent.mkdir(parents=True, exist_ok=True)
+    with CAMINHO_ARMAZENAMENTO.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+    logger.info("Armazenamento: %d eventos -> %s", len(payload.get("eventos", {})), CAMINHO_ARMAZENAMENTO)
+
+
+def expurgar_passados(armazenamento: dict[str, Any], hoje: date | None = None) -> int:
+    """Remove eventos com data de calendário anterior a hoje."""
+    ref = hoje or referencia_hoje()
+    eventos: dict[str, dict] = armazenamento.setdefault("eventos", {})
+    removidos = 0
+    for eid in list(eventos.keys()):
+        ev = eventos[eid]
+        d = parse_data_calendario(ev.get("data"))
+        if d is not None and d < ref:
+            del eventos[eid]
+            removidos += 1
+    if removidos:
+        logger.info("Expurgados %d eventos passados (ref=%s).", removidos, ref.isoformat())
+    return removidos
+
+
+def confronto_atual_por_sigla(
+    eventos: list[dict],
+    hoje: date | None = None,
+) -> dict[str, dict]:
+    """
+    Para cada sigla, partida mais próxima com data >= hoje.
+    Usa apenas o campo `data` do calendário (ignora UTC/fuso do hub).
+    """
+    ref = hoje or referencia_hoje()
+    por_sigla: dict[str, list[dict]] = defaultdict(list)
+    for ev in eventos:
+        d = parse_data_calendario(ev.get("data"))
+        if d is None or d < ref:
+            continue
+        for sig in (ev.get("sigla_mandante"), ev.get("sigla_visitante")):
+            s = (sig or "").upper()
+            if s:
+                por_sigla[s].append(ev)
+    atual: dict[str, dict] = {}
+    for sig, evs in por_sigla.items():
+        evs.sort(key=lambda e: (e.get("data", ""), int(e.get("event_id") or 0)))
+        atual[sig] = evs[0]
+    return atual
+
+
+def compilar_dashboard(
+    armazenamento: dict[str, Any],
+    jogadores: list[dict] | None = None,
+    hoje: date | None = None,
+) -> dict[str, dict]:
+    """Monta odds_jogadores (chave atleta_id) só dos confrontos atuais por seleção."""
+    ref = hoje or referencia_hoje()
+    if jogadores is None:
+        if not CAMINHO_MERCADO.is_file():
+            jogadores = []
+        else:
+            jogadores = _carregar_json(CAMINHO_MERCADO)
+
+    eventos_list = [
+        ev for ev in armazenamento.get("eventos", {}).values()
+        if isinstance(ev, dict)
+    ]
+    atuais = confronto_atual_por_sigla(eventos_list, ref)
+    sigla_por_atleta = mapa_sigla_por_atleta(jogadores)
+
+    resultado: dict[str, dict] = {}
+    for aid, sigla in sigla_por_atleta.items():
+        if not sigla:
+            continue
+        ev = atuais.get(sigla)
+        if not ev:
+            continue
+        entrada_bruta = (ev.get("odds") or {}).get(aid)
+        if not isinstance(entrada_bruta, dict):
+            continue
+        sig_m = (ev.get("sigla_mandante") or "").upper()
+        sig_v = (ev.get("sigla_visitante") or "").upper()
+        adv = sig_v if sigla == sig_m else sig_m
+
+        entrada = dict(entrada_bruta)
+        entrada["event_id"] = ev.get("event_id")
+        entrada["adversario_sigla"] = adv or entrada.get("adversario_sigla")
+        entrada["data_confronto"] = ev.get("data")
+        entrada["rodada"] = ev.get("rodada")
+        resultado[aid] = entrada
+
+    logger.info(
+        "Compilado dashboard: %d atletas | %d seleções com confronto atual (ref=%s).",
+        len(resultado),
+        len(atuais),
+        ref.isoformat(),
+    )
+    return resultado
+
+
+def montar_registro_evento(
+    evento: dict,
+    confronto: dict,
+    odds: dict[str, dict],
+) -> dict[str, Any]:
+    return {
+        "event_id": int(evento["id"]),
+        "data": confronto.get("data") or evento.get("data", ""),
+        "hora": confronto.get("hora", ""),
+        "rodada": confronto.get("rodada"),
+        "grupo": confronto.get("grupo", ""),
+        "mandante": confronto.get("mandante", ""),
+        "visitante": confronto.get("visitante", ""),
+        "sigla_mandante": confronto.get("sigla_mandante", ""),
+        "sigla_visitante": confronto.get("sigla_visitante", ""),
+        "home": evento.get("home", ""),
+        "away": evento.get("away", ""),
+        "fixture_id": confronto.get("match_id") or evento.get("fixture_id"),
+        "odds": odds,
+    }
+
+
+def compilar_e_salvar(
+    hoje: date | None = None,
+    min_jogadores: int = 500,
+) -> dict[str, dict]:
+    """Recompila odds_jogadores.json a partir do armazenamento (sem scrape)."""
+    from pipeline.timestamp_dashboard import marcar_dashboard_atualizado
+
+    ref = hoje or referencia_hoje()
+    armaz = carregar_armazenamento()
+    expurgar_passados(armaz, ref)
+    armaz["referencia_data"] = ref.isoformat()
+    armaz["janela_dias"] = janela_dias()
+    armaz["atualizado_em"] = datetime.now(tz=_FUSO_CALENDARIO).isoformat()
+    salvar_armazenamento(armaz)
+
+    odds = compilar_dashboard(armaz, hoje=ref)
+    if len(odds) < min_jogadores and CAMINHO_SAIDA.is_file():
+        logger.warning(
+            "Compilação com %d atletas (< %d) — preservando odds_jogadores anterior.",
+            len(odds),
+            min_jogadores,
+        )
+        return odds
+
+    payload = {
+        "atualizado_em": datetime.now(tz=_FUSO_CALENDARIO).isoformat(),
+        "referencia_data": ref.isoformat(),
+        "total_jogadores": len(odds),
+        "odds": odds,
+    }
+    CAMINHO_SAIDA.parent.mkdir(parents=True, exist_ok=True)
+    with CAMINHO_SAIDA.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+    if CAMINHO_ESTADO.is_file():
+        marcar_dashboard_atualizado(CAMINHO_ESTADO)
+    logger.info("Salvo dashboard: %d atletas -> %s", len(odds), CAMINHO_SAIDA)
+    return odds

@@ -143,6 +143,8 @@ export interface OddsJogadorEntry {
   event_id: number;
   /** Sigla Cartola do adversário na partida das odds (ex.: CAT = Qatar). */
   adversario_sigla?: string | null;
+  /** Data do confronto no calendário WC2026 (YYYY-MM-DD, âncora Brasil). */
+  data_confronto?: string | null;
   rodada?: number | null;
   g_pct?: number | null;
   casa_g?: string | null;
@@ -160,6 +162,8 @@ export interface OddsJogadorEntry {
 
 export interface OddsJogadoresData {
   atualizado_em: string;
+  /** Data de referência do calendário usada na compilação (YYYY-MM-DD, America/Sao_Paulo). */
+  referencia_data?: string;
   total_jogadores: number;
   odds: Record<string, OddsJogadorEntry>;
 }

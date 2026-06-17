@@ -27,19 +27,36 @@ export function xgXaPor90Copa(j: JogadorMercado): number | null {
   return ((xg + xa) / j.copa_mins_played) * 90;
 }
 
+/** Hoje no fuso do calendário (America/Sao_Paulo), formato YYYY-MM-DD. */
+function hojeCalendario(): string {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+}
+
 /**
- * Odds vigentes para exibição:
- * - quem ainda não estreou: odds atuais (próximo jogo);
- * - quem já jogou: só odds do ADV listado no mercado.
+ * Odds vigentes para exibição (calendário WC2026 como âncora):
+ * - odds compiladas trazem data_confronto; oculta partidas já passadas;
+ * - alinha adversário + data quando o mercado Cartola estiver sincronizado;
+ * - se data_confronto >= hoje, exibe (confronto atual por seleção no armazenamento).
  */
 export function oddsVigentes(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
 ): boolean {
   if (!odds) return false;
+  const dataOdds = odds.data_confronto?.trim();
   const prox = j.proximo_adversario_sigla?.trim().toUpperCase();
-  if (!prox) return true;
+  const proxData = j.proximo_adversario_data?.trim();
   const oddsAdv = odds.adversario_sigla?.trim().toUpperCase();
+
+  if (dataOdds) {
+    if (dataOdds < hojeCalendario()) return false;
+    if (proxData && prox && oddsAdv) {
+      return dataOdds === proxData && oddsAdv === prox;
+    }
+    return Boolean(oddsAdv);
+  }
+
+  if (!prox) return true;
   if (!oddsAdv) return !temCopa(j);
   return oddsAdv === prox;
 }

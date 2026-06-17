@@ -13,7 +13,7 @@ concurrency:
 jobs:
   scrape-odds:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
 
     permissions:
       contents: write
@@ -72,6 +72,7 @@ jobs:
             frontend/public/data/selecoes.json \
             frontend/public/data/jogadores_mercado.json \
             frontend/public/data/odds_jogadores.json \
+            frontend/public/data/odds_eventos_armazenados.json \
             frontend/public/data/eventos_odds_rodada1.json
 
           if git diff --cached --quiet; then

@@ -1,67 +1,143 @@
-name: Atualizar status e fotos dos jogadores
-
-on:
-  schedule:
-    - cron: '0 12 * * *'   # 09h BRT (UTC-3)
-    - cron: '0 17 * * *'   # 14h BRT
-    - cron: '0 0  * * *'   # 21h BRT
-  workflow_dispatch:
-
-concurrency:
-  group: update-status-${{ github.ref }}
-  cancel-in-progress: false
-
-jobs:
-  update:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    env:
-      PYTHONPATH: ${{ github.workspace }}/src
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Configurar Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Atualizar status, fotos e timestamp do dashboard
-        run: python automation/atualizar_status_jogadores.py
-
-      - name: Commitar se houver mudanças
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add \
-            frontend/public/data/jogadores_mercado.json \
-            frontend/public/data/copa_estado.json
-
-          if git diff --cached --quiet; then
-            echo "Nenhuma mudança em status/fotos."
-            exit 0
-          fi
-
-          git commit -m "bot: atualizar status e fotos dos jogadores [skip ci]"
-
-          pushed=0
-          for attempt in 1 2 3 4 5; do
-            if git pull --rebase origin main && git push origin HEAD:main; then
-              pushed=1
-              break
-            fi
-            echo "Push falhou (tentativa ${attempt}/5) — aguardando..."
-            sleep $((attempt * 3))
-          done
-
-          if [ "$pushed" -ne 1 ]; then
-            echo "::error::git push falhou após 5 tentativas."
-            exit 1
-          fi
-
+name: Atualizar status e fotos dos jogadores
+
+
+
+on:
+
+  schedule:
+
+    - cron: '0 12 * * *'   # 09h BRT (UTC-3)
+
+    - cron: '0 17 * * *'   # 14h BRT
+
+    - cron: '0 0  * * *'   # 21h BRT
+
+  workflow_dispatch:
+
+
+
+concurrency:
+
+  group: update-status-${{ github.ref }}
+
+  cancel-in-progress: false
+
+
+
+jobs:
+
+  update:
+
+    runs-on: ubuntu-latest
+
+    permissions:
+
+      contents: write
+
+
+
+    env:
+
+      PYTHONPATH: ${{ github.workspace }}/src
+
+
+
+    steps:
+
+      - name: Checkout
+
+        uses: actions/checkout@v4
+
+        with:
+
+          fetch-depth: 0
+
+
+
+      - name: Configurar Python 3.12
+
+        uses: actions/setup-python@v5
+
+        with:
+
+          python-version: "3.12"
+
+
+
+      - name: Atualizar status, fotos e timestamp do dashboard
+
+        run: python automation/atualizar_status_jogadores.py
+
+
+
+      - name: Recompilar odds do armazenamento (virada de dia)
+
+        run: python automation/compilar_odds.py
+
+
+
+      - name: Commitar se houver mudanças
+
+        run: |
+
+          git config user.name "github-actions[bot]"
+
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+
+
+          git add \
+
+            frontend/public/data/jogadores_mercado.json \
+
+            frontend/public/data/copa_estado.json \
+
+            frontend/public/data/odds_jogadores.json \
+
+            frontend/public/data/odds_eventos_armazenados.json
+
+
+
+          if git diff --cached --quiet; then
+
+            echo "Nenhuma mudança em status/fotos."
+
+            exit 0
+
+          fi
+
+
+
+          git commit -m "bot: atualizar status e fotos dos jogadores [skip ci]"
+
+
+
+          pushed=0
+
+          for attempt in 1 2 3 4 5; do
+
+            if git pull --rebase origin main && git push origin HEAD:main; then
+
+              pushed=1
+
+              break
+
+            fi
+
+            echo "Push falhou (tentativa ${attempt}/5) — aguardando..."
+
+            sleep $((attempt * 3))
+
+          done
+
+
+
+          if [ "$pushed" -ne 1 ]; then
+
+            echo "::error::git push falhou após 5 tentativas."
+
+            exit 1
+
+          fi
+
+

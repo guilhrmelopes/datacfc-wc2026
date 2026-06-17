@@ -17,6 +17,7 @@ POS_LINHA = frozenset({2, 3, 4, 5})
 POS_SG = frozenset({1, 2, 3})
 
 _RAIZ = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(_RAIZ / "src"))
 CAMINHO = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
 CAMINHO_MERCADO = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 
@@ -37,6 +38,24 @@ def validar(caminho: Path | None = None) -> tuple[int, int, int, int, int]:
 
 
 def _entrada_vigente(jog: dict, entrada: dict) -> bool:
+    from scrapers.odds_armazenamento import referencia_hoje
+
+    data_odds = (entrada.get("data_confronto") or "").strip()
+    if data_odds:
+        if data_odds < referencia_hoje().isoformat():
+            return False
+        prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
+        prox_data = (jog.get("proximo_adversario_data") or "").strip()
+        odds_adv = (entrada.get("adversario_sigla") or "").strip().upper()
+        if prox_data and prox and odds_adv:
+            return data_odds == prox_data and odds_adv == prox
+        pos = int(jog.get("posicao_id") or 0)
+        if pos in POS_LINHA:
+            return bool(entrada.get("ga_pct") or entrada.get("g_pct") or entrada.get("a_pct"))
+        if pos in POS_SG:
+            return bool(entrada.get("sg_pct"))
+        return False
+
     prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
     if not prox:
         return bool(

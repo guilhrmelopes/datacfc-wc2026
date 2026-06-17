@@ -51,6 +51,7 @@ $ArquivosCommit = @(
     "frontend/public/data/jogadores_mercado.json",
 
     "frontend/public/data/odds_jogadores.json",
+    "frontend/public/data/odds_eventos_armazenados.json",
 
     "frontend/public/data/eventos_odds_rodada1.json"
 
