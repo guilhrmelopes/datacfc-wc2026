@@ -5,8 +5,8 @@
     "BRAZIL",
     "QATAR",
     "SPAIN",
-    "AUSTRIA",
     "GHANA",
+    "JORDAN",
     "PORTUGAL"
   ],
   "A": [
@@ -508,6 +508,21 @@
   "I": [
     {
       "posicao": 1,
+      "selecao": "NORWAY",
+      "sigla": "NOR",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NOR/60x60.png",
+      "P": 3,
+      "J": 1,
+      "V": 1,
+      "E": 0,
+      "D": 0,
+      "GM": 4,
+      "GS": 1,
+      "SG": 3,
+      "aprov": 100.0
+    },
+    {
+      "posicao": 2,
       "selecao": "FRANCE",
       "sigla": "FRA",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/FRA/60x60.png",
@@ -522,37 +537,7 @@
       "aprov": 100.0
     },
     {
-      "posicao": 2,
-      "selecao": "NORWAY",
-      "sigla": "NOR",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NOR/60x60.png",
-      "P": 3,
-      "J": 1,
-      "V": 1,
-      "E": 0,
-      "D": 0,
-      "GM": 3,
-      "GS": 1,
-      "SG": 2,
-      "aprov": 100.0
-    },
-    {
       "posicao": 3,
-      "selecao": "IRAQ",
-      "sigla": "IRQ",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRQ/60x60.png",
-      "P": 0,
-      "J": 1,
-      "V": 0,
-      "E": 0,
-      "D": 1,
-      "GM": 1,
-      "GS": 3,
-      "SG": -2,
-      "aprov": 0.0
-    },
-    {
-      "posicao": 4,
       "selecao": "SENEGAL",
       "sigla": "SEN",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SEN/60x60.png",
@@ -565,41 +550,41 @@
       "GS": 3,
       "SG": -2,
       "aprov": 0.0
+    },
+    {
+      "posicao": 4,
+      "selecao": "IRAQ",
+      "sigla": "IRQ",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRQ/60x60.png",
+      "P": 0,
+      "J": 1,
+      "V": 0,
+      "E": 0,
+      "D": 1,
+      "GM": 1,
+      "GS": 4,
+      "SG": -3,
+      "aprov": 0.0
     }
   ],
   "J": [
     {
       "posicao": 1,
-      "selecao": "ALGERIA",
-      "sigla": "AGL",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
-      "P": 0,
-      "J": 0,
-      "V": 0,
-      "E": 0,
-      "D": 0,
-      "GM": 0,
-      "GS": 0,
-      "SG": 0,
-      "aprov": 0.0
-    },
-    {
-      "posicao": 2,
       "selecao": "ARGENTINA",
       "sigla": "ARG",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
-      "P": 0,
-      "J": 0,
-      "V": 0,
+      "P": 3,
+      "J": 1,
+      "V": 1,
       "E": 0,
       "D": 0,
-      "GM": 0,
+      "GM": 3,
       "GS": 0,
-      "SG": 0,
-      "aprov": 0.0
+      "SG": 3,
+      "aprov": 100.0
     },
     {
-      "posicao": 3,
+      "posicao": 2,
       "selecao": "AUSTRIA",
       "sigla": "AUT",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUT/60x60.png",
@@ -614,7 +599,7 @@
       "aprov": 0.0
     },
     {
-      "posicao": 4,
+      "posicao": 3,
       "selecao": "JORDAN",
       "sigla": "JOR",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JOR/60x60.png",
@@ -626,6 +611,21 @@
       "GM": 0,
       "GS": 0,
       "SG": 0,
+      "aprov": 0.0
+    },
+    {
+      "posicao": 4,
+      "selecao": "ALGERIA",
+      "sigla": "AGL",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
+      "P": 0,
+      "J": 1,
+      "V": 0,
+      "E": 0,
+      "D": 1,
+      "GM": 0,
+      "GS": 3,
+      "SG": -3,
       "aprov": 0.0
     }
   ],

@@ -263,7 +263,7 @@
       "visitante": "NEW ZEALAND",
       "data": "2026-06-15",
       "hora": "22:00:00",
-      "utc": "2026-06-16T01:00:00.000Z",
+      "utc": "2026-06-16T01:00:00Z",
       "match_id": "4667791",
       "finalizada": true,
       "placar": "2 - 2"
@@ -275,7 +275,7 @@
       "visitante": "SENEGAL",
       "data": "2026-06-16",
       "hora": "16:00:00",
-      "utc": "2026-06-16T19:00:00.000Z",
+      "utc": "2026-06-16T19:00:00Z",
       "match_id": "4667804",
       "finalizada": true,
       "placar": "3 - 1"
@@ -287,10 +287,10 @@
       "visitante": "NORWAY",
       "data": "2026-06-16",
       "hora": "19:00:00",
-      "utc": "2026-06-16T22:00:00.000Z",
+      "utc": "2026-06-16T22:00:00Z",
       "match_id": "4667805",
-      "finalizada": false,
-      "placar": "1 - 3"
+      "finalizada": true,
+      "placar": "1 - 4"
     },
     {
       "grupo": "J",
@@ -299,10 +299,10 @@
       "visitante": "ALGERIA",
       "data": "2026-06-16",
       "hora": "22:00:00",
-      "utc": "2026-06-17T01:00:00Z",
+      "utc": "2026-06-17T01:00:00.000Z",
       "match_id": "4667812",
-      "finalizada": false,
-      "placar": null
+      "finalizada": true,
+      "placar": "3 - 0"
     },
     {
       "grupo": "J",
@@ -311,7 +311,7 @@
       "visitante": "JORDAN",
       "data": "2026-06-17",
       "hora": "01:00:00",
-      "utc": "2026-06-17T04:00:00Z",
+      "utc": "2026-06-17T04:00:00.000Z",
       "match_id": "4667813",
       "finalizada": false,
       "placar": null
@@ -323,7 +323,7 @@
       "visitante": "DR CONGO",
       "data": "2026-06-17",
       "hora": "14:00:00",
-      "utc": "2026-06-17T17:00:00Z",
+      "utc": "2026-06-17T17:00:00.000Z",
       "match_id": "4667819",
       "finalizada": false,
       "placar": null
@@ -335,7 +335,7 @@
       "visitante": "CROATIA",
       "data": "2026-06-17",
       "hora": "17:00:00",
-      "utc": "2026-06-17T20:00:00Z",
+      "utc": "2026-06-17T20:00:00.000Z",
       "match_id": "4667825",
       "finalizada": false,
       "placar": null
@@ -347,7 +347,7 @@
       "visitante": "PANAMA",
       "data": "2026-06-17",
       "hora": "20:00:00",
-      "utc": "2026-06-17T23:00:00Z",
+      "utc": "2026-06-17T23:00:00.000Z",
       "match_id": "4667826",
       "finalizada": false,
       "placar": null
