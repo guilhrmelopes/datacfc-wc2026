@@ -325,8 +325,8 @@
       "hora": "14:00:00",
       "utc": "2026-06-17T17:00:00.000Z",
       "match_id": "4667819",
-      "finalizada": false,
-      "placar": null
+      "finalizada": true,
+      "placar": "1 - 1"
     },
     {
       "grupo": "L",
