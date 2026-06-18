@@ -15,6 +15,7 @@ if str(SRC) not in sys.path:
 from scrapers.matching_cartola import (  # noqa: E402
     melhor_jogador_para_nome,
 )
+from scrapers.mapeamento_odds import alias_aponta_para_outro  # noqa: E402
 
 CAMINHO_MERCADO = RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 
@@ -48,6 +49,7 @@ def main() -> int:
 
     total = 0
     acertos = 0
+    ignorados = 0
     falhas: list[str] = []
 
     random.seed(42)
@@ -57,8 +59,11 @@ def main() -> int:
         amostra = random.sample(elenco, min(8, len(elenco)))
         for jog in amostra:
             for var in _variantes_nome(jog.get("apelido", ""), jog.get("nome", "")):
-                total += 1
                 aid_exp = int(jog["atleta_id"])
+                if alias_aponta_para_outro(var, aid_exp, elenco):
+                    ignorados += 1
+                    continue
+                total += 1
                 melhor, score = melhor_jogador_para_nome(var, elenco, min_score=70)
                 if melhor and int(melhor["atleta_id"]) == aid_exp:
                     acertos += 1
@@ -69,14 +74,14 @@ def main() -> int:
                     )
 
     pct = (acertos / total * 100) if total else 0.0
-    print(f"Matching simulado: {acertos}/{total} ({pct:.1f}%)")
+    print(f"Matching simulado: {acertos}/{total} ({pct:.1f}%) ignorados={ignorados}")
     if falhas:
         print(f"Falhas ({len(falhas)}):")
         for linha in falhas[:25]:
             print(f"  {linha}")
         if len(falhas) > 25:
             print(f"  ... +{len(falhas) - 25}")
-    return 0 if pct >= 98.0 else 1
+    return 0 if pct >= 99.9 and not falhas else 1
 
 
 if __name__ == "__main__":

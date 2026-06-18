@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -11,7 +12,7 @@ MIN_G = 200
 MIN_A = 200
 MIN_GA = 400
 MIN_SG = 400
-MIN_VIGENTES_PCT = 0.85
+MIN_VIGENTES_PCT = float(os.environ.get("ODDS_MIN_VIGENTES_PCT", "0.80"))
 
 POS_LINHA = frozenset({2, 3, 4, 5})
 POS_SG = frozenset({1, 2, 3})

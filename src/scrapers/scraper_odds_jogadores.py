@@ -26,12 +26,27 @@ from typing import Any
 
 from playwright.sync_api import sync_playwright, Page
 
+from scrapers.captura_odds_api import (
+    extrair_odds_de_payload,
+    extrair_sg_de_payload,
+    payload_para_texto,
+)
+from utils.interceptacao_rede_oddsnotifier import ArmazenamentoCapturaOdds
+from scrapers.mapeamento_odds import registrar_alias_aprendido
 from scrapers.matching_cartola import (
     MIN_SCORE_ATRIBUICAO,
     MIN_SCORE_LACUNA,
     atribuir_nomes_a_jogadores,
     limpar_nome_fonte,
     melhor_jogador_para_nome,
+)
+from scrapers.mapeamento_selecoes_odds import chave_confronto as _chave_confronto
+from scrapers.mapeamento_selecoes_odds import normalizar_selecao as _mapear_selecao
+from scrapers.resolucao_eventos_odds import (
+    construir_indice_eventos,
+    mapear_fixtures,
+    salvar_cache_eventos as _salvar_cache_eventos_resolucao,
+    varredura_ids_playwright,
 )
 from scrapers.odds_armazenamento import (
     carregar_armazenamento,
@@ -151,31 +166,9 @@ def _wait_ms(base_ms: int) -> int:
 THRESHOLD_AUTO:   int = 85
 THRESHOLD_REVIEW: int = MIN_SCORE_ATRIBUICAO
 
-# Mapa oddsnotifier → seleção Cartola (campo upper)
-ALIAS_TIMES: dict[str, str] = {
-    "KOREA REPUBLIC":          "SOUTH KOREA",
-    "SOUTH KOREA":             "SOUTH KOREA",
-    "CZECH REPUBLIC":          "CZECHIA",
-    "CZECHIA":                 "CZECHIA",
-    "BOSNIA & HERZ.":          "BOSNIA AND HERZEGOVINA",
-    "BOSNIA AND HERZEGOVINA":  "BOSNIA AND HERZEGOVINA",
-    "USA":                     "UNITED STATES",
-    "UNITED STATES":           "UNITED STATES",
-    "TURKIYE":                 "TURKIYE",
-    "TÜRKIYE":                 "TURKIYE",
-    "CAPE VERDE ISLANDS":      "CAPE VERDE",
-    "CAPE VERDE":              "CAPE VERDE",
-    "CURACAO":                 "CURACAO",
-    "CURAÇAO":                 "CURACAO",
-    "COTE D'IVOIRE":           "IVORY COAST",
-    "CÔTE D'IVOIRE":           "IVORY COAST",
-    "CONGO DR":                "DR CONGO",
-    "IR IRAN":                 "IRAN",
-    "IRAN":                    "IRAN",
-    "IRAQ":                    "IRAQ",
-}
+# Mapa oddsnotifier → seleção Cartola: ver mapeamento_selecoes_odds.py
 
-# Faixa de IDs oddsnotifier para descoberta automática (World Cup 2026)
+# Faixa de IDs oddsnotifier para descoberta automática (somente com ODDS_ALLOW_ID_SCAN=1)
 ODDS_ID_SCAN_MIN: int = int(os.environ.get("ODDS_ID_SCAN_MIN", "66456900"))
 ODDS_ID_SCAN_MAX: int = int(os.environ.get("ODDS_ID_SCAN_MAX", "66458500"))
 
@@ -347,6 +340,7 @@ def _fixtures_de_confrontos(confrontos: list[dict]) -> list[dict]:
     for c in confrontos:
         fixtures.append({
             "fixture_id": c.get("match_id"),
+            "match_id": c.get("match_id"),
             "home": c.get("mandante", ""),
             "away": c.get("visitante", ""),
             "date": c.get("utc") or c.get("data", ""),
@@ -729,53 +723,8 @@ def _cache_eventos_da_api() -> dict[tuple[str, str], int]:
 
 
 def _carregar_cache_eventos() -> dict[tuple[str, str], int]:
-    cache: dict[tuple[str, str], int] = {}
-    if CAMINHO_EVENTOS.exists():
-        try:
-            with CAMINHO_EVENTOS.open(encoding="utf-8") as f:
-                bruto = json.load(f)
-            for ev in bruto.get("eventos", bruto if isinstance(bruto, list) else []):
-                if not isinstance(ev, dict) or "id" not in ev:
-                    continue
-                cache[_chave_confronto(ev.get("home", ""), ev.get("away", ""))] = int(ev["id"])
-        except (json.JSONDecodeError, OSError, ValueError):
-            pass
-    cache.update(_cache_eventos_da_api())
-    return cache
-
-
-def _salvar_cache_eventos(eventos: list[dict]) -> None:
-    CAMINHO_EVENTOS.parent.mkdir(parents=True, exist_ok=True)
-    existentes: list[dict] = []
-    if CAMINHO_EVENTOS.exists():
-        try:
-            with CAMINHO_EVENTOS.open(encoding="utf-8") as f:
-                bruto = json.load(f)
-            existentes = [
-                e for e in (bruto.get("eventos") or [])
-                if isinstance(e, dict) and "id" in e
-            ]
-        except (json.JSONDecodeError, OSError):
-            existentes = []
-
-    por_id: dict[int, dict] = {int(e["id"]): e for e in existentes}
-    for ev in eventos:
-        por_id[int(ev["id"])] = {
-            "id": int(ev["id"]),
-            "home": ev.get("home", ""),
-            "away": ev.get("away", ""),
-            "date": ev.get("date", ""),
-            "fixture_id": ev.get("fixture_id"),
-        }
-
-    payload = {
-        "atualizado_em": datetime.now(tz=timezone.utc).isoformat(),
-        "rodada": _RODADA_ATUAL,
-        "eventos": sorted(por_id.values(), key=lambda e: e.get("date", str(e["id"]))),
-    }
-    with CAMINHO_EVENTOS.open("w", encoding="utf-8") as f:
-        json.dump(payload, f, ensure_ascii=False, indent=2)
-    logger.info("Cache eventos salvo: %d partidas -> %s", len(por_id), CAMINHO_EVENTOS)
+    por_confronto, _ = construir_indice_eventos()
+    return por_confronto
 
 
 def _mapear_ids_eventos(
@@ -785,67 +734,47 @@ def _mapear_ids_eventos(
     rsc: str = "",
 ) -> list[dict]:
     """
-    Associa cada fixture da rodada ao oddsEventId (66456xxx).
-    Usa RSC + cache versionado + API + varredura na faixa conhecida quando necessário.
+    Associa cada fixture ao oddsEventId via API + cache (sem varredura por padrão).
     """
     if rsc:
         cache = {**cache, **_cache_eventos_do_rsc(rsc)}
-    if not cache:
-        cache = _cache_eventos_da_api()
 
-    faltando: list[dict] = []
-    mapeados: list[dict] = []
+    por_confronto, por_fixture = construir_indice_eventos()
+    por_confronto = {**por_confronto, **cache}
 
-    for fx in fixtures:
-        if fx.get("id"):
-            mapeados.append({**fx, "id": int(fx["id"])})
-            continue
-        chave = _chave_confronto(fx["home"], fx["away"])
-        eid = cache.get(chave)
-        if eid:
-            mapeados.append({**fx, "id": eid})
-        else:
-            faltando.append(fx)
+    mapeados, faltando = mapear_fixtures(fixtures, por_confronto, por_fixture)
 
-    if not faltando:
-        return mapeados
-
-    logger.info("Descobrindo oddsEventId para %d partidas...", len(faltando))
-    chaves_faltando = {_chave_confronto(f["home"], f["away"]) for f in faltando}
-    novos: dict[tuple[str, str], int] = {}
-
-    for eid in range(ODDS_ID_SCAN_MIN, ODDS_ID_SCAN_MAX):
-        if not chaves_faltando:
-            break
-        if eid in cache.values():
-            continue
-        nome = _nome_evento_pagina(pagina, eid)
-        if not nome:
-            continue
-        times = _times_do_nome_evento(nome)
-        if not times:
-            continue
-        chave = _chave_confronto(times[0], times[1])
-        if chave in chaves_faltando:
-            novos[chave] = eid
-            chaves_faltando.discard(chave)
-            logger.info("  mapeado %d -> %s", eid, nome)
-
-    for fx in faltando:
-        chave = _chave_confronto(fx["home"], fx["away"])
-        eid = novos.get(chave) or cache.get(chave)
-        if eid:
-            mapeados.append({**fx, "id": eid})
-        else:
-            logger.warning("Sem oddsEventId: %s vs %s", fx["home"], fx["away"])
+    if faltando:
+        novos = varredura_ids_playwright(
+            pagina,
+            faltando,
+            por_confronto,
+            nome_evento_fn=_nome_evento_pagina,
+            times_do_nome_fn=_times_do_nome_evento,
+            url_evento_fn=_url_evento,
+            timeout_ms=TIMEOUT_PAGINA,
+        )
+        por_confronto.update(novos)
+        remapeados, ainda_faltando = mapear_fixtures(faltando, por_confronto, por_fixture)
+        mapeados.extend(remapeados)
+        for fx in ainda_faltando:
+            logger.warning("Sem oddsEventId: %s vs %s", fx.get("home"), fx.get("away"))
 
     mapeados.sort(key=lambda e: e.get("date", ""))
     if mapeados:
-        _salvar_cache_eventos([
-            {"id": e["id"], "home": e["home"], "away": e["away"],
-             "date": e.get("date", ""), "fixture_id": e.get("fixture_id")}
-            for e in mapeados
-        ])
+        _salvar_cache_eventos_resolucao(
+            [
+                {
+                    "id": e["id"],
+                    "home": e.get("home", ""),
+                    "away": e.get("away", ""),
+                    "date": e.get("date", ""),
+                    "fixture_id": e.get("fixture_id"),
+                }
+                for e in mapeados
+            ],
+            _RODADA_ATUAL,
+        )
     return mapeados[:MAX_EVENTOS]
 
 
@@ -905,12 +834,6 @@ def buscar_eventos(pagina: Page, rsc_wc2026: str = "") -> list[dict]:
 def _norm(texto: str) -> str:
     forma = unicodedata.normalize("NFKD", texto)
     return "".join(c for c in forma if not unicodedata.combining(c)).lower().strip()
-
-
-def _mapear_selecao(nome: str) -> str:
-    forma = unicodedata.normalize("NFKD", nome)
-    ascii_n = "".join(c for c in forma if not unicodedata.combining(c)).upper().strip()
-    return ALIAS_TIMES.get(ascii_n, ascii_n)
 
 
 def carregar_jogadores(caminho: Path) -> list[dict]:
@@ -1484,6 +1407,7 @@ def _aplicar_mercado_evento(
             rodada_evento=rodada_evento,
         ):
             adicionados += 1
+            registrar_alias_aprendido(nome_bk, jog, score)
         matched.add(nome_bk)
 
     nomes_lacuna = [n for n in odds_map if n not in matched]
@@ -1511,6 +1435,7 @@ def _aplicar_mercado_evento(
                 rodada_evento=rodada_evento,
             ):
                 adicionados += 1
+                registrar_alias_aprendido(nome_bk, jog, score)
             matched.add(nome_bk)
 
     for nome_bk in odds_map:
@@ -1768,6 +1693,7 @@ def processar_evento(
     rsc_acumulado: list[str],
     *,
     modo_armazenamento: bool = False,
+    captura_api: ArmazenamentoCapturaOdds | None = None,
 ) -> int:
     eid = evento["id"]
     home, away = evento.get("home", "?"), evento.get("away", "?")
@@ -1843,6 +1769,25 @@ def processar_evento(
             len(odds_bruto_acum["g"]),
         )
 
+    if captura_api is not None:
+        payload_api = captura_api.obter_odds_evento(eid)
+        if payload_api:
+            api_odds = extrair_odds_de_payload(payload_api, extrair_odds_rsc)
+            antes_g, antes_a, antes_ga = (
+                len(odds_bruto_acum["g"]),
+                len(odds_bruto_acum["a"]),
+                len(odds_bruto_acum["ga"]),
+            )
+            _mesclar_odds_rsc(odds_bruto_acum, api_odds)
+            logger.info(
+                "  API rede mesclada: g %d→%d a %d→%d ga %d→%d",
+                antes_g, len(odds_bruto_acum["g"]),
+                antes_a, len(odds_bruto_acum["a"]),
+                antes_ga, len(odds_bruto_acum["ga"]),
+            )
+            bloco_api = payload_para_texto(payload_api)
+            rsc = f"{rsc}\n{bloco_api}" if rsc.strip() else bloco_api
+
     if not rsc.strip() and not any(odds_bruto_acum[m] for m in ("g", "a", "ga")):
         logger.warning("RSC vazio para %s — nenhum dado extraido.", desc)
         _screenshot_falha(pagina, eid)
@@ -1857,6 +1802,10 @@ def processar_evento(
     odds_a = consolidar_nomes_odds(odds_bruto_acum["a"])
     odds_ga = consolidar_nomes_odds(odds_bruto_acum["ga"])
     sg_home, sg_away = extrair_sg_times(rsc)
+    if captura_api is not None and not sg_home and not sg_away:
+        payload_api = captura_api.obter_odds_evento(eid)
+        if payload_api:
+            sg_home, sg_away = extrair_sg_de_payload(payload_api, extrair_sg_times)
 
     sel_home = _mapear_selecao(home)
     sel_away = _mapear_selecao(away)
@@ -1995,22 +1944,19 @@ def executar() -> None:
         pagina = ctx.new_page()
 
         rsc_acumulado: list[str] = []
+        captura_api = ArmazenamentoCapturaOdds(logger)
+        captura_api.vincular_pagina(pagina)
 
         def _capturar_rsc(resp) -> None:
             if "oddsnotifier" not in resp.url:
                 return
             ct = (resp.headers.get("content-type") or "").lower()
             try:
-                if "json" in ct and "/anytime-goalscorer" in resp.url:
+                if "json" in ct:
                     corpo = resp.text()
                     if corpo and "bookmakers" in corpo:
                         rsc_acumulado.append(corpo)
-                        logger.debug(
-                            "API anytime-goalscorer %d chars: %s",
-                            len(corpo),
-                            resp.url[:80],
-                        )
-                    return
+                        return
             except Exception:
                 pass
             if "x-component" not in ct and "text/html" not in ct and "javascript" not in ct:
@@ -2064,6 +2010,7 @@ def executar() -> None:
                     evento, pagina, jogadores, jogadores_todos,
                     odds_evento, relatorio, rsc_acumulado,
                     modo_armazenamento=True,
+                    captura_api=captura_api,
                 )
                 if n > 0:
                     eventos_ok.append(eid)
@@ -2094,6 +2041,7 @@ def executar() -> None:
                         evento, pagina, jogadores, jogadores_todos,
                         odds_evento, relatorio, rsc_acumulado,
                         modo_armazenamento=True,
+                        captura_api=captura_api,
                     )
                     if n > 0:
                         eventos_ok.append(eid)

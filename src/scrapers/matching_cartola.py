@@ -1,7 +1,8 @@
 """
 Matching de nomes externos (OddsNotifier, FotMob, etc.) → jogadores Cartola.
 
-Estratégia em camadas (sem aliases hardcoded por jogador):
+Estratégia em camadas:
+  0. Alias registrado (mapeamento_jogadores_odds.json) → atleta_id
   1. Normalização Unicode + tokens expandidos (jr/junior, vini/vinicius)
   2. Substring / subset de tokens / interseção parcial
   3. Sobrenome isolado e formato "Inicial Sobrenome"
@@ -33,6 +34,15 @@ _PAT_SUFIXO_NUM = re.compile(r"\s*\(\d+\)\s*$")
 
 MIN_SCORE_ATRIBUICAO = 70
 MIN_SCORE_LACUNA = 60
+
+
+def _resolver_alias(
+    nome_fonte: str,
+    candidatos: list[dict],
+) -> tuple[dict | None, int]:
+    from scrapers.mapeamento_odds import jogador_por_alias
+
+    return jogador_por_alias(nome_fonte, candidatos)
 
 
 def normalizar_texto(texto: str) -> str:
@@ -196,6 +206,13 @@ def atribuir_nomes_a_jogadores(
     pares: list[tuple[int, int, str, dict]] = []
 
     for nome in nomes:
+        jog_alias, score_alias = _resolver_alias(nome, candidatos)
+        if jog_alias is not None:
+            aid = int(jog_alias.get("atleta_id") or 0)
+            if aid and aid not in excl:
+                jogos = int(jog_alias.get("copa_jogos_num") or 0)
+                pares.append((score_alias, jogos, nome, jog_alias))
+
         for jog in candidatos:
             aid = int(jog.get("atleta_id") or 0)
             if not aid or aid in excl:
@@ -231,6 +248,10 @@ def melhor_jogador_para_nome(
 ) -> tuple[dict | None, int]:
     """Retorna o melhor candidato único (sem reservar um-a-um)."""
     excl = excluir_ids or set()
+    jog_alias, score_alias = _resolver_alias(nome_fonte, candidatos)
+    if jog_alias is not None and int(jog_alias.get("atleta_id") or 0) not in excl:
+        return jog_alias, score_alias
+
     melhor: tuple[int, int, dict] | None = None
     for jog in candidatos:
         aid = int(jog.get("atleta_id") or 0)

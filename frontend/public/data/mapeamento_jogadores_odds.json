@@ -1,0 +1,7261 @@
+{
+  "versao": 1,
+  "por_atleta_id": {
+    "88676": {
+      "sigla": "CRO",
+      "apelido": "Mario Pasalic",
+      "aliases_odds": [
+        "M. Pasalic",
+        "Pasalic M",
+        "Mario Pasalic"
+      ]
+    },
+    "133040": {
+      "sigla": "CRO",
+      "apelido": "Marco Pasalic",
+      "aliases_odds": [
+        "Marco Pasalic"
+      ]
+    },
+    "95282": {
+      "sigla": "ARG",
+      "apelido": "Lautaro Martínez",
+      "aliases_odds": [
+        "L. Martínez",
+        "Martínez L",
+        "Lautaro Martínez",
+        "Lautaro Martinez"
+      ]
+    },
+    "104776": {
+      "sigla": "ARG",
+      "apelido": "Lisandro Martínez",
+      "aliases_odds": [
+        "Lisandro Martínez",
+        "Lisandro Martinez"
+      ]
+    },
+    "116269": {
+      "sigla": "ARS",
+      "apelido": "Nasser Al-Dawsari",
+      "aliases_odds": [
+        "Al-Dawsari N",
+        "N. Al-Dawsari",
+        "Nasser Al-Dawsari",
+        "Al Dawsari N"
+      ]
+    },
+    "102611": {
+      "sigla": "ARS",
+      "apelido": "Salem Al-Dawsari",
+      "aliases_odds": [
+        "Salem Al-Dawsari",
+        "S. Al-Dawsari",
+        "Salem Al Dawsari"
+      ]
+    },
+    "9000002": {
+      "sigla": "COL",
+      "apelido": "J. Árias",
+      "aliases_odds": [
+        "ARIAS J."
+      ]
+    },
+    "89825": {
+      "sigla": "COL",
+      "apelido": "Davinson Sánchez",
+      "aliases_odds": [
+        "Davinson Sanchez",
+        "SANCHEZ DAVINSON"
+      ]
+    },
+    "69063": {
+      "sigla": "COL",
+      "apelido": "James Rodríguez",
+      "aliases_odds": [
+        "James Rodriguez"
+      ]
+    },
+    "103251": {
+      "sigla": "COL",
+      "apelido": "Cucho Hernández",
+      "aliases_odds": [
+        "Cucho Hernandez"
+      ]
+    },
+    "95887": {
+      "sigla": "COL",
+      "apelido": "Deiver Machado",
+      "aliases_odds": [
+        "Deiver Machado"
+      ]
+    },
+    "116706": {
+      "sigla": "COL",
+      "apelido": "Andrés Gómez",
+      "aliases_odds": [
+        "Andres Gomez",
+        "Carlos Andrés Gómez"
+      ]
+    },
+    "107111": {
+      "sigla": "COL",
+      "apelido": "Richard Ríos",
+      "aliases_odds": [
+        "Richard Rios",
+        "RIOS RICHARD"
+      ]
+    },
+    "110567": {
+      "sigla": "COL",
+      "apelido": "Luis Suárez",
+      "aliases_odds": [
+        "Luis Suarez",
+        "LUIS SUAREZ J. C."
+      ]
+    },
+    "99815": {
+      "sigla": "COL",
+      "apelido": "Jhon Arias",
+      "aliases_odds": [
+        "Jhon Arias"
+      ]
+    },
+    "100190": {
+      "sigla": "COL",
+      "apelido": "Luis Díaz",
+      "aliases_odds": [
+        "Luis Díaz"
+      ]
+    },
+    "105436": {
+      "sigla": "COL",
+      "apelido": "Carrascal",
+      "aliases_odds": [
+        "Jorge Carrascal"
+      ]
+    },
+    "126678": {
+      "sigla": "UZB",
+      "apelido": "Khusanov",
+      "aliases_odds": [
+        "Abdukodir Khusanov",
+        "Abduqodir Khusanov"
+      ]
+    },
+    "131832": {
+      "sigla": "COL",
+      "apelido": "Portilla",
+      "aliases_odds": [
+        "Juan Portilla",
+        "Juan Camilo Portilla"
+      ]
+    },
+    "81786": {
+      "sigla": "COL",
+      "apelido": "Quintero",
+      "aliases_odds": [
+        "Juan Quintero"
+      ]
+    },
+    "124961": {
+      "sigla": "COL",
+      "apelido": "Castaño",
+      "aliases_odds": [
+        "Kevin Castano",
+        "Kevin Duvan Castaño"
+      ]
+    },
+    "85684": {
+      "sigla": "COL",
+      "apelido": "Córdoba",
+      "aliases_odds": [
+        "Jhon Cordoba"
+      ]
+    },
+    "103318": {
+      "sigla": "COL",
+      "apelido": "Lucumí",
+      "aliases_odds": [
+        "Jhon Lucumí"
+      ]
+    },
+    "85190": {
+      "sigla": "COL",
+      "apelido": "Mojica",
+      "aliases_odds": [
+        "Johan Mojica"
+      ]
+    },
+    "126571": {
+      "sigla": "COL",
+      "apelido": "Puerta",
+      "aliases_odds": [
+        "Gustavo Puerta"
+      ]
+    },
+    "105102": {
+      "sigla": "COL",
+      "apelido": "Campaz",
+      "aliases_odds": [
+        "Jaminton Campaz"
+      ]
+    },
+    "92707": {
+      "sigla": "COL",
+      "apelido": "Lerma",
+      "aliases_odds": [
+        "Jefferson Lerma"
+      ]
+    },
+    "106163": {
+      "sigla": "COL",
+      "apelido": "Muñoz",
+      "aliases_odds": [
+        "Daniel Muñoz",
+        "MUNOZ DANIEL"
+      ]
+    },
+    "103674": {
+      "sigla": "COL",
+      "apelido": "Ditta",
+      "aliases_odds": [
+        "Willer Ditta"
+      ]
+    },
+    "85241": {
+      "sigla": "COL",
+      "apelido": "Mina",
+      "aliases_odds": [
+        "Yerry Mina"
+      ]
+    },
+    "150991": {
+      "sigla": "AFS",
+      "apelido": "Sebelebele",
+      "aliases_odds": [
+        "Kamogelo Sebelebele"
+      ]
+    },
+    "146032": {
+      "sigla": "TCH",
+      "apelido": "Chaloupek",
+      "aliases_odds": [
+        "Stepan Chaloupek"
+      ]
+    },
+    "130460": {
+      "sigla": "AFS",
+      "apelido": "Appollis",
+      "aliases_odds": [
+        "Oswin Appollis"
+      ]
+    },
+    "130336": {
+      "sigla": "AFS",
+      "apelido": "Makhanya",
+      "aliases_odds": [
+        "Olwethu Makhanya"
+      ]
+    },
+    "150984": {
+      "sigla": "AFS",
+      "apelido": "Mofokeng",
+      "aliases_odds": [
+        "Relebohile Mofokeng"
+      ]
+    },
+    "150989": {
+      "sigla": "AFS",
+      "apelido": "Matuludi",
+      "aliases_odds": [
+        "Thabang Matuludi"
+      ]
+    },
+    "149722": {
+      "sigla": "TCH",
+      "apelido": "Visinsky",
+      "aliases_odds": [
+        "Denis Visinsky"
+      ]
+    },
+    "150947": {
+      "sigla": "TCH",
+      "apelido": "Sochurek",
+      "aliases_odds": [
+        "Hugo Sochurek",
+        "Sochurek, Hugo"
+      ]
+    },
+    "114067": {
+      "sigla": "AFS",
+      "apelido": "Mokoena",
+      "aliases_odds": [
+        "Teboho Mokoena"
+      ]
+    },
+    "150983": {
+      "sigla": "AFS",
+      "apelido": "Mbokazi",
+      "aliases_odds": [
+        "Mbekezeli Mbokazi",
+        "MBOKAZI"
+      ]
+    },
+    "114078": {
+      "sigla": "AFS",
+      "apelido": "Makgopa",
+      "aliases_odds": [
+        "Evidence Makgopa"
+      ]
+    },
+    "103857": {
+      "sigla": "TCH",
+      "apelido": "Sadílek",
+      "aliases_odds": [
+        "Michal Sadilek"
+      ]
+    },
+    "144042": {
+      "sigla": "AFS",
+      "apelido": "Rayners",
+      "aliases_odds": [
+        "Iqraam Rayners"
+      ]
+    },
+    "150987": {
+      "sigla": "AFS",
+      "apelido": "Ndamane",
+      "aliases_odds": [
+        "Khulumani Ndamane"
+      ]
+    },
+    "127059": {
+      "sigla": "TCH",
+      "apelido": "Jurásek",
+      "aliases_odds": [
+        "David Jurasek"
+      ]
+    },
+    "131642": {
+      "sigla": "TCH",
+      "apelido": "Doudera",
+      "aliases_odds": [
+        "David Doudera"
+      ]
+    },
+    "100124": {
+      "sigla": "TCH",
+      "apelido": "Soucek",
+      "aliases_odds": [
+        "Tomás Soucek"
+      ]
+    },
+    "106534": {
+      "sigla": "TCH",
+      "apelido": "Provod",
+      "aliases_odds": [
+        "Lukas Provod"
+      ]
+    },
+    "150988": {
+      "sigla": "AFS",
+      "apelido": "Mbatha",
+      "aliases_odds": [
+        "Thalente Mbatha"
+      ]
+    },
+    "133318": {
+      "sigla": "TCH",
+      "apelido": "Hranac",
+      "aliases_odds": [
+        "Robin Hranac"
+      ]
+    },
+    "106045": {
+      "sigla": "AFS",
+      "apelido": "Foster",
+      "aliases_odds": [
+        "Lyle Foster"
+      ]
+    },
+    "118270": {
+      "sigla": "TCH",
+      "apelido": "Krejcí",
+      "aliases_odds": [
+        "Ladislav Krejci"
+      ]
+    },
+    "105290": {
+      "sigla": "TCH",
+      "apelido": "Coufal",
+      "aliases_odds": [
+        "Vladimir Coufal"
+      ]
+    },
+    "113483": {
+      "sigla": "TCH",
+      "apelido": "Hlozek",
+      "aliases_odds": [
+        "Adam Hlozek"
+      ]
+    },
+    "106528": {
+      "sigla": "TCH",
+      "apelido": "Zeleny",
+      "aliases_odds": [
+        "Jaroslav Zeleny"
+      ]
+    },
+    "95777": {
+      "sigla": "TCH",
+      "apelido": "Schick",
+      "aliases_odds": [
+        "Patrik Schick"
+      ]
+    },
+    "95972": {
+      "sigla": "AFS",
+      "apelido": "Modiba",
+      "aliases_odds": [
+        "Aubrey Modiba"
+      ]
+    },
+    "117439": {
+      "sigla": "AFS",
+      "apelido": "Sibisi",
+      "aliases_odds": [
+        "Nkosinathi Sibisi"
+      ]
+    },
+    "131638": {
+      "sigla": "TCH",
+      "apelido": "Chytil",
+      "aliases_odds": [
+        "Mojmír Chytil"
+      ]
+    },
+    "130462": {
+      "sigla": "AFS",
+      "apelido": "Maseko",
+      "aliases_odds": [
+        "Thapelo Maseko"
+      ]
+    },
+    "150993": {
+      "sigla": "AFS",
+      "apelido": "Kabini",
+      "aliases_odds": [
+        "Kabini Samuekelo",
+        "Samukelo Kabini",
+        "Samukele Kabini"
+      ]
+    },
+    "78135": {
+      "sigla": "TCH",
+      "apelido": "Darida",
+      "aliases_odds": [
+        "Vladimir Darida"
+      ]
+    },
+    "150990": {
+      "sigla": "AFS",
+      "apelido": "Moremi",
+      "aliases_odds": [
+        "Tshepang Moremi"
+      ]
+    },
+    "118271": {
+      "sigla": "TCH",
+      "apelido": "Kuchta",
+      "aliases_odds": [
+        "Jan Kuchta",
+        "Kuchta, Jan"
+      ]
+    },
+    "140568": {
+      "sigla": "TCH",
+      "apelido": "Sojka",
+      "aliases_odds": [
+        "Alexandr Sojka"
+      ]
+    },
+    "117445": {
+      "sigla": "AFS",
+      "apelido": "Mudau",
+      "aliases_odds": [
+        "Khuliso Mudau"
+      ]
+    },
+    "130461": {
+      "sigla": "AFS",
+      "apelido": "Adams",
+      "aliases_odds": [
+        "Jayden Adams"
+      ]
+    },
+    "103612": {
+      "sigla": "TCH",
+      "apelido": "Chory",
+      "aliases_odds": [
+        "Tomás Chory"
+      ]
+    },
+    "150985": {
+      "sigla": "AFS",
+      "apelido": "Cross",
+      "aliases_odds": [
+        "Bradley Cross"
+      ]
+    },
+    "106529": {
+      "sigla": "TCH",
+      "apelido": "Holes",
+      "aliases_odds": [
+        "Tomas Holes"
+      ]
+    },
+    "133319": {
+      "sigla": "TCH",
+      "apelido": "Sulc",
+      "aliases_odds": [
+        "Pavel Sulc"
+      ]
+    },
+    "150986": {
+      "sigla": "AFS",
+      "apelido": "Okon",
+      "aliases_odds": [
+        "Ime Okon",
+        "OKON IME"
+      ]
+    },
+    "113486": {
+      "sigla": "TCH",
+      "apelido": "Zima",
+      "aliases_odds": [
+        "David Zima"
+      ]
+    },
+    "133320": {
+      "sigla": "TCH",
+      "apelido": "Cerv",
+      "aliases_odds": [
+        "Lukas Cerv"
+      ]
+    },
+    "77629": {
+      "sigla": "SUI",
+      "apelido": "Ricardo Rodríguez",
+      "aliases_odds": [
+        "Ricardo Rodriguez",
+        "RODRIGUEZ RICARDO"
+      ]
+    },
+    "109674": {
+      "sigla": "BOS",
+      "apelido": "Hadziahmetovic",
+      "aliases_odds": [
+        "Amir Hadziahmetovic"
+      ]
+    },
+    "132480": {
+      "sigla": "BOS",
+      "apelido": "Bajraktarevic",
+      "aliases_odds": [
+        "Esmir Bajraktarevic"
+      ]
+    },
+    "110289": {
+      "sigla": "BOS",
+      "apelido": "Hadzikadunic",
+      "aliases_odds": [
+        "Dennis Hadzikadunic"
+      ]
+    },
+    "133261": {
+      "sigla": "BOS",
+      "apelido": "Muharemovic",
+      "aliases_odds": [
+        "Tarik Muharemovic"
+      ]
+    },
+    "141851": {
+      "sigla": "BOS",
+      "apelido": "Alajbegovic",
+      "aliases_odds": [
+        "Kerim Alajbegovic"
+      ]
+    },
+    "124633": {
+      "sigla": "BOS",
+      "apelido": "Tahirovic",
+      "aliases_odds": [
+        "Benjamin Tahirovic"
+      ]
+    },
+    "103470": {
+      "sigla": "SUI",
+      "apelido": "Aebischer",
+      "aliases_odds": [
+        "Michel Aebischer"
+      ]
+    },
+    "83119": {
+      "sigla": "BOS",
+      "apelido": "Kolasinac",
+      "aliases_odds": [
+        "Sead Kolasinac"
+      ]
+    },
+    "100098": {
+      "sigla": "BOS",
+      "apelido": "Demirovic",
+      "aliases_odds": [
+        "Ermedin Demirovic",
+        "DEMIROVIC ERMEDIN"
+      ]
+    },
+    "103461": {
+      "sigla": "SUI",
+      "apelido": "Fassnacht",
+      "aliases_odds": [
+        "Christian Fassnacht"
+      ]
+    },
+    "133266": {
+      "sigla": "BOS",
+      "apelido": "Tabakovic",
+      "aliases_odds": [
+        "Haris Tabakovic"
+      ]
+    },
+    "149805": {
+      "sigla": "SUI",
+      "apelido": "Manzambi",
+      "aliases_odds": [
+        "Johan Manzambi"
+      ]
+    },
+    "114687": {
+      "sigla": "BOS",
+      "apelido": "Radeljic",
+      "aliases_odds": [
+        "Stjepan Radeljic"
+      ]
+    },
+    "133264": {
+      "sigla": "BOS",
+      "apelido": "Gigovic",
+      "aliases_odds": [
+        "Armin Gigović"
+      ]
+    },
+    "118397": {
+      "sigla": "SUI",
+      "apelido": "Amdouni",
+      "aliases_odds": [
+        "Zeki Amdouni"
+      ]
+    },
+    "97127": {
+      "sigla": "SUI",
+      "apelido": "Freuler",
+      "aliases_odds": [
+        "Remo Freuler"
+      ]
+    },
+    "95808": {
+      "sigla": "SUI",
+      "apelido": "Zakaria",
+      "aliases_odds": [
+        "Denis Zakaria"
+      ]
+    },
+    "120823": {
+      "sigla": "SUI",
+      "apelido": "Jashari",
+      "aliases_odds": [
+        "Ardon Jashari"
+      ]
+    },
+    "133260": {
+      "sigla": "BOS",
+      "apelido": "Mujakic",
+      "aliases_odds": [
+        "Nihad Mujakic"
+      ]
+    },
+    "140193": {
+      "sigla": "BOS",
+      "apelido": "Sunjic",
+      "aliases_odds": [
+        "Ivan Sunjic"
+      ]
+    },
+    "100930": {
+      "sigla": "BOS",
+      "apelido": "Burnic",
+      "aliases_odds": [
+        "Dzenis Burnic"
+      ]
+    },
+    "97054": {
+      "sigla": "SUI",
+      "apelido": "Akanji",
+      "aliases_odds": [
+        "Manuel Akanji"
+      ]
+    },
+    "92805": {
+      "sigla": "SUI",
+      "apelido": "Elvedi",
+      "aliases_odds": [
+        "Nico Elvedi"
+      ]
+    },
+    "108962": {
+      "sigla": "SUI",
+      "apelido": "Vargas",
+      "aliases_odds": [
+        "Ruben Vargas"
+      ]
+    },
+    "89282": {
+      "sigla": "SUI",
+      "apelido": "Embolo",
+      "aliases_odds": [
+        "Breel Embolo"
+      ]
+    },
+    "132909": {
+      "sigla": "BOS",
+      "apelido": "Bazdar",
+      "aliases_odds": [
+        "Samed Bazdar"
+      ]
+    },
+    "114550": {
+      "sigla": "SUI",
+      "apelido": "Rieder",
+      "aliases_odds": [
+        "Fabian Rieder"
+      ]
+    },
+    "140208": {
+      "sigla": "SUI",
+      "apelido": "Muheim",
+      "aliases_odds": [
+        "Miro Muheim"
+      ]
+    },
+    "97053": {
+      "sigla": "SUI",
+      "apelido": "Cömert",
+      "aliases_odds": [
+        "Eray Cömert"
+      ]
+    },
+    "86847": {
+      "sigla": "SUI",
+      "apelido": "Widmer",
+      "aliases_odds": [
+        "Silvan Widmer"
+      ]
+    },
+    "127363": {
+      "sigla": "SUI",
+      "apelido": "Amenda",
+      "aliases_odds": [
+        "Aurèle Amenda"
+      ]
+    },
+    "145608": {
+      "sigla": "SUI",
+      "apelido": "Jaquez",
+      "aliases_odds": [
+        "Luca Jaquez"
+      ]
+    },
+    "101924": {
+      "sigla": "SUI",
+      "apelido": "Okafor",
+      "aliases_odds": [
+        "Noah Okafor"
+      ]
+    },
+    "150886": {
+      "sigla": "BOS",
+      "apelido": "Mahmic",
+      "aliases_odds": [
+        "Ermin Mahmic"
+      ]
+    },
+    "110526": {
+      "sigla": "BOS",
+      "apelido": "Dedic",
+      "aliases_odds": [
+        "Amar Dedic"
+      ]
+    },
+    "149796": {
+      "sigla": "BOS",
+      "apelido": "Lukic",
+      "aliases_odds": [
+        "JOVO LUKIC"
+      ]
+    },
+    "128072": {
+      "sigla": "BOS",
+      "apelido": "Basic",
+      "aliases_odds": [
+        "Ivan Basic"
+      ]
+    },
+    "120526": {
+      "sigla": "BOS",
+      "apelido": "Katic",
+      "aliases_odds": [
+        "Nikola Katić"
+      ]
+    },
+    "149795": {
+      "sigla": "BOS",
+      "apelido": "Memic",
+      "aliases_odds": [
+        "Amar Memic"
+      ]
+    },
+    "79544": {
+      "sigla": "SUI",
+      "apelido": "Xhaka",
+      "aliases_odds": [
+        "Granit Xhaka"
+      ]
+    },
+    "110083": {
+      "sigla": "SUI",
+      "apelido": "Ndoye",
+      "aliases_odds": [
+        "Dan Ndoye"
+      ]
+    },
+    "71184": {
+      "sigla": "BOS",
+      "apelido": "Dzeko",
+      "aliases_odds": [
+        "Edin Dzeko"
+      ]
+    },
+    "100739": {
+      "sigla": "SUI",
+      "apelido": "Itten",
+      "aliases_odds": [
+        "Cedric Itten"
+      ]
+    },
+    "96575": {
+      "sigla": "SUI",
+      "apelido": "Sow",
+      "aliases_odds": [
+        "Djibril Sow"
+      ]
+    },
+    "132653": {
+      "sigla": "CAN",
+      "apelido": "Ahmed",
+      "aliases_odds": [
+        "AHMED A.",
+        "Ali Ahmed",
+        "Ahmed Al Ganehi"
+      ]
+    },
+    "111025": {
+      "sigla": "CAT",
+      "apelido": "Edmilson Junior",
+      "aliases_odds": [
+        "EDMILSON JUNIOR"
+      ]
+    },
+    "126834": {
+      "sigla": "CAN",
+      "apelido": "De Fougerolles",
+      "aliases_odds": [
+        "Luc De Fougerolles",
+        "DE FOUGEROLLES L."
+      ]
+    },
+    "110782": {
+      "sigla": "CAN",
+      "apelido": "Jonathan David",
+      "aliases_odds": [
+        "Jonathan David",
+        "DAVID J."
+      ]
+    },
+    "146064": {
+      "sigla": "CAN",
+      "apelido": "Promise David",
+      "aliases_odds": [
+        "Promise David"
+      ]
+    },
+    "105797": {
+      "sigla": "CAT",
+      "apelido": "Pedro Miguel",
+      "aliases_odds": [
+        "Pedro Miguel Carvalho Deus Correia",
+        "Pedro Miguel"
+      ]
+    },
+    "114445": {
+      "sigla": "CAT",
+      "apelido": "Jassem Gaber",
+      "aliases_odds": [
+        "Jassem Gaber Abdulsallam",
+        "Jassem Gaber"
+      ]
+    },
+    "70052": {
+      "sigla": "CAT",
+      "apelido": "Lucas Mendes",
+      "aliases_odds": [
+        "Lucas Mendes"
+      ]
+    },
+    "126445": {
+      "sigla": "CAN",
+      "apelido": "Shaffelburg",
+      "aliases_odds": [
+        "Jacob Shaffelburg"
+      ]
+    },
+    "114441": {
+      "sigla": "CAT",
+      "apelido": "Homam Ahmed",
+      "aliases_odds": [
+        "Homam Ahmed"
+      ]
+    },
+    "105789": {
+      "sigla": "CAT",
+      "apelido": "Almoez Ali",
+      "aliases_odds": [
+        "Almoez Ali",
+        "Almoez Ali Abdulla"
+      ]
+    },
+    "120706": {
+      "sigla": "CAN",
+      "apelido": "Cornelius",
+      "aliases_odds": [
+        "Derek Cornelius"
+      ]
+    },
+    "105803": {
+      "sigla": "CAT",
+      "apelido": "Alaaeldin",
+      "aliases_odds": [
+        "Ahmed Alaaeldin"
+      ]
+    },
+    "150901": {
+      "sigla": "CAT",
+      "apelido": "Al-Mannai",
+      "aliases_odds": [
+        "Mohamed Al-Mannai"
+      ]
+    },
+    "133451": {
+      "sigla": "CAN",
+      "apelido": "Oluwaseyi",
+      "aliases_odds": [
+        "Tani Oluwaseyi"
+      ]
+    },
+    "120717": {
+      "sigla": "CAN",
+      "apelido": "Eustáquio",
+      "aliases_odds": [
+        "Stephen Eustaquio",
+        "EUSTAQUIO STEPHEN"
+      ]
+    },
+    "114440": {
+      "sigla": "CAT",
+      "apelido": "Abdurisag",
+      "aliases_odds": [
+        "Yusuf Abdurisag"
+      ]
+    },
+    "78297": {
+      "sigla": "CAT",
+      "apelido": "Al-Haydos",
+      "aliases_odds": [
+        "Hasan Al Haydos",
+        "Hassan Al Haydos"
+      ]
+    },
+    "120710": {
+      "sigla": "CAN",
+      "apelido": "Buchanan",
+      "aliases_odds": [
+        "Tajon Buchanan"
+      ]
+    },
+    "120718": {
+      "sigla": "CAN",
+      "apelido": "Johnston",
+      "aliases_odds": [
+        "Alistair Johnston"
+      ]
+    },
+    "111035": {
+      "sigla": "CAT",
+      "apelido": "Al-Brake",
+      "aliases_odds": [
+        "Sultan Al-Brake"
+      ]
+    },
+    "105792": {
+      "sigla": "CAT",
+      "apelido": "Khoukhi",
+      "aliases_odds": [
+        "Boualem Khoukhi"
+      ]
+    },
+    "105790": {
+      "sigla": "CAT",
+      "apelido": "Boudiaf",
+      "aliases_odds": [
+        "Karim Boudiaf"
+      ]
+    },
+    "105795": {
+      "sigla": "CAT",
+      "apelido": "Madibo",
+      "aliases_odds": [
+        "Assim Madibo"
+      ]
+    },
+    "140443": {
+      "sigla": "CAT",
+      "apelido": "Al-Oui",
+      "aliases_odds": [
+        "Ayoub Al-Oui"
+      ]
+    },
+    "94877": {
+      "sigla": "CAN",
+      "apelido": "Laryea",
+      "aliases_odds": [
+        "Richie Laryea",
+        "Richmond Laryea"
+      ]
+    },
+    "120708": {
+      "sigla": "CAN",
+      "apelido": "Millar",
+      "aliases_odds": [
+        "Liam Millar"
+      ]
+    },
+    "120713": {
+      "sigla": "CAN",
+      "apelido": "Osorio",
+      "aliases_odds": [
+        "Jonathan Osorio"
+      ]
+    },
+    "104961": {
+      "sigla": "CAN",
+      "apelido": "Davies",
+      "aliases_odds": [
+        "Alphonso Davies"
+      ]
+    },
+    "105794": {
+      "sigla": "CAT",
+      "apelido": "Fathi",
+      "aliases_odds": [
+        "Ahmed Fathi"
+      ]
+    },
+    "93249": {
+      "sigla": "CAN",
+      "apelido": "Larin",
+      "aliases_odds": [
+        "Cyle Larin"
+      ]
+    },
+    "96797": {
+      "sigla": "CAT",
+      "apelido": "Afif",
+      "aliases_odds": [
+        "Akram Afif",
+        "AFIF AKRAM"
+      ]
+    },
+    "120715": {
+      "sigla": "CAN",
+      "apelido": "Koné",
+      "aliases_odds": [
+        "Ismael Kone",
+        "KONE ISMAEL"
+      ]
+    },
+    "132762": {
+      "sigla": "MEX",
+      "apelido": "Guillermo Martínez",
+      "aliases_odds": [
+        "Guillermo Martinez"
+      ]
+    },
+    "149857": {
+      "sigla": "MEX",
+      "apelido": "Armando González",
+      "aliases_odds": [
+        "Armando Gonzalez"
+      ]
+    },
+    "114119": {
+      "sigla": "COR",
+      "apelido": "Lee Dong-Gyeong",
+      "aliases_odds": [
+        "Lee Dong-gyeong",
+        "Dong-Gyeong Lee"
+      ]
+    },
+    "111069": {
+      "sigla": "COR",
+      "apelido": "Seol Young-Woo",
+      "aliases_odds": [
+        "Seol Young-woo",
+        "Young-Woo Seol"
+      ]
+    },
+    "96026": {
+      "sigla": "COR",
+      "apelido": "Hwang Hee-Chan",
+      "aliases_odds": [
+        "Hwang Hee-chan",
+        "Hee-Chan Hwang"
+      ]
+    },
+    "106660": {
+      "sigla": "COR",
+      "apelido": "Hwang In-Beom",
+      "aliases_odds": [
+        "Hwang In-beom",
+        "In-Beom Hwang"
+      ]
+    },
+    "129759": {
+      "sigla": "COR",
+      "apelido": "Park Jin-Seob",
+      "aliases_odds": [
+        "Park Jin-seob",
+        "Jin-seob Park"
+      ]
+    },
+    "97395": {
+      "sigla": "MEX",
+      "apelido": "Edson Álvarez",
+      "aliases_odds": [
+        "Edson Álvarez",
+        "ALVAREZ EDSON"
+      ]
+    },
+    "141486": {
+      "sigla": "MEX",
+      "apelido": "Gilberto Mora",
+      "aliases_odds": [
+        "Gilberto Mora"
+      ]
+    },
+    "82060": {
+      "sigla": "COR",
+      "apelido": "Son Heung-Min",
+      "aliases_odds": [
+        "Son Heung-Min",
+        "Heung-Min Son"
+      ]
+    },
+    "103187": {
+      "sigla": "COR",
+      "apelido": "Paik Seung-Ho",
+      "aliases_odds": [
+        "Paik Seung-Ho",
+        "Seung-ho Paik"
+      ]
+    },
+    "106254": {
+      "sigla": "MEX",
+      "apelido": "Jorge Sánchez",
+      "aliases_odds": [
+        "Jorge Sanchez",
+        "SANCHEZ JORGE"
+      ]
+    },
+    "127139": {
+      "sigla": "COR",
+      "apelido": "Yang Hyun-Jun",
+      "aliases_odds": [
+        "Yang Hyun-jun",
+        "Hyun-Jun Yang"
+      ]
+    },
+    "111071": {
+      "sigla": "COR",
+      "apelido": "Kim Tae-Hyeon",
+      "aliases_odds": [
+        "Kim Tae-hyeon",
+        "Tae-hyeon Kim"
+      ]
+    },
+    "106658": {
+      "sigla": "COR",
+      "apelido": "Kim Moon-Hwan",
+      "aliases_odds": [
+        "Kim Moon-hwan",
+        "Moon-Hwan Kim"
+      ]
+    },
+    "127133": {
+      "sigla": "COR",
+      "apelido": "Oh Hyeon-Gyu",
+      "aliases_odds": [
+        "Oh Hyeon-gyu",
+        "Hyeon-Gyu Oh"
+      ]
+    },
+    "146583": {
+      "sigla": "COR",
+      "apelido": "Lee Tae-Seok",
+      "aliases_odds": [
+        "Lee Tae-seok",
+        "Tae-seok Lee"
+      ]
+    },
+    "132767": {
+      "sigla": "MEX",
+      "apelido": "Israel Reyes",
+      "aliases_odds": [
+        "Israel Reyes"
+      ]
+    },
+    "80717": {
+      "sigla": "MEX",
+      "apelido": "Raúl Jiménez",
+      "aliases_odds": [
+        "RAUL JIMENEZ"
+      ]
+    },
+    "82005": {
+      "sigla": "COR",
+      "apelido": "Lee Jae-Sung",
+      "aliases_odds": [
+        "Lee Jae-Sung",
+        "Jae-Sung Lee"
+      ]
+    },
+    "146584": {
+      "sigla": "COR",
+      "apelido": "Lee Han-Beom",
+      "aliases_odds": [
+        "Lee Han-Beom",
+        "Han-beom Lee"
+      ]
+    },
+    "146414": {
+      "sigla": "MEX",
+      "apelido": "Mateo Chávez",
+      "aliases_odds": [
+        "Mateo Chávez"
+      ]
+    },
+    "118255": {
+      "sigla": "COR",
+      "apelido": "Cho Gue-Sung",
+      "aliases_odds": [
+        "Cho Gue-sung",
+        "Gue-sung Cho"
+      ]
+    },
+    "106656": {
+      "sigla": "COR",
+      "apelido": "Kim Min-Jae",
+      "aliases_odds": [
+        "Kim Min-jae",
+        "Min-Jae Kim"
+      ]
+    },
+    "150920": {
+      "sigla": "COR",
+      "apelido": "Lee Gi-Hyuk",
+      "aliases_odds": [
+        "Lee Gi-Hyuk",
+        "GI-HYUK LEE"
+      ]
+    },
+    "120699": {
+      "sigla": "MEX",
+      "apelido": "Luis Chávez",
+      "aliases_odds": [
+        "Luis Chávez"
+      ]
+    },
+    "103900": {
+      "sigla": "COR",
+      "apelido": "Lee Kang-In",
+      "aliases_odds": [
+        "Lee Kang-in",
+        "Kang-In Lee"
+      ]
+    },
+    "146580": {
+      "sigla": "COR",
+      "apelido": "Eom Ji-Sung",
+      "aliases_odds": [
+        "Eom Ji-Sung",
+        "Ji-sung Eom"
+      ]
+    },
+    "150919": {
+      "sigla": "COR",
+      "apelido": "Bae Jun-Ho",
+      "aliases_odds": [
+        "Bae Jun-ho",
+        "Jun-Ho Bae"
+      ]
+    },
+    "128559": {
+      "sigla": "MEX",
+      "apelido": "Érik Lira",
+      "aliases_odds": [
+        "Erik Lira",
+        "LIRA E."
+      ]
+    },
+    "127832": {
+      "sigla": "MEX",
+      "apelido": "Gutiérrez",
+      "aliases_odds": [
+        "Brian Gutierrez"
+      ]
+    },
+    "103713": {
+      "sigla": "MEX",
+      "apelido": "Alvarado",
+      "aliases_odds": [
+        "Roberto Alvarado"
+      ]
+    },
+    "95520": {
+      "sigla": "MEX",
+      "apelido": "Gallardo",
+      "aliases_odds": [
+        "Jesús Gallardo"
+      ]
+    },
+    "111019": {
+      "sigla": "MEX",
+      "apelido": "Quiñones",
+      "aliases_odds": [
+        "Julian Quinones"
+      ]
+    },
+    "105924": {
+      "sigla": "MEX",
+      "apelido": "Fidalgo",
+      "aliases_odds": [
+        "Álvaro Fidalgo",
+        "FIDALGO ALVARO"
+      ]
+    },
+    "106784": {
+      "sigla": "MEX",
+      "apelido": "Vásquez",
+      "aliases_odds": [
+        "Johan Vasquez"
+      ]
+    },
+    "146579": {
+      "sigla": "COR",
+      "apelido": "Castrop",
+      "aliases_odds": [
+        "Jens Castrop"
+      ]
+    },
+    "122689": {
+      "sigla": "MEX",
+      "apelido": "Vargas",
+      "aliases_odds": [
+        "Obed Vargas"
+      ]
+    },
+    "103888": {
+      "sigla": "MEX",
+      "apelido": "Pineda",
+      "aliases_odds": [
+        "Orbelin Pineda"
+      ]
+    },
+    "103897": {
+      "sigla": "MEX",
+      "apelido": "Huerta",
+      "aliases_odds": [
+        "Cesar Huerta"
+      ]
+    },
+    "95233": {
+      "sigla": "MEX",
+      "apelido": "Vega",
+      "aliases_odds": [
+        "Alexis Vega",
+        "Ernesto Alexis Vega Rojas"
+      ]
+    },
+    "113709": {
+      "sigla": "MEX",
+      "apelido": "Romo",
+      "aliases_odds": [
+        "Luis Romo"
+      ]
+    },
+    "114125": {
+      "sigla": "COR",
+      "apelido": "Kim Jin-Gyu",
+      "aliases_odds": [
+        "Jin-Gyu Kim",
+        "Kim Jin-gyu"
+      ]
+    },
+    "151058": {
+      "sigla": "COR",
+      "apelido": "Cho Wi-Je",
+      "aliases_odds": [
+        "Wi-Je Cho"
+      ]
+    },
+    "133063": {
+      "sigla": "EUA",
+      "apelido": "McKenzie",
+      "aliases_odds": [
+        "MCKENZIE M.",
+        "Mark McKenzie"
+      ]
+    },
+    "92458": {
+      "sigla": "EUA",
+      "apelido": "Antonee Robinson",
+      "aliases_odds": [
+        "Antonee Robinson",
+        "ROBINSON ANTONEE"
+      ]
+    },
+    "127003": {
+      "sigla": "EUA",
+      "apelido": "Miles Robinson",
+      "aliases_odds": [
+        "Miles Robinson"
+      ]
+    },
+    "151038": {
+      "sigla": "AUS",
+      "apelido": "Okon-Engstler",
+      "aliases_odds": [
+        "Paul Michael Junior Okon-Engstler",
+        "Paul Okon-Engstler"
+      ]
+    },
+    "151034": {
+      "sigla": "AUS",
+      "apelido": "Velupillay",
+      "aliases_odds": [
+        "Nishan Velupillay",
+        "Velupillay, Nishan"
+      ]
+    },
+    "132652": {
+      "sigla": "EUA",
+      "apelido": "Berhalter",
+      "aliases_odds": [
+        "Sebastian Berhalter"
+      ]
+    },
+    "134625": {
+      "sigla": "AUS",
+      "apelido": "Irankunda",
+      "aliases_odds": [
+        "Nestory Irankunda"
+      ]
+    },
+    "109123": {
+      "sigla": "EUA",
+      "apelido": "Richards",
+      "aliases_odds": [
+        "Chris Richards",
+        "Christopher Richards"
+      ]
+    },
+    "113992": {
+      "sigla": "AUS",
+      "apelido": "Metcalfe",
+      "aliases_odds": [
+        "Connor Metcalfe",
+        "Conor Metcalfe"
+      ]
+    },
+    "100316": {
+      "sigla": "EUA",
+      "apelido": "McKennie",
+      "aliases_odds": [
+        "Weston McKennie"
+      ]
+    },
+    "151033": {
+      "sigla": "AUS",
+      "apelido": "Italiano",
+      "aliases_odds": [
+        "Jacob Italiano"
+      ]
+    },
+    "103893": {
+      "sigla": "EUA",
+      "apelido": "Zendejas",
+      "aliases_odds": [
+        "Alex Zendejas"
+      ]
+    },
+    "116538": {
+      "sigla": "EUA",
+      "apelido": "Aaronson",
+      "aliases_odds": [
+        "Brenden Aaronson"
+      ]
+    },
+    "109592": {
+      "sigla": "EUA",
+      "apelido": "Tillman",
+      "aliases_odds": [
+        "Malik Tillman"
+      ]
+    },
+    "124971": {
+      "sigla": "AUS",
+      "apelido": "Circati",
+      "aliases_odds": [
+        "Alessandro Circati"
+      ]
+    },
+    "137111": {
+      "sigla": "AUS",
+      "apelido": "Burgess",
+      "aliases_odds": [
+        "Cameron Burgess"
+      ]
+    },
+    "110802": {
+      "sigla": "EUA",
+      "apelido": "Balogun",
+      "aliases_odds": [
+        "Folarin Balogun"
+      ]
+    },
+    "127435": {
+      "sigla": "EUA",
+      "apelido": "Freeman",
+      "aliases_odds": [
+        "Alexander Freeman",
+        "Alex Freeman"
+      ]
+    },
+    "101124": {
+      "sigla": "AUS",
+      "apelido": "O'Neill",
+      "aliases_odds": [
+        "Aiden O'Neill",
+        "O'NEILL A."
+      ]
+    },
+    "94919": {
+      "sigla": "EUA",
+      "apelido": "Pulisic",
+      "aliases_odds": [
+        "Christian Pulisic"
+      ]
+    },
+    "100414": {
+      "sigla": "AUS",
+      "apelido": "Souttar",
+      "aliases_odds": [
+        "Harry Souttar"
+      ]
+    },
+    "99684": {
+      "sigla": "AUS",
+      "apelido": "Hrustic",
+      "aliases_odds": [
+        "Ajdin Hrustic"
+      ]
+    },
+    "132878": {
+      "sigla": "EUA",
+      "apelido": "Arfsten",
+      "aliases_odds": [
+        "Max Arfsten",
+        "Maximilian Arfsten"
+      ]
+    },
+    "124634": {
+      "sigla": "AUS",
+      "apelido": "Volpato",
+      "aliases_odds": [
+        "Cristian Volpato"
+      ]
+    },
+    "81779": {
+      "sigla": "AUS",
+      "apelido": "Irvine",
+      "aliases_odds": [
+        "Jackson Irvine"
+      ]
+    },
+    "91458": {
+      "sigla": "AUS",
+      "apelido": "Behich",
+      "aliases_odds": [
+        "Aziz Behich"
+      ]
+    },
+    "103263": {
+      "sigla": "EUA",
+      "apelido": "Roldán",
+      "aliases_odds": [
+        "Cristian Roldan"
+      ]
+    },
+    "104967": {
+      "sigla": "EUA",
+      "apelido": "Wright",
+      "aliases_odds": [
+        "Haji Wright"
+      ]
+    },
+    "126310": {
+      "sigla": "EUA",
+      "apelido": "Trusty",
+      "aliases_odds": [
+        "Auston Trusty"
+      ]
+    },
+    "107143": {
+      "sigla": "EUA",
+      "apelido": "Scally",
+      "aliases_odds": [
+        "Joseph Scally",
+        "Joe Scally"
+      ]
+    },
+    "151035": {
+      "sigla": "AUS",
+      "apelido": "Yengi",
+      "aliases_odds": [
+        "Tete Yengi"
+      ]
+    },
+    "151037": {
+      "sigla": "AUS",
+      "apelido": "Geria",
+      "aliases_odds": [
+        "Jason Geria",
+        "Geria, Jason"
+      ]
+    },
+    "108342": {
+      "sigla": "EUA",
+      "apelido": "Reyna",
+      "aliases_odds": [
+        "Giovanni Reyna"
+      ]
+    },
+    "102866": {
+      "sigla": "EUA",
+      "apelido": "Adams",
+      "aliases_odds": [
+        "Tyler Adams"
+      ]
+    },
+    "146387": {
+      "sigla": "AUS",
+      "apelido": "Touré",
+      "aliases_odds": [
+        "Mohamed Toure",
+        "TOURE MOHAMED"
+      ]
+    },
+    "127282": {
+      "sigla": "EUA",
+      "apelido": "Pepi",
+      "aliases_odds": [
+        "Ricardo Pepi"
+      ]
+    },
+    "106524": {
+      "sigla": "EUA",
+      "apelido": "Dest",
+      "aliases_odds": [
+        "Sergino Dest"
+      ]
+    },
+    "92544": {
+      "sigla": "EUA",
+      "apelido": "Ream",
+      "aliases_odds": [
+        "Tim Ream"
+      ]
+    },
+    "102288": {
+      "sigla": "EUA",
+      "apelido": "Weah",
+      "aliases_odds": [
+        "Timothy Weah"
+      ]
+    },
+    "124915": {
+      "sigla": "AUS",
+      "apelido": "Bos",
+      "aliases_odds": [
+        "Jordan Bos"
+      ]
+    },
+    "147965": {
+      "sigla": "MAR",
+      "apelido": "Amaimouni Echghouyab",
+      "aliases_odds": [
+        "Ayoube Amaimouni-Echghouyab"
+      ]
+    },
+    "121376": {
+      "sigla": "MAR",
+      "apelido": "El Khannouss",
+      "aliases_odds": [
+        "Bilal El Khannouss",
+        "EL KHANNOUSS B."
+      ]
+    },
+    "138903": {
+      "sigla": "MAR",
+      "apelido": "Salah-Eddine",
+      "aliases_odds": [
+        "Anass Salah-Eddine"
+      ]
+    },
+    "121758": {
+      "sigla": "ESC",
+      "apelido": "Gannon-Doak",
+      "aliases_odds": [
+        "Ben Gannon-Doak"
+      ]
+    },
+    "100745": {
+      "sigla": "MAR",
+      "apelido": "Brahim Díaz",
+      "aliases_odds": [
+        "BRAHIM DIAZ"
+      ]
+    },
+    "130690": {
+      "sigla": "MAR",
+      "apelido": "El Mourabet",
+      "aliases_odds": [
+        "Samir El Mourabet"
+      ]
+    },
+    "126677": {
+      "sigla": "MAR",
+      "apelido": "El Aynaoui",
+      "aliases_odds": [
+        "Neil El Aynaoui",
+        "EL AYNAOUI N."
+      ]
+    },
+    "113593": {
+      "sigla": "ESC",
+      "apelido": "Patterson",
+      "aliases_odds": [
+        "Nathan Patterson"
+      ]
+    },
+    "89195": {
+      "sigla": "ESC",
+      "apelido": "Robertson",
+      "aliases_odds": [
+        "Andy Robertson",
+        "Andrew Robertson"
+      ]
+    },
+    "99481": {
+      "sigla": "ESC",
+      "apelido": "McTominay",
+      "aliases_odds": [
+        "Scott McTominay"
+      ]
+    },
+    "124103": {
+      "sigla": "ESC",
+      "apelido": "Shankland",
+      "aliases_odds": [
+        "Lawrence Shankland"
+      ]
+    },
+    "127087": {
+      "sigla": "MAR",
+      "apelido": "El Ouahdi",
+      "aliases_odds": [
+        "Zakaria El Ouahdi"
+      ]
+    },
+    "146550": {
+      "sigla": "MAR",
+      "apelido": "Belammari",
+      "aliases_odds": [
+        "Youssef Belammari"
+      ]
+    },
+    "96569": {
+      "sigla": "ESC",
+      "apelido": "Christie",
+      "aliases_odds": [
+        "Ryan Christie"
+      ]
+    },
+    "104038": {
+      "sigla": "MAR",
+      "apelido": "Mazraoui",
+      "aliases_odds": [
+        "Noussair Mazraoui"
+      ]
+    },
+    "118320": {
+      "sigla": "ESC",
+      "apelido": "Ferguson",
+      "aliases_odds": [
+        "Lewis Ferguson",
+        "FERGUSON LEWIS"
+      ]
+    },
+    "102709": {
+      "sigla": "MAR",
+      "apelido": "El Kaabi",
+      "aliases_odds": [
+        "Ayoub El Kaabi",
+        "EL KAABI A."
+      ]
+    },
+    "147188": {
+      "sigla": "ESC",
+      "apelido": "Fletcher",
+      "aliases_odds": [
+        "Tyler Fletcher"
+      ]
+    },
+    "128743": {
+      "sigla": "MAR",
+      "apelido": "Bouaddi",
+      "aliases_odds": [
+        "Ayyoub Bouaddi"
+      ]
+    },
+    "120600": {
+      "sigla": "MAR",
+      "apelido": "Saibari",
+      "aliases_odds": [
+        "Ismael Saibari"
+      ]
+    },
+    "118319": {
+      "sigla": "ESC",
+      "apelido": "Souttar",
+      "aliases_odds": [
+        "John Souttar"
+      ]
+    },
+    "96566": {
+      "sigla": "ESC",
+      "apelido": "Tierney",
+      "aliases_odds": [
+        "Kieran Tierney"
+      ]
+    },
+    "96829": {
+      "sigla": "ESC",
+      "apelido": "Ralston",
+      "aliases_odds": [
+        "Anthony Ralston"
+      ]
+    },
+    "118322": {
+      "sigla": "ESC",
+      "apelido": "Stewart",
+      "aliases_odds": [
+        "Ross Cameron Stewart",
+        "Ross Stewart"
+      ]
+    },
+    "100223": {
+      "sigla": "MAR",
+      "apelido": "Amrabat",
+      "aliases_odds": [
+        "Sofyan Amrabat",
+        "AMRABAT SOFYAN"
+      ]
+    },
+    "150979": {
+      "sigla": "MAR",
+      "apelido": "Yassine",
+      "aliases_odds": [
+        "Gessime Yassine"
+      ]
+    },
+    "113596": {
+      "sigla": "ESC",
+      "apelido": "McKenna",
+      "aliases_odds": [
+        "Scott McKenna"
+      ]
+    },
+    "106040": {
+      "sigla": "ESC",
+      "apelido": "McLean",
+      "aliases_odds": [
+        "Kenny McLean",
+        "Kenneth McLean"
+      ]
+    },
+    "97270": {
+      "sigla": "ESC",
+      "apelido": "McGinn",
+      "aliases_odds": [
+        "John McGinn"
+      ]
+    },
+    "110810": {
+      "sigla": "ESC",
+      "apelido": "Hickey",
+      "aliases_odds": [
+        "Aaron Hickey"
+      ]
+    },
+    "114808": {
+      "sigla": "MAR",
+      "apelido": "Ounahi",
+      "aliases_odds": [
+        "Azzedine Ounahi",
+        "Azz-Eddine Ounahi"
+      ]
+    },
+    "113594": {
+      "sigla": "ESC",
+      "apelido": "Hendry",
+      "aliases_odds": [
+        "Jack Hendry"
+      ]
+    },
+    "73398": {
+      "sigla": "ESC",
+      "apelido": "Hanley",
+      "aliases_odds": [
+        "Grant Hanley"
+      ]
+    },
+    "141759": {
+      "sigla": "ESC",
+      "apelido": "Curtis",
+      "aliases_odds": [
+        "Findlay Curtis"
+      ]
+    },
+    "131501": {
+      "sigla": "MAR",
+      "apelido": "Rahimi",
+      "aliases_odds": [
+        "Soufiane Rahimi"
+      ]
+    },
+    "98019": {
+      "sigla": "MAR",
+      "apelido": "Hakimi",
+      "aliases_odds": [
+        "Achraf Hakimi"
+      ]
+    },
+    "114719": {
+      "sigla": "MAR",
+      "apelido": "Halhal",
+      "aliases_odds": [
+        "Redouane Halhal"
+      ]
+    },
+    "106067": {
+      "sigla": "ESC",
+      "apelido": "Adams",
+      "aliases_odds": [
+        "Ché Adams",
+        "ADAMS CHE"
+      ]
+    },
+    "113598": {
+      "sigla": "ESC",
+      "apelido": "Dykes",
+      "aliases_odds": [
+        "Lyndon Dykes"
+      ]
+    },
+    "123676": {
+      "sigla": "MAR",
+      "apelido": "Talbi",
+      "aliases_odds": [
+        "Chemsdine Talbi"
+      ]
+    },
+    "137120": {
+      "sigla": "ESC",
+      "apelido": "Hirst",
+      "aliases_odds": [
+        "George Hirst"
+      ]
+    },
+    "120978": {
+      "sigla": "MAR",
+      "apelido": "Riad",
+      "aliases_odds": [
+        "Chadi Riad"
+      ]
+    },
+    "93923": {
+      "sigla": "MAR",
+      "apelido": "Diop",
+      "aliases_odds": [
+        "Issa Diop"
+      ]
+    },
+    "124104": {
+      "sigla": "ESC",
+      "apelido": "Hyam",
+      "aliases_odds": [
+        "Dominic Hyam"
+      ]
+    },
+    "101851": {
+      "sigla": "BRA",
+      "apelido": "Gabriel Martinelli",
+      "aliases_odds": [
+        "Gabriel Martinelli"
+      ]
+    },
+    "94103": {
+      "sigla": "BRA",
+      "apelido": "Gabriel Magalhães",
+      "aliases_odds": [
+        "GABRIEL MAGALHAES"
+      ]
+    },
+    "150863": {
+      "sigla": "HAI",
+      "apelido": "Woodensky Pierre",
+      "aliases_odds": [
+        "Woodensky Pierre"
+      ]
+    },
+    "98352": {
+      "sigla": "BRA",
+      "apelido": "Bruno Guimarães",
+      "aliases_odds": [
+        "Bruno Guimarães",
+        "GUIMARAES B."
+      ]
+    },
+    "79826": {
+      "sigla": "BRA",
+      "apelido": "Douglas Santos",
+      "aliases_odds": [
+        "Douglas Santos"
+      ]
+    },
+    "109282": {
+      "sigla": "BRA",
+      "apelido": "Luiz Henrique",
+      "aliases_odds": [
+        "Luiz Henrique",
+        "Luiz Henrique Andre Rosa da Silva"
+      ]
+    },
+    "105605": {
+      "sigla": "BRA",
+      "apelido": "Matheus Cunha",
+      "aliases_odds": [
+        "Matheus Cunha"
+      ]
+    },
+    "94930": {
+      "sigla": "BRA",
+      "apelido": "Lucas Paquetá",
+      "aliases_odds": [
+        "Lucas Paquetá"
+      ]
+    },
+    "118234": {
+      "sigla": "HAI",
+      "apelido": "Jean Jacques",
+      "aliases_odds": [
+        "Danley Jean Jacques",
+        "JEAN JACQUES D."
+      ]
+    },
+    "107045": {
+      "sigla": "BRA",
+      "apelido": "Igor Thiago",
+      "aliases_odds": [
+        "Igor Thiago"
+      ]
+    },
+    "61987": {
+      "sigla": "BRA",
+      "apelido": "Alex Sandro",
+      "aliases_odds": [
+        "ALEX SANDRO"
+      ]
+    },
+    "83528": {
+      "sigla": "BRA",
+      "apelido": "Léo Pereira",
+      "aliases_odds": [
+        "Leo Pereira"
+      ]
+    },
+    "150854": {
+      "sigla": "HAI",
+      "apelido": "Expérience",
+      "aliases_odds": [
+        "Martin Experience",
+        "Experience, Martin"
+      ]
+    },
+    "74072": {
+      "sigla": "BRA",
+      "apelido": "Marquinhos",
+      "aliases_odds": [
+        "Marquinhos",
+        "MARQUINHOS CORREA"
+      ]
+    },
+    "106265": {
+      "sigla": "HAI",
+      "apelido": "Bellegarde",
+      "aliases_odds": [
+        "Jean Ricner Bellegarde",
+        "Jeanricner Bellegarde"
+      ]
+    },
+    "110457": {
+      "sigla": "HAI",
+      "apelido": "Providence",
+      "aliases_odds": [
+        "Ruben Providence"
+      ]
+    },
+    "102742": {
+      "sigla": "HAI",
+      "apelido": "Etienne Jr.",
+      "aliases_odds": [
+        "Derrick Etienne Jr."
+      ]
+    },
+    "150911": {
+      "sigla": "HAI",
+      "apelido": "Thermoncy",
+      "aliases_odds": [
+        "Keeto Thermoncy"
+      ]
+    },
+    "70119": {
+      "sigla": "BRA",
+      "apelido": "Casemiro",
+      "aliases_odds": [
+        "Carlos Casemiro",
+        "CASEMIRO"
+      ]
+    },
+    "93283": {
+      "sigla": "BRA",
+      "apelido": "Raphinha",
+      "aliases_odds": [
+        "RAPHINHA"
+      ]
+    },
+    "99325": {
+      "sigla": "HAI",
+      "apelido": "Delcroix",
+      "aliases_odds": [
+        "Hannes Delcroix"
+      ]
+    },
+    "128570": {
+      "sigla": "HAI",
+      "apelido": "Casimir",
+      "aliases_odds": [
+        "Josue Casimir",
+        "CASIMIR JOSUE"
+      ]
+    },
+    "80401": {
+      "sigla": "BRA",
+      "apelido": "Fabinho",
+      "aliases_odds": [
+        "FABINHO"
+      ]
+    },
+    "120582": {
+      "sigla": "HAI",
+      "apelido": "Pierrot",
+      "aliases_odds": [
+        "Frantzdy Pierrot",
+        "Pierrot, Frantzdy"
+      ]
+    },
+    "150856": {
+      "sigla": "HAI",
+      "apelido": "Deedson",
+      "aliases_odds": [
+        "Louicius Don Deedson",
+        "Louicius Deedson"
+      ]
+    },
+    "111083": {
+      "sigla": "HAI",
+      "apelido": "Fortuné",
+      "aliases_odds": [
+        "Yassin Fortune"
+      ]
+    },
+    "108734": {
+      "sigla": "HAI",
+      "apelido": "Duverne",
+      "aliases_odds": [
+        "Jean-Kevin Duverne"
+      ]
+    },
+    "150860": {
+      "sigla": "HAI",
+      "apelido": "Lacroix",
+      "aliases_odds": [
+        "Duke Lacroix"
+      ]
+    },
+    "150861": {
+      "sigla": "HAI",
+      "apelido": "Paugain",
+      "aliases_odds": [
+        "Wilguens Paugain"
+      ]
+    },
+    "115959": {
+      "sigla": "BRA",
+      "apelido": "Endrick",
+      "aliases_odds": [
+        "Endrick Moreira de Sousa",
+        "Endrick"
+      ]
+    },
+    "97803": {
+      "sigla": "BRA",
+      "apelido": "Ibañez",
+      "aliases_odds": [
+        "Roger Ibañez da Silva",
+        "Roger Ibanez"
+      ]
+    },
+    "69783": {
+      "sigla": "BRA",
+      "apelido": "Danilo",
+      "aliases_odds": [
+        "Danilo Luiz da Silva",
+        "Danilo da Silva",
+        "Danilo dos Santos",
+        "Danilo dos Santos de Oliveira"
+      ]
+    },
+    "114610": {
+      "sigla": "HAI",
+      "apelido": "Joseph",
+      "aliases_odds": [
+        "Lenny Joseph"
+      ]
+    },
+    "103005": {
+      "sigla": "HAI",
+      "apelido": "Isidor",
+      "aliases_odds": [
+        "Wilson Isidor",
+        "ISIDOR WILSON"
+      ]
+    },
+    "63007": {
+      "sigla": "BRA",
+      "apelido": "Neymar",
+      "aliases_odds": [
+        "Neymar",
+        "Neymar Jr"
+      ]
+    },
+    "150864": {
+      "sigla": "HAI",
+      "apelido": "Sainté",
+      "aliases_odds": [
+        "Carl Fred Sainte",
+        "Carl Sainte"
+      ]
+    },
+    "99817": {
+      "sigla": "BRA",
+      "apelido": "Bremer",
+      "aliases_odds": [
+        "Bremer"
+      ]
+    },
+    "93327": {
+      "sigla": "HAI",
+      "apelido": "Arcus",
+      "aliases_odds": [
+        "Carlens Arcus",
+        "Arcus, Carlens"
+      ]
+    },
+    "95720": {
+      "sigla": "HAI",
+      "apelido": "Nazon",
+      "aliases_odds": [
+        "Duckens Nazon",
+        "Nazon, Duckens"
+      ]
+    },
+    "122486": {
+      "sigla": "BRA",
+      "apelido": "Rayan",
+      "aliases_odds": [
+        "Rayan Vitor"
+      ]
+    },
+    "150912": {
+      "sigla": "HAI",
+      "apelido": "Simon",
+      "aliases_odds": [
+        "Dominique Simon"
+      ]
+    },
+    "102739": {
+      "sigla": "HAI",
+      "apelido": "Adé",
+      "aliases_odds": [
+        "Ricardo Ade",
+        "Ade, Ricardo"
+      ]
+    },
+    "99535": {
+      "sigla": "BRA",
+      "apelido": "Vini Jr.",
+      "aliases_odds": [
+        "Vinicius Junior",
+        "Vinicius Jr."
+      ]
+    },
+    "106699": {
+      "sigla": "TUR",
+      "apelido": "Müldür",
+      "aliases_odds": [
+        "MULDUR M.",
+        "Mert Muldur"
+      ]
+    },
+    "88312": {
+      "sigla": "PAR",
+      "apelido": "Junior Alonso",
+      "aliases_odds": [
+        "Júnior Alonso",
+        "ALONSO J."
+      ]
+    },
+    "71684": {
+      "sigla": "PAR",
+      "apelido": "Gustavo Gómez",
+      "aliases_odds": [
+        "Gustavo Gomez",
+        "GOMEZ GUSTAVO"
+      ]
+    },
+    "108133": {
+      "sigla": "PAR",
+      "apelido": "Isidro Pitta",
+      "aliases_odds": [
+        "Isidro Pitta",
+        "PITTA ISIDRO"
+      ]
+    },
+    "110047": {
+      "sigla": "PAR",
+      "apelido": "Diego Gómez",
+      "aliases_odds": [
+        "Diego Gómez"
+      ]
+    },
+    "112863": {
+      "sigla": "PAR",
+      "apelido": "Ramón Sosa",
+      "aliases_odds": [
+        "Ramón Sosa",
+        "SOSA RAMON"
+      ]
+    },
+    "113578": {
+      "sigla": "TUR",
+      "apelido": "Aktürkoglu",
+      "aliases_odds": [
+        "Kerem Aktürkoglu",
+        "KEREM AKTURKOGLU M."
+      ]
+    },
+    "86214": {
+      "sigla": "TUR",
+      "apelido": "Calhanoglu",
+      "aliases_odds": [
+        "Hakan Calhanoglu"
+      ]
+    },
+    "107873": {
+      "sigla": "PAR",
+      "apelido": "Bobadilla",
+      "aliases_odds": [
+        "Damian Bobadilla"
+      ]
+    },
+    "88878": {
+      "sigla": "PAR",
+      "apelido": "Velázquez",
+      "aliases_odds": [
+        "Gustavo Velázquez"
+      ]
+    },
+    "122781": {
+      "sigla": "PAR",
+      "apelido": "Caballero",
+      "aliases_odds": [
+        "Gustavo Caballero"
+      ]
+    },
+    "85035": {
+      "sigla": "PAR",
+      "apelido": "Sanabria",
+      "aliases_odds": [
+        "Antonio Sanabria"
+      ]
+    },
+    "123967": {
+      "sigla": "TUR",
+      "apelido": "Bardakci",
+      "aliases_odds": [
+        "Abdülkerim Bardakci"
+      ]
+    },
+    "123969": {
+      "sigla": "TUR",
+      "apelido": "Kadioglu",
+      "aliases_odds": [
+        "Ferdi Kadioglu"
+      ]
+    },
+    "105647": {
+      "sigla": "PAR",
+      "apelido": "Maurício",
+      "aliases_odds": [
+        "Maurício Magalhães Prado",
+        "Prado Mauricio",
+        "Mauricio Prado"
+      ]
+    },
+    "97089": {
+      "sigla": "PAR",
+      "apelido": "Alderete",
+      "aliases_odds": [
+        "Omar Alderete"
+      ]
+    },
+    "87887": {
+      "sigla": "PAR",
+      "apelido": "Balbuena",
+      "aliases_odds": [
+        "Fabian Balbuena"
+      ]
+    },
+    "104813": {
+      "sigla": "TUR",
+      "apelido": "Demiral",
+      "aliases_odds": [
+        "Merih Demiral"
+      ]
+    },
+    "88320": {
+      "sigla": "PAR",
+      "apelido": "Almirón",
+      "aliases_odds": [
+        "Miguel Almiron"
+      ]
+    },
+    "108668": {
+      "sigla": "PAR",
+      "apelido": "Cáceres",
+      "aliases_odds": [
+        "Juan José Cáceres",
+        "Juan Caceres"
+      ]
+    },
+    "95690": {
+      "sigla": "TUR",
+      "apelido": "Söyüncü",
+      "aliases_odds": [
+        "Caglar Soyuncu"
+      ]
+    },
+    "142781": {
+      "sigla": "PAR",
+      "apelido": "Maidana",
+      "aliases_odds": [
+        "Alexandro Maidana"
+      ]
+    },
+    "108528": {
+      "sigla": "PAR",
+      "apelido": "Galarza",
+      "aliases_odds": [
+        "Matias Galarza",
+        "Matias Galarza Fonda"
+      ]
+    },
+    "120751": {
+      "sigla": "TUR",
+      "apelido": "Yüksek",
+      "aliases_odds": [
+        "Ismail Yuksek"
+      ]
+    },
+    "117230": {
+      "sigla": "TUR",
+      "apelido": "Yilmaz",
+      "aliases_odds": [
+        "Baris Alper Yilmaz",
+        "Baris Yilmaz"
+      ]
+    },
+    "106011": {
+      "sigla": "PAR",
+      "apelido": "Enciso",
+      "aliases_odds": [
+        "Julio Enciso"
+      ]
+    },
+    "128141": {
+      "sigla": "TUR",
+      "apelido": "Yildiz",
+      "aliases_odds": [
+        "Kenan Yildiz"
+      ]
+    },
+    "92755": {
+      "sigla": "PAR",
+      "apelido": "Canale",
+      "aliases_odds": [
+        "José Maria Canale Domínguez",
+        "Jose Canale"
+      ]
+    },
+    "112741": {
+      "sigla": "PAR",
+      "apelido": "Ávalos",
+      "aliases_odds": [
+        "Gabriel Avalos"
+      ]
+    },
+    "123965": {
+      "sigla": "TUR",
+      "apelido": "Güler",
+      "aliases_odds": [
+        "Arda Güler"
+      ]
+    },
+    "96865": {
+      "sigla": "TUR",
+      "apelido": "Özcan",
+      "aliases_odds": [
+        "SALIH OZCAN"
+      ]
+    },
+    "103646": {
+      "sigla": "TUR",
+      "apelido": "Celik",
+      "aliases_odds": [
+        "Zeki Celik",
+        "CELIK ZEKI"
+      ]
+    },
+    "106404": {
+      "sigla": "TUR",
+      "apelido": "Akgün",
+      "aliases_odds": [
+        "Yunus Akgün"
+      ]
+    },
+    "110272": {
+      "sigla": "TUR",
+      "apelido": "Kökçü",
+      "aliases_odds": [
+        "Orkun Kokcu"
+      ]
+    },
+    "89843": {
+      "sigla": "PAR",
+      "apelido": "Cubas",
+      "aliases_odds": [
+        "Andres Cubas"
+      ]
+    },
+    "105946": {
+      "sigla": "PAR",
+      "apelido": "Ojeda",
+      "aliases_odds": [
+        "Braian Ojeda",
+        "BRAIAN OSCAR OJEDA"
+      ]
+    },
+    "131280": {
+      "sigla": "PAR",
+      "apelido": "Arce",
+      "aliases_odds": [
+        "Alex Arce",
+        "ARCE ALEX"
+      ]
+    },
+    "139069": {
+      "sigla": "TUR",
+      "apelido": "Gül",
+      "aliases_odds": [
+        "Deniz Gul"
+      ]
+    },
+    "149614": {
+      "sigla": "SUE",
+      "apelido": "Herman Johansson",
+      "aliases_odds": [
+        "Herman Johansson"
+      ]
+    },
+    "112943": {
+      "sigla": "HOL",
+      "apelido": "Quinten Timber",
+      "aliases_odds": [
+        "Quinten Timber"
+      ]
+    },
+    "150891": {
+      "sigla": "SUE",
+      "apelido": "Bernhardsson",
+      "aliases_odds": [
+        "Alexander Bernhardsson"
+      ]
+    },
+    "104042": {
+      "sigla": "HOL",
+      "apelido": "Gravenberch",
+      "aliases_odds": [
+        "Ryan Gravenberch"
+      ]
+    },
+    "127138": {
+      "sigla": "SUE",
+      "apelido": "Lagerbielke",
+      "aliases_odds": [
+        "Gustaf Lagerbielke",
+        "Lagerbielke, Gustaf"
+      ]
+    },
+    "110297": {
+      "sigla": "HOL",
+      "apelido": "Koopmeiners",
+      "aliases_odds": [
+        "Teun Koopmeiners"
+      ]
+    },
+    "114820": {
+      "sigla": "SUE",
+      "apelido": "Gudmundsson",
+      "aliases_odds": [
+        "Gabriel Gudmundsson"
+      ]
+    },
+    "114560": {
+      "sigla": "HOL",
+      "apelido": "Summerville",
+      "aliases_odds": [
+        "Crysencio Summerville"
+      ]
+    },
+    "126427": {
+      "sigla": "HOL",
+      "apelido": "Van de Ven",
+      "aliases_odds": [
+        "Micky Van de Ven"
+      ]
+    },
+    "117468": {
+      "sigla": "SUE",
+      "apelido": "Karlström",
+      "aliases_odds": [
+        "Jesper Karlström"
+      ]
+    },
+    "109850": {
+      "sigla": "HOL",
+      "apelido": "Van Hecke",
+      "aliases_odds": [
+        "Jan Paul van Hecke"
+      ]
+    },
+    "124884": {
+      "sigla": "HOL",
+      "apelido": "Reijnders",
+      "aliases_odds": [
+        "Tijjani Reijnders",
+        "Tijani Reijnders"
+      ]
+    },
+    "93289": {
+      "sigla": "SUE",
+      "apelido": "Lindelöf",
+      "aliases_odds": [
+        "Victor Lindelof"
+      ]
+    },
+    "103110": {
+      "sigla": "SUE",
+      "apelido": "Gyökeres",
+      "aliases_odds": [
+        "Viktor Gyökeres"
+      ]
+    },
+    "85181": {
+      "sigla": "HOL",
+      "apelido": "Van Dijk",
+      "aliases_odds": [
+        "Virgil van Dijk"
+      ]
+    },
+    "134547": {
+      "sigla": "SUE",
+      "apelido": "Bergvall",
+      "aliases_odds": [
+        "Lucas Bergvall"
+      ]
+    },
+    "92648": {
+      "sigla": "SUE",
+      "apelido": "Svanberg",
+      "aliases_odds": [
+        "Mattias Svanberg"
+      ]
+    },
+    "142068": {
+      "sigla": "SUE",
+      "apelido": "Svensson",
+      "aliases_odds": [
+        "Daniel Svensson"
+      ]
+    },
+    "103351": {
+      "sigla": "HOL",
+      "apelido": "Dumfries",
+      "aliases_odds": [
+        "Denzel Dumfries"
+      ]
+    },
+    "102388": {
+      "sigla": "HOL",
+      "apelido": "Weghorst",
+      "aliases_odds": [
+        "Wout Weghorst",
+        "Wouter Weghorst"
+      ]
+    },
+    "110309": {
+      "sigla": "SUE",
+      "apelido": "Starfelt",
+      "aliases_odds": [
+        "Carl Starfelt"
+      ]
+    },
+    "99514": {
+      "sigla": "HOL",
+      "apelido": "Kluivert",
+      "aliases_odds": [
+        "Justin Kluivert"
+      ]
+    },
+    "149618": {
+      "sigla": "SUE",
+      "apelido": "Taha Ali",
+      "aliases_odds": [
+        "Taha Ali"
+      ]
+    },
+    "110748": {
+      "sigla": "HOL",
+      "apelido": "Brobbey",
+      "aliases_odds": [
+        "Brian Brobbey"
+      ]
+    },
+    "99515": {
+      "sigla": "HOL",
+      "apelido": "De Jong",
+      "aliases_odds": [
+        "Frenkie De Jong"
+      ]
+    },
+    "85048": {
+      "sigla": "HOL",
+      "apelido": "Memphis",
+      "aliases_odds": [
+        "Memphis Depay"
+      ]
+    },
+    "97106": {
+      "sigla": "HOL",
+      "apelido": "De Roon",
+      "aliases_odds": [
+        "Marten De Roon"
+      ]
+    },
+    "127851": {
+      "sigla": "SUE",
+      "apelido": "Nilsson",
+      "aliases_odds": [
+        "Gustaf Nilsson"
+      ]
+    },
+    "123903": {
+      "sigla": "HOL",
+      "apelido": "Wieffer",
+      "aliases_odds": [
+        "Mats Wieffer"
+      ]
+    },
+    "112836": {
+      "sigla": "SUE",
+      "apelido": "Elanga",
+      "aliases_odds": [
+        "Anthony Elanga"
+      ]
+    },
+    "149616": {
+      "sigla": "SUE",
+      "apelido": "Stroud",
+      "aliases_odds": [
+        "Elliot Stroud"
+      ]
+    },
+    "106422": {
+      "sigla": "SUE",
+      "apelido": "Nygren",
+      "aliases_odds": [
+        "Benjamin Nygren"
+      ]
+    },
+    "147834": {
+      "sigla": "SUE",
+      "apelido": "Zeneli",
+      "aliases_odds": [
+        "Besfort Zeneli"
+      ]
+    },
+    "123314": {
+      "sigla": "SUE",
+      "apelido": "Ayari",
+      "aliases_odds": [
+        "Yasin Ayari"
+      ]
+    },
+    "101385": {
+      "sigla": "HOL",
+      "apelido": "Malen",
+      "aliases_odds": [
+        "Donyell Malen"
+      ]
+    },
+    "101382": {
+      "sigla": "HOL",
+      "apelido": "Gakpo",
+      "aliases_odds": [
+        "Cody Gakpo"
+      ]
+    },
+    "123732": {
+      "sigla": "SUE",
+      "apelido": "Ekdal",
+      "aliases_odds": [
+        "Hjalmar Ekdal"
+      ]
+    },
+    "149612": {
+      "sigla": "SUE",
+      "apelido": "Smith",
+      "aliases_odds": [
+        "Eric Smith"
+      ]
+    },
+    "97698": {
+      "sigla": "SUE",
+      "apelido": "Isak",
+      "aliases_odds": [
+        "Isak Hien",
+        "Alexander Isak"
+      ]
+    },
+    "128719": {
+      "sigla": "HOL",
+      "apelido": "Hato",
+      "aliases_odds": [
+        "Jorrel Hato"
+      ]
+    },
+    "104208": {
+      "sigla": "HOL",
+      "apelido": "Lang",
+      "aliases_odds": [
+        "Noa Lang"
+      ]
+    },
+    "95995": {
+      "sigla": "SUE",
+      "apelido": "Sema",
+      "aliases_odds": [
+        "Ken Sema"
+      ]
+    },
+    "82295": {
+      "sigla": "HOL",
+      "apelido": "Aké",
+      "aliases_odds": [
+        "Nathan Ake"
+      ]
+    },
+    "102387": {
+      "sigla": "HOL",
+      "apelido": "Til",
+      "aliases_odds": [
+        "Guus Til"
+      ]
+    },
+    "120776": {
+      "sigla": "SUE",
+      "apelido": "Hien"
+    },
+    "123599": {
+      "sigla": "CDM",
+      "apelido": "Ousmane Diomandé",
+      "aliases_odds": [
+        "Ousmane Diomande"
+      ]
+    },
+    "108975": {
+      "sigla": "ALE",
+      "apelido": "Schlotterbeck",
+      "aliases_odds": [
+        "Nico Schlotterbeck"
+      ]
+    },
+    "143294": {
+      "sigla": "CDM",
+      "apelido": "Yan Diomandé",
+      "aliases_odds": [
+        "Yan Diomande"
+      ]
+    },
+    "93003": {
+      "sigla": "CDM",
+      "apelido": "Seko Fofana",
+      "aliases_odds": [
+        "Seko Fofana"
+      ]
+    },
+    "150909": {
+      "sigla": "CDM",
+      "apelido": "Inao Oulaï",
+      "aliases_odds": [
+        "Christ Inao Oulai"
+      ]
+    },
+    "106384": {
+      "sigla": "CDM",
+      "apelido": "Kossounou",
+      "aliases_odds": [
+        "Odilon Kossounou"
+      ]
+    },
+    "108923": {
+      "sigla": "ALE",
+      "apelido": "Woltemade",
+      "aliases_odds": [
+        "Nick Woltemade"
+      ]
+    },
+    "126865": {
+      "sigla": "ALE",
+      "apelido": "Pavlovic",
+      "aliases_odds": [
+        "Aleksandar Pavlovic"
+      ]
+    },
+    "87771": {
+      "sigla": "ALE",
+      "apelido": "Goretzka",
+      "aliases_odds": [
+        "Leon Goretzka"
+      ]
+    },
+    "126799": {
+      "sigla": "ALE",
+      "apelido": "Leweling",
+      "aliases_odds": [
+        "Jamie Leweling"
+      ]
+    },
+    "110084": {
+      "sigla": "CDM",
+      "apelido": "Guessand",
+      "aliases_odds": [
+        "Evann Guessand"
+      ]
+    },
+    "84774": {
+      "sigla": "ALE",
+      "apelido": "Rüdiger",
+      "aliases_odds": [
+        "Antonio Rudiger"
+      ]
+    },
+    "109118": {
+      "sigla": "ALE",
+      "apelido": "Musiala",
+      "aliases_odds": [
+        "Jamal Musiala"
+      ]
+    },
+    "96670": {
+      "sigla": "CDM",
+      "apelido": "Sangaré",
+      "aliases_odds": [
+        "Ibrahim Sangaré"
+      ]
+    },
+    "117394": {
+      "sigla": "CDM",
+      "apelido": "Agbadou",
+      "aliases_odds": [
+        "Emmanuel Agbadou"
+      ]
+    },
+    "97348": {
+      "sigla": "ALE",
+      "apelido": "Havertz",
+      "aliases_odds": [
+        "Kai Havertz"
+      ]
+    },
+    "92235": {
+      "sigla": "ALE",
+      "apelido": "Kimmich",
+      "aliases_odds": [
+        "Joshua Kimmich"
+      ]
+    },
+    "105922": {
+      "sigla": "ALE",
+      "apelido": "Stiller",
+      "aliases_odds": [
+        "Angelo Stiller"
+      ]
+    },
+    "128206": {
+      "sigla": "CDM",
+      "apelido": "Diakité",
+      "aliases_odds": [
+        "Oumar Diakite"
+      ]
+    },
+    "126320": {
+      "sigla": "CDM",
+      "apelido": "Adingra",
+      "aliases_odds": [
+        "Simon Adingra",
+        "Adingra, Simon"
+      ]
+    },
+    "113959": {
+      "sigla": "CDM",
+      "apelido": "Guiagon",
+      "aliases_odds": [
+        "Parfait Guiagon",
+        "Guiagon, Parfait"
+      ]
+    },
+    "106680": {
+      "sigla": "CDM",
+      "apelido": "Diallo",
+      "aliases_odds": [
+        "Amad Diallo"
+      ]
+    },
+    "103898": {
+      "sigla": "ALE",
+      "apelido": "Nmecha",
+      "aliases_odds": [
+        "Felix Nmecha"
+      ]
+    },
+    "97128": {
+      "sigla": "CDM",
+      "apelido": "Kessié",
+      "aliases_odds": [
+        "Franck Kessie"
+      ]
+    },
+    "106606": {
+      "sigla": "CDM",
+      "apelido": "Singo",
+      "aliases_odds": [
+        "Wilfried Stephane Singo",
+        "Wilfried Singo"
+      ]
+    },
+    "150910": {
+      "sigla": "CDM",
+      "apelido": "Touré",
+      "aliases_odds": [
+        "Bazoumana Toure"
+      ]
+    },
+    "108927": {
+      "sigla": "ALE",
+      "apelido": "Wirtz",
+      "aliases_odds": [
+        "Florian Wirtz"
+      ]
+    },
+    "145894": {
+      "sigla": "CDM",
+      "apelido": "Bonny",
+      "aliases_odds": [
+        "Ange-Yoan Bonny",
+        "Ange Bonny"
+      ]
+    },
+    "103419": {
+      "sigla": "CDM",
+      "apelido": "Konan",
+      "aliases_odds": [
+        "Ghislain Konan"
+      ]
+    },
+    "118786": {
+      "sigla": "ALE",
+      "apelido": "Undav",
+      "aliases_odds": [
+        "Deniz Undav"
+      ]
+    },
+    "138949": {
+      "sigla": "ALE",
+      "apelido": "Brown",
+      "aliases_odds": [
+        "Nathaniel Brown"
+      ]
+    },
+    "100802": {
+      "sigla": "ALE",
+      "apelido": "Anton",
+      "aliases_odds": [
+        "Waldemar Anton"
+      ]
+    },
+    "95573": {
+      "sigla": "ALE",
+      "apelido": "Gross",
+      "aliases_odds": [
+        "Pascal Gross"
+      ]
+    },
+    "108895": {
+      "sigla": "ALE",
+      "apelido": "Thiaw",
+      "aliases_odds": [
+        "Malick Thiaw"
+      ]
+    },
+    "109033": {
+      "sigla": "ALE",
+      "apelido": "Beier",
+      "aliases_odds": [
+        "Maximilian Beier"
+      ]
+    },
+    "89889": {
+      "sigla": "ALE",
+      "apelido": "Amiri",
+      "aliases_odds": [
+        "Nadiem Amiri"
+      ]
+    },
+    "128580": {
+      "sigla": "CDM",
+      "apelido": "Opéri",
+      "aliases_odds": [
+        "Christopher Operi"
+      ]
+    },
+    "114021": {
+      "sigla": "ALE",
+      "apelido": "Raum",
+      "aliases_odds": [
+        "David Raum"
+      ]
+    },
+    "99331": {
+      "sigla": "CDM",
+      "apelido": "Pépé",
+      "aliases_odds": [
+        "Nicolas Pepe"
+      ]
+    },
+    "89161": {
+      "sigla": "ALE",
+      "apelido": "Sané",
+      "aliases_odds": [
+        "Leroy Sane"
+      ]
+    },
+    "110968": {
+      "sigla": "CDM",
+      "apelido": "Wahi",
+      "aliases_odds": [
+        "Elye Wahi",
+        "Sepe Elye Wahi"
+      ]
+    },
+    "122402": {
+      "sigla": "CDM",
+      "apelido": "Doué",
+      "aliases_odds": [
+        "Guela Doue"
+      ]
+    },
+    "93408": {
+      "sigla": "CDM",
+      "apelido": "Seri",
+      "aliases_odds": [
+        "Jean Seri",
+        "Jean Michael Seri"
+      ]
+    },
+    "86213": {
+      "sigla": "ALE",
+      "apelido": "Tah",
+      "aliases_odds": [
+        "Jonathan Tah"
+      ]
+    },
+    "121413": {
+      "sigla": "EQU",
+      "apelido": "Kevin Rodríguez",
+      "aliases_odds": [
+        "Kevin Rodriguez"
+      ]
+    },
+    "103059": {
+      "sigla": "CUR",
+      "apelido": "Juninho Bacuna",
+      "aliases_odds": [
+        "Juninho Bacuna"
+      ]
+    },
+    "108334": {
+      "sigla": "EQU",
+      "apelido": "Moisés Caicedo",
+      "aliases_odds": [
+        "Moisés Caicedo"
+      ]
+    },
+    "88045": {
+      "sigla": "CUR",
+      "apelido": "Leandro Bacuna",
+      "aliases_odds": [
+        "Leandro Bacuna"
+      ]
+    },
+    "70788": {
+      "sigla": "EQU",
+      "apelido": "Enner Valencia",
+      "aliases_odds": [
+        "Enner Valencia"
+      ]
+    },
+    "97642": {
+      "sigla": "EQU",
+      "apelido": "Félix Torres",
+      "aliases_odds": [
+        "Felix Torres"
+      ]
+    },
+    "39656": {
+      "sigla": "EQU",
+      "apelido": "Alan Franco",
+      "aliases_odds": [
+        "Alan Franco",
+        "Alan Franco Palma"
+      ]
+    },
+    "123327": {
+      "sigla": "EQU",
+      "apelido": "Kendry Páez",
+      "aliases_odds": [
+        "Kendry Páez"
+      ]
+    },
+    "150866": {
+      "sigla": "CUR",
+      "apelido": "Comenencia",
+      "aliases_odds": [
+        "Livano Comenencia"
+      ]
+    },
+    "150878": {
+      "sigla": "CUR",
+      "apelido": "Margaritha",
+      "aliases_odds": [
+        "Jearl Margaritha"
+      ]
+    },
+    "124003": {
+      "sigla": "CUR",
+      "apelido": "Roemeratoe",
+      "aliases_odds": [
+        "Godfried Roemeratoe",
+        "Roemeratoe, Godfried"
+      ]
+    },
+    "150879": {
+      "sigla": "CUR",
+      "apelido": "Kastaneer",
+      "aliases_odds": [
+        "Gervane Kastaneer"
+      ]
+    },
+    "123997": {
+      "sigla": "CUR",
+      "apelido": "Antonisse",
+      "aliases_odds": [
+        "Jeremy Antonisse"
+      ]
+    },
+    "94868": {
+      "sigla": "EQU",
+      "apelido": "Estupiñán",
+      "aliases_odds": [
+        "Pervis Estupinan"
+      ]
+    },
+    "124001": {
+      "sigla": "CUR",
+      "apelido": "Van Eijma",
+      "aliases_odds": [
+        "Roshon van Eijma"
+      ]
+    },
+    "108335": {
+      "sigla": "EQU",
+      "apelido": "Hincapié",
+      "aliases_odds": [
+        "Piero Hincapie"
+      ]
+    },
+    "106302": {
+      "sigla": "EQU",
+      "apelido": "Preciado",
+      "aliases_odds": [
+        "Ángelo Preciado"
+      ]
+    },
+    "150929": {
+      "sigla": "CUR",
+      "apelido": "Fonville",
+      "aliases_odds": [
+        "Deveron Fonville"
+      ]
+    },
+    "123995": {
+      "sigla": "CUR",
+      "apelido": "Floranus",
+      "aliases_odds": [
+        "Sherel Floranus"
+      ]
+    },
+    "117605": {
+      "sigla": "EQU",
+      "apelido": "Ordóñez",
+      "aliases_odds": [
+        "Joel Ordonez"
+      ]
+    },
+    "85044": {
+      "sigla": "CUR",
+      "apelido": "Locadia",
+      "aliases_odds": [
+        "Jurgen Locadia"
+      ]
+    },
+    "150877": {
+      "sigla": "CUR",
+      "apelido": "Hansen",
+      "aliases_odds": [
+        "Sontje Hansen"
+      ]
+    },
+    "128152": {
+      "sigla": "EQU",
+      "apelido": "Yeboah",
+      "aliases_odds": [
+        "John Yeboah",
+        "Yeboah, John"
+      ]
+    },
+    "105112": {
+      "sigla": "EQU",
+      "apelido": "Porozo",
+      "aliases_odds": [
+        "Jackson Porozo"
+      ]
+    },
+    "114217": {
+      "sigla": "EQU",
+      "apelido": "Angulo",
+      "aliases_odds": [
+        "Nilson Angulo"
+      ]
+    },
+    "101384": {
+      "sigla": "CUR",
+      "apelido": "Obispo",
+      "aliases_odds": [
+        "Armando Obispo"
+      ]
+    },
+    "92938": {
+      "sigla": "CUR",
+      "apelido": "Bazoer",
+      "aliases_odds": [
+        "Riechedly Bazoer"
+      ]
+    },
+    "150874": {
+      "sigla": "CUR",
+      "apelido": "Martha",
+      "aliases_odds": [
+        "Ar'jany Martha"
+      ]
+    },
+    "85050": {
+      "sigla": "CUR",
+      "apelido": "Brenet",
+      "aliases_odds": [
+        "Joshua Brenet"
+      ]
+    },
+    "150876": {
+      "sigla": "CUR",
+      "apelido": "Noslin",
+      "aliases_odds": [
+        "Tyrese Noslin"
+      ]
+    },
+    "124002": {
+      "sigla": "CUR",
+      "apelido": "Felida",
+      "aliases_odds": [
+        "Kevin Felida",
+        "Felida, Kevin"
+      ]
+    },
+    "109096": {
+      "sigla": "EQU",
+      "apelido": "Plata",
+      "aliases_odds": [
+        "Gonzalo Plata"
+      ]
+    },
+    "108601": {
+      "sigla": "EQU",
+      "apelido": "Pacho",
+      "aliases_odds": [
+        "Willian Pacho",
+        "William Pacho"
+      ]
+    },
+    "114040": {
+      "sigla": "EQU",
+      "apelido": "Minda",
+      "aliases_odds": [
+        "Alan Minda"
+      ]
+    },
+    "103629": {
+      "sigla": "CUR",
+      "apelido": "Chong",
+      "aliases_odds": [
+        "Tahith Chong"
+      ]
+    },
+    "123999": {
+      "sigla": "CUR",
+      "apelido": "Gaari",
+      "aliases_odds": [
+        "Jurien Gaari"
+      ]
+    },
+    "127284": {
+      "sigla": "CUR",
+      "apelido": "Sambo",
+      "aliases_odds": [
+        "Shurandy Sambo"
+      ]
+    },
+    "94900": {
+      "sigla": "CUR",
+      "apelido": "Gorré",
+      "aliases_odds": [
+        "Kenji Gorre"
+      ]
+    },
+    "123994": {
+      "sigla": "CUR",
+      "apelido": "Kuwas",
+      "aliases_odds": [
+        "Brandley Kuwas"
+      ]
+    },
+    "111913": {
+      "sigla": "EQU",
+      "apelido": "Vite",
+      "aliases_odds": [
+        "Pedro Vite"
+      ]
+    },
+    "145988": {
+      "sigla": "JAP",
+      "apelido": "Junnosuke Suzuki",
+      "aliases_odds": [
+        "Junnosuke Suzuki"
+      ]
+    },
+    "146455": {
+      "sigla": "TUN",
+      "apelido": "Hadj Mahmoud",
+      "aliases_odds": [
+        "Mohamed Belhadj Mahmoud",
+        "Hadj Mahmoud"
+      ]
+    },
+    "124629": {
+      "sigla": "JAP",
+      "apelido": "Yuito Suzuki",
+      "aliases_odds": [
+        "Yuito Suzuki"
+      ]
+    },
+    "120630": {
+      "sigla": "TUN",
+      "apelido": "Ben Slimane",
+      "aliases_odds": [
+        "Anis Ben Slimane"
+      ]
+    },
+    "118309": {
+      "sigla": "JAP",
+      "apelido": "Hiroki Ito",
+      "aliases_odds": [
+        "Hiroki Ito"
+      ]
+    },
+    "106768": {
+      "sigla": "TUN",
+      "apelido": "Ben Hamida",
+      "aliases_odds": [
+        "Amine Ben Hamida",
+        "Mohamed Ben Hamida",
+        "Mohamed Amine Ben Hamida"
+      ]
+    },
+    "120633": {
+      "sigla": "TUN",
+      "apelido": "Ben Ouanes",
+      "aliases_odds": [
+        "Mortadha Ben Ouanes"
+      ]
+    },
+    "118314": {
+      "sigla": "JAP",
+      "apelido": "Taniguchi",
+      "aliases_odds": [
+        "Shogo Taniguchi"
+      ]
+    },
+    "106421": {
+      "sigla": "JAP",
+      "apelido": "Junya Ito",
+      "aliases_odds": [
+        "Junya Ito"
+      ]
+    },
+    "150915": {
+      "sigla": "TUN",
+      "apelido": "Chikhaoui",
+      "aliases_odds": [
+        "Raed Chikhaoui"
+      ]
+    },
+    "96333": {
+      "sigla": "JAP",
+      "apelido": "Tomiyasu",
+      "aliases_odds": [
+        "Takehiro Tomiyasu"
+      ]
+    },
+    "129651": {
+      "sigla": "JAP",
+      "apelido": "Watanabe",
+      "aliases_odds": [
+        "Tsuyoshi Watanabe"
+      ]
+    },
+    "116581": {
+      "sigla": "TUN",
+      "apelido": "Hannibal",
+      "aliases_odds": [
+        "Hannibal Mejbri"
+      ]
+    },
+    "128201": {
+      "sigla": "JAP",
+      "apelido": "Nakamura",
+      "aliases_odds": [
+        "Keito Nakamura"
+      ]
+    },
+    "118310": {
+      "sigla": "JAP",
+      "apelido": "Sugawara",
+      "aliases_odds": [
+        "Yukinari Sugawara"
+      ]
+    },
+    "146870": {
+      "sigla": "TUN",
+      "apelido": "Tounekti",
+      "aliases_odds": [
+        "Sebastian Tounekti"
+      ]
+    },
+    "146458": {
+      "sigla": "TUN",
+      "apelido": "Mastouri",
+      "aliases_odds": [
+        "Hazem Mastouri"
+      ]
+    },
+    "69945": {
+      "sigla": "JAP",
+      "apelido": "Nagatomo",
+      "aliases_odds": [
+        "Yuto Nagatomo"
+      ]
+    },
+    "84783": {
+      "sigla": "TUN",
+      "apelido": "Khedira",
+      "aliases_odds": [
+        "Rani Khedira"
+      ]
+    },
+    "127270": {
+      "sigla": "TUN",
+      "apelido": "Achouri",
+      "aliases_odds": [
+        "Mohamed Elias Achouri",
+        "Elias Achouri"
+      ]
+    },
+    "146459": {
+      "sigla": "TUN",
+      "apelido": "Chaouat",
+      "aliases_odds": [
+        "Firas Chaouat"
+      ]
+    },
+    "150906": {
+      "sigla": "JAP",
+      "apelido": "Shiogai",
+      "aliases_odds": [
+        "Kento Shiogai"
+      ]
+    },
+    "105736": {
+      "sigla": "JAP",
+      "apelido": "Itakura",
+      "aliases_odds": [
+        "Ko Itakura"
+      ]
+    },
+    "146457": {
+      "sigla": "TUN",
+      "apelido": "Neffati",
+      "aliases_odds": [
+        "Moutaz Neffati"
+      ]
+    },
+    "146977": {
+      "sigla": "TUN",
+      "apelido": "Elloumi",
+      "aliases_odds": [
+        "Rayan Elloumi"
+      ]
+    },
+    "90043": {
+      "sigla": "TUN",
+      "apelido": "Skhiri",
+      "aliases_odds": [
+        "Ellyes Skhiri"
+      ]
+    },
+    "103775": {
+      "sigla": "TUN",
+      "apelido": "Valery",
+      "aliases_odds": [
+        "Yan Valery",
+        "Yann Valery"
+      ]
+    },
+    "112827": {
+      "sigla": "TUN",
+      "apelido": "Gharbi",
+      "aliases_odds": [
+        "Ismaël Gharbi"
+      ]
+    },
+    "102697": {
+      "sigla": "JAP",
+      "apelido": "Kamada",
+      "aliases_odds": [
+        "Daichi Kamada"
+      ]
+    },
+    "114077": {
+      "sigla": "JAP",
+      "apelido": "Tanaka",
+      "aliases_odds": [
+        "Ao Tanaka"
+      ]
+    },
+    "120637": {
+      "sigla": "TUN",
+      "apelido": "Rekik",
+      "aliases_odds": [
+        "Omar Rekik"
+      ]
+    },
+    "105729": {
+      "sigla": "JAP",
+      "apelido": "Maeda",
+      "aliases_odds": [
+        "Daizen Maeda"
+      ]
+    },
+    "96330": {
+      "sigla": "JAP",
+      "apelido": "Ogawa",
+      "aliases_odds": [
+        "Koki Ogawa"
+      ]
+    },
+    "120638": {
+      "sigla": "TUN",
+      "apelido": "Talbi",
+      "aliases_odds": [
+        "Montassar Talbi"
+      ]
+    },
+    "102422": {
+      "sigla": "TUN",
+      "apelido": "Bronn",
+      "aliases_odds": [
+        "Dylan Bronn"
+      ]
+    },
+    "150913": {
+      "sigla": "TUN",
+      "apelido": "Arous",
+      "aliases_odds": [
+        "Adem Arous"
+      ]
+    },
+    "150916": {
+      "sigla": "TUN",
+      "apelido": "Ayari",
+      "aliases_odds": [
+        "Khalil Ayari"
+      ]
+    },
+    "146461": {
+      "sigla": "TUN",
+      "apelido": "Saad",
+      "aliases_odds": [
+        "Elias Saad"
+      ]
+    },
+    "105728": {
+      "sigla": "JAP",
+      "apelido": "Ueda",
+      "aliases_odds": [
+        "Ayase Ueda"
+      ]
+    },
+    "105730": {
+      "sigla": "JAP",
+      "apelido": "Kubo",
+      "aliases_odds": [
+        "Takefusa Kubo"
+      ]
+    },
+    "120634": {
+      "sigla": "TUN",
+      "apelido": "Abdi",
+      "aliases_odds": [
+        "Ali Abdi"
+      ]
+    },
+    "129654": {
+      "sigla": "JAP",
+      "apelido": "Sano",
+      "aliases_odds": [
+        "Kaishu Sano"
+      ]
+    },
+    "114064": {
+      "sigla": "JAP",
+      "apelido": "Doan",
+      "aliases_odds": [
+        "Ritsu Doan"
+      ]
+    },
+    "150905": {
+      "sigla": "JAP",
+      "apelido": "Goto",
+      "aliases_odds": [
+        "Keisuke Goto"
+      ]
+    },
+    "114081": {
+      "sigla": "JAP",
+      "apelido": "Seko",
+      "aliases_odds": [
+        "Ayumu Seko"
+      ]
+    },
+    "114321": {
+      "sigla": "ESP",
+      "apelido": "Nico Williams",
+      "aliases_odds": [
+        "Nico Williams"
+      ]
+    },
+    "101843": {
+      "sigla": "ESP",
+      "apelido": "Ferran Torres",
+      "aliases_odds": [
+        "Ferran Torres"
+      ]
+    },
+    "139653": {
+      "sigla": "ARS",
+      "apelido": "Abu Al-Shamat",
+      "aliases_odds": [
+        "Mohammed Abu Al Shamat"
+      ]
+    },
+    "124602": {
+      "sigla": "ESP",
+      "apelido": "Lamine Yamal",
+      "aliases_odds": [
+        "Lamine Yamal"
+      ]
+    },
+    "92510": {
+      "sigla": "ESP",
+      "apelido": "Fabián Ruiz",
+      "aliases_odds": [
+        "Fabian Ruiz"
+      ]
+    },
+    "102842": {
+      "sigla": "ARS",
+      "apelido": "Al-Khaibari",
+      "aliases_odds": [
+        "Abdullah Al-Khaibari"
+      ]
+    },
+    "114149": {
+      "sigla": "ARS",
+      "apelido": "Al-Buraikan",
+      "aliases_odds": [
+        "Firas Al Buraikan"
+      ]
+    },
+    "103184": {
+      "sigla": "ESP",
+      "apelido": "Pedro Porro",
+      "aliases_odds": [
+        "Pedro Porro"
+      ]
+    },
+    "103908": {
+      "sigla": "ESP",
+      "apelido": "Eric García",
+      "aliases_odds": [
+        "Eric Garcia"
+      ]
+    },
+    "110620": {
+      "sigla": "ESP",
+      "apelido": "Yéremy Pino",
+      "aliases_odds": [
+        "Yeremy Pino"
+      ]
+    },
+    "114105": {
+      "sigla": "ARS",
+      "apelido": "Abdulhamid",
+      "aliases_odds": [
+        "Saud Abdulhamid"
+      ]
+    },
+    "114140": {
+      "sigla": "ARS",
+      "apelido": "Al-Ghannam",
+      "aliases_odds": [
+        "Khalid Al Ghannam"
+      ]
+    },
+    "96822": {
+      "sigla": "ESP",
+      "apelido": "Dani Olmo",
+      "aliases_odds": [
+        "Dani Olmo"
+      ]
+    },
+    "93334": {
+      "sigla": "ESP",
+      "apelido": "Oyarzabal",
+      "aliases_odds": [
+        "Mikel Oyarzabal"
+      ]
+    },
+    "116275": {
+      "sigla": "ARS",
+      "apelido": "Al-Juwayr",
+      "aliases_odds": [
+        "Musab Al Juwayr",
+        "Musab Fahz AL-Juwayr"
+      ]
+    },
+    "103067": {
+      "sigla": "ESP",
+      "apelido": "Cucurella",
+      "aliases_odds": [
+        "Marc Cucurella"
+      ]
+    },
+    "114101": {
+      "sigla": "ARS",
+      "apelido": "Al-Hamdan",
+      "aliases_odds": [
+        "Abdullah Al Hamdan"
+      ]
+    },
+    "109144": {
+      "sigla": "ESP",
+      "apelido": "Zubimendi",
+      "aliases_odds": [
+        "Martín Zubimendi"
+      ]
+    },
+    "106719": {
+      "sigla": "ARS",
+      "apelido": "Al-Shehri",
+      "aliases_odds": [
+        "Saleh Al-Shehri"
+      ]
+    },
+    "127599": {
+      "sigla": "ARS",
+      "apelido": "Al-Johani",
+      "aliases_odds": [
+        "Ziyad Al Johani",
+        "Ziyad Mubarak Al-Johani"
+      ]
+    },
+    "90196": {
+      "sigla": "ESP",
+      "apelido": "Llorente",
+      "aliases_odds": [
+        "Marcos Llorente"
+      ]
+    },
+    "121406": {
+      "sigla": "ARS",
+      "apelido": "Tambakti",
+      "aliases_odds": [
+        "Hassan Tambakti"
+      ]
+    },
+    "126868": {
+      "sigla": "ARS",
+      "apelido": "Al-Harbi",
+      "aliases_odds": [
+        "Moteb Al-Harbi"
+      ]
+    },
+    "88914": {
+      "sigla": "ESP",
+      "apelido": "Grimaldo",
+      "aliases_odds": [
+        "Álex Grimaldo",
+        "Alejandro Grimaldo"
+      ]
+    },
+    "94512": {
+      "sigla": "ESP",
+      "apelido": "Iglesias",
+      "aliases_odds": [
+        "Borja Iglesias"
+      ]
+    },
+    "127593": {
+      "sigla": "ARS",
+      "apelido": "Majrashi",
+      "aliases_odds": [
+        "Ali Majrashi"
+      ]
+    },
+    "126356": {
+      "sigla": "ARS",
+      "apelido": "Boushal",
+      "aliases_odds": [
+        "Nawaf Al-Boushal"
+      ]
+    },
+    "114107": {
+      "sigla": "ARS",
+      "apelido": "Al-Amri",
+      "aliases_odds": [
+        "Abdulelah Al Amri"
+      ]
+    },
+    "126863": {
+      "sigla": "ESP",
+      "apelido": "Cubarsí",
+      "aliases_odds": [
+        "Pau Cubarsí"
+      ]
+    },
+    "81947": {
+      "sigla": "ESP",
+      "apelido": "Laporte",
+      "aliases_odds": [
+        "Aymeric Laporte"
+      ]
+    },
+    "126464": {
+      "sigla": "ARS",
+      "apelido": "Mandash",
+      "aliases_odds": [
+        "Sultan Mandash"
+      ]
+    },
+    "96838": {
+      "sigla": "ESP",
+      "apelido": "Merino",
+      "aliases_odds": [
+        "Mikel Merino"
+      ]
+    },
+    "126359": {
+      "sigla": "ARS",
+      "apelido": "Lajami",
+      "aliases_odds": [
+        "Ali Lajami"
+      ]
+    },
+    "117766": {
+      "sigla": "ESP",
+      "apelido": "Pubill",
+      "aliases_odds": [
+        "Marc Pubill"
+      ]
+    },
+    "139646": {
+      "sigla": "ARS",
+      "apelido": "Thakri",
+      "aliases_odds": [
+        "Jehad Thakri"
+      ]
+    },
+    "106712": {
+      "sigla": "ARS",
+      "apelido": "Kadesh",
+      "aliases_odds": [
+        "Hassan Kadesh Mahboob",
+        "Hassan Kadesh"
+      ]
+    },
+    "102838": {
+      "sigla": "ARS",
+      "apelido": "Kanno",
+      "aliases_odds": [
+        "Mohamed Kanno",
+        "Mohammed Kanno"
+      ]
+    },
+    "109570": {
+      "sigla": "ESP",
+      "apelido": "Pedri",
+      "aliases_odds": [
+        "Pedri"
+      ]
+    },
+    "95456": {
+      "sigla": "ESP",
+      "apelido": "Rodri",
+      "aliases_odds": [
+        "Rodri",
+        "Rodrigo Hernandez Cascante"
+      ]
+    },
+    "128360": {
+      "sigla": "ARS",
+      "apelido": "Hejji",
+      "aliases_odds": [
+        "Alaa Hejji"
+      ]
+    },
+    "114100": {
+      "sigla": "ARS",
+      "apelido": "Yahya",
+      "aliases_odds": [
+        "Ayman Yahya"
+      ]
+    },
+    "140727": {
+      "sigla": "ESP",
+      "apelido": "Muñoz",
+      "aliases_odds": [
+        "Victor Munoz"
+      ]
+    },
+    "109333": {
+      "sigla": "ESP",
+      "apelido": "Baena",
+      "aliases_odds": [
+        "Álex Baena"
+      ]
+    },
+    "114312": {
+      "sigla": "ESP",
+      "apelido": "Gavi",
+      "aliases_odds": [
+        "Gavi",
+        "Pablo Martin Gavi"
+      ]
+    },
+    "138239": {
+      "sigla": "BEL",
+      "apelido": "Fernández-Pardo",
+      "aliases_odds": [
+        "Matías Fernández-Pardo"
+      ]
+    },
+    "120606": {
+      "sigla": "BEL",
+      "apelido": "Diego Moreira",
+      "aliases_odds": [
+        "Diego Moreira"
+      ]
+    },
+    "106387": {
+      "sigla": "BEL",
+      "apelido": "De Ketelaere",
+      "aliases_odds": [
+        "Charles De Ketelaere"
+      ]
+    },
+    "146396": {
+      "sigla": "IRA",
+      "apelido": "Hosseinzadeh",
+      "aliases_odds": [
+        "Amirhossein Hosseinzadeh"
+      ]
+    },
+    "108194": {
+      "sigla": "BEL",
+      "apelido": "Saelemaekers",
+      "aliases_odds": [
+        "Alexis Saelemaekers"
+      ]
+    },
+    "121427": {
+      "sigla": "IRA",
+      "apelido": "Khalilzadeh",
+      "aliases_odds": [
+        "Shoja Khalilzadeh",
+        "Shojae Khalilzadeh"
+      ]
+    },
+    "133146": {
+      "sigla": "BEL",
+      "apelido": "De Cuyper",
+      "aliases_odds": [
+        "Maxim De Cuyper"
+      ]
+    },
+    "128929": {
+      "sigla": "IRA",
+      "apelido": "Moghanlou",
+      "aliases_odds": [
+        "Shahriar Moghanlou",
+        "Shahriyar Moghanlou"
+      ]
+    },
+    "85084": {
+      "sigla": "BEL",
+      "apelido": "De Bruyne",
+      "aliases_odds": [
+        "Kevin De Bruyne"
+      ]
+    },
+    "102777": {
+      "sigla": "IRA",
+      "apelido": "Mohammadi",
+      "aliases_odds": [
+        "Milad Mohammadi"
+      ]
+    },
+    "96585": {
+      "sigla": "IRA",
+      "apelido": "Ezatolahi",
+      "aliases_odds": [
+        "Saeid Ezatolahi"
+      ]
+    },
+    "97246": {
+      "sigla": "BEL",
+      "apelido": "Tielemans",
+      "aliases_odds": [
+        "Youri Tielemans"
+      ]
+    },
+    "110507": {
+      "sigla": "BEL",
+      "apelido": "De Winter",
+      "aliases_odds": [
+        "Koni De Winter"
+      ]
+    },
+    "96672": {
+      "sigla": "BEL",
+      "apelido": "Lukébakio",
+      "aliases_odds": [
+        "Dodi Lukébakio"
+      ]
+    },
+    "102775": {
+      "sigla": "IRA",
+      "apelido": "Rezaeian",
+      "aliases_odds": [
+        "Ramin Rezaeian"
+      ]
+    },
+    "103561": {
+      "sigla": "BEL",
+      "apelido": "Castagne",
+      "aliases_odds": [
+        "Timothy Castagne"
+      ]
+    },
+    "105267": {
+      "sigla": "BEL",
+      "apelido": "Trossard",
+      "aliases_odds": [
+        "Leandro Trossard"
+      ]
+    },
+    "101937": {
+      "sigla": "IRA",
+      "apelido": "Ghoddos",
+      "aliases_odds": [
+        "Saman Ghoddos"
+      ]
+    },
+    "70594": {
+      "sigla": "IRA",
+      "apelido": "Hajsafi",
+      "aliases_odds": [
+        "Ehsan Hajsafi"
+      ]
+    },
+    "92343": {
+      "sigla": "BEL",
+      "apelido": "Meunier",
+      "aliases_odds": [
+        "Thomas Meunier"
+      ]
+    },
+    "150889": {
+      "sigla": "IRA",
+      "apelido": "Ghayedi",
+      "aliases_odds": [
+        "Mehdi Ghayedi"
+      ]
+    },
+    "128931": {
+      "sigla": "IRA",
+      "apelido": "Yousefi",
+      "aliases_odds": [
+        "Arya Yousefi",
+        "Aria Yousefi"
+      ]
+    },
+    "92347": {
+      "sigla": "BEL",
+      "apelido": "Mechele",
+      "aliases_odds": [
+        "Brandon Mechele"
+      ]
+    },
+    "142177": {
+      "sigla": "IRA",
+      "apelido": "Alipour",
+      "aliases_odds": [
+        "Ali Alipour"
+      ]
+    },
+    "92351": {
+      "sigla": "BEL",
+      "apelido": "Vanaken",
+      "aliases_odds": [
+        "Hans Vanaken"
+      ]
+    },
+    "146390": {
+      "sigla": "IRA",
+      "apelido": "Mohebi",
+      "aliases_odds": [
+        "Mohammad Mohebi",
+        "Mohammed Mohebi"
+      ]
+    },
+    "141669": {
+      "sigla": "BEL",
+      "apelido": "Raskin",
+      "aliases_odds": [
+        "Nicolas Raskin"
+      ]
+    },
+    "71543": {
+      "sigla": "BEL",
+      "apelido": "Lukaku",
+      "aliases_odds": [
+        "Romelu Lukaku"
+      ]
+    },
+    "102770": {
+      "sigla": "IRA",
+      "apelido": "Taremi",
+      "aliases_odds": [
+        "Mehdi Taremi"
+      ]
+    },
+    "127500": {
+      "sigla": "IRA",
+      "apelido": "Nemati",
+      "aliases_odds": [
+        "Ali Nemati"
+      ]
+    },
+    "114599": {
+      "sigla": "BEL",
+      "apelido": "Theate",
+      "aliases_odds": [
+        "Arthur Theate"
+      ]
+    },
+    "77898": {
+      "sigla": "BEL",
+      "apelido": "Witsel",
+      "aliases_odds": [
+        "Axel Witsel"
+      ]
+    },
+    "120657": {
+      "sigla": "BEL",
+      "apelido": "Debast",
+      "aliases_odds": [
+        "Zeno Debast"
+      ]
+    },
+    "114821": {
+      "sigla": "BEL",
+      "apelido": "Onana",
+      "aliases_odds": [
+        "Amadou Onana"
+      ]
+    },
+    "110298": {
+      "sigla": "BEL",
+      "apelido": "Doku",
+      "aliases_odds": [
+        "Jeremy Doku"
+      ]
+    },
+    "150907": {
+      "sigla": "BEL",
+      "apelido": "Ngoy",
+      "aliases_odds": [
+        "Nathan Ngoy"
+      ]
+    },
+    "138658": {
+      "sigla": "BEL",
+      "apelido": "Seys",
+      "aliases_odds": [
+        "Joaquin Seys"
+      ]
+    },
+    "108683": {
+      "sigla": "URU",
+      "apelido": "Emiliano Martínez",
+      "aliases_odds": [
+        "Emiliano Martinez",
+        "Emiliano Martinez Toranza"
+      ]
+    },
+    "129859": {
+      "sigla": "CAB",
+      "apelido": "Jamiro Monteiro",
+      "aliases_odds": [
+        "Jamiro Monteiro"
+      ]
+    },
+    "94073": {
+      "sigla": "URU",
+      "apelido": "Mathías Olivera",
+      "aliases_odds": [
+        "Mathías Olivera"
+      ]
+    },
+    "102931": {
+      "sigla": "URU",
+      "apelido": "Brian Rodríguez",
+      "aliases_odds": [
+        "Brian Rodriguez"
+      ]
+    },
+    "87722": {
+      "sigla": "CAB",
+      "apelido": "Garry Rodrigues",
+      "aliases_odds": [
+        "Garry Rodrigues"
+      ]
+    },
+    "88559": {
+      "sigla": "CAB",
+      "apelido": "Steven Moreira",
+      "aliases_odds": [
+        "Steven Moreira"
+      ]
+    },
+    "150927": {
+      "sigla": "CAB",
+      "apelido": "Yannick Semedo",
+      "aliases_odds": [
+        "Yannick Semedo"
+      ]
+    },
+    "113504": {
+      "sigla": "CAB",
+      "apelido": "Telmo Arcanjo",
+      "aliases_odds": [
+        "Telmo Arcanjo"
+      ]
+    },
+    "109097": {
+      "sigla": "CAB",
+      "apelido": "Jovane Cabral",
+      "aliases_odds": [
+        "Jovane Cabral"
+      ]
+    },
+    "100815": {
+      "sigla": "CAB",
+      "apelido": "Nuno da Costa",
+      "aliases_odds": [
+        "Nuno Da Costa",
+        "Joia Nuno Da Costa"
+      ]
+    },
+    "106431": {
+      "sigla": "URU",
+      "apelido": "Ronald Araujo",
+      "aliases_odds": [
+        "Ronald Araujo"
+      ]
+    },
+    "102935": {
+      "sigla": "URU",
+      "apelido": "Darwin Núñez",
+      "aliases_odds": [
+        "Darwin Nunez"
+      ]
+    },
+    "113500": {
+      "sigla": "CAB",
+      "apelido": "Diney Borges",
+      "aliases_odds": [
+        "Diney Borges"
+      ]
+    },
+    "147891": {
+      "sigla": "CAB",
+      "apelido": "Sidny Cabral",
+      "aliases_odds": [
+        "Sidny Cabral"
+      ]
+    },
+    "129857": {
+      "sigla": "CAB",
+      "apelido": "Laros Duarte",
+      "aliases_odds": [
+        "Laros Duarte"
+      ]
+    },
+    "113503": {
+      "sigla": "CAB",
+      "apelido": "Willy Semedo",
+      "aliases_odds": [
+        "Willy Semedo"
+      ]
+    },
+    "129855": {
+      "sigla": "CAB",
+      "apelido": "Deroy Duarte",
+      "aliases_odds": [
+        "Deroy Duarte"
+      ]
+    },
+    "150925": {
+      "sigla": "CAB",
+      "apelido": "Hélio Varela",
+      "aliases_odds": [
+        "Hélio Varela"
+      ]
+    },
+    "85056": {
+      "sigla": "URU",
+      "apelido": "José Giménez",
+      "aliases_odds": [
+        "Jose Gimenez"
+      ]
+    },
+    "150928": {
+      "sigla": "CAB",
+      "apelido": "Kelvin Pires",
+      "aliases_odds": [
+        "Kelvin Pires"
+      ]
+    },
+    "86260": {
+      "sigla": "CAB",
+      "apelido": "Ryan Mendes",
+      "aliases_odds": [
+        "Ryan Mendes"
+      ]
+    },
+    "120416": {
+      "sigla": "CAB",
+      "apelido": "Logan Costa",
+      "aliases_odds": [
+        "Logan Costa"
+      ]
+    },
+    "150926": {
+      "sigla": "CAB",
+      "apelido": "Wagner Pina",
+      "aliases_odds": [
+        "Wagner Pina"
+      ]
+    },
+    "113509": {
+      "sigla": "CAB",
+      "apelido": "Kevin Pina",
+      "aliases_odds": [
+        "Kevin Pina"
+      ]
+    },
+    "99228": {
+      "sigla": "URU",
+      "apelido": "De la Cruz",
+      "aliases_odds": [
+        "Nicolas De la Cruz"
+      ]
+    },
+    "137282": {
+      "sigla": "CAB",
+      "apelido": "Livramento",
+      "aliases_odds": [
+        "Dailon Rocha Livramento",
+        "Dailon Livramento"
+      ]
+    },
+    "113490": {
+      "sigla": "CAB",
+      "apelido": "João Paulo",
+      "aliases_odds": [
+        "Joao Paulo Fernandes",
+        "Joao Paulo Moreira"
+      ]
+    },
+    "87863": {
+      "sigla": "URU",
+      "apelido": "Arrascaeta",
+      "aliases_odds": [
+        "Giorgian De Arrascaeta"
+      ]
+    },
+    "91886": {
+      "sigla": "URU",
+      "apelido": "Bentancur",
+      "aliases_odds": [
+        "Rodrigo Bentancur"
+      ]
+    },
+    "102954": {
+      "sigla": "URU",
+      "apelido": "Pellistri",
+      "aliases_odds": [
+        "Facundo Pellistri"
+      ]
+    },
+    "113487": {
+      "sigla": "CAB",
+      "apelido": "Benchimol",
+      "aliases_odds": [
+        "Gilson Benchimol"
+      ]
+    },
+    "102928": {
+      "sigla": "URU",
+      "apelido": "Canobbio",
+      "aliases_odds": [
+        "Agustin Canobbio"
+      ]
+    },
+    "105996": {
+      "sigla": "URU",
+      "apelido": "Sanabria",
+      "aliases_odds": [
+        "Juan Manuel Sanabria",
+        "Juan Sanabria"
+      ]
+    },
+    "99857": {
+      "sigla": "URU",
+      "apelido": "Valverde",
+      "aliases_odds": [
+        "Federico Valverde"
+      ]
+    },
+    "102130": {
+      "sigla": "URU",
+      "apelido": "Piquerez",
+      "aliases_odds": [
+        "Joaquin Piquerez"
+      ]
+    },
+    "104781": {
+      "sigla": "URU",
+      "apelido": "Cáceres",
+      "aliases_odds": [
+        "Sebastian Caceres"
+      ]
+    },
+    "92474": {
+      "sigla": "URU",
+      "apelido": "Aguirre",
+      "aliases_odds": [
+        "Rodrigo Aguirre"
+      ]
+    },
+    "113499": {
+      "sigla": "CAB",
+      "apelido": "Stopira",
+      "aliases_odds": [
+        "Ianique Stopira",
+        "Stopira"
+      ]
+    },
+    "108921": {
+      "sigla": "URU",
+      "apelido": "Zalazar",
+      "aliases_odds": [
+        "Rodrigo Zalazar",
+        "Rodrigo Zalazar Martinez"
+      ]
+    },
+    "107560": {
+      "sigla": "URU",
+      "apelido": "Ugarte",
+      "aliases_odds": [
+        "Manuel Ugarte"
+      ]
+    },
+    "84816": {
+      "sigla": "URU",
+      "apelido": "Varela",
+      "aliases_odds": [
+        "Guillermo Varela"
+      ]
+    },
+    "107559": {
+      "sigla": "URU",
+      "apelido": "Viñas",
+      "aliases_odds": [
+        "Federico Viñas"
+      ]
+    },
+    "98974": {
+      "sigla": "URU",
+      "apelido": "Viña",
+      "aliases_odds": [
+        "Matias Vina"
+      ]
+    },
+    "99715": {
+      "sigla": "NZE",
+      "apelido": "Ryan Thomas",
+      "aliases_odds": [
+        "Ryan Thomas"
+      ]
+    },
+    "134369": {
+      "sigla": "EGI",
+      "apelido": "Abdelmaguid",
+      "aliases_odds": [
+        "Hossam Abdelmaguid"
+      ]
+    },
+    "80648": {
+      "sigla": "NZE",
+      "apelido": "Barbarouses",
+      "aliases_odds": [
+        "Kosta Barbarouses"
+      ]
+    },
+    "150942": {
+      "sigla": "EGI",
+      "apelido": "Abdelkarim",
+      "aliases_odds": [
+        "Hamza Abdelkarim"
+      ]
+    },
+    "116583": {
+      "sigla": "EGI",
+      "apelido": "Abdelmonem",
+      "aliases_odds": [
+        "Mohamed Abdelmonem El Sayed Mohamed Ahmed",
+        "Mohamed Abdelmonem"
+      ]
+    },
+    "146236": {
+      "sigla": "EGI",
+      "apelido": "Tarek Alaa",
+      "aliases_odds": [
+        "Tarek Alaa"
+      ]
+    },
+    "82039": {
+      "sigla": "EGI",
+      "apelido": "Trézéguet",
+      "aliases_odds": [
+        "Trezeguet",
+        "Mahmoud Trezeguet"
+      ]
+    },
+    "100836": {
+      "sigla": "NZE",
+      "apelido": "McCowatt",
+      "aliases_odds": [
+        "Callum McCowatt",
+        "McCowatt, Callum"
+      ]
+    },
+    "108948": {
+      "sigla": "EGI",
+      "apelido": "Marmoush",
+      "aliases_odds": [
+        "Omar Marmoush"
+      ]
+    },
+    "114019": {
+      "sigla": "NZE",
+      "apelido": "Stamenic",
+      "aliases_odds": [
+        "Marko Stamenic",
+        "Marko Nikola Stamenic"
+      ]
+    },
+    "114013": {
+      "sigla": "NZE",
+      "apelido": "Pijnaker",
+      "aliases_odds": [
+        "Nando Pijnaker"
+      ]
+    },
+    "118384": {
+      "sigla": "NZE",
+      "apelido": "De Vries",
+      "aliases_odds": [
+        "Francis De Vries"
+      ]
+    },
+    "133988": {
+      "sigla": "NZE",
+      "apelido": "Randall",
+      "aliases_odds": [
+        "Jesse Randall"
+      ]
+    },
+    "136084": {
+      "sigla": "NZE",
+      "apelido": "Bayliss",
+      "aliases_odds": [
+        "Lachlan Bayliss"
+      ]
+    },
+    "114031": {
+      "sigla": "NZE",
+      "apelido": "Garbett",
+      "aliases_odds": [
+        "Matthew Garbett"
+      ]
+    },
+    "114012": {
+      "sigla": "NZE",
+      "apelido": "Cacace",
+      "aliases_odds": [
+        "Liberato Cacace"
+      ]
+    },
+    "133987": {
+      "sigla": "NZE",
+      "apelido": "Surman",
+      "aliases_odds": [
+        "Finn Surman"
+      ]
+    },
+    "114029": {
+      "sigla": "NZE",
+      "apelido": "Elliot",
+      "aliases_odds": [
+        "Callan Elliot",
+        "Elliot, Callan"
+      ]
+    },
+    "99712": {
+      "sigla": "NZE",
+      "apelido": "Boxall",
+      "aliases_odds": [
+        "Michael Boxall"
+      ]
+    },
+    "133990": {
+      "sigla": "NZE",
+      "apelido": "Bindon",
+      "aliases_odds": [
+        "Tyler Bindon"
+      ]
+    },
+    "111046": {
+      "sigla": "EGI",
+      "apelido": "Yasser",
+      "aliases_odds": [
+        "Yasser Ibrahim"
+      ]
+    },
+    "114054": {
+      "sigla": "EGI",
+      "apelido": "Ashour",
+      "aliases_odds": [
+        "Emam Ashour",
+        "Eman Ashour"
+      ]
+    },
+    "117474": {
+      "sigla": "EGI",
+      "apelido": "Fatouh",
+      "aliases_odds": [
+        "Ahmed Fatouh"
+      ]
+    },
+    "124359": {
+      "sigla": "EGI",
+      "apelido": "Hassan",
+      "aliases_odds": [
+        "Haissem Hassan",
+        "Hassan Saber"
+      ]
+    },
+    "105919": {
+      "sigla": "NZE",
+      "apelido": "Singh",
+      "aliases_odds": [
+        "Sarpreet Singh"
+      ]
+    },
+    "111052": {
+      "sigla": "EGI",
+      "apelido": "Fathy",
+      "aliases_odds": [
+        "Hamdy Fathy"
+      ]
+    },
+    "80617": {
+      "sigla": "EGI",
+      "apelido": "Salah",
+      "aliases_odds": [
+        "Mohamed Salah"
+      ]
+    },
+    "82033": {
+      "sigla": "EGI",
+      "apelido": "Rabia",
+      "aliases_odds": [
+        "Rami Rabia",
+        "Ramy Rabia"
+      ]
+    },
+    "122613": {
+      "sigla": "EGI",
+      "apelido": "Attia",
+      "aliases_odds": [
+        "Marawan Attia",
+        "Marwan Attia"
+      ]
+    },
+    "80647": {
+      "sigla": "NZE",
+      "apelido": "Payne",
+      "aliases_odds": [
+        "Tim Payne",
+        "Payne, Tim"
+      ]
+    },
+    "102763": {
+      "sigla": "EGI",
+      "apelido": "Hafez",
+      "aliases_odds": [
+        "Karim Hafez"
+      ]
+    },
+    "99717": {
+      "sigla": "NZE",
+      "apelido": "Rufer",
+      "aliases_odds": [
+        "Alex Rufer",
+        "Rufer, Alex"
+      ]
+    },
+    "114030": {
+      "sigla": "NZE",
+      "apelido": "Waine",
+      "aliases_odds": [
+        "Ben Waine",
+        "Waine, Ben"
+      ]
+    },
+    "69971": {
+      "sigla": "NZE",
+      "apelido": "Smith",
+      "aliases_odds": [
+        "Tommy Smith"
+      ]
+    },
+    "134353": {
+      "sigla": "EGI",
+      "apelido": "Saber",
+      "aliases_odds": [
+        "Mahmoud Saber"
+      ]
+    },
+    "111054": {
+      "sigla": "EGI",
+      "apelido": "Hany",
+      "aliases_odds": [
+        "Mohamed Hany",
+        "Hany, Mohamed"
+      ]
+    },
+    "114014": {
+      "sigla": "NZE",
+      "apelido": "Just",
+      "aliases_odds": [
+        "Elijah Just",
+        "Just, Elijah"
+      ]
+    },
+    "69973": {
+      "sigla": "NZE",
+      "apelido": "Wood",
+      "aliases_odds": [
+        "Chris Wood"
+      ]
+    },
+    "117477": {
+      "sigla": "EGI",
+      "apelido": "Zizo",
+      "aliases_odds": [
+        "Ahmed Sayed \"Zizo\""
+      ]
+    },
+    "114015": {
+      "sigla": "NZE",
+      "apelido": "Bell",
+      "aliases_odds": [
+        "Joe Bell",
+        "Bell, Joe"
+      ]
+    },
+    "114048": {
+      "sigla": "EGI",
+      "apelido": "Adel",
+      "aliases_odds": [
+        "Ibrahim Adel"
+      ]
+    },
+    "114033": {
+      "sigla": "NZE",
+      "apelido": "Old",
+      "aliases_odds": [
+        "Ben Old",
+        "Benjamin Old"
+      ]
+    },
+    "102754": {
+      "sigla": "AUT",
+      "apelido": "Xaver Schlager",
+      "aliases_odds": [
+        "Xaver Schlager"
+      ]
+    },
+    "103687": {
+      "sigla": "ARG",
+      "apelido": "Julián Álvarez",
+      "aliases_odds": [
+        "Julian Alvarez"
+      ]
+    },
+    "108643": {
+      "sigla": "ARG",
+      "apelido": "Enzo Fernández",
+      "aliases_odds": [
+        "Enzo Fernández"
+      ]
+    },
+    "105952": {
+      "sigla": "ARG",
+      "apelido": "Mac Allister",
+      "aliases_odds": [
+        "Alexis Mac Allister"
+      ]
+    },
+    "113059": {
+      "sigla": "AUT",
+      "apelido": "Chukwuemeka",
+      "aliases_odds": [
+        "Carney Chukwuemeka"
+      ]
+    },
+    "92289": {
+      "sigla": "AUT",
+      "apelido": "Gregoritsch",
+      "aliases_odds": [
+        "Michael Gregoritsch"
+      ]
+    },
+    "145499": {
+      "sigla": "AUT",
+      "apelido": "Affengruber",
+      "aliases_odds": [
+        "David Affengruber"
+      ]
+    },
+    "113103": {
+      "sigla": "ARG",
+      "apelido": "Flaco López",
+      "aliases_odds": [
+        "Jose Flaco Lopez"
+      ]
+    },
+    "69384": {
+      "sigla": "AUT",
+      "apelido": "Arnautovic",
+      "aliases_odds": [
+        "Marko Arnautovic"
+      ]
+    },
+    "96681": {
+      "sigla": "ARG",
+      "apelido": "Tagliafico",
+      "aliases_odds": [
+        "Nicolás Tagliafico"
+      ]
+    },
+    "98147": {
+      "sigla": "AUT",
+      "apelido": "Grillitsch",
+      "aliases_odds": [
+        "Florian Grillitsch"
+      ]
+    },
+    "113473": {
+      "sigla": "AUT",
+      "apelido": "Kalajdzic",
+      "aliases_odds": [
+        "Sasa Kalajdzic"
+      ]
+    },
+    "89766": {
+      "sigla": "AUT",
+      "apelido": "Sabitzer",
+      "aliases_odds": [
+        "Marcel Sabitzer"
+      ]
+    },
+    "93006": {
+      "sigla": "AUT",
+      "apelido": "Lienhart",
+      "aliases_odds": [
+        "Philipp Lienhart"
+      ]
+    },
+    "69219": {
+      "sigla": "ARG",
+      "apelido": "Otamendi",
+      "aliases_odds": [
+        "Nicolas Otamendi"
+      ]
+    },
+    "117401": {
+      "sigla": "ARG",
+      "apelido": "Nico Paz",
+      "aliases_odds": [
+        "Nico Paz"
+      ]
+    },
+    "94849": {
+      "sigla": "ARG",
+      "apelido": "Lo Celso",
+      "aliases_odds": [
+        "Giovani Lo Celso"
+      ]
+    },
+    "94917": {
+      "sigla": "ARG",
+      "apelido": "Palacios",
+      "aliases_odds": [
+        "Exequiel Palacios"
+      ]
+    },
+    "110529": {
+      "sigla": "AUT",
+      "apelido": "Seiwald",
+      "aliases_odds": [
+        "Nicolas Seiwald"
+      ]
+    },
+    "89912": {
+      "sigla": "ARG",
+      "apelido": "De Paul",
+      "aliases_odds": [
+        "Rodrigo De Paul"
+      ]
+    },
+    "97614": {
+      "sigla": "ARG",
+      "apelido": "Montiel",
+      "aliases_odds": [
+        "Gonzalo Montiel"
+      ]
+    },
+    "79259": {
+      "sigla": "ARG",
+      "apelido": "Paredes",
+      "aliases_odds": [
+        "Leandro Paredes"
+      ]
+    },
+    "118142": {
+      "sigla": "ARG",
+      "apelido": "Simeone",
+      "aliases_odds": [
+        "Giuliano Simeone"
+      ]
+    },
+    "150924": {
+      "sigla": "AUT",
+      "apelido": "Svoboda",
+      "aliases_odds": [
+        "Michael Svoboda"
+      ]
+    },
+    "95138": {
+      "sigla": "ARG",
+      "apelido": "Molina",
+      "aliases_odds": [
+        "Nahuel Molina"
+      ]
+    },
+    "97613": {
+      "sigla": "ARG",
+      "apelido": "Medina",
+      "aliases_odds": [
+        "Facundo Medina"
+      ]
+    },
+    "100629": {
+      "sigla": "AUT",
+      "apelido": "Laimer",
+      "aliases_odds": [
+        "Konrad Laimer"
+      ]
+    },
+    "116533": {
+      "sigla": "AUT",
+      "apelido": "Wanner",
+      "aliases_odds": [
+        "Paul Wanner"
+      ]
+    },
+    "120653": {
+      "sigla": "AUT",
+      "apelido": "Schmid",
+      "aliases_odds": [
+        "Romano Schmid"
+      ]
+    },
+    "108358": {
+      "sigla": "ARG",
+      "apelido": "Almada",
+      "aliases_odds": [
+        "Thiago Almada"
+      ]
+    },
+    "118388": {
+      "sigla": "AUT",
+      "apelido": "Wimmer",
+      "aliases_odds": [
+        "Patrick Wimmer"
+      ]
+    },
+    "84968": {
+      "sigla": "AUT",
+      "apelido": "Schöpf",
+      "aliases_odds": [
+        "Alessandro Schopf"
+      ]
+    },
+    "98138": {
+      "sigla": "AUT",
+      "apelido": "Friedl",
+      "aliases_odds": [
+        "Marco Friedl"
+      ]
+    },
+    "108942": {
+      "sigla": "AUT",
+      "apelido": "Mwene",
+      "aliases_odds": [
+        "Philipp Mwene",
+        "Phillipp Mwene"
+      ]
+    },
+    "99134": {
+      "sigla": "AUT",
+      "apelido": "Danso",
+      "aliases_odds": [
+        "Kevin Danso"
+      ]
+    },
+    "71178": {
+      "sigla": "AUT",
+      "apelido": "Alaba",
+      "aliases_odds": [
+        "David Alaba"
+      ]
+    },
+    "99997": {
+      "sigla": "AUT",
+      "apelido": "Posch",
+      "aliases_odds": [
+        "Stefan Posch"
+      ]
+    },
+    "67746": {
+      "sigla": "ARG",
+      "apelido": "Messi",
+      "aliases_odds": [
+        "Lionel Messi"
+      ]
+    },
+    "133123": {
+      "sigla": "AUT",
+      "apelido": "Prass",
+      "aliases_odds": [
+        "Alexander Prass"
+      ]
+    },
+    "113691": {
+      "sigla": "ARG",
+      "apelido": "Barco",
+      "aliases_odds": [
+        "Valentin Barco"
+      ]
+    },
+    "86038": {
+      "sigla": "FRA",
+      "apelido": "Lucas Hernández",
+      "aliases_odds": [
+        "Lucas Hernandez"
+      ]
+    },
+    "96538": {
+      "sigla": "FRA",
+      "apelido": "Theo Hernández",
+      "aliases_odds": [
+        "Théo Hernández"
+      ]
+    },
+    "129956": {
+      "sigla": "IRQ",
+      "apelido": "Aymen Hussein",
+      "aliases_odds": [
+        "Aymen Hussein"
+      ]
+    },
+    "138786": {
+      "sigla": "IRQ",
+      "apelido": "Manaf Younis",
+      "aliases_odds": [
+        "Manaf Younis"
+      ]
+    },
+    "149846": {
+      "sigla": "IRQ",
+      "apelido": "Zaid Ismail",
+      "aliases_odds": [
+        "Zaid Ismail"
+      ]
+    },
+    "129972": {
+      "sigla": "IRQ",
+      "apelido": "Hussein Ali",
+      "aliases_odds": [
+        "Hussein Ali",
+        "Ali Hussein"
+      ]
+    },
+    "129968": {
+      "sigla": "IRQ",
+      "apelido": "Akam Hashem",
+      "aliases_odds": [
+        "Akam Hashem"
+      ]
+    },
+    "103536": {
+      "sigla": "IRQ",
+      "apelido": "Mohanad Ali",
+      "aliases_odds": [
+        "Mohanad Ali"
+      ]
+    },
+    "118711": {
+      "sigla": "FRA",
+      "apelido": "Zaire-Emery",
+      "aliases_odds": [
+        "Warren Zaire Emery"
+      ]
+    },
+    "103756": {
+      "sigla": "FRA",
+      "apelido": "Tchouaméni",
+      "aliases_odds": [
+        "Aurélien Tchouaméni"
+      ]
+    },
+    "149845": {
+      "sigla": "IRQ",
+      "apelido": "Ali Yousif",
+      "aliases_odds": [
+        "Ali Yousif"
+      ]
+    },
+    "129962": {
+      "sigla": "IRQ",
+      "apelido": "Al-Hamadi",
+      "aliases_odds": [
+        "Ali Al-Hamadi"
+      ]
+    },
+    "129964": {
+      "sigla": "IRQ",
+      "apelido": "Al-Ammari",
+      "aliases_odds": [
+        "Amir Al-Ammari"
+      ]
+    },
+    "129957": {
+      "sigla": "IRQ",
+      "apelido": "Ali Jasim",
+      "aliases_odds": [
+        "Ali Jasim"
+      ]
+    },
+    "100627": {
+      "sigla": "FRA",
+      "apelido": "Upamecano",
+      "aliases_odds": [
+        "Dayot Upamecano"
+      ]
+    },
+    "115261": {
+      "sigla": "FRA",
+      "apelido": "Akliouche",
+      "aliases_odds": [
+        "Maghnes Akliouche"
+      ]
+    },
+    "129970": {
+      "sigla": "IRQ",
+      "apelido": "Tahseen",
+      "aliases_odds": [
+        "Zaid Tahseen"
+      ]
+    },
+    "95534": {
+      "sigla": "FRA",
+      "apelido": "Dembélé",
+      "aliases_odds": [
+        "Ousmane Dembélé"
+      ]
+    },
+    "120644": {
+      "sigla": "FRA",
+      "apelido": "Barcola",
+      "aliases_odds": [
+        "Bradley Barcola"
+      ]
+    },
+    "134492": {
+      "sigla": "IRQ",
+      "apelido": "Saadoon",
+      "aliases_odds": [
+        "Mustafa Saadoon"
+      ]
+    },
+    "126739": {
+      "sigla": "FRA",
+      "apelido": "Lacroix",
+      "aliases_odds": [
+        "Maxence Lacroix"
+      ]
+    },
+    "103340": {
+      "sigla": "FRA",
+      "apelido": "Saliba",
+      "aliases_odds": [
+        "William Saliba"
+      ]
+    },
+    "108196": {
+      "sigla": "FRA",
+      "apelido": "Cherki",
+      "aliases_odds": [
+        "Rayan Cherki",
+        "Mathis Rayan Cherki"
+      ]
+    },
+    "129958": {
+      "sigla": "IRQ",
+      "apelido": "Bayesh",
+      "aliases_odds": [
+        "Ibraheem Bayesh",
+        "Ibrahim Bayesh"
+      ]
+    },
+    "81104": {
+      "sigla": "FRA",
+      "apelido": "Rabiot",
+      "aliases_odds": [
+        "Adrien Rabiot"
+      ]
+    },
+    "95063": {
+      "sigla": "FRA",
+      "apelido": "Mbappé",
+      "aliases_odds": [
+        "Kylian Mbappe"
+      ]
+    },
+    "103759": {
+      "sigla": "FRA",
+      "apelido": "Koundé",
+      "aliases_odds": [
+        "Jules Kounde"
+      ]
+    },
+    "103542": {
+      "sigla": "IRQ",
+      "apelido": "Sulaka",
+      "aliases_odds": [
+        "Rebin Sulaka",
+        "Rebin Gharib Sulaka"
+      ]
+    },
+    "129974": {
+      "sigla": "IRQ",
+      "apelido": "Putros",
+      "aliases_odds": [
+        "Frans Dhia Putros",
+        "Frans Putros"
+      ]
+    },
+    "100628": {
+      "sigla": "FRA",
+      "apelido": "Konaté",
+      "aliases_odds": [
+        "Ibrahima Konate"
+      ]
+    },
+    "99977": {
+      "sigla": "FRA",
+      "apelido": "Thuram",
+      "aliases_odds": [
+        "Marcus Thuram"
+      ]
+    },
+    "96833": {
+      "sigla": "FRA",
+      "apelido": "Mateta",
+      "aliases_odds": [
+        "Jean-Philippe Mateta"
+      ]
+    },
+    "114235": {
+      "sigla": "FRA",
+      "apelido": "Olise",
+      "aliases_odds": [
+        "Michael Olise"
+      ]
+    },
+    "149847": {
+      "sigla": "IRQ",
+      "apelido": "Farji",
+      "aliases_odds": [
+        "Marko Farji",
+        "Farji, Marko"
+      ]
+    },
+    "150950": {
+      "sigla": "IRQ",
+      "apelido": "Qasem",
+      "aliases_odds": [
+        "Ahmed Qasem"
+      ]
+    },
+    "129966": {
+      "sigla": "IRQ",
+      "apelido": "Doski",
+      "aliases_odds": [
+        "Merchas Doski"
+      ]
+    },
+    "115264": {
+      "sigla": "IRQ",
+      "apelido": "Iqbal",
+      "aliases_odds": [
+        "Zidane Iqbal"
+      ]
+    },
+    "112200": {
+      "sigla": "FRA",
+      "apelido": "Gusto",
+      "aliases_odds": [
+        "Malo Gusto"
+      ]
+    },
+    "84989": {
+      "sigla": "FRA",
+      "apelido": "Digne",
+      "aliases_odds": [
+        "Lucas Digne"
+      ]
+    },
+    "149843": {
+      "sigla": "IRQ",
+      "apelido": "Yakob",
+      "aliases_odds": [
+        "Kevin Yakob"
+      ]
+    },
+    "89329": {
+      "sigla": "FRA",
+      "apelido": "Kanté",
+      "aliases_odds": [
+        "Ngolo Kante",
+        "N'Golo Kante"
+      ]
+    },
+    "122401": {
+      "sigla": "FRA",
+      "apelido": "Doué",
+      "aliases_odds": [
+        "Désiré Doué"
+      ]
+    },
+    "149842": {
+      "sigla": "IRQ",
+      "apelido": "Sher",
+      "aliases_odds": [
+        "Aimar Sher"
+      ]
+    },
+    "129960": {
+      "sigla": "IRQ",
+      "apelido": "Amyn",
+      "aliases_odds": [
+        "Youssef Amyn"
+      ]
+    },
+    "110966": {
+      "sigla": "FRA",
+      "apelido": "Koné",
+      "aliases_odds": [
+        "Kouadio Kone",
+        "Manu Kone"
+      ]
+    },
+    "131651": {
+      "sigla": "SEN",
+      "apelido": "El Hadji Diouf",
+      "aliases_odds": [
+        "El Hadji Diouf"
+      ]
+    },
+    "111678": {
+      "sigla": "SEN",
+      "apelido": "Iliman Ndiaye",
+      "aliases_odds": [
+        "Iliman Ndiaye"
+      ]
+    },
+    "120854": {
+      "sigla": "SEN",
+      "apelido": "Antoine Mendy",
+      "aliases_odds": [
+        "Antoine Mendy"
+      ]
+    },
+    "127112": {
+      "sigla": "SEN",
+      "apelido": "Chérif Ndiaye",
+      "aliases_odds": [
+        "Cherif Ndiaye",
+        "Ndiaye, Cherif"
+      ]
+    },
+    "147890": {
+      "sigla": "SEN",
+      "apelido": "Sapoko Ndiaye",
+      "aliases_odds": [
+        "Bara Sapoko Ndiaye"
+      ]
+    },
+    "99405": {
+      "sigla": "SEN",
+      "apelido": "Ismaïla Sarr",
+      "aliases_odds": [
+        "Ismaïla Sarr"
+      ]
+    },
+    "126759": {
+      "sigla": "SEN",
+      "apelido": "Mamadou Sarr",
+      "aliases_odds": [
+        "Mamadou Sarr"
+      ]
+    },
+    "123096": {
+      "sigla": "NOR",
+      "apelido": "Schjelderup",
+      "aliases_odds": [
+        "Andreas Schjelderup"
+      ]
+    },
+    "109852": {
+      "sigla": "SEN",
+      "apelido": "Pape Gueye",
+      "aliases_odds": [
+        "Pape Gueye"
+      ]
+    },
+    "115091": {
+      "sigla": "NOR",
+      "apelido": "Thorstvedt",
+      "aliases_odds": [
+        "Kristian Thorstvedt"
+      ]
+    },
+    "86256": {
+      "sigla": "SEN",
+      "apelido": "Gana Gueye",
+      "aliases_odds": [
+        "Idrissa Gana Gueye"
+      ]
+    },
+    "88931": {
+      "sigla": "SEN",
+      "apelido": "Koulibaly",
+      "aliases_odds": [
+        "Kalidou Koulibaly"
+      ]
+    },
+    "112901": {
+      "sigla": "SEN",
+      "apelido": "Pape Sarr",
+      "aliases_odds": [
+        "Pape Sarr"
+      ]
+    },
+    "149804": {
+      "sigla": "NOR",
+      "apelido": "Falchener",
+      "aliases_odds": [
+        "Henrik Falchener",
+        "Falchener, Henrik"
+      ]
+    },
+    "100038": {
+      "sigla": "SEN",
+      "apelido": "Niakhaté",
+      "aliases_odds": [
+        "Moussa Niakhate"
+      ]
+    },
+    "89973": {
+      "sigla": "NOR",
+      "apelido": "Odegaard",
+      "aliases_odds": [
+        "Martin Odegaard"
+      ]
+    },
+    "115094": {
+      "sigla": "NOR",
+      "apelido": "Pedersen",
+      "aliases_odds": [
+        "Marcus Pedersen",
+        "Marcus Holmgren Pedersen"
+      ]
+    },
+    "144483": {
+      "sigla": "NOR",
+      "apelido": "Aasgaard",
+      "aliases_odds": [
+        "Thelonious Aasgaard",
+        "Thelo Aasgaard"
+      ]
+    },
+    "108909": {
+      "sigla": "NOR",
+      "apelido": "Ryerson",
+      "aliases_odds": [
+        "Julian Ryerson"
+      ]
+    },
+    "121080": {
+      "sigla": "SEN",
+      "apelido": "Jackson",
+      "aliases_odds": [
+        "Nicolas Jackson"
+      ]
+    },
+    "115096": {
+      "sigla": "NOR",
+      "apelido": "Aursnes",
+      "aliases_odds": [
+        "Fredrik Aursnes"
+      ]
+    },
+    "106032": {
+      "sigla": "NOR",
+      "apelido": "Haaland",
+      "aliases_odds": [
+        "Erling Haaland"
+      ]
+    },
+    "66833": {
+      "sigla": "NOR",
+      "apelido": "Sorloth",
+      "aliases_odds": [
+        "Alexander Sorloth"
+      ]
+    },
+    "118269": {
+      "sigla": "NOR",
+      "apelido": "Bjorkan",
+      "aliases_odds": [
+        "Fredrik Bjorkan",
+        "Fredrik Andre Bjorkan"
+      ]
+    },
+    "106854": {
+      "sigla": "NOR",
+      "apelido": "Thorsby",
+      "aliases_odds": [
+        "Morten Thorsby"
+      ]
+    },
+    "128752": {
+      "sigla": "SEN",
+      "apelido": "Camara",
+      "aliases_odds": [
+        "Lamine Camara",
+        "Mamadou Lamine Camara"
+      ]
+    },
+    "140177": {
+      "sigla": "NOR",
+      "apelido": "Heggem",
+      "aliases_odds": [
+        "Torbjørn Heggem",
+        "Torbjorn Heggem"
+      ]
+    },
+    "114310": {
+      "sigla": "SEN",
+      "apelido": "Diarra",
+      "aliases_odds": [
+        "Habib Diarra",
+        "Mouhamadou Habib Diarra"
+      ]
+    },
+    "106388": {
+      "sigla": "SEN",
+      "apelido": "Diatta",
+      "aliases_odds": [
+        "Krépin Diatta"
+      ]
+    },
+    "109022": {
+      "sigla": "SEN",
+      "apelido": "Jakobs",
+      "aliases_odds": [
+        "Ismail Jakobs"
+      ]
+    },
+    "120469": {
+      "sigla": "NOR",
+      "apelido": "Larsen",
+      "aliases_odds": [
+        "Jorgen Larsen",
+        "Jorgen Strand Larsen"
+      ]
+    },
+    "138531": {
+      "sigla": "SEN",
+      "apelido": "Mbaye",
+      "aliases_odds": [
+        "Ibrahima Mbaye",
+        "Ibrahim Mbaye"
+      ]
+    },
+    "100140": {
+      "sigla": "NOR",
+      "apelido": "Berge",
+      "aliases_odds": [
+        "Sander Berge"
+      ]
+    },
+    "128654": {
+      "sigla": "NOR",
+      "apelido": "Wolfe",
+      "aliases_odds": [
+        "David Møller Wolfe",
+        "David Wolfe"
+      ]
+    },
+    "114901": {
+      "sigla": "SEN",
+      "apelido": "Dieng",
+      "aliases_odds": [
+        "Ahmadou Dieng",
+        "Bamba Dieng"
+      ]
+    },
+    "110250": {
+      "sigla": "NOR",
+      "apelido": "Hauge",
+      "aliases_odds": [
+        "Jens Hauge",
+        "Jens Petter Hauge"
+      ]
+    },
+    "96568": {
+      "sigla": "NOR",
+      "apelido": "Ajer",
+      "aliases_odds": [
+        "Kristoffer Ajer"
+      ]
+    },
+    "114574": {
+      "sigla": "NOR",
+      "apelido": "Nusa",
+      "aliases_odds": [
+        "Antonio Nusa"
+      ]
+    },
+    "89189": {
+      "sigla": "SEN",
+      "apelido": "Mané",
+      "aliases_odds": [
+        "Sadio Mane"
+      ]
+    },
+    "114922": {
+      "sigla": "SEN",
+      "apelido": "Ciss",
+      "aliases_odds": [
+        "Pathé Ciss"
+      ]
+    },
+    "118741": {
+      "sigla": "NOR",
+      "apelido": "Bobb",
+      "aliases_odds": [
+        "Oscar Bobb"
+      ]
+    },
+    "117896": {
+      "sigla": "NOR",
+      "apelido": "Berg",
+      "aliases_odds": [
+        "Patrick Berg"
+      ]
+    },
+    "127470": {
+      "sigla": "SEN",
+      "apelido": "Diao",
+      "aliases_odds": [
+        "Assane Diao"
+      ]
+    },
+    "117470": {
+      "sigla": "SEN",
+      "apelido": "Seck",
+      "aliases_odds": [
+        "Abdoulaye Seck"
+      ]
+    },
+    "151062": {
+      "sigla": "JOR",
+      "apelido": "Odeh Fakhoury",
+      "aliases_odds": [
+        "Odeh Fakhoury"
+      ]
+    },
+    "121464": {
+      "sigla": "JOR",
+      "apelido": "Al-Rawabdeh",
+      "aliases_odds": [
+        "Noor Al Rawabdeh"
+      ]
+    },
+    "138584": {
+      "sigla": "AGL",
+      "apelido": "Hadj Moussa",
+      "aliases_odds": [
+        "Anis Hadj Moussa"
+      ]
+    },
+    "92399": {
+      "sigla": "AGL",
+      "apelido": "Bensebaini",
+      "aliases_odds": [
+        "Ramy Bensebaini"
+      ]
+    },
+    "121468": {
+      "sigla": "JOR",
+      "apelido": "Al-Rashdan",
+      "aliases_odds": [
+        "Nizar Al Rashdan"
+      ]
+    },
+    "151064": {
+      "sigla": "JOR",
+      "apelido": "Abualnadi",
+      "aliases_odds": [
+        "Mohammad Abualnadi"
+      ]
+    },
+    "103149": {
+      "sigla": "AGL",
+      "apelido": "Aït-Nouri",
+      "aliases_odds": [
+        "Rayan Aït Nouri"
+      ]
+    },
+    "151068": {
+      "sigla": "JOR",
+      "apelido": "Al-Dawoud",
+      "aliases_odds": [
+        "Mohammad Al-Dawoud"
+      ]
+    },
+    "151065": {
+      "sigla": "JOR",
+      "apelido": "Abu Dahab",
+      "aliases_odds": [
+        "Husam Abu Dahab"
+      ]
+    },
+    "151028": {
+      "sigla": "AGL",
+      "apelido": "Benbouali",
+      "aliases_odds": [
+        "Ahmed Benbouali",
+        "Nadhir Benbouali"
+      ]
+    },
+    "129348": {
+      "sigla": "AGL",
+      "apelido": "Ghedjemis",
+      "aliases_odds": [
+        "Fares Ghedjemis"
+      ]
+    },
+    "130113": {
+      "sigla": "JOR",
+      "apelido": "Abu Taha",
+      "aliases_odds": [
+        "Mohannad Abu Taha",
+        "Mohammad Abu Taha"
+      ]
+    },
+    "87094": {
+      "sigla": "AGL",
+      "apelido": "Bentaleb",
+      "aliases_odds": [
+        "Nabil Bentaleb"
+      ]
+    },
+    "121469": {
+      "sigla": "JOR",
+      "apelido": "Al-Mardi",
+      "aliases_odds": [
+        "Mahmoud Al Mardi"
+      ]
+    },
+    "127108": {
+      "sigla": "AGL",
+      "apelido": "Zerrouki",
+      "aliases_odds": [
+        "Ramiz Zerrouki"
+      ]
+    },
+    "151066": {
+      "sigla": "JOR",
+      "apelido": "Al-Rosan",
+      "aliases_odds": [
+        "Saed Al Rosan"
+      ]
+    },
+    "106494": {
+      "sigla": "AGL",
+      "apelido": "Boudaoui",
+      "aliases_odds": [
+        "Hicham Boudaoui"
+      ]
+    },
+    "151027": {
+      "sigla": "AGL",
+      "apelido": "Belghali",
+      "aliases_odds": [
+        "Rafik Belghali"
+      ]
+    },
+    "151025": {
+      "sigla": "AGL",
+      "apelido": "Boulbina",
+      "aliases_odds": [
+        "Adil Boulbina"
+      ]
+    },
+    "151031": {
+      "sigla": "AGL",
+      "apelido": "Titraoui",
+      "aliases_odds": [
+        "Yacine Titraoui",
+        "Yassine Titraoui"
+      ]
+    },
+    "121460": {
+      "sigla": "JOR",
+      "apelido": "Al-Arab",
+      "aliases_odds": [
+        "Yazan Al Arab"
+      ]
+    },
+    "151063": {
+      "sigla": "JOR",
+      "apelido": "Azaizeh",
+      "aliases_odds": [
+        "Ali Azaizeh",
+        "Ali Al-Azaizeh"
+      ]
+    },
+    "151030": {
+      "sigla": "AGL",
+      "apelido": "Chergui",
+      "aliases_odds": [
+        "Samir Sophian Chergui",
+        "Samir Chergui"
+      ]
+    },
+    "121470": {
+      "sigla": "JOR",
+      "apelido": "Tamari",
+      "aliases_odds": [
+        "Musa Al-Tamari",
+        "Mousa Al Tamari"
+      ]
+    },
+    "127850": {
+      "sigla": "AGL",
+      "apelido": "Amoura",
+      "aliases_odds": [
+        "Mohamed Amoura",
+        "Mohamed El Amine Amoura"
+      ]
+    },
+    "88745": {
+      "sigla": "AGL",
+      "apelido": "Mahrez",
+      "aliases_odds": [
+        "Riyad Mahrez"
+      ]
+    },
+    "100320": {
+      "sigla": "AGL",
+      "apelido": "Gouiri",
+      "aliases_odds": [
+        "Amine Gouiri"
+      ]
+    },
+    "121457": {
+      "sigla": "JOR",
+      "apelido": "Haddad",
+      "aliases_odds": [
+        "Ehsan Haddad",
+        "Ihsan Haddad"
+      ]
+    },
+    "120404": {
+      "sigla": "AGL",
+      "apelido": "Chaïbi",
+      "aliases_odds": [
+        "Fares Chaibi",
+        "Chaibi Fares"
+      ]
+    },
+    "151023": {
+      "sigla": "AGL",
+      "apelido": "Belaïd",
+      "aliases_odds": [
+        "Zineddine Belaïd"
+      ]
+    },
+    "123317": {
+      "sigla": "AGL",
+      "apelido": "Hadjam",
+      "aliases_odds": [
+        "Jaouen Hadjam"
+      ]
+    },
+    "143775": {
+      "sigla": "AGL",
+      "apelido": "Tougai",
+      "aliases_odds": [
+        "Mohamed Tougai",
+        "Mohamed Amine Tougai"
+      ]
+    },
+    "121461": {
+      "sigla": "JOR",
+      "apelido": "Nasib",
+      "aliases_odds": [
+        "Abdallah Nasib"
+      ]
+    },
+    "121458": {
+      "sigla": "JOR",
+      "apelido": "Obaid",
+      "aliases_odds": [
+        "Saleem Obaid",
+        "Salim Obaid"
+      ]
+    },
+    "86013": {
+      "sigla": "AGL",
+      "apelido": "Mandi",
+      "aliases_odds": [
+        "Aïssa Mandi"
+      ]
+    },
+    "99014": {
+      "sigla": "AGL",
+      "apelido": "Aouar",
+      "aliases_odds": [
+        "Houssem Aouar"
+      ]
+    },
+    "121474": {
+      "sigla": "JOR",
+      "apelido": "Olwan",
+      "aliases_odds": [
+        "Ali Olwan"
+      ]
+    },
+    "151026": {
+      "sigla": "AGL",
+      "apelido": "Abada",
+      "aliases_odds": [
+        "Achref Abada"
+      ]
+    },
+    "145887": {
+      "sigla": "AGL",
+      "apelido": "Maza",
+      "aliases_odds": [
+        "Ibrahim Maza"
+      ]
+    },
+    "111233": {
+      "sigla": "POR",
+      "apelido": "Francisco Conceição",
+      "aliases_odds": [
+        "Francisco Conceição"
+      ]
+    },
+    "67972": {
+      "sigla": "POR",
+      "apelido": "Cristiano Ronaldo",
+      "aliases_odds": [
+        "Cristiano Ronaldo"
+      ]
+    },
+    "86849": {
+      "sigla": "POR",
+      "apelido": "Bruno Fernandes",
+      "aliases_odds": [
+        "Bruno Fernandes"
+      ]
+    },
+    "89432": {
+      "sigla": "POR",
+      "apelido": "Bernardo Silva",
+      "aliases_odds": [
+        "Bernardo Silva"
+      ]
+    },
+    "114417": {
+      "sigla": "POR",
+      "apelido": "Gonçalo Inácio",
+      "aliases_odds": [
+        "Goncalo Inacio"
+      ]
+    },
+    "93290": {
+      "sigla": "POR",
+      "apelido": "Gonçalo Guedes",
+      "aliases_odds": [
+        "Gonçalo Guedes"
+      ]
+    },
+    "114485": {
+      "sigla": "POR",
+      "apelido": "Gonçalo Ramos",
+      "aliases_odds": [
+        "Gonçalo Ramos"
+      ]
+    },
+    "114403": {
+      "sigla": "POR",
+      "apelido": "Matheus Nunes",
+      "aliases_odds": [
+        "Matheus Nunes"
+      ]
+    },
+    "81958": {
+      "sigla": "POR",
+      "apelido": "João Cancelo",
+      "aliases_odds": [
+        "Joao Cancelo"
+      ]
+    },
+    "116984": {
+      "sigla": "POR",
+      "apelido": "Tomás Araújo",
+      "aliases_odds": [
+        "Tomás Araújo"
+      ]
+    },
+    "117309": {
+      "sigla": "POR",
+      "apelido": "Renato Veiga",
+      "aliases_odds": [
+        "Renato Veiga"
+      ]
+    },
+    "103648": {
+      "sigla": "POR",
+      "apelido": "Rafael Leão",
+      "aliases_odds": [
+        "Rafael Leão"
+      ]
+    },
+    "112377": {
+      "sigla": "POR",
+      "apelido": "Nuno Mendes",
+      "aliases_odds": [
+        "Nuno Mendes"
+      ]
+    },
+    "89091": {
+      "sigla": "POR",
+      "apelido": "Rúben Neves",
+      "aliases_odds": [
+        "Ruben Neves"
+      ]
+    },
+    "99851": {
+      "sigla": "POR",
+      "apelido": "Pedro Neto",
+      "aliases_odds": [
+        "Pedro Neto"
+      ]
+    },
+    "123097": {
+      "sigla": "POR",
+      "apelido": "João Neves",
+      "aliases_odds": [
+        "Joao Neves"
+      ]
+    },
+    "94965": {
+      "sigla": "POR",
+      "apelido": "Rúben Dias",
+      "aliases_odds": [
+        "Ruben Dias"
+      ]
+    },
+    "105288": {
+      "sigla": "POR",
+      "apelido": "João Félix",
+      "aliases_odds": [
+        "Joao Felix"
+      ]
+    },
+    "109046": {
+      "sigla": "POR",
+      "apelido": "Vitinha",
+      "aliases_odds": [
+        "Vitinha"
+      ]
+    },
+    "109569": {
+      "sigla": "POR",
+      "apelido": "Trincão",
+      "aliases_odds": [
+        "Francisco Trincão"
+      ]
+    },
+    "92881": {
+      "sigla": "POR",
+      "apelido": "Semedo",
+      "aliases_odds": [
+        "Nelson Semedo"
+      ]
+    },
+    "102303": {
+      "sigla": "POR",
+      "apelido": "Dalot",
+      "aliases_odds": [
+        "Diogo Dalot"
+      ]
+    },
+    "118834": {
+      "sigla": "POR",
+      "apelido": "Samú Costa",
+      "aliases_odds": [
+        "Costa Samu"
+      ]
+    },
+    "70972": {
+      "sigla": "ING",
+      "apelido": "Jordan Henderson",
+      "aliases_odds": [
+        "Jordan Henderson"
+      ]
+    },
+    "110831": {
+      "sigla": "ING",
+      "apelido": "Elliot Anderson",
+      "aliases_odds": [
+        "Elliot Anderson"
+      ]
+    },
+    "90922": {
+      "sigla": "GAN",
+      "apelido": "Iñaki Williams",
+      "aliases_odds": [
+        "Iñaki Williams"
+      ]
+    },
+    "150978": {
+      "sigla": "GAN",
+      "apelido": "Thomas-Asante",
+      "aliases_odds": [
+        "Brandon Thomas-Asante"
+      ]
+    },
+    "149873": {
+      "sigla": "GAN",
+      "apelido": "Peprah Oppong",
+      "aliases_odds": [
+        "Kojo Peprah Oppong"
+      ]
+    },
+    "89152": {
+      "sigla": "ING",
+      "apelido": "Reece James",
+      "aliases_odds": [
+        "Reece James"
+      ]
+    },
+    "71484": {
+      "sigla": "GAN",
+      "apelido": "Jordan Ayew",
+      "aliases_odds": [
+        "Jordan Ayew"
+      ]
+    },
+    "110219": {
+      "sigla": "ING",
+      "apelido": "Bellingham",
+      "aliases_odds": [
+        "Jude Bellingham"
+      ]
+    },
+    "82232": {
+      "sigla": "ING",
+      "apelido": "Harry Kane",
+      "aliases_odds": [
+        "Harry Kane"
+      ]
+    },
+    "149872": {
+      "sigla": "GAN",
+      "apelido": "Bonsu Baah",
+      "aliases_odds": [
+        "Christopher Bonsu Baah"
+      ]
+    },
+    "101098": {
+      "sigla": "GAN",
+      "apelido": "Luckassen",
+      "aliases_odds": [
+        "Derrick Luckassen"
+      ]
+    },
+    "93279": {
+      "sigla": "ING",
+      "apelido": "Rashford",
+      "aliases_odds": [
+        "Marcus Rashford"
+      ]
+    },
+    "124806": {
+      "sigla": "ING",
+      "apelido": "O'Reilly",
+      "aliases_odds": [
+        "Nico O'Reilly"
+      ]
+    },
+    "114751": {
+      "sigla": "GAN",
+      "apelido": "Sulemana",
+      "aliases_odds": [
+        "Kamal-Deen Sulemana",
+        "Kamaldeen Sulemana"
+      ]
+    },
+    "149875": {
+      "sigla": "GAN",
+      "apelido": "Yirenkyi",
+      "aliases_odds": [
+        "Caleb Yirenkyi"
+      ]
+    },
+    "120599": {
+      "sigla": "ING",
+      "apelido": "Madueke",
+      "aliases_odds": [
+        "Noni Madueke"
+      ]
+    },
+    "115424": {
+      "sigla": "ING",
+      "apelido": "Quansah",
+      "aliases_odds": [
+        "Jarell Quansah"
+      ]
+    },
+    "149871": {
+      "sigla": "GAN",
+      "apelido": "Adjetey",
+      "aliases_odds": [
+        "Jonas Adjetey"
+      ]
+    },
+    "120618": {
+      "sigla": "GAN",
+      "apelido": "Semenyo",
+      "aliases_odds": [
+        "Antoine Semenyo"
+      ]
+    },
+    "93954": {
+      "sigla": "ING",
+      "apelido": "Watkins",
+      "aliases_odds": [
+        "Ollie Watkins"
+      ]
+    },
+    "85995": {
+      "sigla": "ING",
+      "apelido": "Stones",
+      "aliases_odds": [
+        "John Stones"
+      ]
+    },
+    "107027": {
+      "sigla": "ING",
+      "apelido": "Gordon",
+      "aliases_odds": [
+        "Anthony Gordon"
+      ]
+    },
+    "118821": {
+      "sigla": "ING",
+      "apelido": "Spence",
+      "aliases_odds": [
+        "Djed Spence"
+      ]
+    },
+    "129458": {
+      "sigla": "ING",
+      "apelido": "Rogers",
+      "aliases_odds": [
+        "Morgan Rogers"
+      ]
+    },
+    "80953": {
+      "sigla": "GAN",
+      "apelido": "Partey",
+      "aliases_odds": [
+        "Thomas Partey"
+      ]
+    },
+    "106029": {
+      "sigla": "GAN",
+      "apelido": "Mensah",
+      "aliases_odds": [
+        "Gideon Mensah"
+      ]
+    },
+    "114233": {
+      "sigla": "GAN",
+      "apelido": "Senaya",
+      "aliases_odds": [
+        "Marvin Senaya"
+      ]
+    },
+    "150977": {
+      "sigla": "GAN",
+      "apelido": "Boakye",
+      "aliases_odds": [
+        "Augustine Boakye"
+      ]
+    },
+    "121185": {
+      "sigla": "ING",
+      "apelido": "Mainoo",
+      "aliases_odds": [
+        "Kobbie Mainoo"
+      ]
+    },
+    "127026": {
+      "sigla": "GAN",
+      "apelido": "Nuamah",
+      "aliases_odds": [
+        "Ernest Nuamah"
+      ]
+    },
+    "120619": {
+      "sigla": "GAN",
+      "apelido": "Fatawu",
+      "aliases_odds": [
+        "Abdul Fatawu Issahaku",
+        "Abdul Fatawu"
+      ]
+    },
+    "114236": {
+      "sigla": "ING",
+      "apelido": "Guéhi",
+      "aliases_odds": [
+        "Marc Guéhi"
+      ]
+    },
+    "106541": {
+      "sigla": "ING",
+      "apelido": "Konsa",
+      "aliases_odds": [
+        "Ezri Konsa"
+      ]
+    },
+    "120470": {
+      "sigla": "GAN",
+      "apelido": "Mumin",
+      "aliases_odds": [
+        "Abdul Mumin"
+      ]
+    },
+    "120621": {
+      "sigla": "GAN",
+      "apelido": "Owusu",
+      "aliases_odds": [
+        "Elisha Owusu"
+      ]
+    },
+    "149870": {
+      "sigla": "GAN",
+      "apelido": "Opoku",
+      "aliases_odds": [
+        "Jerome Opoku"
+      ]
+    },
+    "92809": {
+      "sigla": "ING",
+      "apelido": "Toney",
+      "aliases_odds": [
+        "Ivan Toney"
+      ]
+    },
+    "114509": {
+      "sigla": "GAN",
+      "apelido": "Seidu",
+      "aliases_odds": [
+        "Alidu Seidu"
+      ]
+    },
+    "103976": {
+      "sigla": "ING",
+      "apelido": "Saka",
+      "aliases_odds": [
+        "Bukayo Saka"
+      ]
+    },
+    "96380": {
+      "sigla": "ING",
+      "apelido": "Rice",
+      "aliases_odds": [
+        "Declan Rice"
+      ]
+    },
+    "103453": {
+      "sigla": "GAN",
+      "apelido": "Sibo",
+      "aliases_odds": [
+        "Kwasi Sibo"
+      ]
+    },
+    "87792": {
+      "sigla": "ING",
+      "apelido": "Burn",
+      "aliases_odds": [
+        "Dan Burn"
+      ]
+    },
+    "92255": {
+      "sigla": "GAN",
+      "apelido": "Baba",
+      "aliases_odds": [
+        "Rahman Baba",
+        "Abdul Rahman Baba"
+      ]
+    },
+    "140573": {
+      "sigla": "GAN",
+      "apelido": "Adu",
+      "aliases_odds": [
+        "Prince Kwabena Adu",
+        "Prince Adu"
+      ]
+    },
+    "110401": {
+      "sigla": "ING",
+      "apelido": "Eze",
+      "aliases_odds": [
+        "Eberechi Eze"
+      ]
+    },
+    "116717": {
+      "sigla": "PAN",
+      "apelido": "Cristian Martínez",
+      "aliases_odds": [
+        "Cristian Martinez"
+      ]
+    },
+    "141967": {
+      "sigla": "PAN",
+      "apelido": "Tomás Rodríguez",
+      "aliases_odds": [
+        "Tomas Rodriguez"
+      ]
+    },
+    "109581": {
+      "sigla": "PAN",
+      "apelido": "Andrés Andrade",
+      "aliases_odds": [
+        "Andres Andrade"
+      ]
+    },
+    "117386": {
+      "sigla": "PAN",
+      "apelido": "Jiovany Ramos",
+      "aliases_odds": [
+        "Jiovany Ramos"
+      ]
+    },
+    "105309": {
+      "sigla": "PAN",
+      "apelido": "Carrasquilla",
+      "aliases_odds": [
+        "Adalberto Carrasquilla"
+      ]
+    },
+    "133035": {
+      "sigla": "CRO",
+      "apelido": "Petar Sucic",
+      "aliases_odds": [
+        "Petar Sucic"
+      ]
+    },
+    "95728": {
+      "sigla": "PAN",
+      "apelido": "Ismael Díaz",
+      "aliases_odds": [
+        "Ismael Diaz"
+      ]
+    },
+    "110528": {
+      "sigla": "CRO",
+      "apelido": "Luka Sucic",
+      "aliases_odds": [
+        "Luka Sucic"
+      ]
+    },
+    "95768": {
+      "sigla": "CRO",
+      "apelido": "Caleta-Car",
+      "aliases_odds": [
+        "Duje Caleta-Car"
+      ]
+    },
+    "133036": {
+      "sigla": "CRO",
+      "apelido": "Matanovic",
+      "aliases_odds": [
+        "Igor Matanovic"
+      ]
+    },
+    "142803": {
+      "sigla": "PAN",
+      "apelido": "Gutiérrez",
+      "aliases_odds": [
+        "Jorge Gutierrez"
+      ]
+    },
+    "106037": {
+      "sigla": "CRO",
+      "apelido": "Pongracic",
+      "aliases_odds": [
+        "Marin Pongracic"
+      ]
+    },
+    "89712": {
+      "sigla": "CRO",
+      "apelido": "Kramaric",
+      "aliases_odds": [
+        "Andrej Kramaric"
+      ]
+    },
+    "120496": {
+      "sigla": "CRO",
+      "apelido": "Baturina",
+      "aliases_odds": [
+        "Martin Baturina"
+      ]
+    },
+    "113535": {
+      "sigla": "CRO",
+      "apelido": "Gvardiol",
+      "aliases_odds": [
+        "Josko Gvardiol"
+      ]
+    },
+    "112895": {
+      "sigla": "CRO",
+      "apelido": "Stanisic",
+      "aliases_odds": [
+        "Josip Stanisic"
+      ]
+    },
+    "145446": {
+      "sigla": "CRO",
+      "apelido": "Vuskovic",
+      "aliases_odds": [
+        "Luka Vuskovic"
+      ]
+    },
+    "92118": {
+      "sigla": "PAN",
+      "apelido": "Bárcenas",
+      "aliases_odds": [
+        "Yoel Bárcenas"
+      ]
+    },
+    "92186": {
+      "sigla": "PAN",
+      "apelido": "Waterman",
+      "aliases_odds": [
+        "Cecilio Waterman"
+      ]
+    },
+    "81829": {
+      "sigla": "PAN",
+      "apelido": "Quintero",
+      "aliases_odds": [
+        "Alberto Quintero"
+      ]
+    },
+    "105360": {
+      "sigla": "PAN",
+      "apelido": "Blackman",
+      "aliases_odds": [
+        "Cesar Blackman"
+      ]
+    },
+    "80507": {
+      "sigla": "CRO",
+      "apelido": "Perisic",
+      "aliases_odds": [
+        "Ivan Perisic"
+      ]
+    },
+    "77844": {
+      "sigla": "CRO",
+      "apelido": "Kovacic",
+      "aliases_odds": [
+        "Mateo Kovacic"
+      ]
+    },
+    "92112": {
+      "sigla": "PAN",
+      "apelido": "Escobar",
+      "aliases_odds": [
+        "Fidel Escobar"
+      ]
+    },
+    "133546": {
+      "sigla": "PAN",
+      "apelido": "Córdoba",
+      "aliases_odds": [
+        "Jose Cordoba"
+      ]
+    },
+    "97185": {
+      "sigla": "CRO",
+      "apelido": "Budimir",
+      "aliases_odds": [
+        "Ante Budimir"
+      ]
+    },
+    "105361": {
+      "sigla": "PAN",
+      "apelido": "Fajardo",
+      "aliases_odds": [
+        "Jose Fajardo"
+      ]
+    },
+    "92185": {
+      "sigla": "PAN",
+      "apelido": "Murillo",
+      "aliases_odds": [
+        "Amir Murillo",
+        "Michael Murillo"
+      ]
+    },
+    "142800": {
+      "sigla": "PAN",
+      "apelido": "Londoño",
+      "aliases_odds": [
+        "Azarias Londono"
+      ]
+    },
+    "67812": {
+      "sigla": "CRO",
+      "apelido": "Modric",
+      "aliases_odds": [
+        "Luka Modric"
+      ]
+    },
+    "100318": {
+      "sigla": "CRO",
+      "apelido": "Vlasic",
+      "aliases_odds": [
+        "Nikola Vlasic"
+      ]
+    },
+    "118306": {
+      "sigla": "CRO",
+      "apelido": "Sutalo",
+      "aliases_odds": [
+        "Josip Sutalo"
+      ]
+    },
+    "123976": {
+      "sigla": "PAN",
+      "apelido": "Fariña",
+      "aliases_odds": [
+        "Edgardo Farina"
+      ]
+    },
+    "105314": {
+      "sigla": "PAN",
+      "apelido": "Harvey",
+      "aliases_odds": [
+        "Carlos Harvey"
+      ]
+    },
+    "95725": {
+      "sigla": "PAN",
+      "apelido": "Miller",
+      "aliases_odds": [
+        "Roderick Miller"
+      ]
+    },
+    "110136": {
+      "sigla": "CRO",
+      "apelido": "Erlic",
+      "aliases_odds": [
+        "Martin Erlic"
+      ]
+    },
+    "117592": {
+      "sigla": "CRO",
+      "apelido": "Jakic",
+      "aliases_odds": [
+        "Kristijan Jakic"
+      ]
+    },
+    "133547": {
+      "sigla": "PAN",
+      "apelido": "Yanis",
+      "aliases_odds": [
+        "Cesar Yanis"
+      ]
+    },
+    "81824": {
+      "sigla": "PAN",
+      "apelido": "Godoy",
+      "aliases_odds": [
+        "Anibal Godoy"
+      ]
+    },
+    "95723": {
+      "sigla": "PAN",
+      "apelido": "Davis",
+      "aliases_odds": [
+        "Eric Davis"
+      ]
+    },
+    "111085": {
+      "sigla": "CRO",
+      "apelido": "Musa",
+      "aliases_odds": [
+        "Petar Musa"
+      ]
+    },
+    "96825": {
+      "sigla": "CRO",
+      "apelido": "Moro",
+      "aliases_odds": [
+        "Nikola Moro"
+      ]
+    },
+    "133029": {
+      "sigla": "CRO",
+      "apelido": "Fruk",
+      "aliases_odds": [
+        "Toni Fruk"
+      ]
+    },
+    "100730": {
+      "sigla": "RDC",
+      "apelido": "Joris Kayembe",
+      "aliases_odds": [
+        "Joris Kayembe"
+      ]
+    },
+    "100731": {
+      "sigla": "RDC",
+      "apelido": "Moutoussamy",
+      "aliases_odds": [
+        "Samuel Moutoussamy"
+      ]
+    },
+    "98141": {
+      "sigla": "RDC",
+      "apelido": "Wan-Bissaka",
+      "aliases_odds": [
+        "Aaron Wan-Bissaka"
+      ]
+    },
+    "116868": {
+      "sigla": "RDC",
+      "apelido": "Edo Kayembe",
+      "aliases_odds": [
+        "Edo Kayembe"
+      ]
+    },
+    "120591": {
+      "sigla": "RDC",
+      "apelido": "Batubinsika",
+      "aliases_odds": [
+        "Dylan Batubinsika"
+      ]
+    },
+    "96343": {
+      "sigla": "RDC",
+      "apelido": "Tuanzebe",
+      "aliases_odds": [
+        "Axel Tuanzebe"
+      ]
+    },
+    "129982": {
+      "sigla": "RDC",
+      "apelido": "Tshibola",
+      "aliases_odds": [
+        "Aaron Tshibola"
+      ]
+    },
+    "91635": {
+      "sigla": "RDC",
+      "apelido": "Bongonda",
+      "aliases_odds": [
+        "Theo Bongonda"
+      ]
+    },
+    "88472": {
+      "sigla": "RDC",
+      "apelido": "Bakambu",
+      "aliases_odds": [
+        "Cedric Bakambu"
+      ]
+    },
+    "87416": {
+      "sigla": "RDC",
+      "apelido": "Masuaku",
+      "aliases_odds": [
+        "Arthur Masuaku"
+      ]
+    },
+    "143356": {
+      "sigla": "RDC",
+      "apelido": "Kapuadi",
+      "aliases_odds": [
+        "Steve Kapuadi"
+      ]
+    },
+    "149838": {
+      "sigla": "RDC",
+      "apelido": "Cipenga",
+      "aliases_odds": [
+        "Brian Cipenga"
+      ]
+    },
+    "129978": {
+      "sigla": "RDC",
+      "apelido": "Pickel",
+      "aliases_odds": [
+        "Charles Pickel"
+      ]
+    },
+    "127819": {
+      "sigla": "RDC",
+      "apelido": "Sadiki",
+      "aliases_odds": [
+        "Noah Sadiki"
+      ]
+    },
+    "92446": {
+      "sigla": "RDC",
+      "apelido": "Mbemba",
+      "aliases_odds": [
+        "Chancel Mbemba"
+      ]
+    },
+    "121276": {
+      "sigla": "RDC",
+      "apelido": "Kalulu",
+      "aliases_odds": [
+        "Gédéon Kalulu"
+      ]
+    },
+    "70891": {
+      "sigla": "RDC",
+      "apelido": "Kakuta",
+      "aliases_odds": [
+        "Gaël Kakuta"
+      ]
+    },
+    "129988": {
+      "sigla": "RDC",
+      "apelido": "Mayele",
+      "aliases_odds": [
+        "Fiston Mayele"
+      ]
+    },
+    "107527": {
+      "sigla": "RDC",
+      "apelido": "Wissa",
+      "aliases_odds": [
+        "Yoane Wissa"
+      ]
+    },
+    "138236": {
+      "sigla": "RDC",
+      "apelido": "Mukau",
+      "aliases_odds": [
+        "Ngay Ayel Mukau",
+        "Ngal'ayel Mukau"
+      ]
+    },
+    "109758": {
+      "sigla": "RDC",
+      "apelido": "Banza",
+      "aliases_odds": [
+        "Simon Banza"
+      ]
+    },
+    "106362": {
+      "sigla": "RDC",
+      "apelido": "Mbuku",
+      "aliases_odds": [
+        "Nathanael Mbuku"
+      ]
+    },
+    "114555": {
+      "sigla": "RDC",
+      "apelido": "Elia",
+      "aliases_odds": [
+        "Meschack Elia"
+      ]
+    },
+    "95893": {
+      "sigla": "MEX",
+      "apelido": "Montes",
+      "aliases_odds": [
+        "César Montes"
+      ]
+    },
+    "130459": {
+      "sigla": "AFS",
+      "apelido": "Sithole",
+      "aliases_odds": [
+        "Sphephelo Sithole"
+      ]
+    },
+    "97412": {
+      "sigla": "AFS",
+      "apelido": "Zwane",
+      "aliases_odds": [
+        "Themba Zwane"
+      ]
+    }
+  }
+}

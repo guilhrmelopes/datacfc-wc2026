@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-17T03:46:34.582471+00:00",
+  "atualizado_em": "2026-06-18T01:15:38.733081+00:00",
   "rodada": 2,
   "eventos": [
     {
@@ -167,28 +167,28 @@
       "id": 66457032,
       "home": "UZBEKISTAN",
       "away": "COLOMBIA",
-      "date": "2026-06-18T02:00:00Z",
+      "date": "2026-06-18T02:00:00.000Z",
       "fixture_id": "4667820"
     },
     {
       "id": 66456910,
       "home": "CZECHIA",
       "away": "SOUTH AFRICA",
-      "date": "2026-06-18T16:00:00Z",
+      "date": "2026-06-18T16:00:00.000Z",
       "fixture_id": "4667753"
     },
     {
       "id": 66456922,
       "home": "SWITZERLAND",
       "away": "BOSNIA AND HERZEGOVINA",
-      "date": "2026-06-18T19:00:00Z",
+      "date": "2026-06-18T19:00:00.000Z",
       "fixture_id": "4667759"
     },
     {
       "id": 66456920,
       "home": "CANADA",
       "away": "QATAR",
-      "date": "2026-06-18T22:00:00Z",
+      "date": "2026-06-18T22:00:00.000Z",
       "fixture_id": "4667760"
     },
     {
@@ -220,11 +220,25 @@
       "fixture_id": "4667767"
     },
     {
+      "id": 66456946,
+      "home": "TURKIYE",
+      "away": "PARAGUAY",
+      "date": "2026-06-20T03:00:00Z",
+      "fixture_id": "4667773"
+    },
+    {
       "id": 66456972,
       "home": "NETHERLANDS",
       "away": "SWEDEN",
       "date": "2026-06-20T17:00:00Z",
       "fixture_id": "4667786"
+    },
+    {
+      "id": 66457074,
+      "home": "GERMANY",
+      "away": "IVORY COAST",
+      "date": "2026-06-20T20:00:00Z",
+      "fixture_id": "4667780"
     },
     {
       "id": 66457076,
@@ -323,6 +337,48 @@
       "away": "DR CONGO",
       "date": "2026-06-24T02:00:00Z",
       "fixture_id": "4667821"
+    },
+    {
+      "id": 66456924,
+      "home": "SWITZERLAND",
+      "away": "CANADA",
+      "date": "2026-06-24T19:00:00Z",
+      "fixture_id": "4667761"
+    },
+    {
+      "id": 66456926,
+      "home": "BOSNIA AND HERZEGOVINA",
+      "away": "QATAR",
+      "date": "2026-06-24T19:00:00Z",
+      "fixture_id": "4667762"
+    },
+    {
+      "id": 66456936,
+      "home": "SCOTLAND",
+      "away": "BRAZIL",
+      "date": "2026-06-24T22:00:00Z",
+      "fixture_id": "4667768"
+    },
+    {
+      "id": 66456938,
+      "home": "MOROCCO",
+      "away": "HAITI",
+      "date": "2026-06-24T22:00:00Z",
+      "fixture_id": "4667769"
+    },
+    {
+      "id": 66456912,
+      "home": "CZECHIA",
+      "away": "MEXICO",
+      "date": "2026-06-25T01:00:00Z",
+      "fixture_id": "4667755"
+    },
+    {
+      "id": 66456914,
+      "home": "SOUTH AFRICA",
+      "away": "SOUTH KOREA",
+      "date": "2026-06-25T01:00:00Z",
+      "fixture_id": "4667756"
     }
   ]
 }

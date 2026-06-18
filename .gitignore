@@ -14,6 +14,10 @@
 !/src/scrapers/scraper_odds_jogadores.py
 !/src/scrapers/odds_armazenamento.py
 !/src/scrapers/matching_cartola.py
+!/src/scrapers/mapeamento_odds.py
+!/src/scrapers/mapeamento_selecoes_odds.py
+!/src/scrapers/resolucao_eventos_odds.py
+!/src/scrapers/captura_odds_api.py
 !/src/scrapers/fotmob_copa.py
 !/src/scrapers/fotmob_fixtures.py
 !/src/scrapers/fotmob_mapa.py

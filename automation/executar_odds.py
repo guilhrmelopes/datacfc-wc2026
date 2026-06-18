@@ -16,6 +16,18 @@ def main() -> int:
     env = os.environ.copy()
     src = str(RAIZ / "src")
     env["PYTHONPATH"] = src if not env.get("PYTHONPATH") else f"{src}{os.pathsep}{env['PYTHONPATH']}"
+
+    skip_preflight = os.environ.get("ODDS_SKIP_PREFLIGHT", "").strip().lower() in ("1", "true", "yes")
+    if not skip_preflight:
+        pre = subprocess.run(
+            [sys.executable, str(RAIZ / "automation" / "validar_pipeline_odds.py")],
+            cwd=RAIZ,
+            env=env,
+            check=False,
+        )
+        if pre.returncode != 0:
+            return pre.returncode
+
     scrape = subprocess.run(
         [sys.executable, "-m", "scrapers.scraper_odds_jogadores"],
         cwd=RAIZ,
