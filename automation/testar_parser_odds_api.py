@@ -8,8 +8,16 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "src"))
 
-from scrapers.captura_odds_api import extrair_odds_de_payload, extrair_sg_de_payload  # noqa: E402
-from scrapers.scraper_odds_jogadores import extrair_odds_rsc, extrair_sg_times  # noqa: E402
+from scrapers.captura_odds_api import (  # noqa: E402
+    extrair_ml_de_payload,
+    extrair_odds_de_payload,
+    extrair_sg_de_payload,
+)
+from scrapers.scraper_odds_jogadores import (  # noqa: E402
+    extrair_ml_times,
+    extrair_odds_rsc,
+    extrair_sg_times,
+)
 
 SAMPLE = {
     "bookmakers": {
@@ -44,6 +52,15 @@ SAMPLE = {
                 ],
             },
         ],
+        "Pinnacle": [
+            {
+                "name": "ML",
+                "updatedAt": "2026-06-17T00:00:00Z",
+                "odds": [
+                    {"home": "1.50", "draw": "4.00", "away": "6.00"},
+                ],
+            },
+        ],
     },
 }
 
@@ -51,11 +68,18 @@ SAMPLE = {
 def main() -> int:
     odds = extrair_odds_de_payload(SAMPLE, extrair_odds_rsc)
     sg = extrair_sg_de_payload(SAMPLE, extrair_sg_times)
+    ml = extrair_ml_de_payload(SAMPLE, extrair_ml_times, "England", "France")
     g, a, ga = len(odds["g"]), len(odds["a"]), len(odds["ga"])
-    print(f"parser: g={g} a={a} ga={ga} sg_home={bool(sg[0])} sg_away={bool(sg[1])}")
+    print(
+        f"parser: g={g} a={a} ga={ga} sg_home={bool(sg[0])} sg_away={bool(sg[1])} "
+        f"ml={bool(ml)} p_home={ml.get('p_vit_home') if ml else None}",
+    )
 
-    if g < 1 or a < 1 or not sg[0] or not sg[1]:
+    if g < 1 or a < 1 or not sg[0] or not sg[1] or not ml:
         print("FALHA: parser API incompleto.")
+        return 1
+    if ml.get("casa_ml") != "Pinnacle" or ml.get("p_vit_home", 0) < 60:
+        print("FALHA: parser ML incorreto.", ml)
         return 1
 
     print("OK: parser API unitario.")

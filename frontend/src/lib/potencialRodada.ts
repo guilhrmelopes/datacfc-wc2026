@@ -1,6 +1,14 @@
 import { oddsVigentes, temCopa } from "@/lib/copaJogador";
+import {
+  FATOR_ML_GAMMA,
+  fatorMlSelecao,
+  type ContextoMlRodada,
+} from "@/lib/fatorMoneylineRodada";
 import { gaPctEfetivo } from "@/lib/oddsGaFallback";
-import { calcularRatingJogador, type EscalasRating } from "@/lib/ratingJogador";
+import {
+  calcularRatingJogador,
+  type EscalasRating,
+} from "@/lib/ratingJogador";
 import type { JogadorMercado, OddsJogadorEntry } from "@/types/dados";
 
 /**
@@ -57,8 +65,13 @@ export function sinalOddsRodada(
   return sg ?? ga;
 }
 
-export function ratingBase(j: JogadorMercado, escalas: EscalasRating): number {
-  return calcularRatingJogador(j, escalas);
+export function ratingBase(
+  j: JogadorMercado,
+  escalas: EscalasRating,
+  mlCtx?: ContextoMlRodada | null,
+  siglaSelecao?: string | null,
+): number {
+  return calcularRatingJogador(j, escalas, mlCtx, siglaSelecao);
 }
 
 export function fatorStatus(statusId: number): number {
@@ -70,16 +83,21 @@ export function calcularPotencialBruto(
   odds: OddsJogadorEntry | null | undefined,
   escalas: EscalasRating,
   confiarOdds = false,
+  mlCtx?: ContextoMlRodada | null,
+  siglaSelecao?: string | null,
 ): number | null {
   if (!temCopa(j)) return null;
 
-  const r = ratingBase(j, escalas);
+  const sigla = siglaSelecao ?? j.sigla;
+  const fatorMl = fatorMlSelecao(sigla, mlCtx);
+  const r = ratingBase(j, escalas, mlCtx, sigla);
   if (r <= 0) return null;
 
   const oddsValidas = confiarOdds ? odds : oddsVigentes(j, odds) ? odds : null;
   const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
   if (o !== null) {
-    return Math.round((POTENCIAL_ALPHA * r + (1 - POTENCIAL_ALPHA) * o) * 10) / 10;
+    const oAjust = Math.round(o * Math.pow(fatorMl, FATOR_ML_GAMMA) * 10) / 10;
+    return Math.round((POTENCIAL_ALPHA * r + (1 - POTENCIAL_ALPHA) * oAjust) * 10) / 10;
   }
   return Math.round(r * 10) / 10;
 }
@@ -89,8 +107,17 @@ export function calcularPotencialRodada(
   odds: OddsJogadorEntry | null | undefined,
   escalas: EscalasRating,
   confiarOdds = false,
+  mlCtx?: ContextoMlRodada | null,
+  siglaSelecao?: string | null,
 ): number | null {
-  const bruto = calcularPotencialBruto(j, odds, escalas, confiarOdds);
+  const bruto = calcularPotencialBruto(
+    j,
+    odds,
+    escalas,
+    confiarOdds,
+    mlCtx,
+    siglaSelecao,
+  );
   if (bruto === null) return null;
   const fator = fatorStatus(j.status_id);
   return Math.round(bruto * fator * 10) / 10;
@@ -102,24 +129,36 @@ export function tooltipPotencialRodada(
   potencial: number | null,
   escalas: EscalasRating,
   confiarOdds = false,
+  mlCtx?: ContextoMlRodada | null,
+  siglaSelecao?: string | null,
 ): string {
   if (!temCopa(j) || potencial === null) {
     return "Sem partidas na Copa 2026";
   }
 
-  const r = ratingBase(j, escalas);
+  const sigla = siglaSelecao ?? j.sigla;
+  const fatorMl = fatorMlSelecao(sigla, mlCtx);
+  const r = ratingBase(j, escalas, mlCtx, sigla);
   const oddsValidas = confiarOdds ? odds : oddsVigentes(j, odds) ? odds : null;
   const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
-  const bruto = calcularPotencialBruto(j, odds, escalas) ?? 0;
+  const bruto = calcularPotencialBruto(j, odds, escalas, confiarOdds, mlCtx, sigla) ?? 0;
   const fator = fatorStatus(j.status_id);
   const pesos = PESOS_ODDS[j.bucket_posicao];
 
   let base: string;
   if (o !== null) {
     const oddsLabel = pesos?.descricao ?? "odds";
-    base = `${Math.round(POTENCIAL_ALPHA * 100)}% Rating ${r.toFixed(1)} + ${Math.round((1 - POTENCIAL_ALPHA) * 100)}% ${oddsLabel} ${o.toFixed(1)}`;
+    const oAjust = Math.round(o * Math.pow(fatorMl, FATOR_ML_GAMMA) * 10) / 10;
+    if (fatorMl !== 1) {
+      base = `${Math.round(POTENCIAL_ALPHA * 100)}% Rating ${r.toFixed(1)} + ${Math.round((1 - POTENCIAL_ALPHA) * 100)}% ${oddsLabel} ${o.toFixed(1)}→${oAjust.toFixed(1)} (ML ×${fatorMl.toFixed(2)})`;
+    } else {
+      base = `${Math.round(POTENCIAL_ALPHA * 100)}% Rating ${r.toFixed(1)} + ${Math.round((1 - POTENCIAL_ALPHA) * 100)}% ${oddsLabel} ${o.toFixed(1)}`;
+    }
   } else {
-    base = `Rating ${r.toFixed(1)} (sem odds na rodada)`;
+    base =
+      fatorMl !== 1
+        ? `Rating ${r.toFixed(1)} (ML ×${fatorMl.toFixed(2)}; sem props na rodada)`
+        : `Rating ${r.toFixed(1)} (sem odds na rodada)`;
   }
 
   if (fator < 1) {

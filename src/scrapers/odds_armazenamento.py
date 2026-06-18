@@ -216,6 +216,8 @@ def confronto_fresco_no_armazenamento(
             continue
         if len(ev.get("odds") or {}) < limite_odds:
             continue
+        if ev.get("p_vit_home") is None or ev.get("p_vit_away") is None:
+            continue
         raspar = _parse_iso_datetime(str(ev.get("raspar_em") or ""))
         if raspar is None:
             continue
@@ -374,12 +376,24 @@ def compilar_dashboard(
     return resultado
 
 
+_CAMPOS_ML = (
+    "ml_home",
+    "ml_draw",
+    "ml_away",
+    "casa_ml",
+    "p_vit_home",
+    "p_vit_away",
+    "p_empate",
+)
+
+
 def montar_registro_evento(
     evento: dict,
     confronto: dict,
     odds: dict[str, dict],
+    ml: dict | None = None,
 ) -> dict[str, Any]:
-    return {
+    registro: dict[str, Any] = {
         "event_id": int(evento["id"]),
         "data": confronto.get("data") or evento.get("data", ""),
         "hora": confronto.get("hora", ""),
@@ -394,6 +408,11 @@ def montar_registro_evento(
         "fixture_id": confronto.get("match_id") or evento.get("fixture_id"),
         "odds": odds,
     }
+    if ml:
+        for chave in _CAMPOS_ML:
+            if chave in ml and ml[chave] is not None:
+                registro[chave] = ml[chave]
+    return registro
 
 
 def compilar_e_salvar(

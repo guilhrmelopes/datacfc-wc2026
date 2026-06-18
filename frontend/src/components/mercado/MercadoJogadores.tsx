@@ -7,6 +7,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  compilarContextoMlRodada,
+  type ContextoMlRodada,
+} from "@/lib/fatorMoneylineRodada";
+import {
   calcularPotencialRodada,
   tooltipPotencialRodada,
 } from "@/lib/potencialRodada";
@@ -406,6 +410,7 @@ function classeCelulaHub(
   oddsAtiva: (o: OddsJogadorEntry | null | undefined) => boolean,
   temAdv: boolean,
   escalas: ReturnType<typeof construirContextoRating>,
+  mlCtx: ContextoMlRodada | null,
 ): string {
   if (colKey === "adv") {
     return temAdv ? "bg-sky-500/20" : "";
@@ -448,13 +453,20 @@ function classeCelulaHub(
   }
   if (colKey === "potencial_r1") {
     const oddsVal = oddsAtiva(odds) ? odds : null;
-    const valor = calcularPotencialRodada(j, oddsVal, escalas, true);
+    const valor = calcularPotencialRodada(j, oddsVal, escalas, true, mlCtx, j.sigla);
     if (valor == null) return "";
     const amostra = jogadores
       .filter((x) => x.bucket_posicao === pos && temCopa(x))
       .map((x) => {
         const o = oddsResolver(x);
-        return calcularPotencialRodada(x, oddsAtiva(o) ? o : null, escalas, true);
+        return calcularPotencialRodada(
+          x,
+          oddsAtiva(o) ? o : null,
+          escalas,
+          true,
+          mlCtx,
+          x.sigla,
+        );
       })
       .filter((v): v is number => v !== null);
     return classeCelulaIndice100(valor, amostra);
@@ -463,10 +475,10 @@ function classeCelulaHub(
   if (!temCopa(j)) return "";
 
   if (colKey === "rating") {
-    const valor = calcularRatingJogador(j, escalas);
+    const valor = calcularRatingJogador(j, escalas, mlCtx, j.sigla);
     if (valor <= 0) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) => {
-      const r = calcularRatingJogador(x, escalas);
+      const r = calcularRatingJogador(x, escalas, mlCtx, x.sigla);
       return r > 0 ? r : null;
     });
     return classeCelulaIndice100(valor, amostra);
@@ -534,10 +546,11 @@ function valorOrdenacao(
   escalas: ReturnType<typeof construirContextoRating>,
   pontuacaoCedida: PontuacaoCedida,
   advSigla: string | null,
+  mlCtx: ContextoMlRodada | null,
 ): number | null {
   switch (colKey) {
     case "rating":
-      return temCopa(j) ? calcularRatingJogador(j, escalas) : null;
+      return temCopa(j) ? calcularRatingJogador(j, escalas, mlCtx, j.sigla) : null;
     case "mg":
       return mediaGeralCopa(j);
     case "mb":
@@ -558,6 +571,8 @@ function valorOrdenacao(
         oddsAtiva(odds) ? odds : null,
         escalas,
         true,
+        mlCtx,
+        j.sigla,
       );
     case "j":
       return temCopa(j) ? (j.copa_jogos_num ?? null) : null;
@@ -667,6 +682,10 @@ export function MercadoJogadores({
   const [rodadaFiltro, setRodadaFiltro] = useState<RodadaCartolaFiltro>(() =>
     rodadaFiltroInicial(rodadaCartolaAtual),
   );
+  const mlCtxRodada = useMemo(
+    () => compilarContextoMlRodada(oddsArmazenamento, rodadaFiltro),
+    [oddsArmazenamento, rodadaFiltro],
+  );
 
   const resolverOdds = useMemo(() => {
     return (j: JogadorMercado) =>
@@ -726,8 +745,8 @@ export function MercadoJogadores({
       const advA = adversarioRodada(a, mapaSel, rodadaFiltro)?.sigla ?? null;
       const advB = adversarioRodada(b, mapaSel, rodadaFiltro)?.sigla ?? null;
       const cmp = compararValores(
-        valorOrdenacao(a, ordenarPor, oddsA, oddsAtiva, escalasRating, pontuacaoCedida, advA),
-        valorOrdenacao(b, ordenarPor, oddsB, oddsAtiva, escalasRating, pontuacaoCedida, advB),
+        valorOrdenacao(a, ordenarPor, oddsA, oddsAtiva, escalasRating, pontuacaoCedida, advA, mlCtxRodada),
+        valorOrdenacao(b, ordenarPor, oddsB, oddsAtiva, escalasRating, pontuacaoCedida, advB, mlCtxRodada),
         ordem,
       );
       if (cmp !== 0) return cmp;
@@ -746,6 +765,7 @@ export function MercadoJogadores({
     resolverOdds,
     escalasRating,
     pontuacaoCedida,
+    mlCtxRodada,
   ]);
 
   const colunas = useMemo(() => {
@@ -754,9 +774,9 @@ export function MercadoJogadores({
         return {
           ...col,
           render: (j: JogadorMercado) => {
-            const valor = calcularRatingJogador(j, escalasRating);
+            const valor = calcularRatingJogador(j, escalasRating, mlCtxRodada, j.sigla);
             return (
-              <span className="tabular-nums" title={tooltipRating(j, valor, escalasRating)}>
+              <span className="tabular-nums" title={tooltipRating(j, valor, escalasRating, mlCtxRodada, j.sigla)}>
                 {temCopa(j) && valor > 0 ? fmt(valor, 1) : <Dash />}
               </span>
             );
@@ -793,11 +813,11 @@ export function MercadoJogadores({
           title: `Potencial para Rodada ${rodadaFiltro}`,
           render: (j: JogadorMercado, _ced: number | null, odds: OddsJogadorEntry | null) => {
             const oddsVal = oddsAtiva(odds) ? odds : null;
-            const valor = calcularPotencialRodada(j, oddsVal, escalasRating, true);
+            const valor = calcularPotencialRodada(j, oddsVal, escalasRating, true, mlCtxRodada, j.sigla);
             return (
               <span
                 className="tabular-nums font-medium"
-                title={tooltipPotencialRodada(j, oddsVal, valor, escalasRating, true)}
+                title={tooltipPotencialRodada(j, oddsVal, valor, escalasRating, true, mlCtxRodada, j.sigla)}
               >
                 {valor != null ? fmt(valor, 1) : <Dash />}
               </span>
@@ -840,7 +860,7 @@ export function MercadoJogadores({
       }
       return col;
     });
-  }, [posicao, escalasRating, rodadaFiltro, mapaSel]);
+  }, [posicao, escalasRating, rodadaFiltro, mapaSel, mlCtxRodada]);
   const totalCols = 1 + colunas.length; // 1 = coluna JOGADOR
 
   return (
@@ -1017,6 +1037,7 @@ export function MercadoJogadores({
                       oddsAtiva,
                       Boolean(adv?.escudo),
                       escalasRating,
+                      mlCtxRodada,
                     );
                     return (
                       <td

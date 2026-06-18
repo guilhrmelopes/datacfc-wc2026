@@ -7,6 +7,13 @@ export interface EventoOddsArmazenado {
   rodada?: number | null;
   sigla_mandante?: string;
   sigla_visitante?: string;
+  ml_home?: number;
+  ml_draw?: number | null;
+  ml_away?: number;
+  casa_ml?: string;
+  p_vit_home?: number;
+  p_vit_away?: number;
+  p_empate?: number | null;
   odds?: Record<string, OddsJogadorEntry>;
 }
 

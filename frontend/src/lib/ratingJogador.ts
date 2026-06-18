@@ -1,4 +1,9 @@
 import { mediaBaseCopa, mediaGeralCopa, temCopa } from "@/lib/copaJogador";
+import {
+  fatorMlSelecao,
+  pVitSelecaoRodada,
+  type ContextoMlRodada,
+} from "@/lib/fatorMoneylineRodada";
 import { calcularRatingSelecaoCopa } from "@/lib/ratingSelecao";
 import type { JogadorMercado, Selecao } from "@/types/dados";
 
@@ -108,7 +113,11 @@ function mediaPerformanceCopa(j: JogadorMercado): number | null {
   return Math.round((0.75 * mg + 0.25 * mb) * 100) / 100;
 }
 
-export function calcularRatingJogador(j: JogadorMercado, ctx: ContextoRating): number {
+/** Rating histórico na Copa (MG/MB + adversários já jogados), sem moneyline da rodada. */
+export function calcularRatingHistorico(
+  j: JogadorMercado,
+  ctx: ContextoRating,
+): number {
   if (!temCopa(j)) return 0;
   const media = mediaPerformanceCopa(j);
   if (media === null) return 0;
@@ -121,26 +130,63 @@ export function calcularRatingJogador(j: JogadorMercado, ctx: ContextoRating): n
   return Math.round(Math.min(100, Math.max(1, ponderado)) * 10) / 10;
 }
 
+export function calcularRatingJogador(
+  j: JogadorMercado,
+  ctx: ContextoRating,
+  mlCtx?: ContextoMlRodada | null,
+  siglaSelecao?: string | null,
+): number {
+  const historico = calcularRatingHistorico(j, ctx);
+  if (historico <= 0) return 0;
+
+  const fator = fatorMlSelecao(siglaSelecao ?? j.sigla, mlCtx);
+  if (fator === 1) return historico;
+
+  const ajustado = historico * fator;
+  return Math.round(Math.min(100, Math.max(1, ajustado)) * 10) / 10;
+}
+
 export function tooltipRating(
   j: JogadorMercado,
   rating: number,
   ctx: ContextoRating,
+  mlCtx?: ContextoMlRodada | null,
+  siglaSelecao?: string | null,
 ): string {
   const media = mediaPerformanceCopa(j);
   if (media === null) {
     return "Nível de atuação do jogador durante a Copa";
   }
 
+  const historico = calcularRatingHistorico(j, ctx);
+  const sigla = siglaSelecao ?? j.sigla;
+  const pVit = pVitSelecaoRodada(sigla, mlCtx);
+  const fator = fatorMlSelecao(sigla, mlCtx);
+
   const base = mgParaRating(media);
   const mediaAdv = mediaNivelAdversarios(j, ctx);
-  if (mediaAdv === null) {
+  if (mediaAdv === null && pVit == null) {
     return `Nível de atuação na Copa (MG/MB ${media.toFixed(2)})`;
   }
 
-  const siglas = ctx.adversariosPorSelecao.get(j.selecao) ?? [];
-  return (
-    `Nível de atuação na Copa ponderado pelo nível dos adversários ` +
-    `(${siglas.join(", ") || "—"} · média ${mediaAdv.toFixed(0)}). ` +
-    `Performance ${media.toFixed(2)} → ${base.toFixed(1)} → ${rating.toFixed(1)}`
-  );
+  const partes: string[] = [];
+  if (mediaAdv !== null) {
+    const siglas = ctx.adversariosPorSelecao.get(j.selecao) ?? [];
+    partes.push(
+      `Performance ${media.toFixed(2)} → ${base.toFixed(1)} → ${historico.toFixed(1)} ` +
+        `(adversários ${siglas.join(", ") || "—"} · média ${mediaAdv.toFixed(0)})`,
+    );
+  } else {
+    partes.push(`Performance ${media.toFixed(2)} → ${historico.toFixed(1)}`);
+  }
+
+  if (pVit != null && fator !== 1) {
+    partes.push(
+      `ML rodada P(vit.) ${pVit.toFixed(1)}% × fator ${fator.toFixed(2)} → ${rating.toFixed(1)}`,
+    );
+  } else if (pVit != null) {
+    partes.push(`ML rodada P(vit.) ${pVit.toFixed(1)}%`);
+  }
+
+  return partes.join(". ");
 }

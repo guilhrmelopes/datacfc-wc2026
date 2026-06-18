@@ -30,3 +30,15 @@ def extrair_sg_de_payload(payload: Any, extrair_sg_fn) -> tuple[tuple[float, str
     if not texto or "bookmakers" not in texto:
         return None, None
     return extrair_sg_fn(texto)
+
+
+def extrair_ml_de_payload(
+    payload: Any,
+    extrair_ml_fn,
+    home_name: str = "",
+    away_name: str = "",
+) -> dict | None:
+    texto = payload_para_texto(payload)
+    if not texto or "bookmakers" not in texto:
+        return None
+    return extrair_ml_fn(texto, home_name=home_name, away_name=away_name)

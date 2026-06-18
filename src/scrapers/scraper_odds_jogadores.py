@@ -27,6 +27,7 @@ from typing import Any
 from playwright.sync_api import sync_playwright, Page
 
 from scrapers.captura_odds_api import (
+    extrair_ml_de_payload,
     extrair_odds_de_payload,
     extrair_sg_de_payload,
     payload_para_texto,
@@ -121,6 +122,7 @@ MERCADOS_PLAYER_UI: list[tuple[str, str]] = MERCADOS_PLAYER_SUB_UI
 MKT_TEAM_TOTAL_HOME = "Team Total Home"
 MKT_TEAM_TOTAL_AWAY = "Team Total Away"
 HDP_CLEAN_SHEET = 0.5
+MKT_ML = frozenset({"ML", "Moneyline", "1x2", "1X2"})
 
 # Nomes de mercados conhecidos (para não confundir com nomes de bookmakers)
 NOMES_MERCADOS_CONHECIDOS: frozenset[str] = frozenset({
@@ -1080,6 +1082,143 @@ def extrair_sg_times(rsc_conteudo: str) -> tuple[tuple[float, str] | None, tuple
     return sg_home, sg_away
 
 
+def _parse_odd_decimal(val: Any) -> float | None:
+    if val is None or val in ("N/A", "-", ""):
+        return None
+    try:
+        odd = float(val)
+    except (TypeError, ValueError):
+        return None
+    return odd if odd > 1.0 else None
+
+
+def _classificar_outcome_ml(label: str, home_name: str, away_name: str) -> str | None:
+    bruto = _norm(label)
+    if bruto in ("1", "h", "home"):
+        return "home"
+    if bruto in ("2", "a", "away"):
+        return "away"
+    if bruto in ("x", "d", "draw", "tie"):
+        return "draw"
+    if home_name and bruto == _norm(home_name):
+        return "home"
+    if away_name and bruto == _norm(away_name):
+        return "away"
+    return None
+
+
+def _extrair_tripla_ml_item(item: dict, home_name: str, away_name: str) -> tuple[float, float | None, float] | None:
+    h = _parse_odd_decimal(item.get("home"))
+    a = _parse_odd_decimal(item.get("away"))
+    d = _parse_odd_decimal(item.get("draw"))
+    if h and a:
+        return h, d, a
+
+    h = a = d = None
+    for sub in (item,):
+        label = str(sub.get("label") or "")
+        odd = _parse_odd_decimal(sub.get("over") or sub.get("under"))
+        if odd is None:
+            continue
+        lado = _classificar_outcome_ml(label, home_name, away_name)
+        if lado == "home":
+            h = odd
+        elif lado == "away":
+            a = odd
+        elif lado == "draw":
+            d = odd
+    if h and a:
+        return h, d, a
+    return None
+
+
+def _prob_ml_normalizada(home: float, draw: float | None, away: float) -> tuple[float, float, float | None]:
+    ph = 1.0 / home
+    pa = 1.0 / away
+    pd = (1.0 / draw) if draw else 0.0
+    soma = ph + pa + pd
+    if soma <= 0:
+        return 0.0, 0.0, None
+    p_home = round(100.0 * ph / soma, 2)
+    p_away = round(100.0 * pa / soma, 2)
+    p_draw = round(100.0 * pd / soma, 2) if draw else None
+    return p_home, p_away, p_draw
+
+
+def extrair_ml_times(
+    rsc_conteudo: str,
+    home_name: str = "",
+    away_name: str = "",
+) -> dict[str, Any] | None:
+    """
+    Moneyline (1X2) por confronto — mercado Main → ML no hub.
+    Retorna odds decimais e P(vitória) normalizada (sem vigorish relativo).
+    """
+    bookmakers = _extrair_json_object(rsc_conteudo, "bookmakers")
+    if not bookmakers:
+        return None
+
+    candidatos: list[tuple[int, int, str, float, float | None, float]] = []
+    for bk_name, mercados in bookmakers.items():
+        if not isinstance(mercados, list):
+            continue
+        tier = _bookmaker_tier(str(bk_name))
+        preferencia = 0 if "pinnacle" in str(bk_name).lower() else 1
+        for mercado in mercados:
+            if not isinstance(mercado, dict):
+                continue
+            if mercado.get("name") not in MKT_ML:
+                continue
+            for item in mercado.get("odds") or []:
+                if not isinstance(item, dict):
+                    continue
+                tripla = _extrair_tripla_ml_item(item, home_name, away_name)
+                if tripla is None:
+                    labels: dict[str, float] = {}
+                    for sub in mercado.get("odds") or []:
+                        if not isinstance(sub, dict):
+                            continue
+                        label = str(sub.get("label") or "")
+                        odd = _parse_odd_decimal(sub.get("over") or sub.get("under"))
+                        if odd is None:
+                            continue
+                        lado = _classificar_outcome_ml(label, home_name, away_name)
+                        if lado:
+                            labels[lado] = odd
+                    if labels.get("home") and labels.get("away"):
+                        tripla = (labels["home"], labels.get("draw"), labels["away"])
+                if tripla is None:
+                    continue
+                h, d, a = tripla
+                candidatos.append((tier, preferencia, str(bk_name), h, d, a))
+                break
+
+    if not candidatos:
+        return None
+
+    candidatos.sort(key=lambda x: (x[0], x[1]))
+    _, _, bk, ml_home, ml_draw, ml_away = candidatos[0]
+    p_home, p_away, p_draw = _prob_ml_normalizada(ml_home, ml_draw, ml_away)
+    logger.info(
+        "ML parseado: home=%.2f draw=%s away=%.2f @ %s (P %.1f%% / %.1f%%)",
+        ml_home,
+        f"{ml_draw:.2f}" if ml_draw else "—",
+        ml_away,
+        bk,
+        p_home,
+        p_away,
+    )
+    return {
+        "ml_home": ml_home,
+        "ml_draw": ml_draw,
+        "ml_away": ml_away,
+        "casa_ml": bk,
+        "p_vit_home": p_home,
+        "p_vit_away": p_away,
+        "p_empate": p_draw,
+    }
+
+
 def _aplicar_sg_evento(
     resultado: dict[str, dict],
     eid: int,
@@ -1608,6 +1747,14 @@ def _clicar_filtro_ptsoa(pagina: Page, rotulo: str) -> bool:
     return _clicar_mercado_player(pagina, rotulo)
 
 
+def _navegar_clicar_main_ml(pagina: Page) -> bool:
+    """Abre Main → ML para carregar moneyline no RSC/API."""
+    if not _clicar_mercado_player(pagina, "Main"):
+        return False
+    pagina.wait_for_timeout(_wait_ms(1500))
+    return _clicar_mercado_player(pagina, "ML")
+
+
 def _navegar_clicar_player(pagina: Page) -> None:
     """Abre Player → Player To Score or Assist (sub-filtros são clicados em processar_evento)."""
     vis_timeout = _wait_ms(6000 if IS_CI else 4000)
@@ -1697,6 +1844,7 @@ def processar_evento(
     *,
     modo_armazenamento: bool = False,
     captura_api: ArmazenamentoCapturaOdds | None = None,
+    extras_evento: dict[str, Any] | None = None,
 ) -> int:
     eid = evento["id"]
     home, away = evento.get("home", "?"), evento.get("away", "?")
@@ -1731,6 +1879,9 @@ def processar_evento(
         except Exception:
             pass
         pagina.wait_for_timeout(_wait_ms(6000))
+
+    if _navegar_clicar_main_ml(pagina):
+        pagina.wait_for_timeout(_wait_ms(random.randint(2000, 4000)))
 
     _navegar_clicar_player(pagina)
 
@@ -1809,6 +1960,14 @@ def processar_evento(
         payload_api = captura_api.obter_odds_evento(eid)
         if payload_api:
             sg_home, sg_away = extrair_sg_de_payload(payload_api, extrair_sg_times)
+
+    ml_dados = extrair_ml_times(rsc, home, away)
+    if captura_api is not None and not ml_dados:
+        payload_api = captura_api.obter_odds_evento(eid)
+        if payload_api:
+            ml_dados = extrair_ml_de_payload(payload_api, extrair_ml_times, home, away)
+    if ml_dados and extras_evento is not None:
+        extras_evento.update(ml_dados)
 
     sel_home = _mapear_selecao(home)
     sel_away = _mapear_selecao(away)
@@ -2046,6 +2205,7 @@ def executar() -> None:
 
                 chave = str(eid)
                 odds_evento: dict[str, dict] = {}
+                extras_evento: dict[str, Any] = {}
                 if chave in eventos_store:
                     bruto = eventos_store[chave].get("odds") or {}
                     odds_evento = {str(k): dict(v) for k, v in bruto.items() if isinstance(v, dict)}
@@ -2056,11 +2216,14 @@ def executar() -> None:
                     odds_evento, relatorio, rsc_acumulado,
                     modo_armazenamento=True,
                     captura_api=captura_api,
+                    extras_evento=extras_evento,
                 )
                 if n > 0:
                     eventos_ok.append(eid)
                     total_add += n
-                    eventos_store[chave] = montar_registro_evento(evento, conf, odds_evento)
+                    eventos_store[chave] = montar_registro_evento(
+                        evento, conf, odds_evento, ml=extras_evento or None,
+                    )
                     eventos_store[chave]["raspar_em"] = datetime.now(tz=timezone.utc).isoformat()
                 else:
                     eventos_falha.append(evento)
@@ -2079,6 +2242,7 @@ def executar() -> None:
                     conf = evento.get("confronto") or {}
                     chave = str(eid)
                     odds_evento = {}
+                    extras_evento = {}
                     if chave in eventos_store:
                         bruto = eventos_store[chave].get("odds") or {}
                         odds_evento = {str(k): dict(v) for k, v in bruto.items() if isinstance(v, dict)}
@@ -2087,11 +2251,14 @@ def executar() -> None:
                         odds_evento, relatorio, rsc_acumulado,
                         modo_armazenamento=True,
                         captura_api=captura_api,
+                        extras_evento=extras_evento,
                     )
                     if n > 0:
                         eventos_ok.append(eid)
                         total_add += n
-                        eventos_store[chave] = montar_registro_evento(evento, conf, odds_evento)
+                        eventos_store[chave] = montar_registro_evento(
+                            evento, conf, odds_evento, ml=extras_evento or None,
+                        )
                         eventos_store[chave]["raspar_em"] = datetime.now(tz=timezone.utc).isoformat()
 
             num_eventos = len(eventos)
