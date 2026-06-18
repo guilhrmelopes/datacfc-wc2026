@@ -1,4 +1,4 @@
-"""Atualiza status_id e foto_url via API oficial Cartola Copa (/copa/)."""
+"""Atualiza status_id e foto_url — Cartola /copa + Prováveis (lineups) para status 6."""
 
 from __future__ import annotations
 
@@ -20,6 +20,7 @@ def main() -> int:
     print(
         f"Cartola Copa: status={resumo['status_campos_atualizados']} campos | "
         f"fotos={resumo['fotos_atualizadas']} | "
+        f"provaveis_lineup={resumo.get('provaveis_lineup', 0)} | "
         f"mercado_api={resumo['mercado_api']} | "
         f"rodada={resumo['rodada_cartola_atual']}"
     )

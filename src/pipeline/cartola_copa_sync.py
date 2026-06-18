@@ -398,6 +398,40 @@ def incorporar_atletas_ausentes_mercado(
 _FOTO_GLOBO_HOST = "s.sde.globo.com"
 _URL_FOTOS_PROVAVEIS = "https://provaveisdocartola.com.br/api/copa/fotos-atletas"
 
+# Status oficiais do Cartola que não são sobrescritos por provável de lineup.
+_STATUS_CARTOLA_PRIORITARIO = frozenset({2, 3, 5})
+_CAMPOS_MERCADO_CARTOLA = (
+    "preco_num",
+    "pontos_num",
+    "media_num",
+    "variacao_num",
+    "jogos_num",
+)
+
+
+def resolver_status_id(
+    atleta_id: int,
+    status_cartola: Any,
+    provavel_ids: set[int],
+) -> int:
+    """
+    Provável (6) → lineups Prováveis do Cartola.
+    Dúvida/lesionado/suspenso (2/3/5) → Cartola /copa.
+    Demais casos → Cartola, exceto 6 sem lineup (vira 7).
+    """
+    try:
+        status = int(status_cartola)
+    except (TypeError, ValueError):
+        status = 7
+
+    if status in _STATUS_CARTOLA_PRIORITARIO:
+        return status
+    if atleta_id in provavel_ids:
+        return 6
+    if status == 6:
+        return 7
+    return status
+
 
 def _carregar_fotos_provaveis() -> dict[int, str]:
     import urllib.request
@@ -453,12 +487,15 @@ def sincronizar_fotos_mercado(
 def sincronizar_mercado_cartola(
     mercado: list[dict],
     dados: DadosCartolaCopa,
+    *,
+    provavel_ids: set[int] | None = None,
 ) -> int:
     por_id = {
         int(a["atleta_id"]): a
         for a in dados.mercado.get("atletas") or []
         if a.get("atleta_id")
     }
+    aplicar_status = provavel_ids is not None
     atualizados = 0
     for jogador in mercado:
         aid = jogador.get("atleta_id")
@@ -467,10 +504,19 @@ def sincronizar_mercado_cartola(
         api = por_id.get(int(aid))
         if not api:
             continue
-        for campo in ("preco_num", "status_id", "pontos_num", "media_num", "variacao_num", "jogos_num"):
+        campos = (
+            *_CAMPOS_MERCADO_CARTOLA,
+            *(() if aplicar_status else ("status_id",)),
+        )
+        for campo in campos:
             valor = api.get(campo)
             if valor is not None and jogador.get(campo) != valor:
                 jogador[campo] = valor
+                atualizados += 1
+        if aplicar_status:
+            novo_status = resolver_status_id(int(aid), api.get("status_id"), provavel_ids)
+            if jogador.get("status_id") != novo_status:
+                jogador["status_id"] = novo_status
                 atualizados += 1
     return atualizados
 
@@ -481,10 +527,11 @@ def sincronizar_status_fotos_cartola(
     dados: DadosCartolaCopa | None = None,
 ) -> dict[str, Any]:
     """
-    Fonte primária de status_id e fotos: API oficial Cartola Copa (/copa/atletas/mercado).
-    Não usa Prováveis do Cartola para status (lineups desativados até correção).
+    Status: Cartola /copa (2/3/5/7) + Prováveis do Cartola (lineups → 6).
+    Fotos: CDN Prováveis com fallback Cartola /copa.
     """
     from scrapers.cartola_copa import buscar_dados_cartola_copa
+    from scrapers.provaveis_copa import buscar_ids_provaveis_lineup
 
     caminho_mercado = pasta_dados / "jogadores_mercado.json"
     caminho_estado = pasta_dados / "copa_estado.json"
@@ -501,7 +548,10 @@ def sincronizar_status_fotos_cartola(
     mercado = _carregar_json(caminho_mercado)
     estado = _carregar_json(caminho_estado) if caminho_estado.is_file() else {}
 
-    status_atualizados = sincronizar_mercado_cartola(mercado, dados)
+    provavel_ids = buscar_ids_provaveis_lineup()
+    status_atualizados = sincronizar_mercado_cartola(
+        mercado, dados, provavel_ids=provavel_ids,
+    )
     fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
 
     rodada = int(dados.status.get("rodada_atual") or estado.get("rodada_cartola_atual") or 1)
@@ -516,6 +566,7 @@ def sincronizar_status_fotos_cartola(
     return {
         "status_campos_atualizados": status_atualizados,
         "fotos_atualizadas": fotos_atualizadas,
+        "provaveis_lineup": len(provavel_ids),
         "mercado_api": len(dados.mercado.get("atletas") or []),
         "rodada_cartola_atual": rodada,
     }
@@ -795,7 +846,12 @@ def aplicar_dados_cartola(
     estado["bola_rolando"] = dados.status.get("bola_rolando")
     estado["cartola_atualizado_em"] = dados.obtido_em
 
-    mercado_atualizados = sincronizar_mercado_cartola(mercado, dados)
+    from scrapers.provaveis_copa import buscar_ids_provaveis_lineup
+
+    provavel_ids = buscar_ids_provaveis_lineup()
+    mercado_atualizados = sincronizar_mercado_cartola(
+        mercado, dados, provavel_ids=provavel_ids,
+    )
     meta_mercado = sincronizar_mercado_metadados_selecao(mercado, selecoes, dados)
     mercado_inseridos = incorporar_atletas_ausentes_mercado(mercado, dados, selecoes)
     fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
