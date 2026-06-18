@@ -698,6 +698,13 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
   ],
 };
 
+/** Colunas comuns quando a comparação mistura posições (GOL + ATA, etc.). */
+const COLUNAS_COMPARACAO: ColDef[] = [
+  COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
+  COL_G_PCT, COL_A_PCT, COL_GA_PCT,
+  COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
+];
+
 // ---------------------------------------------------------------------------
 // Componente
 // ---------------------------------------------------------------------------
@@ -745,6 +752,26 @@ export function MercadoJogadores({
   const [statusFiltro,  setStatusFiltro]  = useState<string>("TODOS");
   const [ordenarPor,    setOrdenarPor]    = useState<string>("rating");
   const [ordem,         setOrdem]         = useState<Ordem>("desc");
+  const [selecionados,  setSelecionados]  = useState<Set<number>>(() => new Set());
+  const [modoComparacao, setModoComparacao] = useState(false);
+
+  function toggleSelecao(atletaId: number) {
+    setSelecionados((prev) => {
+      const next = new Set(prev);
+      if (next.has(atletaId)) next.delete(atletaId);
+      else next.add(atletaId);
+      return next;
+    });
+  }
+
+  function iniciarComparacao() {
+    if (selecionados.size >= 2) setModoComparacao(true);
+  }
+
+  function sairComparacao() {
+    setModoComparacao(false);
+    setSelecionados(new Set());
+  }
 
   function handlePosicaoChange(v: BucketPos) {
     setPosicao(v);
@@ -776,10 +803,11 @@ export function MercadoJogadores({
 
   const linhas = useMemo(() => {
     const filtradas = jogadores
-      .filter((j) => j.bucket_posicao === posicao)
+      .filter((j) => modoComparacao || j.bucket_posicao === posicao)
       .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
       .filter((j) => jogadorNaRodada(j, mapaSel, rodadaFiltro))
-      .filter((j) => passaFiltroStatus(j.status_id, statusFiltro));
+      .filter((j) => passaFiltroStatus(j.status_id, statusFiltro))
+      .filter((j) => !modoComparacao || selecionados.has(j.atleta_id));
 
     const dados = [...filtradas];
     dados.sort((a, b) => {
@@ -795,7 +823,8 @@ export function MercadoJogadores({
       if (cmp !== 0) return cmp;
       return a.apelido.localeCompare(b.apelido, "pt-BR", { sensitivity: "base" });
     });
-    return dados.slice(0, 500);
+    const limitadas = dados.slice(0, modoComparacao ? 50 : 500);
+    return limitadas;
   }, [
     jogadores,
     posicao,
@@ -809,10 +838,29 @@ export function MercadoJogadores({
     escalasRating,
     pontuacaoCedida,
     mlCtxRodada,
+    modoComparacao,
+    selecionados,
   ]);
 
+  const qtdSelecionados = selecionados.size;
+  const bucketsComparacaoMista =
+    modoComparacao &&
+    new Set(
+      [...selecionados]
+        .map((id) => jogadores.find((j) => j.atleta_id === id)?.bucket_posicao)
+        .filter(Boolean),
+    ).size > 1;
+
   const colunas = useMemo(() => {
-    return COLUNAS[posicao].map((col) => {
+    const buckets = [...new Set(linhas.map((j) => j.bucket_posicao))];
+    const bucketCols =
+      modoComparacao && buckets.length !== 1
+        ? null
+        : modoComparacao && buckets.length === 1
+          ? (buckets[0] as BucketPos)
+          : posicao;
+    const defs = bucketCols ? COLUNAS[bucketCols] : COLUNAS_COMPARACAO;
+    return defs.map((col) => {
       if (col.key === "rating") {
         return {
           ...col,
@@ -903,7 +951,7 @@ export function MercadoJogadores({
       }
       return col;
     });
-  }, [posicao, escalasRating, rodadaFiltro, mapaSel, mlCtxRodada]);
+  }, [posicao, escalasRating, rodadaFiltro, mapaSel, mlCtxRodada, modoComparacao, linhas]);
   const totalCols = 1 + colunas.length; // 1 = coluna JOGADOR
 
   return (
@@ -1013,8 +1061,41 @@ export function MercadoJogadores({
 
         <span className="text-xs text-[var(--color-muted)]">
           {linhas.length} jogador{linhas.length !== 1 ? "es" : ""}
+          {modoComparacao ? " · comparação" : null}
         </span>
+
+        <div className="ml-auto flex flex-wrap items-center gap-2">
+          {modoComparacao ? (
+            <button
+              type="button"
+              onClick={sairComparacao}
+              className="rounded-md border border-[var(--color-border)] bg-[var(--color-card)] px-3 py-1.5 text-xs font-medium text-[var(--color-fg)] transition-colors hover:bg-[var(--color-border)]/40"
+            >
+              Sair da comparação
+            </button>
+          ) : qtdSelecionados >= 2 ? (
+            <button
+              type="button"
+              onClick={iniciarComparacao}
+              className="rounded-md bg-sky-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-sky-500"
+            >
+              Comparar ({qtdSelecionados})
+            </button>
+          ) : qtdSelecionados === 1 ? (
+            <span className="text-xs text-[var(--color-muted)]">
+              Selecione mais 1 jogador
+            </span>
+          ) : null}
+        </div>
       </div>
+
+      {modoComparacao ? (
+        <p className="rounded-md border border-sky-500/30 bg-sky-500/10 px-3 py-2 text-xs text-sky-200/90">
+          Modo comparação: exibindo {linhas.length} jogador
+          {linhas.length !== 1 ? "es" : ""} selecionado{linhas.length !== 1 ? "s" : ""}.
+          Troque posição ou filtros para incluir outros atletas na seleção.
+        </p>
+      ) : null}
 
       {/* ---------------------------------------------------------------- */}
       {/* Tabela                                                            */}
@@ -1059,11 +1140,20 @@ export function MercadoJogadores({
               linhas.map((j) => (
                 <tr
                   key={j.atleta_id}
-                  className="border-t border-[var(--color-border)] transition-colors hover:bg-[var(--color-card)]/40"
+                  className={`border-t border-[var(--color-border)] transition-colors hover:bg-[var(--color-card)]/40 ${
+                    selecionados.has(j.atleta_id) ? "bg-sky-500/5" : ""
+                  }`}
                 >
                   {/* JOGADOR */}
                   <td className="px-3 py-2">
                     <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={selecionados.has(j.atleta_id)}
+                        onChange={() => toggleSelecao(j.atleta_id)}
+                        aria-label={`Selecionar ${j.apelido} para comparar`}
+                        className="h-3.5 w-3.5 shrink-0 cursor-pointer rounded border-[var(--color-border)] accent-sky-500"
+                      />
                       {j.foto_url ? (
                         <img
                           src={j.foto_url}
@@ -1074,6 +1164,11 @@ export function MercadoJogadores({
                       <StatusDot statusId={j.status_id} />
                       <EscudoSelecao j={j} />
                       <span className="font-medium">{j.apelido}</span>
+                      {modoComparacao && bucketsComparacaoMista ? (
+                        <span className="rounded bg-[var(--color-border)]/60 px-1 py-0.5 text-[10px] font-medium uppercase text-[var(--color-muted)]">
+                          {j.bucket_posicao}
+                        </span>
+                      ) : null}
                       <IconesCobrador cobrador={indiceCobradores.get(j.atleta_id)} />
                     </div>
                   </td>
