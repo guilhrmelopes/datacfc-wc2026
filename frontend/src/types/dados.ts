@@ -26,6 +26,8 @@ export interface ConfrontoAgendado {
   data: string;
   hora: string;
   estadio: string;
+  rodada?: number;
+  match_id?: string;
 }
 
 export interface Selecao {

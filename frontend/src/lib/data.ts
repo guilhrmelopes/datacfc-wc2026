@@ -11,6 +11,7 @@ import {
   parseClassificacaoGrupos,
   type ClassificacaoGruposParseada,
 } from "@/lib/classificacaoGrupos";
+import type { OddsArmazenamentoData } from "@/lib/oddsRodada";
 
 // Cache em memória para evitar re-fetch ao trocar de aba
 const _cache = new Map<string, unknown>();
@@ -40,6 +41,8 @@ export interface DadosMercado {
   selecoes: Selecao[];
   pontuacaoCedida: PontuacaoCedida;
   oddsJogadores: OddsJogadoresData | null;
+  oddsArmazenamento: OddsArmazenamentoData | null;
+  rodadaCartolaAtual: number;
   confrontosCopa: ConfrontoCopa[];
   partidasProcessadas: string[];
 }
@@ -64,7 +67,7 @@ export async function carregarDadosRadar(): Promise<
 
 /** Dados da aba Mercado (jogadores_mercado + selecoes + pontuacao_cedida + odds). */
 export async function carregarDadosMercado(): Promise<DadosMercado> {
-  const [jogadores, selecoes, pontuacaoCedida, oddsResult, grupos, copaEstado] =
+  const [jogadores, selecoes, pontuacaoCedida, oddsResult, oddsArmaz, grupos, copaEstado] =
     await Promise.all([
     carregarJson<JogadorMercado[]>("/data/jogadores_mercado.json"),
     carregarJson<Selecao[]>("/data/selecoes.json"),
@@ -72,14 +75,21 @@ export async function carregarDadosMercado(): Promise<DadosMercado> {
     fetch("/data/odds_jogadores.json")
       .then((r) => (r.ok ? (r.json() as Promise<OddsJogadoresData>) : null))
       .catch(() => null),
+    fetch("/data/odds_eventos_armazenados.json")
+      .then((r) => (r.ok ? (r.json() as Promise<OddsArmazenamentoData>) : null))
+      .catch(() => null),
     carregarJson<{ confrontos: ConfrontoCopa[] }>("/data/grupos_wc2026.json"),
-    carregarJson<{ partidas_processadas?: string[] }>("/data/copa_estado.json"),
+    carregarJson<{ partidas_processadas?: string[]; rodada_cartola_atual?: number }>(
+      "/data/copa_estado.json",
+    ),
   ]);
   return {
     jogadores,
     selecoes,
     pontuacaoCedida,
     oddsJogadores: oddsResult,
+    oddsArmazenamento: oddsArmaz,
+    rodadaCartolaAtual: Number(copaEstado.rodada_cartola_atual) || 2,
     confrontosCopa: grupos.confrontos ?? [],
     partidasProcessadas: copaEstado.partidas_processadas ?? [],
   };

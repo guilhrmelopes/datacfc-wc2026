@@ -68,8 +68,9 @@ export const oddsProximoAdversario = oddsVigentes;
 export function cedidoAdversarioCopa(
   j: JogadorMercado,
   pontuacao: PontuacaoCedida,
+  adversarioSigla?: string | null,
 ): number | null {
-  const adv = j.proximo_adversario_sigla?.trim().toUpperCase();
+  const adv = (adversarioSigla ?? j.proximo_adversario_sigla)?.trim().toUpperCase();
   if (!adv) return null;
   const perf = pontuacao[adv] as PerformancePorSigla | null | undefined;
   if (!perf) return null;

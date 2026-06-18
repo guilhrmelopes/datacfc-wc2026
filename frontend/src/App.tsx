@@ -97,6 +97,8 @@ export default function App() {
               confrontosCopa={mercado.dados.confrontosCopa}
               partidasProcessadas={mercado.dados.partidasProcessadas}
               oddsJogadores={mercado.dados.oddsJogadores}
+              oddsArmazenamento={mercado.dados.oddsArmazenamento}
+              rodadaCartolaAtual={mercado.dados.rodadaCartolaAtual}
               pontuacaoCedida={mercado.dados.pontuacaoCedida as PontuacaoCedida}
             />
           )}
