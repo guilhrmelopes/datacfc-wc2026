@@ -173,8 +173,10 @@ def compilar_cobradores_por_atleta(
                 continue
             aid = str(int(par[0]["atleta_id"]))
             entry = por_atleta.setdefault(aid, {})
-            entry["bola_parada"] = True
-            entry["ordem_bola_parada"] = idx
+            entry["escanteio"] = True
+            entry["ordem_escanteio"] = idx
+            entry["falta"] = True
+            entry["ordem_falta"] = idx
 
     if nao_resolvidos:
         log.warning(
@@ -187,7 +189,7 @@ def compilar_cobradores_por_atleta(
         "Cobradores compilados: %d atletas (%d P + %d BP únicos).",
         len(por_atleta),
         sum(1 for v in por_atleta.values() if v.get("penalti")),
-        sum(1 for v in por_atleta.values() if v.get("bola_parada")),
+        sum(1 for v in por_atleta.values() if v.get("escanteio")),
     )
 
     return {
