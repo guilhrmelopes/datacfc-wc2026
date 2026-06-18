@@ -100,13 +100,24 @@ class _RateLimiter:
 _limiter = _RateLimiter(INTERVALO_REQUISICOES_S)
 
 
-def _fetch_json(url: str, logger: logging.Logger) -> dict[str, Any]:
+def _fetch_json(
+    url: str,
+    logger: logging.Logger,
+    *,
+    permitir_vazio: bool = False,
+) -> dict[str, Any]:
     for tentativa in range(1, MAX_TENTATIVAS + 1):
         _limiter.aguardar()
         req = urllib.request.Request(url, headers=CABECALHOS)
         try:
             with urllib.request.urlopen(req, timeout=TIMEOUT_S) as resp:
-                payload = json.loads(resp.read())
+                bruto = resp.read()
+                if not bruto.strip():
+                    if permitir_vazio or resp.status in (204, 404):
+                        logger.info("Resposta vazia em %s (HTTP %s) — usando payload vazio.", url, resp.status)
+                        return {}
+                    raise ValueError(f"Resposta vazia de {url}")
+                payload = json.loads(bruto)
             if not isinstance(payload, dict):
                 raise ValueError(f"Resposta inesperada de {url}")
             return payload
@@ -163,9 +174,14 @@ def buscar_dados_cartola_copa(
     log.info("Cartola Copa — iniciando raspagem (intervalo %.1fs)", INTERVALO_REQUISICOES_S)
 
     status = _fetch_json(URL_STATUS, log)
-    pontuados = _fetch_json(URL_PONTUADOS, log)
+    pontuados = _fetch_json(URL_PONTUADOS, log, permitir_vazio=True)
     mercado = _fetch_json(URL_MERCADO, log)
     partidas = _fetch_json(URL_PARTIDAS, log)
+
+    if not pontuados:
+        avisos.append(
+            "/copa/atletas/pontuados indisponível (HTTP 204 — comum com mercado aberto antes do fechamento)."
+        )
 
     if not payload_tem_selecoes(partidas):
         avisos.append("/copa/partidas não retornou clubes de seleções.")
