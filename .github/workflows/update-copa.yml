@@ -109,6 +109,8 @@ jobs:
           fi
 
       - name: Validar pipeline odds
+        id: validar_odds
+        continue-on-error: true
         run: python automation/validar_pipeline_odds.py
 
       - name: Odds GA% / SG% (próximo adversário)
@@ -160,6 +162,9 @@ jobs:
         run: |
           if [ "${{ steps.odds.outcome }}" = "failure" ]; then
             echo "::warning::Scraper de odds falhou — arquivo anterior preservado via merge."
+          fi
+          if [ "${{ steps.validar_odds.outcome }}" = "failure" ]; then
+            echo "::warning::Validacao pre-scrape de odds falhou — Copa atualizada; odds usam cache/soft-fail."
           fi
           if [ "${{ steps.commit_odds.outcome }}" = "failure" ]; then
             echo "::warning::Commit de odds falhou (push rejeitado ou sem mudanças válidas)."

@@ -4,14 +4,20 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import date, timedelta
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
+CAMINHO_MERCADO = RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 sys.path.insert(0, str(RAIZ / "src"))
 
 from scrapers.mapeamento_selecoes_odds import chave_confronto  # noqa: E402
-from scrapers.odds_armazenamento import confrontos_na_janela, referencia_hoje  # noqa: E402
+from scrapers.odds_armazenamento import (  # noqa: E402
+    confrontos_demanda_odds,
+    confrontos_na_janela,
+    mapa_sigla_por_selecao,
+    referencia_hoje,
+    scrape_seletivo_habilitado,
+)
 from scrapers.resolucao_eventos_odds import (  # noqa: E402
     construir_indice_eventos,
     mapear_fixtures,
@@ -19,14 +25,26 @@ from scrapers.resolucao_eventos_odds import (  # noqa: E402
 from scrapers.scraper_odds_jogadores import _fixtures_de_confrontos  # noqa: E402
 
 
+def _confrontos_alvo(hoje, janela: list[dict]) -> tuple[list[dict], str]:
+    """Com scrape seletivo, valida só confrontos com demanda (ADV no mercado)."""
+    if scrape_seletivo_habilitado() and CAMINHO_MERCADO.is_file():
+        mercado = json.loads(CAMINHO_MERCADO.read_text(encoding="utf-8"))
+        selecao_sigla = mapa_sigla_por_selecao(mercado)
+        demanda = confrontos_demanda_odds(mercado, janela, selecao_sigla, hoje)
+        if demanda:
+            return demanda, "demanda"
+    return janela, "janela"
+
+
 def main() -> int:
     hoje = referencia_hoje()
-    confrontos = confrontos_na_janela(hoje, 7)
-    fixtures = _fixtures_de_confrontos(confrontos)
+    janela = confrontos_na_janela(hoje, 7)
+    alvo, rotulo = _confrontos_alvo(hoje, janela)
+    fixtures = _fixtures_de_confrontos(alvo)
     por_confronto, por_fixture = construir_indice_eventos()
     mapeados, faltando = mapear_fixtures(fixtures, por_confronto, por_fixture)
 
-    print(f"janela={hoje.isoformat()}..+7d confrontos={len(confrontos)}")
+    print(f"janela={hoje.isoformat()}..+7d total={len(janela)} validacao={rotulo}={len(alvo)}")
     print(f"indice: confronto={len(por_confronto)} fixture_id={len(por_fixture)}")
     print(f"mapeados={len(mapeados)} faltando={len(faltando)}")
 
@@ -37,6 +55,13 @@ def main() -> int:
             print(f"  {fx.get('home')} vs {fx.get('away')} [{ch}]")
         if len(faltando) > 15:
             print(f"  ... +{len(faltando) - 15}")
+        if rotulo == "demanda":
+            print(
+                "FALHA: confronto com demanda de odds sem oddsEventId "
+                "(cache + API OddsNotifier)."
+            )
+        else:
+            print("FALHA: confronto na janela sem oddsEventId.")
         return 1
 
     ids = {int(m["id"]) for m in mapeados}
@@ -44,7 +69,13 @@ def main() -> int:
         print("ERRO: event_id duplicado no mapeamento.")
         return 1
 
-    print("OK: 100% dos confrontos na janela mapeados via API/cache.")
+    if rotulo == "demanda" and len(alvo) < len(janela):
+        print(
+            f"OK: 100% dos {len(alvo)} confrontos com demanda mapeados "
+            f"(janela completa {len(janela)} — restante sem scrape previsto)."
+        )
+    else:
+        print("OK: 100% dos confrontos na janela mapeados via API/cache.")
     return 0
 
 
