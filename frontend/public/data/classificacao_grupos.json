@@ -4,9 +4,9 @@
     "BELGIUM",
     "BRAZIL",
     "PORTUGAL",
-    "QATAR",
     "SPAIN",
     "CZECHIA",
+    "BOSNIA AND HERZEGOVINA",
     "ECUADOR"
   ],
   "A": [
@@ -74,6 +74,21 @@
   "B": [
     {
       "posicao": 1,
+      "selecao": "CANADA",
+      "sigla": "CAN",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
+      "P": 4,
+      "J": 2,
+      "V": 1,
+      "E": 1,
+      "D": 0,
+      "GM": 5,
+      "GS": 1,
+      "SG": 4,
+      "aprov": 66.7
+    },
+    {
+      "posicao": 2,
       "selecao": "SWITZERLAND",
       "sigla": "SUI",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
@@ -88,37 +103,7 @@
       "aprov": 66.7
     },
     {
-      "posicao": 2,
-      "selecao": "CANADA",
-      "sigla": "CAN",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
-      "P": 1,
-      "J": 1,
-      "V": 0,
-      "E": 1,
-      "D": 0,
-      "GM": 1,
-      "GS": 1,
-      "SG": 0,
-      "aprov": 33.3
-    },
-    {
       "posicao": 3,
-      "selecao": "QATAR",
-      "sigla": "CAT",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAT/60x60.png",
-      "P": 1,
-      "J": 1,
-      "V": 0,
-      "E": 1,
-      "D": 0,
-      "GM": 1,
-      "GS": 1,
-      "SG": 0,
-      "aprov": 33.3
-    },
-    {
-      "posicao": 4,
       "selecao": "BOSNIA AND HERZEGOVINA",
       "sigla": "BOS",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BOS/60x60.png",
@@ -130,6 +115,21 @@
       "GM": 2,
       "GS": 5,
       "SG": -3,
+      "aprov": 16.7
+    },
+    {
+      "posicao": 4,
+      "selecao": "QATAR",
+      "sigla": "CAT",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAT/60x60.png",
+      "P": 1,
+      "J": 2,
+      "V": 0,
+      "E": 1,
+      "D": 1,
+      "GM": 1,
+      "GS": 5,
+      "SG": -4,
       "aprov": 16.7
     }
   ],
