@@ -271,7 +271,7 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
         <span className="inline-block rounded px-1.5 py-0.5 bg-rose-600/20">RUIM</span>
         {contextoMetricas.recalibAtiva
           ? " — limiares recalibrados por quartis da Copa (seleções com J≥3)."
-          : " — benchmarks absolutos Wyscout/StatsBomb (recalibra com J≥3 por seleção)."}
+          : null}
       </p>
     </div>
     </>

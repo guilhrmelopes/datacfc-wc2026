@@ -45,17 +45,6 @@ interface Props {
   classificacao: ClassificacaoGruposParseada;
 }
 
-function LegendaRecorrencia() {
-  return (
-    <span
-      className="inline-flex h-5 w-5 cursor-help items-center justify-center rounded-full border border-[var(--color-border)] text-[10px] font-serif italic"
-      title="Pontuação cedido/conquistado — média Cartola por posição (Copa 2026). Cores: BOM (verde) · MEDIANO (âmbar) · RUIM (vermelho). Conquistado: maior é melhor. Cedido: menor é melhor."
-    >
-      i
-    </span>
-  );
-}
-
 function linhaClassificacao(
   classificacao: ClassificacaoGruposParseada,
   selecaoNome: string,
@@ -322,20 +311,17 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <FiltrosRecorrencia
-          rodadaFiltro={rodadaFiltro}
-          diaAtual={diaAtual}
-          datasDisponiveis={datasDisponiveis}
-          grupo={grupoFiltro}
-          busca={busca}
-          onRodadaChange={handleRodadaChange}
-          onDiaChange={setDiaAtual}
-          onGrupoChange={setGrupoFiltro}
-          onBuscaChange={setBusca}
-        />
-        <LegendaRecorrencia />
-      </div>
+      <FiltrosRecorrencia
+        rodadaFiltro={rodadaFiltro}
+        diaAtual={diaAtual}
+        datasDisponiveis={datasDisponiveis}
+        grupo={grupoFiltro}
+        busca={busca}
+        onRodadaChange={handleRodadaChange}
+        onDiaChange={setDiaAtual}
+        onGrupoChange={setGrupoFiltro}
+        onBuscaChange={setBusca}
+      />
 
       {/* Cedido / conquistado — todas as seleções visíveis nos filtros */}
       <section className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4">
