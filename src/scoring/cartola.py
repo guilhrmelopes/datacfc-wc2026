@@ -121,9 +121,9 @@ def celula_pontuacao(valor: float | None) -> dict:
     return {"valor": round(valor, 2), "cor": cor_performance(valor)}
 
 
-def media_bucket(pontos: list[float]) -> float | None:
+def media_bucket(pontos: list[float], *, padrao_se_vazio: float | None = None) -> float | None:
     if not pontos:
-        return None
+        return padrao_se_vazio
     return round(sum(pontos) / len(pontos), 2)
 
 
@@ -152,11 +152,17 @@ class AcumuladorCedidoConquistado:
                 self.cedido[bucket].append(d)
 
     def exportar(self) -> dict[str, dict[str, dict]]:
+        jogou = any(self.conquistado[b] or self.cedido[b] for b in BUCKETS)
+        padrao = 0.0 if jogou else None
         out: dict[str, dict[str, dict]] = {}
         for bucket in BUCKETS:
             out[bucket] = {
-                "cedido": celula_pontuacao(media_bucket(self.cedido[bucket])),
-                "conquistado": celula_pontuacao(media_bucket(self.conquistado[bucket])),
+                "cedido": celula_pontuacao(
+                    media_bucket(self.cedido[bucket], padrao_se_vazio=padrao),
+                ),
+                "conquistado": celula_pontuacao(
+                    media_bucket(self.conquistado[bucket], padrao_se_vazio=padrao),
+                ),
             }
         return out
 

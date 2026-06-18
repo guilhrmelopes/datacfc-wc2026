@@ -391,7 +391,15 @@ const COL_DE_PCT = copaCol(
   "de_pct",
   "DE%",
   "Defesas por 90 minutos",
-  (j) => (temCopa(j) ? (j.copa_de_pct ?? null) : null),
+  (j) => {
+    if (!temCopa(j)) return null;
+    if (j.copa_de_pct != null) return j.copa_de_pct;
+    const mins = j.copa_mins_played ?? 0;
+    if (j.bucket_posicao === "GOL" && mins > 0) {
+      return ((j.copa_de ?? 0) / mins) * 90;
+    }
+    return j.bucket_posicao === "GOL" ? 0 : null;
+  },
   2,
 );
 const COL_GE = copaCol(

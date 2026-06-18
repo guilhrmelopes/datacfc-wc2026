@@ -12,19 +12,32 @@ export function temCopa(j: JogadorMercado): boolean {
 
 export function mediaGeralCopa(j: JogadorMercado): number | null {
   if (!temCopa(j)) return null;
-  return j.copa_media_geral ?? null;
+  const mg = j.copa_media_geral;
+  if (mg !== null && mg !== undefined) return mg;
+  const jogos = j.copa_jogos_num ?? 0;
+  if (jogos > 0) return round2((j.copa_pontos_total ?? 0) / jogos);
+  return null;
 }
 
 export function mediaBaseCopa(j: JogadorMercado): number | null {
   if (!temCopa(j)) return null;
-  return j.copa_media_base ?? null;
+  const mb = j.copa_media_base;
+  if (mb !== null && mb !== undefined) return mb;
+  const mg = mediaGeralCopa(j);
+  return mg !== null ? mg : 0;
+}
+
+function round2(n: number): number {
+  return Math.round(n * 100) / 100;
 }
 
 export function xgXaPor90Copa(j: JogadorMercado): number | null {
-  if (!temCopa(j) || !j.copa_mins_played) return null;
+  if (!temCopa(j)) return null;
+  const mins = j.copa_mins_played ?? 0;
+  if (mins <= 0) return 0;
   const xg = j.copa_xg ?? 0;
   const xa = j.copa_xa ?? 0;
-  return ((xg + xa) / j.copa_mins_played) * 90;
+  return ((xg + xa) / mins) * 90;
 }
 
 /** Hoje no fuso do calendário (America/Sao_Paulo), formato YYYY-MM-DD. */
@@ -75,6 +88,8 @@ export function cedidoAdversarioCopa(
   const perf = pontuacao[adv] as PerformancePorSigla | null | undefined;
   if (!perf) return null;
   const bucket = j.bucket_posicao as keyof PerformancePorSigla;
-  const valor = perf[bucket]?.cedido?.valor;
-  return valor === null || valor === undefined ? null : valor;
+  const celula = perf[bucket]?.cedido;
+  const valor = celula?.valor;
+  if (valor === null || valor === undefined) return 0;
+  return valor;
 }

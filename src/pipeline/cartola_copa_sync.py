@@ -12,7 +12,9 @@ from scoring.cartola import (
     Bucket,
     PONTOS,
     AcumuladorCedidoConquistado,
+    ScoutsPartida,
     calcular_cedido_conquistado_partida,
+    calcular_medias_copa,
 )
 from scrapers.cartola_copa import DadosCartolaCopa, POSICAO_PARA_BUCKET, payload_tem_selecoes
 from scrapers.fotmob_mapa import cartola_abrev_para_selecao, url_escudo_cartola
@@ -113,6 +115,78 @@ def _bonus_oficial_scout(scout: dict[str, Any] | None, posicao_id: int | None) -
 def mb_rodada_oficial(pontuacao: float, scout: dict[str, Any] | None, posicao_id: int | None) -> float:
     """MB de uma rodada = pontuacao − bônus G/A/SG (campos oficiais de pontuados)."""
     return round(float(pontuacao) - _bonus_oficial_scout(scout, posicao_id), 2)
+
+
+def _zerar_scouts_copa_numerico(entry: dict) -> None:
+    """Zera contadores oficiais Cartola antes de reaplicar scout da API."""
+    for campo in COPA_CAMPOS_JOGADOR:
+        if campo.startswith("copa_") and campo not in (
+            "copa_jogos_num",
+            "copa_pontos_total",
+            "copa_media_geral",
+            "copa_media_base",
+            "copa_de_pct",
+            "copa_xg",
+            "copa_xa",
+            "copa_int",
+            "copa_c",
+            "copa_br",
+            "copa_ge",
+            "copa_gcc",
+            "copa_mins_played",
+        ):
+            entry[campo] = 0
+
+
+def _scouts_partida_de_entry(entry: dict) -> ScoutsPartida:
+    return ScoutsPartida(
+        minutos=int(entry.get("copa_mins_played") or 0),
+        G=int(entry.get("copa_goals") or 0),
+        A=int(entry.get("copa_goal_assist") or 0),
+        SG=int(entry.get("copa_clean_sheet") or 0),
+        DE=int(entry.get("copa_de") or 0),
+        DS=int(entry.get("copa_ds") or 0),
+        GS=int(entry.get("copa_gs") or 0),
+        FD=int(entry.get("copa_fd") or 0),
+    )
+
+
+def finalizar_metricas_copa(mercado: list[dict]) -> None:
+    """Garante MG/MB/scouts numéricos para quem tem J≥1 (inclui pontuação 0)."""
+    for entry in mercado:
+        jogos = int(entry.get("copa_jogos_num") or 0)
+        if jogos <= 0:
+            continue
+        bucket = entry.get("bucket_posicao")
+        if bucket not in BUCKETS:
+            continue
+
+        for campo in COPA_CAMPOS_JOGADOR:
+            if campo in ("copa_media_geral", "copa_media_base", "copa_de_pct"):
+                continue
+            if entry.get(campo) is None:
+                entry[campo] = (
+                    0.0
+                    if campo in ("copa_xg", "copa_xa", "copa_ge")
+                    else 0
+                )
+
+        pontos = float(entry.get("copa_pontos_total") or 0)
+        if entry.get("copa_media_geral") is None:
+            entry["copa_media_geral"] = round(pontos / jogos, 2)
+
+        if entry.get("copa_media_base") is None:
+            sc = _scouts_partida_de_entry(entry)
+            _, mb = calcular_medias_copa(pontos, jogos, sc, bucket)  # type: ignore[arg-type]
+            entry["copa_media_base"] = mb if mb is not None else 0.0
+
+        if bucket == "GOL":
+            mins = int(entry.get("copa_mins_played") or 0)
+            if mins > 0 and entry.get("copa_de_pct") is None:
+                entry["copa_de_pct"] = round(
+                    (float(entry.get("copa_de") or 0) / mins) * 90,
+                    2,
+                )
 
 
 def _aplicar_scouts_copa(entry: dict, scout: dict[str, Any] | None) -> None:
@@ -648,35 +722,20 @@ def rebuild_copa_oficial(
                 entry["copa_jogos_num"] = api_jogos
                 entry["copa_pontos_total"] = round(api_pontos, 2)
                 entry["copa_media_geral"] = round(api_media, 2)
-                if api_scout:
-                    for campo in COPA_CAMPOS_JOGADOR:
-                        if campo.startswith("copa_") and campo not in (
-                            "copa_jogos_num",
-                            "copa_pontos_total",
-                            "copa_media_geral",
-                            "copa_media_base",
-                            "copa_de_pct",
-                            "copa_xg",
-                            "copa_xa",
-                            "copa_int",
-                            "copa_c",
-                            "copa_br",
-                            "copa_ge",
-                            "copa_gcc",
-                            "copa_mins_played",
-                        ):
-                            entry[campo] = 0
-                    _aplicar_scouts_copa(entry, api_scout)
+                _zerar_scouts_copa_numerico(entry)
+                _aplicar_scouts_copa(entry, api_scout)
                 jogos = api_jogos
 
         if jogos <= 0:
             continue
 
         if entry.get("copa_media_geral") is None:
-            entry["copa_media_geral"] = round(float(entry["copa_pontos_total"]) / jogos, 2)
+            entry["copa_media_geral"] = round(float(entry.get("copa_pontos_total") or 0) / jogos, 2)
 
         if aid_int in acum_mb:
             entry["copa_media_base"] = round(acum_mb[aid_int] / jogos, 2)
+
+    finalizar_metricas_copa(mercado)
 
 
 def _partidas_cedido_historico(
@@ -903,16 +962,8 @@ def rebuild_extras_fotmob(
         if jogos <= 0:
             continue
         entry["copa_jogos_num"] = jogos
-        if entry.get("copa_media_geral") is None and entry.get("copa_pontos_total"):
-            entry["copa_media_geral"] = round(float(entry["copa_pontos_total"]) / jogos, 2)
-        if entry.get("bucket_posicao") == "GOL":
-            mins = int(entry.get("copa_mins_played") or 0)
-            if mins:
-                entry["copa_de_pct"] = round(
-                    (float(entry.get("copa_de") or 0) / mins) * 90,
-                    2,
-                )
 
+    finalizar_metricas_copa(mercado)
     _salvar_json(caminho_mercado, mercado)
 
 
@@ -963,6 +1014,9 @@ def aplicar_dados_cartola(
     else:
         siglas = set()
 
+    _salvar_json(caminho_mercado, mercado)
+
+    finalizar_metricas_copa(mercado)
     _salvar_json(caminho_mercado, mercado)
 
     return {
