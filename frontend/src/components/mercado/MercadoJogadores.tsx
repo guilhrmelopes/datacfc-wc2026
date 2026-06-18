@@ -38,6 +38,7 @@ import {
   oddsParaRodada,
   type OddsArmazenamentoData,
 } from "@/lib/oddsRodada";
+import { gaPctCalculado, gaPctEfetivo } from "@/lib/oddsGaFallback";
 import {
   adversarioRodada,
   jogadorNaRodada,
@@ -149,21 +150,24 @@ function PctOdds({
   casa,
   odds,
   tooltipPrefix = "Probabilidade",
+  tooltip,
   ativo = true,
 }: {
   pct: number | null | undefined;
   casa: string | null | undefined;
   odds: number | null | undefined;
   tooltipPrefix?: string;
+  tooltip?: string;
   ativo?: boolean;
 }) {
   if (!ativo || pct === null || pct === undefined) return <Dash />;
-  const tooltip =
-    casa && odds
+  const tooltipFinal =
+    tooltip ??
+    (casa && odds
       ? `${tooltipPrefix} (${casa} - odd ${odds.toFixed(2)})`
-      : undefined;
+      : tooltipPrefix);
   return (
-    <span className="tabular-nums font-medium" title={tooltip}>
+    <span className="tabular-nums font-medium" title={tooltipFinal}>
       {pct.toFixed(1)}%
     </span>
   );
@@ -205,7 +209,7 @@ const COL_MB: ColDef = {
 const COL_CED: ColDef = {
   key: "ced",
   header: "CED",
-  title: "Pontuação cedida pelo adversário",
+  title: "Pontuação cedida acumulada na Copa pelo adversário da rodada",
   render: (_j, ced) =>
     ced != null ? <span className="tabular-nums">{fmt(ced, 2)}</span> : <Dash />,
 };
@@ -428,11 +432,12 @@ function classeCelulaHub(
     return classeCelulaIndice100(odds.a_pct, amostra);
   }
   if (colKey === "ga_pct") {
-    if (!oddsAtiva(odds) || odds?.ga_pct == null) return "";
+    const ga = gaPctEfetivo(odds);
+    if (!oddsAtiva(odds) || ga == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
-      oddsResolver(x)?.ga_pct ?? null,
+      gaPctEfetivo(oddsResolver(x)),
     );
-    return classeCelulaIndice100(odds.ga_pct, amostra);
+    return classeCelulaIndice100(ga, amostra);
   }
   if (colKey === "sg_pct") {
     if (!oddsAtiva(odds) || odds?.sg_pct == null) return "";
@@ -442,13 +447,14 @@ function classeCelulaHub(
     return classeCelulaIndice100(odds.sg_pct, amostra);
   }
   if (colKey === "potencial_r1") {
-    const valor = calcularPotencialRodada(j, oddsAtiva(odds) ? odds : null, escalas);
+    const oddsVal = oddsAtiva(odds) ? odds : null;
+    const valor = calcularPotencialRodada(j, oddsVal, escalas, true);
     if (valor == null) return "";
     const amostra = jogadores
       .filter((x) => x.bucket_posicao === pos && temCopa(x))
       .map((x) => {
         const o = oddsResolver(x);
-        return calcularPotencialRodada(x, oddsAtiva(o) ? o : null, escalas);
+        return calcularPotencialRodada(x, oddsAtiva(o) ? o : null, escalas, true);
       })
       .filter((v): v is number => v !== null);
     return classeCelulaIndice100(valor, amostra);
@@ -543,11 +549,16 @@ function valorOrdenacao(
     case "a_pct":
       return oddsAtiva(odds) ? (odds?.a_pct ?? null) : null;
     case "ga_pct":
-      return oddsAtiva(odds) ? (odds?.ga_pct ?? null) : null;
+      return oddsAtiva(odds) ? gaPctEfetivo(odds) : null;
     case "sg_pct":
       return oddsAtiva(odds) ? (odds?.sg_pct ?? null) : null;
     case "potencial_r1":
-      return calcularPotencialRodada(j, oddsAtiva(odds) ? odds : null, escalas);
+      return calcularPotencialRodada(
+        j,
+        oddsAtiva(odds) ? odds : null,
+        escalas,
+        true,
+      );
     case "j":
       return temCopa(j) ? (j.copa_jogos_num ?? null) : null;
     case "min":
@@ -782,7 +793,7 @@ export function MercadoJogadores({
           title: `Potencial para Rodada ${rodadaFiltro}`,
           render: (j: JogadorMercado, _ced: number | null, odds: OddsJogadorEntry | null) => {
             const oddsVal = oddsAtiva(odds) ? odds : null;
-            const valor = calcularPotencialRodada(j, oddsVal, escalasRating);
+            const valor = calcularPotencialRodada(j, oddsVal, escalasRating, true);
             return (
               <span
                 className="tabular-nums font-medium"
@@ -799,14 +810,30 @@ export function MercadoJogadores({
           ...col,
           render: (_j: JogadorMercado, _ced: number | null, odds: OddsJogadorEntry | null) => {
             const ativo = oddsAtiva(odds);
+            if (col.key === "ga_pct") {
+              const ga = gaPctEfetivo(odds);
+              const calculado = gaPctCalculado(odds);
+              return (
+                <PctOdds
+                  pct={ga}
+                  casa={calculado ? null : odds?.casa_ga}
+                  odds={calculado ? null : odds?.odds_ga}
+                  tooltipPrefix="Probabilidade de marcar ou assistir"
+                  tooltip={
+                    calculado && odds?.g_pct != null && odds?.a_pct != null
+                      ? `GA% estimado: G% ${odds.g_pct.toFixed(1)} + A% ${odds.a_pct.toFixed(1)} (independência)`
+                      : undefined
+                  }
+                  ativo={ativo}
+                />
+              );
+            }
             const props =
               col.key === "g_pct"
                 ? { pct: odds?.g_pct, casa: odds?.casa_g, odds: odds?.odds_g, tooltipPrefix: "Probabilidade de marcar" }
                 : col.key === "a_pct"
                   ? { pct: odds?.a_pct, casa: odds?.casa_a, odds: odds?.odds_a, tooltipPrefix: "Probabilidade de assistir" }
-                  : col.key === "ga_pct"
-                    ? { pct: odds?.ga_pct, casa: odds?.casa_ga, odds: odds?.odds_ga, tooltipPrefix: "Probabilidade de marcar ou assistir" }
-                    : { pct: odds?.sg_pct, casa: odds?.casa_sg, odds: odds?.odds_sg, tooltipPrefix: "Probabilidade de não sofrer gol" };
+                  : { pct: odds?.sg_pct, casa: odds?.casa_sg, odds: odds?.odds_sg, tooltipPrefix: "Probabilidade de não sofrer gol" };
             return <PctOdds {...props} ativo={ativo} />;
           },
         };

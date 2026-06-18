@@ -174,6 +174,14 @@ def _mapa_clube_sigla(dados: DadosCartolaCopa, selecoes: list[dict]) -> dict[int
                 por_id[cid] = sigla
 
     nome_para_sigla = _sigla_por_selecao(selecoes)
+    for s in selecoes:
+        try:
+            cid = int(s.get("clube_id"))
+        except (TypeError, ValueError):
+            continue
+        sigla = str(s.get("sigla") or "").upper()
+        if sigla:
+            por_id[cid] = sigla
     for info in (dados.mercado.get("clubes") or {}).values():
         if not isinstance(info, dict):
             continue
@@ -601,28 +609,92 @@ def rebuild_copa_oficial(
             entry["copa_media_base"] = round(acum_mb[aid_int] / jogos, 2)
 
 
+def _partidas_cedido_historico(
+    estado: dict,
+    selecoes: list[dict],
+    caminho_grupos: Path,
+) -> list[dict]:
+    """Partidas finalizadas já processadas — fonte estável quando a API só expõe a janela atual."""
+    processadas = set(str(x) for x in (estado.get("partidas_processadas") or []))
+    mapa_sel = {s["selecao"]: s for s in selecoes}
+    confrontos = _carregar_json(caminho_grupos).get("confrontos") or []
+    saida: list[dict] = []
+
+    for c in confrontos:
+        match_id = str(c.get("match_id") or "")
+        if match_id not in processadas and not c.get("finalizada"):
+            continue
+        mandante = mapa_sel.get(c.get("mandante", ""))
+        visitante = mapa_sel.get(c.get("visitante", ""))
+        if not mandante or not visitante:
+            continue
+        try:
+            casa_id = int(mandante["clube_id"])
+            visitante_id = int(visitante["clube_id"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        saida.append(
+            {
+                "clube_casa_id": casa_id,
+                "clube_visitante_id": visitante_id,
+                "sig_m": str(mandante["sigla"]).upper(),
+                "sig_v": str(visitante["sigla"]).upper(),
+                "rodada_cartola": int(c.get("rodada") or 1),
+            }
+        )
+    return saida
+
+
 def reprocessar_cedido_cartola(
     dados: DadosCartolaCopa,
     estado: dict,
     selecoes: list[dict],
     caminho_pontuacao: Path,
+    caminho_grupos: Path | None = None,
 ) -> set[str]:
     clube_sigla = _mapa_clube_sigla(dados, selecoes)
     acumuladores: dict[str, AcumuladorCedidoConquistado] = {}
     rodadas = estado.get("pontuados_por_rodada") or {}
 
-    for partida in _partidas_encerradas(dados):
-        try:
-            casa = int(partida["clube_casa_id"])
-            visitante = int(partida["clube_visitante_id"])
-        except (KeyError, TypeError, ValueError):
-            continue
-        sig_m = clube_sigla.get(casa)
-        sig_v = clube_sigla.get(visitante)
+    partidas: list[dict] = []
+    if caminho_grupos and caminho_grupos.is_file():
+        partidas = _partidas_cedido_historico(estado, selecoes, caminho_grupos)
+
+    if not partidas:
+        for partida in _partidas_encerradas(dados):
+            try:
+                casa = int(partida["clube_casa_id"])
+                visitante = int(partida["clube_visitante_id"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            sig_m = clube_sigla.get(casa)
+            sig_v = clube_sigla.get(visitante)
+            if not sig_m or not sig_v:
+                continue
+            partidas.append(
+                {
+                    "clube_casa_id": casa,
+                    "clube_visitante_id": visitante,
+                    "sig_m": sig_m,
+                    "sig_v": sig_v,
+                    "rodada_cartola": int(
+                        partida.get("rodada")
+                        or dados.partidas.get("rodada")
+                        or estado.get("rodada_cartola_atual")
+                        or 1
+                    ),
+                }
+            )
+
+    for partida in partidas:
+        casa = int(partida["clube_casa_id"])
+        visitante = int(partida["clube_visitante_id"])
+        sig_m = partida.get("sig_m") or clube_sigla.get(casa)
+        sig_v = partida.get("sig_v") or clube_sigla.get(visitante)
         if not sig_m or not sig_v:
             continue
 
-        rodada_partida = str(dados.partidas.get("rodada") or estado.get("rodada_cartola_atual") or 1)
+        rodada_partida = str(partida.get("rodada_cartola") or 1)
         snapshot = rodadas.get(rodada_partida)
         if not isinstance(snapshot, dict):
             continue
@@ -637,8 +709,12 @@ def reprocessar_cedido_cartola(
         acumuladores[sig_m].registrar_partida(conquistado[sig_m], cedido[sig_m])
         acumuladores[sig_v].registrar_partida(conquistado[sig_v], cedido[sig_v])
 
-    pontuacao = {sigla: acc.exportar() for sigla, acc in acumuladores.items()}
-    _salvar_json(caminho_pontuacao, pontuacao)
+    if acumuladores:
+        pontuacao = {sigla: acc.exportar() for sigla, acc in acumuladores.items()}
+        _salvar_json(caminho_pontuacao, pontuacao)
+    elif not caminho_pontuacao.is_file():
+        _salvar_json(caminho_pontuacao, {})
+
     return set(acumuladores.keys())
 
 
@@ -725,12 +801,13 @@ def aplicar_dados_cartola(
     fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
     rebuild_copa_oficial(mercado, estado, dados)
 
-    encerradas = len(_partidas_encerradas(dados))
-    if encerradas and por_rodada:
-        siglas = reprocessar_cedido_cartola(dados, estado, selecoes, caminho_pontuacao)
+    caminho_grupos = pasta_dados / "grupos_wc2026.json"
+    if por_rodada:
+        siglas = reprocessar_cedido_cartola(
+            dados, estado, selecoes, caminho_pontuacao, caminho_grupos,
+        )
     else:
         siglas = set()
-        _salvar_json(caminho_pontuacao, {})
 
     _salvar_json(caminho_mercado, mercado)
 
@@ -738,7 +815,7 @@ def aplicar_dados_cartola(
         "rodada_cartola": estado["rodada_cartola_atual"],
         "pontuados_rodada": len(snapshot),
         "mercado_api": len(dados.mercado.get("atletas") or []),
-        "partidas_encerradas": encerradas,
+        "partidas_encerradas": len(_partidas_encerradas(dados)),
         "mercado_campos_atualizados": mercado_atualizados,
         "mercado_meta_selecao": meta_mercado,
         "selecoes_corrigidas": selecoes_corrigidas,

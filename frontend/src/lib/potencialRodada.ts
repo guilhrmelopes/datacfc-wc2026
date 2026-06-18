@@ -1,4 +1,5 @@
 import { oddsVigentes, temCopa } from "@/lib/copaJogador";
+import { gaPctEfetivo } from "@/lib/oddsGaFallback";
 import { calcularRatingJogador, type EscalasRating } from "@/lib/ratingJogador";
 import type { JogadorMercado, OddsJogadorEntry } from "@/types/dados";
 
@@ -33,7 +34,7 @@ export function sinalOddsRodada(
   bucket: string,
   odds: OddsJogadorEntry | null | undefined,
 ): number | null {
-  const ga = odds?.ga_pct ?? null;
+  const ga = gaPctEfetivo(odds);
   const sg = odds?.sg_pct ?? null;
   const g = odds?.g_pct ?? null;
   const a = odds?.a_pct ?? null;
@@ -87,8 +88,9 @@ export function calcularPotencialRodada(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
   escalas: EscalasRating,
+  confiarOdds = false,
 ): number | null {
-  const bruto = calcularPotencialBruto(j, odds, escalas);
+  const bruto = calcularPotencialBruto(j, odds, escalas, confiarOdds);
   if (bruto === null) return null;
   const fator = fatorStatus(j.status_id);
   return Math.round(bruto * fator * 10) / 10;

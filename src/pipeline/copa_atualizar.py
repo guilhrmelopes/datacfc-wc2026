@@ -317,7 +317,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
             caminho_classificacao,
         )
     else:
-        if not resumo_cartola.get("partidas_encerradas"):
+        if not resumo_cartola.get("siglas_cedido") and not caminho_pontuacao.is_file():
             _salvar_json(caminho_pontuacao, {})
 
     rodada = int(estado.get("rodada_cartola_atual") or _rodada_efetiva(partidas, estado))
