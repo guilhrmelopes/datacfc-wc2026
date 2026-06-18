@@ -229,6 +229,10 @@ try {
 
     $env:ODDS_SKIP_WARMUP = "0"
 
+    $env:ODDS_SCRAPE_SELETIVO = "1"
+
+    $env:ODDS_SKIP_FRESCOS = "1"
+
 
 
     Write-Log "Executando scraper + validacao..."

@@ -14,7 +14,7 @@ import json
 import logging
 import os
 from collections import defaultdict
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -23,6 +23,9 @@ logger = logging.getLogger(__name__)
 
 _FUSO_CALENDARIO = ZoneInfo("America/Sao_Paulo")
 _JANELA_DIAS_PADRAO = 7
+_POS_LINHA = frozenset({2, 3, 4, 5})
+_POS_SG = frozenset({1, 2, 3})
+_POS_ODDS_ALVO = _POS_LINHA | _POS_SG
 
 _RAIZ = Path(__file__).resolve().parents[2]
 CAMINHO_ARMAZENAMENTO = _RAIZ / "frontend" / "public" / "data" / "odds_eventos_armazenados.json"
@@ -106,6 +109,141 @@ def confrontos_na_janela(
         resultado.append(c)
     resultado.sort(key=lambda c: (c.get("data", ""), c.get("hora", ""), c.get("match_id", "")))
     return resultado
+
+
+def scrape_seletivo_habilitado() -> bool:
+    """Padrão: seletivo. Forçar janela completa: ODDS_SCRAPE_COMPLETO=1."""
+    if os.environ.get("ODDS_SCRAPE_COMPLETO", "").strip().lower() in ("1", "true", "yes"):
+        return False
+    return os.environ.get("ODDS_SCRAPE_SELETIVO", "1").strip().lower() not in ("0", "false", "no", "off")
+
+
+def _par_siglas(sig_a: str, sig_b: str) -> tuple[str, str]:
+    return tuple(sorted((sig_a.upper(), sig_b.upper())))
+
+
+def confrontos_demanda_odds(
+    jogadores: list[dict],
+    confrontos: list[dict],
+    selecao_sigla: dict[str, str],
+    hoje: date | None = None,
+) -> list[dict]:
+    """
+    Confrontos onde há jogadores de linha/SG com ADV no mercado para aquela partida.
+    Inclui também partidas de hoje envolvendo seleções com demanda.
+    """
+    ref = hoje or referencia_hoje()
+    pares_demanda: set[tuple[str, str]] = set()
+    siglas_ativas: set[str] = set()
+
+    for j in jogadores:
+        prox = (j.get("proximo_adversario_sigla") or "").strip().upper()
+        sig = (j.get("sigla") or "").strip().upper()
+        pos = int(j.get("posicao_id") or 0)
+        if not prox or not sig or pos not in _POS_ODDS_ALVO:
+            continue
+        pares_demanda.add(_par_siglas(sig, prox))
+        siglas_ativas.add(sig)
+
+    if not pares_demanda:
+        return list(confrontos)
+
+    vistos: set[str] = set()
+    resultado: list[dict] = []
+    for c in confrontos:
+        if c.get("finalizada"):
+            continue
+        sig_m = selecao_sigla.get((c.get("mandante") or "").upper(), "").upper()
+        sig_v = selecao_sigla.get((c.get("visitante") or "").upper(), "").upper()
+        if not sig_m or not sig_v:
+            continue
+
+        par = _par_siglas(sig_m, sig_v)
+        incluir = par in pares_demanda
+        if not incluir:
+            d = parse_data_calendario(c.get("data"))
+            if d == ref and (sig_m in siglas_ativas or sig_v in siglas_ativas):
+                incluir = True
+        if not incluir:
+            continue
+
+        chave = f"{c.get('match_id')}|{c.get('data')}"
+        if chave in vistos:
+            continue
+        vistos.add(chave)
+        resultado.append(c)
+
+    resultado.sort(key=lambda c: (c.get("data", ""), c.get("hora", ""), c.get("match_id", "")))
+    return resultado
+
+
+def _parse_iso_datetime(valor: str) -> datetime | None:
+    bruto = (valor or "").strip()
+    if not bruto:
+        return None
+    try:
+        return datetime.fromisoformat(bruto.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def confronto_fresco_no_armazenamento(
+    confronto: dict,
+    eventos_store: dict[str, dict],
+    selecao_sigla: dict[str, str],
+    *,
+    min_odds: int | None = None,
+    max_horas: float | None = None,
+) -> bool:
+    """True se o armazenamento já tem scrape recente e suficiente para o confronto."""
+    limite_odds = min_odds if min_odds is not None else int(os.environ.get("ODDS_MIN_ODDS_EVENTO", "45"))
+    limite_horas = max_horas if max_horas is not None else float(os.environ.get("ODDS_FRESH_HORAS", "10"))
+
+    conf = enriquecer_confronto(confronto, selecao_sigla)
+    data_alvo = (conf.get("data") or "")[:10]
+    sig_m = (conf.get("sigla_mandante") or "").upper()
+    sig_v = (conf.get("sigla_visitante") or "").upper()
+    agora = datetime.now(tz=timezone.utc)
+
+    for ev in eventos_store.values():
+        if not isinstance(ev, dict):
+            continue
+        if (ev.get("data") or "")[:10] != data_alvo:
+            continue
+        if (ev.get("sigla_mandante") or "").upper() != sig_m:
+            continue
+        if (ev.get("sigla_visitante") or "").upper() != sig_v:
+            continue
+        if len(ev.get("odds") or {}) < limite_odds:
+            continue
+        raspar = _parse_iso_datetime(str(ev.get("raspar_em") or ""))
+        if raspar is None:
+            continue
+        if raspar.tzinfo is None:
+            raspar = raspar.replace(tzinfo=timezone.utc)
+        horas = (agora - raspar.astimezone(timezone.utc)).total_seconds() / 3600
+        if horas <= limite_horas:
+            return True
+    return False
+
+
+def filtrar_confrontos_para_scrape(
+    confrontos: list[dict],
+    eventos_store: dict[str, dict],
+    selecao_sigla: dict[str, str],
+    *,
+    pular_frescos: bool = True,
+) -> tuple[list[dict], list[dict]]:
+    if not pular_frescos:
+        return confrontos, []
+    pendentes: list[dict] = []
+    pulados: list[dict] = []
+    for c in confrontos:
+        if confronto_fresco_no_armazenamento(c, eventos_store, selecao_sigla):
+            pulados.append(c)
+        else:
+            pendentes.append(c)
+    return pendentes, pulados
 
 
 def enriquecer_confronto(confronto: dict, selecao_sigla: dict[str, str]) -> dict[str, Any]:

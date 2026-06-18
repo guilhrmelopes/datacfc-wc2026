@@ -51,14 +51,17 @@ from scrapers.resolucao_eventos_odds import (
 from scrapers.odds_armazenamento import (
     carregar_armazenamento,
     compilar_dashboard,
+    confrontos_demanda_odds,
     confrontos_na_janela,
     enriquecer_confronto,
     expurgar_passados,
+    filtrar_confrontos_para_scrape,
     janela_dias,
     mapa_sigla_por_selecao,
     montar_registro_evento,
     referencia_hoje,
     salvar_armazenamento,
+    scrape_seletivo_habilitado,
 )
 
 # ─────────────────────────────────── Logging ─────────────────────────────────
@@ -1895,7 +1898,7 @@ def executar() -> None:
     _RODADA_ATUAL = _rodada_odds_alvo(jogadores_todos)
 
     logger.info(
-        "=== Scraper Odds WC2026 (janela %s + %d dias, %d confrontos, CI=%s) ===",
+        "=== Scraper Odds WC2026 (janela %s + %d dias, %d confrontos na janela, CI=%s) ===",
         hoje.isoformat(),
         dias,
         len(confrontos_janela),
@@ -1905,6 +1908,48 @@ def executar() -> None:
     armazenamento = carregar_armazenamento()
     expurgar_passados(armazenamento, hoje)
     eventos_store: dict[str, dict] = armazenamento.setdefault("eventos", {})
+
+    confrontos_scrape = confrontos_janela
+    if scrape_seletivo_habilitado():
+        confrontos_scrape = confrontos_demanda_odds(
+            jogadores_todos, confrontos_janela, selecao_sigla, hoje,
+        )
+        logger.info(
+            "Scrape seletivo: %d/%d confrontos com demanda de odds.",
+            len(confrontos_scrape),
+            len(confrontos_janela),
+        )
+
+    pular_frescos = os.environ.get("ODDS_SKIP_FRESCOS", "1").strip().lower() not in (
+        "0", "false", "no", "off",
+    )
+    confrontos_scrape, confrontos_frescos = filtrar_confrontos_para_scrape(
+        confrontos_scrape,
+        eventos_store,
+        selecao_sigla,
+        pular_frescos=pular_frescos,
+    )
+    if confrontos_frescos:
+        logger.info(
+            "Confrontos frescos no armazenamento (sem re-scrape): %d",
+            len(confrontos_frescos),
+        )
+
+    if not confrontos_scrape:
+        logger.info("Nenhum evento pendente — recompilando dashboard do armazenamento.")
+        armazenamento["referencia_data"] = hoje.isoformat()
+        armazenamento["janela_dias"] = dias
+        armazenamento["atualizado_em"] = datetime.now(tz=timezone.utc).isoformat()
+        salvar_armazenamento(armazenamento)
+        resultado = compilar_dashboard(armazenamento, jogadores_todos, hoje)
+        _salvar(resultado, referencia_data=hoje.isoformat())
+        return
+
+    logger.info(
+        "=== Scraper Odds WC2026 (%d eventos a raspar, CI=%s) ===",
+        len(confrontos_scrape),
+        IS_CI,
+    )
 
     relatorio = Relatorio()
     total_add = 0
@@ -1978,7 +2023,7 @@ def executar() -> None:
             rsc_wc2026 = _rsc_de_pagina(pagina) + "\n".join(rsc_acumulado)
 
             eventos = buscar_eventos_janela(
-                pagina, confrontos_janela, selecao_sigla, rsc_wc2026,
+                pagina, confrontos_scrape, selecao_sigla, rsc_wc2026,
             )
 
             if not eventos:

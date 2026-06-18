@@ -28,6 +28,8 @@ jobs:
       ODDS_DELAY_MIN: "12"
       ODDS_DELAY_MAX: "20"
       ODDS_TIMEOUT_MS: "60000"
+      ODDS_SCRAPE_SELETIVO: "1"
+      ODDS_SKIP_FRESCOS: "1"
 
     steps:
       - name: Checkout

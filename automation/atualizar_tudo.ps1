@@ -130,6 +130,8 @@ try {
         $env:ODDS_MERGE = "1"
         $env:ODDSNOTIFIER_HEADLESS = "true"
         $env:ODDS_SKIP_WARMUP = "0"
+        $env:ODDS_SCRAPE_SELETIVO = "1"
+        $env:ODDS_SKIP_FRESCOS = "1"
 
         $scrapeOut = & $python (Join-Path $Raiz "automation\executar_odds.py") 2>&1
         $scrapeExit = $LASTEXITCODE

@@ -12,6 +12,7 @@ SCRIPTS = (
     "testar_resolucao_eventos.py",
     "testar_parser_odds_api.py",
     "testar_aprendizado_aliases.py",
+    "testar_scrape_seletivo.py",
 )
 
 
