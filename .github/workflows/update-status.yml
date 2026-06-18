@@ -91,6 +91,8 @@ jobs:
 
             frontend/public/data/copa_estado.json \
 
+            frontend/public/data/cobradores_copa.json \
+
             frontend/public/data/odds_jogadores.json \
 
             frontend/public/data/odds_eventos_armazenados.json

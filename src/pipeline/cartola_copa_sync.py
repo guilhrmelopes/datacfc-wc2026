@@ -554,6 +554,12 @@ def sincronizar_status_fotos_cartola(
     )
     fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
 
+    from scrapers.provaveis_copa import compilar_cobradores_por_atleta
+
+    cobradores_payload = compilar_cobradores_por_atleta(mercado)
+    caminho_cobradores = pasta_dados / "cobradores_copa.json"
+    _salvar_json(caminho_cobradores, cobradores_payload)
+
     rodada = int(dados.status.get("rodada_atual") or estado.get("rodada_cartola_atual") or 1)
     estado["rodada_cartola_atual"] = rodada
     estado["status_mercado"] = dados.status.get("status_mercado")
@@ -567,6 +573,7 @@ def sincronizar_status_fotos_cartola(
         "status_campos_atualizados": status_atualizados,
         "fotos_atualizadas": fotos_atualizadas,
         "provaveis_lineup": len(provavel_ids),
+        "cobradores_atletas": len(cobradores_payload.get("por_atleta") or {}),
         "mercado_api": len(dados.mercado.get("atletas") or []),
         "rodada_cartola_atual": rodada,
     }

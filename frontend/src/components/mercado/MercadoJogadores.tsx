@@ -6,6 +6,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { IconesCobrador } from "@/components/mercado/IconesCobrador";
+import {
+  compilarIndiceCobradores,
+  type CobradoresCopaData,
+} from "@/lib/cobradoresCopa";
 import {
   compilarContextoMlRodada,
   type ContextoMlRodada,
@@ -93,6 +98,7 @@ interface Props {
   partidasProcessadas: string[];
   oddsJogadores?: OddsJogadoresData | null;
   oddsArmazenamento?: OddsArmazenamentoData | null;
+  cobradoresCopa?: CobradoresCopaData | null;
   rodadaCartolaAtual?: number;
   pontuacaoCedida: PontuacaoCedida;
 }
@@ -670,6 +676,7 @@ export function MercadoJogadores({
   partidasProcessadas,
   oddsJogadores,
   oddsArmazenamento,
+  cobradoresCopa,
   rodadaCartolaAtual = 2,
   pontuacaoCedida,
 }: Props) {
@@ -685,6 +692,10 @@ export function MercadoJogadores({
   const mlCtxRodada = useMemo(
     () => compilarContextoMlRodada(oddsArmazenamento, rodadaFiltro),
     [oddsArmazenamento, rodadaFiltro],
+  );
+  const indiceCobradores = useMemo(
+    () => compilarIndiceCobradores(cobradoresCopa),
+    [cobradoresCopa],
   );
 
   const resolverOdds = useMemo(() => {
@@ -1019,6 +1030,7 @@ export function MercadoJogadores({
                       <StatusDot statusId={j.status_id} />
                       <EscudoSelecao j={j} />
                       <span className="font-medium">{j.apelido}</span>
+                      <IconesCobrador cobrador={indiceCobradores.get(j.atleta_id)} />
                     </div>
                   </td>
 

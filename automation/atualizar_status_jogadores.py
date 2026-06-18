@@ -21,6 +21,7 @@ def main() -> int:
         f"Cartola Copa: status={resumo['status_campos_atualizados']} campos | "
         f"fotos={resumo['fotos_atualizadas']} | "
         f"provaveis_lineup={resumo.get('provaveis_lineup', 0)} | "
+        f"cobradores={resumo.get('cobradores_atletas', 0)} | "
         f"mercado_api={resumo['mercado_api']} | "
         f"rodada={resumo['rodada_cartola_atual']}"
     )

@@ -98,6 +98,7 @@ export default function App() {
               partidasProcessadas={mercado.dados.partidasProcessadas}
               oddsJogadores={mercado.dados.oddsJogadores}
               oddsArmazenamento={mercado.dados.oddsArmazenamento}
+              cobradoresCopa={mercado.dados.cobradoresCopa}
               rodadaCartolaAtual={mercado.dados.rodadaCartolaAtual}
               pontuacaoCedida={mercado.dados.pontuacaoCedida as PontuacaoCedida}
             />

@@ -12,6 +12,7 @@ import {
   type ClassificacaoGruposParseada,
 } from "@/lib/classificacaoGrupos";
 import type { OddsArmazenamentoData } from "@/lib/oddsRodada";
+import type { CobradoresCopaData } from "@/lib/cobradoresCopa";
 
 // Cache em memória para evitar re-fetch ao trocar de aba
 const _cache = new Map<string, unknown>();
@@ -42,6 +43,7 @@ export interface DadosMercado {
   pontuacaoCedida: PontuacaoCedida;
   oddsJogadores: OddsJogadoresData | null;
   oddsArmazenamento: OddsArmazenamentoData | null;
+  cobradoresCopa: CobradoresCopaData | null;
   rodadaCartolaAtual: number;
   confrontosCopa: ConfrontoCopa[];
   partidasProcessadas: string[];
@@ -67,7 +69,7 @@ export async function carregarDadosRadar(): Promise<
 
 /** Dados da aba Mercado (jogadores_mercado + selecoes + pontuacao_cedida + odds). */
 export async function carregarDadosMercado(): Promise<DadosMercado> {
-  const [jogadores, selecoes, pontuacaoCedida, oddsResult, oddsArmaz, grupos, copaEstado] =
+  const [jogadores, selecoes, pontuacaoCedida, oddsResult, oddsArmaz, cobradores, grupos, copaEstado] =
     await Promise.all([
     carregarJson<JogadorMercado[]>("/data/jogadores_mercado.json"),
     carregarJson<Selecao[]>("/data/selecoes.json"),
@@ -77,6 +79,9 @@ export async function carregarDadosMercado(): Promise<DadosMercado> {
       .catch(() => null),
     fetch("/data/odds_eventos_armazenados.json")
       .then((r) => (r.ok ? (r.json() as Promise<OddsArmazenamentoData>) : null))
+      .catch(() => null),
+    fetch("/data/cobradores_copa.json")
+      .then((r) => (r.ok ? (r.json() as Promise<CobradoresCopaData>) : null))
       .catch(() => null),
     carregarJson<{ confrontos: ConfrontoCopa[] }>("/data/grupos_wc2026.json"),
     carregarJson<{ partidas_processadas?: string[]; rodada_cartola_atual?: number }>(
@@ -89,6 +94,7 @@ export async function carregarDadosMercado(): Promise<DadosMercado> {
     pontuacaoCedida,
     oddsJogadores: oddsResult,
     oddsArmazenamento: oddsArmaz,
+    cobradoresCopa: cobradores,
     rodadaCartolaAtual: Number(copaEstado.rodada_cartola_atual) || 2,
     confrontosCopa: grupos.confrontos ?? [],
     partidasProcessadas: copaEstado.partidas_processadas ?? [],
