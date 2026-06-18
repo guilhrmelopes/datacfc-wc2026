@@ -15,6 +15,7 @@ from scrapers.matching_cartola import atribuir_nomes_a_jogadores
 URL_LINEUPS = "https://provaveisdocartola.com.br/api/copa/lineups"
 URL_BOLAS_PARADAS = "https://provaveisdocartola.com.br/api/copa/bolas-paradas"
 SIT_PROVAVEL = "provavel"
+SIT_DUVIDA = "duvida"
 
 _CABECALHOS = {
     "User-Agent": (
@@ -36,6 +37,31 @@ def _fetch_json(url: str, timeout: float = 30.0) -> dict:
     return payload
 
 
+def _ids_lineup_por_sit(sit: str, payload: dict) -> set[int]:
+    ids: set[int] = set()
+    for team in (payload.get("teams") or {}).values():
+        if not isinstance(team, dict):
+            continue
+        for titular in team.get("titulares") or []:
+            if not isinstance(titular, dict):
+                continue
+            if titular.get("sit") != sit:
+                continue
+            try:
+                ids.add(int(titular["id"]))
+            except (TypeError, ValueError, KeyError):
+                continue
+    return ids
+
+
+def _buscar_payload_lineups(logger: logging.Logger) -> dict | None:
+    try:
+        return _fetch_json(URL_LINEUPS)
+    except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError) as erro:
+        logger.warning("Lineups Prováveis indisponíveis: %s", erro)
+        return None
+
+
 def buscar_ids_provaveis_lineup(
     logger: logging.Logger | None = None,
 ) -> set[int]:
@@ -44,27 +70,26 @@ def buscar_ids_provaveis_lineup(
     Usado exclusivamente para status_id=6; demais status vêm do Cartola /copa.
     """
     log = logger or logging.getLogger("provaveis_copa")
-    try:
-        payload = _fetch_json(URL_LINEUPS)
-    except (OSError, urllib.error.URLError, json.JSONDecodeError, ValueError) as erro:
-        log.warning("Lineups Prováveis indisponíveis: %s", erro)
+    payload = _buscar_payload_lineups(log)
+    if payload is None:
         return set()
 
-    ids: set[int] = set()
-    for team in (payload.get("teams") or {}).values():
-        if not isinstance(team, dict):
-            continue
-        for titular in team.get("titulares") or []:
-            if not isinstance(titular, dict):
-                continue
-            if titular.get("sit") != SIT_PROVAVEL:
-                continue
-            try:
-                ids.add(int(titular["id"]))
-            except (TypeError, ValueError, KeyError):
-                continue
-
+    ids = _ids_lineup_por_sit(SIT_PROVAVEL, payload)
     log.info("Prováveis lineups: %d titulares (sit=provavel).", len(ids))
+    return ids
+
+
+def buscar_ids_duvida_lineup(
+    logger: logging.Logger | None = None,
+) -> set[int]:
+    """Titulares com sit=duvida nos lineups da Copa → status_id=2 no dashboard."""
+    log = logger or logging.getLogger("provaveis_copa")
+    payload = _buscar_payload_lineups(log)
+    if payload is None:
+        return set()
+
+    ids = _ids_lineup_por_sit(SIT_DUVIDA, payload)
+    log.info("Prováveis lineups: %d titulares (sit=duvida).", len(ids))
     return ids
 
 

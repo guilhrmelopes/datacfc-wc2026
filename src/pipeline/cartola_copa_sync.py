@@ -398,8 +398,8 @@ def incorporar_atletas_ausentes_mercado(
 _FOTO_GLOBO_HOST = "s.sde.globo.com"
 _URL_FOTOS_PROVAVEIS = "https://provaveisdocartola.com.br/api/copa/fotos-atletas"
 
-# Status oficiais do Cartola que não são sobrescritos por provável de lineup.
-_STATUS_CARTOLA_PRIORITARIO = frozenset({2, 3, 5})
+# Lesionado/suspenso do Cartola prevalecem sobre lineups Prováveis.
+_STATUS_CARTOLA_PRIORITARIO = frozenset({3, 5})
 _CAMPOS_MERCADO_CARTOLA = (
     "preco_num",
     "pontos_num",
@@ -413,12 +413,15 @@ def resolver_status_id(
     atleta_id: int,
     status_cartola: Any,
     provavel_ids: set[int],
+    duvida_ids: set[int] | None = None,
 ) -> int:
     """
-    Provável (6) → lineups Prováveis do Cartola.
-    Dúvida/lesionado/suspenso (2/3/5) → Cartola /copa.
+    Lesionado/suspenso (3/5) → Cartola /copa.
+    Dúvida (2) → Cartola ou sit=duvida nos lineups Prováveis.
+    Provável (6) → sit=provavel nos lineups Prováveis.
     Demais casos → Cartola, exceto 6 sem lineup (vira 7).
     """
+    duvida = duvida_ids or set()
     try:
         status = int(status_cartola)
     except (TypeError, ValueError):
@@ -426,6 +429,8 @@ def resolver_status_id(
 
     if status in _STATUS_CARTOLA_PRIORITARIO:
         return status
+    if status == 2 or atleta_id in duvida:
+        return 2
     if atleta_id in provavel_ids:
         return 6
     if status == 6:
@@ -489,6 +494,7 @@ def sincronizar_mercado_cartola(
     dados: DadosCartolaCopa,
     *,
     provavel_ids: set[int] | None = None,
+    duvida_ids: set[int] | None = None,
 ) -> int:
     por_id = {
         int(a["atleta_id"]): a
@@ -514,7 +520,9 @@ def sincronizar_mercado_cartola(
                 jogador[campo] = valor
                 atualizados += 1
         if aplicar_status:
-            novo_status = resolver_status_id(int(aid), api.get("status_id"), provavel_ids)
+            novo_status = resolver_status_id(
+                int(aid), api.get("status_id"), provavel_ids or set(), duvida_ids,
+            )
             if jogador.get("status_id") != novo_status:
                 jogador["status_id"] = novo_status
                 atualizados += 1
@@ -531,7 +539,7 @@ def sincronizar_status_fotos_cartola(
     Fotos: CDN Prováveis com fallback Cartola /copa.
     """
     from scrapers.cartola_copa import buscar_dados_cartola_copa
-    from scrapers.provaveis_copa import buscar_ids_provaveis_lineup
+    from scrapers.provaveis_copa import buscar_ids_duvida_lineup, buscar_ids_provaveis_lineup
 
     caminho_mercado = pasta_dados / "jogadores_mercado.json"
     caminho_estado = pasta_dados / "copa_estado.json"
@@ -549,8 +557,9 @@ def sincronizar_status_fotos_cartola(
     estado = _carregar_json(caminho_estado) if caminho_estado.is_file() else {}
 
     provavel_ids = buscar_ids_provaveis_lineup()
+    duvida_ids = buscar_ids_duvida_lineup()
     status_atualizados = sincronizar_mercado_cartola(
-        mercado, dados, provavel_ids=provavel_ids,
+        mercado, dados, provavel_ids=provavel_ids, duvida_ids=duvida_ids,
     )
     fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
 
@@ -573,6 +582,7 @@ def sincronizar_status_fotos_cartola(
         "status_campos_atualizados": status_atualizados,
         "fotos_atualizadas": fotos_atualizadas,
         "provaveis_lineup": len(provavel_ids),
+        "duvida_lineup": len(duvida_ids),
         "cobradores_atletas": len(cobradores_payload.get("por_atleta") or {}),
         "mercado_api": len(dados.mercado.get("atletas") or []),
         "rodada_cartola_atual": rodada,
@@ -641,6 +651,8 @@ def rebuild_copa_oficial(
                 if api_scout:
                     for campo in COPA_CAMPOS_JOGADOR:
                         if campo.startswith("copa_") and campo not in (
+                            "copa_jogos_num",
+                            "copa_pontos_total",
                             "copa_media_geral",
                             "copa_media_base",
                             "copa_de_pct",
@@ -693,6 +705,7 @@ def _partidas_cedido_historico(
             continue
         saida.append(
             {
+                "match_id": match_id,
                 "clube_casa_id": casa_id,
                 "clube_visitante_id": visitante_id,
                 "sig_m": str(mandante["sigla"]).upper(),
@@ -703,12 +716,49 @@ def _partidas_cedido_historico(
     return saida
 
 
+def _aplicar_scouts_fotmob(entry: dict, scouts: Any) -> None:
+    """Mapeia ScoutsPartida (FotMob) para campos copa_* do mercado."""
+    if int(getattr(scouts, "G", 0) or 0):
+        entry["copa_goals"] = int(entry.get("copa_goals") or 0) + int(scouts.G)
+    if int(getattr(scouts, "A", 0) or 0):
+        entry["copa_goal_assist"] = int(entry.get("copa_goal_assist") or 0) + int(scouts.A)
+    if int(getattr(scouts, "FD", 0) or 0):
+        entry["copa_fd"] = int(entry.get("copa_fd") or 0) + int(scouts.FD)
+    if int(getattr(scouts, "DS", 0) or 0):
+        entry["copa_ds"] = int(entry.get("copa_ds") or 0) + int(scouts.DS)
+    if int(getattr(scouts, "DE", 0) or 0):
+        entry["copa_de"] = int(entry.get("copa_de") or 0) + int(scouts.DE)
+    if int(getattr(scouts, "GS", 0) or 0):
+        entry["copa_gs"] = int(entry.get("copa_gs") or 0) + int(scouts.GS)
+    if int(getattr(scouts, "SG", 0) or 0):
+        entry["copa_clean_sheet"] = int(entry.get("copa_clean_sheet") or 0) + int(scouts.SG)
+
+
+def _agrupar_fotmob_partida(
+    match_id: str,
+    caminho_mercado: Path,
+    sig_m: str,
+    sig_v: str,
+) -> dict[str, dict[Bucket, list[float]]] | None:
+    from scrapers.fotmob_copa import agrupar_pontos_por_bucket, processar_partida
+
+    try:
+        resultado = processar_partida(match_id, caminho_mercado, sig_m, sig_v)
+    except (OSError, ValueError, KeyError):
+        return None
+    if not resultado.jogadores:
+        return None
+    return agrupar_pontos_por_bucket(resultado.jogadores)
+
+
 def reprocessar_cedido_cartola(
     dados: DadosCartolaCopa,
     estado: dict,
     selecoes: list[dict],
     caminho_pontuacao: Path,
     caminho_grupos: Path | None = None,
+    *,
+    caminho_mercado: Path | None = None,
 ) -> set[str]:
     clube_sigla = _mapa_clube_sigla(dados, selecoes)
     acumuladores: dict[str, AcumuladorCedidoConquistado] = {}
@@ -754,11 +804,22 @@ def reprocessar_cedido_cartola(
 
         rodada_partida = str(partida.get("rodada_cartola") or 1)
         snapshot = rodadas.get(rodada_partida)
-        if not isinstance(snapshot, dict):
-            continue
+        agrupado: dict[str, dict[Bucket, list[float]]] | None = None
 
-        agrupado = _agrupar_pontos_partida(snapshot, casa, visitante, clube_sigla)
-        if sig_m not in agrupado or sig_v not in agrupado:
+        if isinstance(snapshot, dict):
+            agrupado = _agrupar_pontos_partida(snapshot, casa, visitante, clube_sigla)
+            if sig_m not in agrupado or sig_v not in agrupado:
+                agrupado = None
+
+        if agrupado is None and caminho_mercado and partida.get("match_id"):
+            agrupado = _agrupar_fotmob_partida(
+                str(partida["match_id"]),
+                caminho_mercado,
+                sig_m,
+                sig_v,
+            )
+
+        if not agrupado or sig_m not in agrupado or sig_v not in agrupado:
             continue
 
         conquistado, cedido = calcular_cedido_conquistado_partida(agrupado, sig_m, sig_v)
@@ -781,13 +842,19 @@ def rebuild_extras_fotmob(
     caminho_mercado: Path,
     selecoes: list[dict],
 ) -> None:
-    """Preenche xG/xA e métricas FotMob sem alterar pontuação oficial Cartola."""
+    """Preenche scouts FotMob, xG/xA e métricas extras (fallback quando Cartola indisponível)."""
     mercado = _carregar_json(caminho_mercado)
     sigla_map = _sigla_por_selecao(selecoes)
 
     from scrapers.fotmob_fixtures import listar_partidas_grupos
 
     partidas_idx = {p.match_id: p for p in listar_partidas_grupos()}
+    fotmob_jogos: dict[int, int] = {}
+    cartola_jogos_inicial = {
+        int(j["atleta_id"]): int(j.get("copa_jogos_num") or 0)
+        for j in mercado
+        if j.get("atleta_id") is not None
+    }
 
     for match_id in partidas_ids:
         meta = partidas_idx.get(match_id)
@@ -802,10 +869,15 @@ def rebuild_extras_fotmob(
         for jogador in resultado.jogadores:
             if jogador.atleta_id is None:
                 continue
-            entry = por_atleta.get(jogador.atleta_id)
+            aid = int(jogador.atleta_id)
+            entry = por_atleta.get(aid)
             if not entry:
                 continue
             sc = jogador.scouts
+            if sc.minutos <= 0:
+                continue
+
+            fotmob_jogos[aid] = fotmob_jogos.get(aid, 0) + 1
             entry["copa_mins_played"] = int(entry.get("copa_mins_played") or 0) + sc.minutos
             entry["copa_gcc"] = int(entry.get("copa_gcc") or 0) + sc.GCC
             entry["copa_int"] = int(entry.get("copa_int") or 0) + sc.INT
@@ -815,14 +887,31 @@ def rebuild_extras_fotmob(
             entry["copa_xg"] = round(float(entry.get("copa_xg") or 0) + jogador.xg, 2)
             entry["copa_xa"] = round(float(entry.get("copa_xa") or 0) + jogador.xa, 2)
 
-        for entry in mercado:
-            if entry.get("copa_jogos_num") and entry.get("bucket_posicao") == "GOL":
-                mins = int(entry.get("copa_mins_played") or 0)
-                if mins:
-                    entry["copa_de_pct"] = round(
-                        (float(entry.get("copa_de") or 0) / mins) * 90,
-                        2,
-                    )
+            if fotmob_jogos[aid] > cartola_jogos_inicial.get(aid, 0):
+                _aplicar_scouts_fotmob(entry, sc)
+                entry["copa_pontos_total"] = round(
+                    float(entry.get("copa_pontos_total") or 0) + jogador.pontos,
+                    2,
+                )
+
+    for entry in mercado:
+        aid = entry.get("atleta_id")
+        if aid is None:
+            continue
+        aid_int = int(aid)
+        jogos = max(int(entry.get("copa_jogos_num") or 0), fotmob_jogos.get(aid_int, 0))
+        if jogos <= 0:
+            continue
+        entry["copa_jogos_num"] = jogos
+        if entry.get("copa_media_geral") is None and entry.get("copa_pontos_total"):
+            entry["copa_media_geral"] = round(float(entry["copa_pontos_total"]) / jogos, 2)
+        if entry.get("bucket_posicao") == "GOL":
+            mins = int(entry.get("copa_mins_played") or 0)
+            if mins:
+                entry["copa_de_pct"] = round(
+                    (float(entry.get("copa_de") or 0) / mins) * 90,
+                    2,
+                )
 
     _salvar_json(caminho_mercado, mercado)
 
@@ -853,11 +942,12 @@ def aplicar_dados_cartola(
     estado["bola_rolando"] = dados.status.get("bola_rolando")
     estado["cartola_atualizado_em"] = dados.obtido_em
 
-    from scrapers.provaveis_copa import buscar_ids_provaveis_lineup
+    from scrapers.provaveis_copa import buscar_ids_duvida_lineup, buscar_ids_provaveis_lineup
 
     provavel_ids = buscar_ids_provaveis_lineup()
+    duvida_ids = buscar_ids_duvida_lineup()
     mercado_atualizados = sincronizar_mercado_cartola(
-        mercado, dados, provavel_ids=provavel_ids,
+        mercado, dados, provavel_ids=provavel_ids, duvida_ids=duvida_ids,
     )
     meta_mercado = sincronizar_mercado_metadados_selecao(mercado, selecoes, dados)
     mercado_inseridos = incorporar_atletas_ausentes_mercado(mercado, dados, selecoes)
@@ -868,6 +958,7 @@ def aplicar_dados_cartola(
     if por_rodada:
         siglas = reprocessar_cedido_cartola(
             dados, estado, selecoes, caminho_pontuacao, caminho_grupos,
+            caminho_mercado=caminho_mercado,
         )
     else:
         siglas = set()

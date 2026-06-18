@@ -2286,5 +2286,213 @@
         "cor": "bg-yellow-500"
       }
     }
+  },
+  "GAN": {
+    "GOL": {
+      "cedido": {
+        "valor": 1.6,
+        "cor": "bg-red-500"
+      },
+      "conquistado": {
+        "valor": 8.1,
+        "cor": "bg-green-500"
+      }
+    },
+    "LAT": {
+      "cedido": {
+        "valor": 8.5,
+        "cor": "bg-green-500"
+      },
+      "conquistado": {
+        "valor": 10.73,
+        "cor": "bg-green-500"
+      }
+    },
+    "ZAG": {
+      "cedido": {
+        "valor": 5.47,
+        "cor": "bg-yellow-500"
+      },
+      "conquistado": {
+        "valor": 9.0,
+        "cor": "bg-green-500"
+      }
+    },
+    "MEI": {
+      "cedido": {
+        "valor": 3.36,
+        "cor": "bg-orange-500"
+      },
+      "conquistado": {
+        "valor": 2.25,
+        "cor": "bg-red-500"
+      }
+    },
+    "ATA": {
+      "cedido": {
+        "valor": 0.9,
+        "cor": "bg-red-500"
+      },
+      "conquistado": {
+        "valor": 1.36,
+        "cor": "bg-red-500"
+      }
+    }
+  },
+  "PAN": {
+    "GOL": {
+      "cedido": {
+        "valor": 8.1,
+        "cor": "bg-green-500"
+      },
+      "conquistado": {
+        "valor": 1.6,
+        "cor": "bg-red-500"
+      }
+    },
+    "LAT": {
+      "cedido": {
+        "valor": 10.73,
+        "cor": "bg-green-500"
+      },
+      "conquistado": {
+        "valor": 8.5,
+        "cor": "bg-green-500"
+      }
+    },
+    "ZAG": {
+      "cedido": {
+        "valor": 9.0,
+        "cor": "bg-green-500"
+      },
+      "conquistado": {
+        "valor": 5.47,
+        "cor": "bg-yellow-500"
+      }
+    },
+    "MEI": {
+      "cedido": {
+        "valor": 2.25,
+        "cor": "bg-red-500"
+      },
+      "conquistado": {
+        "valor": 3.36,
+        "cor": "bg-orange-500"
+      }
+    },
+    "ATA": {
+      "cedido": {
+        "valor": 1.36,
+        "cor": "bg-red-500"
+      },
+      "conquistado": {
+        "valor": 0.9,
+        "cor": "bg-red-500"
+      }
+    }
+  },
+  "UZB": {
+    "GOL": {
+      "cedido": {
+        "valor": 0.3,
+        "cor": "bg-red-500"
+      },
+      "conquistado": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      }
+    },
+    "LAT": {
+      "cedido": {
+        "valor": 6.3,
+        "cor": "bg-green-500"
+      },
+      "conquistado": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      }
+    },
+    "ZAG": {
+      "cedido": {
+        "valor": 1.45,
+        "cor": "bg-red-500"
+      },
+      "conquistado": {
+        "valor": 1.1,
+        "cor": "bg-red-500"
+      }
+    },
+    "MEI": {
+      "cedido": {
+        "valor": 3.77,
+        "cor": "bg-orange-500"
+      },
+      "conquistado": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      }
+    },
+    "ATA": {
+      "cedido": {
+        "valor": 7.15,
+        "cor": "bg-green-500"
+      },
+      "conquistado": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      }
+    }
+  },
+  "COL": {
+    "GOL": {
+      "cedido": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      },
+      "conquistado": {
+        "valor": 0.3,
+        "cor": "bg-red-500"
+      }
+    },
+    "LAT": {
+      "cedido": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      },
+      "conquistado": {
+        "valor": 6.3,
+        "cor": "bg-green-500"
+      }
+    },
+    "ZAG": {
+      "cedido": {
+        "valor": 1.1,
+        "cor": "bg-red-500"
+      },
+      "conquistado": {
+        "valor": 1.45,
+        "cor": "bg-red-500"
+      }
+    },
+    "MEI": {
+      "cedido": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      },
+      "conquistado": {
+        "valor": 3.77,
+        "cor": "bg-orange-500"
+      }
+    },
+    "ATA": {
+      "cedido": {
+        "valor": null,
+        "cor": "bg-gray-300"
+      },
+      "conquistado": {
+        "valor": 7.15,
+        "cor": "bg-green-500"
+      }
+    }
   }
 }

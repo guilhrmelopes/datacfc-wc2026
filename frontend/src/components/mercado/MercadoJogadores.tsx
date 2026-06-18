@@ -115,6 +115,38 @@ const STATUS_MAP: Record<number, { label: string; cor: string }> = {
 };
 
 const STATUS_ORDEM = [6, 2, 5, 3, 7] as const;
+const FILTRO_PROVAVEL_DUVIDA = "6+2";
+
+function passaFiltroStatus(statusId: number, filtro: string): boolean {
+  if (filtro === "TODOS") return true;
+  if (filtro === FILTRO_PROVAVEL_DUVIDA) return statusId === 6 || statusId === 2;
+  return String(statusId) === filtro;
+}
+
+function StatusDotFiltro({ statusId }: { statusId: number | typeof FILTRO_PROVAVEL_DUVIDA }) {
+  if (statusId === FILTRO_PROVAVEL_DUVIDA) {
+    return (
+      <span
+        className="inline-block h-2 w-2 shrink-0 overflow-hidden rounded-full"
+        title="Provável + Dúvida"
+        aria-hidden
+      >
+        <span className="flex h-full w-full">
+          <span className="h-full w-1/2 bg-green-500" />
+          <span className="h-full w-1/2 bg-amber-400" />
+        </span>
+      </span>
+    );
+  }
+  const s = STATUS_MAP[statusId as number];
+  if (!s) return null;
+  return (
+    <span
+      className={`inline-block h-2 w-2 shrink-0 rounded-full ${s.cor}`}
+      title={s.label}
+    />
+  );
+}
 
 function EscudoSelecao({ j }: { j: JogadorMercado }) {
   if (!j.url_escudo) return null;
@@ -747,7 +779,7 @@ export function MercadoJogadores({
       .filter((j) => j.bucket_posicao === posicao)
       .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
       .filter((j) => jogadorNaRodada(j, mapaSel, rodadaFiltro))
-      .filter((j) => statusFiltro === "TODOS" || String(j.status_id) === statusFiltro);
+      .filter((j) => passaFiltroStatus(j.status_id, statusFiltro));
 
     const dados = [...filtradas];
     dados.sort((a, b) => {
@@ -955,14 +987,26 @@ export function MercadoJogadores({
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="TODOS">Todos</SelectItem>
-              {STATUS_ORDEM.map((id) => (
-                <SelectItem key={id} value={String(id)}>
-                  <span className="flex items-center gap-2">
-                    <span className={`inline-block h-2 w-2 rounded-full ${STATUS_MAP[id].cor}`} />
-                    {STATUS_MAP[id].label}
-                  </span>
-                </SelectItem>
-              ))}
+              {STATUS_ORDEM.flatMap((id) => {
+                const item = (
+                  <SelectItem key={id} value={String(id)}>
+                    <span className="flex items-center gap-2">
+                      <StatusDotFiltro statusId={id} />
+                      {STATUS_MAP[id].label}
+                    </span>
+                  </SelectItem>
+                );
+                if (id !== 2) return [item];
+                return [
+                  item,
+                  <SelectItem key={FILTRO_PROVAVEL_DUVIDA} value={FILTRO_PROVAVEL_DUVIDA}>
+                    <span className="flex items-center gap-2">
+                      <StatusDotFiltro statusId={FILTRO_PROVAVEL_DUVIDA} />
+                      Provável + Dúvida
+                    </span>
+                  </SelectItem>,
+                ];
+              })}
             </SelectContent>
           </Select>
         </div>

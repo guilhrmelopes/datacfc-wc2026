@@ -1,906 +1,8 @@
 {
-  "atualizado_em": "2026-06-18T04:18:15.318119+00:00",
+  "atualizado_em": "2026-06-18T04:32:45.801094+00:00",
   "fonte": "provaveisdocartola.com.br/api/copa/bolas-paradas",
   "selecoes_com_dados": 48,
   "por_atleta": {
-    "121474": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "121469": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "151063": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "88745": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "127850": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "120404": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "100320": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "94919": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "109592": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "132652": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "63007": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "93283": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "94930": {
-      "penalti": true,
-      "ordem_penalti": 3
-    },
-    "107045": {
-      "penalti": true,
-      "ordem_penalti": 4
-    },
-    "98352": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "83528": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "106032": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "144483": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "89973": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "108909": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "118741": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "129972": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "129964": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "129957": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "82232": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "93279": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "96380": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "103976": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "110401": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "107027": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "99684": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "134625": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "113992": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "99857": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "102935": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "102931": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "99228": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "89189": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "121080": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "109022": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "131651": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "106388": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "89282": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "79544": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "108962": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "77629": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "103470": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "100098": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "71184": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "133266": {
-      "penalti": true,
-      "ordem_penalti": 3
-    },
-    "128072": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "124633": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "105728": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "114064": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "105730": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "106421": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "118310": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "99481": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "97270": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "89195": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "97348": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "92235": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "114021": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "108927": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "100124": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "95777": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "105290": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "106534": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "127059": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "80617": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "108948": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "117477": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "82039": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "67746": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "103687": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "95282": {
-      "penalti": true,
-      "ordem_penalti": 3
-    },
-    "108358": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "117401": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "102770": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "146396": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "101937": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "120634": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "127270": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "112827": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "102611": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "114149": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "106719": {
-      "penalti": true,
-      "ordem_penalti": 3
-    },
-    "116275": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "139653": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "130460": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "114067": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "95972": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "150984": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "95728": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "95723": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "92185": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "102767": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "82060": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "96026": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "103900": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "106660": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "80717": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "120700": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "127832": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "95233": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "120699": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "103713": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "86214": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "123965": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "113578": {
-      "penalti": true,
-      "ordem_penalti": 3
-    },
-    "110272": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "86260": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "87722": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "129857": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "147891": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "103110": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "97698": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "123314": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "106422": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "112836": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "142068": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "67812": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "89712": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "80507": {
-      "penalti": true,
-      "ordem_penalti": 3,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "120496": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "133040": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "69063": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "100190": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "9000002": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "107111": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "69973": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "114030": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "80647": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "118384": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "133988": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "114014": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "95063": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "95534": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "114235": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "108196": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "115261": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "110782": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "104961": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "120717": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "101382": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "110297": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "124884": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "107527": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "88472": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "87416": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "70891": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
     "69384": {
       "penalti": true,
       "ordem_penalti": 1
@@ -928,164 +30,6 @@
       "ordem_escanteio": 3,
       "falta": true,
       "ordem_falta": 3
-    },
-    "85084": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "71543": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "106387": {
-      "penalti": true,
-      "ordem_penalti": 3
-    },
-    "120657": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "105267": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "95720": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "103005": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "106265": {
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "110457": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "150856": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "96797": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "105789": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "114440": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "111025": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "71484": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "120618": {
-      "penalti": true,
-      "ordem_penalti": 2
-    },
-    "114751": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "67972": {
-      "penalti": true,
-      "ordem_penalti": 1,
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "86849": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "109046": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "89432": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
-    },
-    "93334": {
-      "penalti": true,
-      "ordem_penalti": 1
-    },
-    "124602": {
-      "penalti": true,
-      "ordem_penalti": 2,
-      "escanteio": true,
-      "ordem_escanteio": 1,
-      "falta": true,
-      "ordem_falta": 1
-    },
-    "109333": {
-      "escanteio": true,
-      "ordem_escanteio": 2,
-      "falta": true,
-      "ordem_falta": 2
-    },
-    "109570": {
-      "escanteio": true,
-      "ordem_escanteio": 3,
-      "falta": true,
-      "ordem_falta": 3
-    },
-    "88914": {
-      "escanteio": true,
-      "ordem_escanteio": 4,
-      "falta": true,
-      "ordem_falta": 4
     },
     "106011": {
       "penalti": true,
@@ -1149,6 +93,110 @@
       "falta": true,
       "ordem_falta": 4
     },
+    "89282": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "79544": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "108962": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "77629": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "103470": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "97348": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "92235": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "114021": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "108927": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "85084": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "71543": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "106387": {
+      "penalti": true,
+      "ordem_penalti": 3
+    },
+    "120657": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "105267": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "99684": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "134625": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "113992": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
     "97128": {
       "penalti": true,
       "ordem_penalti": 1,
@@ -1168,6 +216,644 @@
       "ordem_falta": 3
     },
     "106680": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "93334": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "124602": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "109333": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "109570": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "88914": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "95063": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "95534": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "114235": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "108196": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "115261": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "69973": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "114030": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "80647": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "118384": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "133988": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "114014": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "88745": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "127850": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "120404": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "100320": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "86260": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "87722": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "129857": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "147891": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "96797": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "105789": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "114440": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "111025": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "88045": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "103059": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "123997": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "102611": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "114149": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "106719": {
+      "penalti": true,
+      "ordem_penalti": 3
+    },
+    "116275": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "139653": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "120634": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "127270": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "112827": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "100098": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "71184": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "133266": {
+      "penalti": true,
+      "ordem_penalti": 3
+    },
+    "128072": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "124633": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "67746": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "103687": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "95282": {
+      "penalti": true,
+      "ordem_penalti": 3
+    },
+    "108358": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "117401": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "63007": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "93283": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "94930": {
+      "penalti": true,
+      "ordem_penalti": 3
+    },
+    "107045": {
+      "penalti": true,
+      "ordem_penalti": 4
+    },
+    "98352": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "83528": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "94919": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "109592": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "132652": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "110782": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "104961": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "120717": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "89189": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "121080": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "109022": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "131651": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "106388": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "95728": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "95723": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "92185": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "102767": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "69063": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "100190": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "9000002": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "107111": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "95720": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "103005": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "106265": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "110457": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "150856": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "67812": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "89712": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "80507": {
+      "penalti": true,
+      "ordem_penalti": 3,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "120496": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "133040": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "106032": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "144483": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "89973": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "108909": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "118741": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "107527": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "88472": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "87416": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "70891": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "130460": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "114067": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "95972": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "150984": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "99481": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "97270": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "89195": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "82232": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "93279": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "96380": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "103976": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "110401": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "107027": {
       "escanteio": true,
       "ordem_escanteio": 4,
       "falta": true,
@@ -1195,7 +881,39 @@
       "falta": true,
       "ordem_falta": 4
     },
-    "88045": {
+    "103110": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "97698": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "123314": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "106422": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "112836": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "142068": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "80617": {
       "penalti": true,
       "ordem_penalti": 1,
       "escanteio": true,
@@ -1203,7 +921,77 @@
       "falta": true,
       "ordem_falta": 1
     },
-    "103059": {
+    "108948": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "117477": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "82039": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "121474": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "121469": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "151063": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "100124": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "95777": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "105290": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "106534": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "127059": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "86214": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "123965": {
       "penalti": true,
       "ordem_penalti": 2,
       "escanteio": true,
@@ -1211,11 +999,223 @@
       "falta": true,
       "ordem_falta": 2
     },
-    "123997": {
+    "113578": {
+      "penalti": true,
+      "ordem_penalti": 3
+    },
+    "110272": {
       "escanteio": true,
       "ordem_escanteio": 3,
       "falta": true,
       "ordem_falta": 3
+    },
+    "99857": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "102935": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "102931": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "99228": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "82060": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "96026": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "103900": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "106660": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "71484": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "120618": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "114751": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "105728": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "114064": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "105730": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "106421": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "118310": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "80717": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "120700": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "127832": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "95233": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "120699": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "103713": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "102770": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "146396": {
+      "penalti": true,
+      "ordem_penalti": 2
+    },
+    "101937": {
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "67972": {
+      "penalti": true,
+      "ordem_penalti": 1,
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "86849": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "109046": {
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "89432": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "101382": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 3,
+      "falta": true,
+      "ordem_falta": 3
+    },
+    "110297": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
+    },
+    "124884": {
+      "escanteio": true,
+      "ordem_escanteio": 4,
+      "falta": true,
+      "ordem_falta": 4
+    },
+    "129972": {
+      "penalti": true,
+      "ordem_penalti": 1
+    },
+    "129964": {
+      "penalti": true,
+      "ordem_penalti": 2,
+      "escanteio": true,
+      "ordem_escanteio": 1,
+      "falta": true,
+      "ordem_falta": 1
+    },
+    "129957": {
+      "escanteio": true,
+      "ordem_escanteio": 2,
+      "falta": true,
+      "ordem_falta": 2
     }
   }
 }
