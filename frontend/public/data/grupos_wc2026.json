@@ -299,7 +299,7 @@
       "visitante": "ALGERIA",
       "data": "2026-06-16",
       "hora": "22:00:00",
-      "utc": "2026-06-17T01:00:00.000Z",
+      "utc": "2026-06-17T01:00:00Z",
       "match_id": "4667812",
       "finalizada": true,
       "placar": "3 - 0"
@@ -311,7 +311,7 @@
       "visitante": "JORDAN",
       "data": "2026-06-17",
       "hora": "01:00:00",
-      "utc": "2026-06-17T04:00:00.000Z",
+      "utc": "2026-06-17T04:00:00Z",
       "match_id": "4667813",
       "finalizada": true,
       "placar": "3 - 1"
@@ -323,7 +323,7 @@
       "visitante": "DR CONGO",
       "data": "2026-06-17",
       "hora": "14:00:00",
-      "utc": "2026-06-17T17:00:00.000Z",
+      "utc": "2026-06-17T17:00:00Z",
       "match_id": "4667819",
       "finalizada": true,
       "placar": "1 - 1"
@@ -335,7 +335,7 @@
       "visitante": "CROATIA",
       "data": "2026-06-17",
       "hora": "17:00:00",
-      "utc": "2026-06-17T20:00:00.000Z",
+      "utc": "2026-06-17T20:00:00Z",
       "match_id": "4667825",
       "finalizada": true,
       "placar": "4 - 2"
@@ -347,10 +347,10 @@
       "visitante": "PANAMA",
       "data": "2026-06-17",
       "hora": "20:00:00",
-      "utc": "2026-06-17T23:00:00.000Z",
+      "utc": "2026-06-17T23:00:00Z",
       "match_id": "4667826",
-      "finalizada": false,
-      "placar": null
+      "finalizada": true,
+      "placar": "1 - 0"
     },
     {
       "grupo": "K",
@@ -359,7 +359,7 @@
       "visitante": "COLOMBIA",
       "data": "2026-06-17",
       "hora": "23:00:00",
-      "utc": "2026-06-18T02:00:00Z",
+      "utc": "2026-06-18T02:00:00.000Z",
       "match_id": "4667820",
       "finalizada": false,
       "placar": null
@@ -371,7 +371,7 @@
       "visitante": "SOUTH AFRICA",
       "data": "2026-06-18",
       "hora": "13:00:00",
-      "utc": "2026-06-18T16:00:00Z",
+      "utc": "2026-06-18T16:00:00.000Z",
       "match_id": "4667753",
       "finalizada": false,
       "placar": null
@@ -383,7 +383,7 @@
       "visitante": "BOSNIA AND HERZEGOVINA",
       "data": "2026-06-18",
       "hora": "16:00:00",
-      "utc": "2026-06-18T19:00:00Z",
+      "utc": "2026-06-18T19:00:00.000Z",
       "match_id": "4667759",
       "finalizada": false,
       "placar": null
@@ -395,7 +395,7 @@
       "visitante": "QATAR",
       "data": "2026-06-18",
       "hora": "19:00:00",
-      "utc": "2026-06-18T22:00:00Z",
+      "utc": "2026-06-18T22:00:00.000Z",
       "match_id": "4667760",
       "finalizada": false,
       "placar": null
