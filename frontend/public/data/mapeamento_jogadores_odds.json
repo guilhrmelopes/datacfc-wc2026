@@ -155,7 +155,8 @@
       "sigla": "COL",
       "apelido": "Quintero",
       "aliases_odds": [
-        "Juan Quintero"
+        "Juan Quintero",
+        "Juan Fernando Quintero"
       ]
     },
     "124961": {
@@ -2700,7 +2701,8 @@
       "sigla": "SUE",
       "apelido": "Gudmundsson",
       "aliases_odds": [
-        "Gabriel Gudmundsson"
+        "Gabriel Gudmundsson",
+        "GUDMUNDSSON G."
       ]
     },
     "114560": {
@@ -2714,7 +2716,8 @@
       "sigla": "HOL",
       "apelido": "Van de Ven",
       "aliases_odds": [
-        "Micky Van de Ven"
+        "Micky Van de Ven",
+        "VAN DE VEN M."
       ]
     },
     "117468": {
@@ -2728,7 +2731,8 @@
       "sigla": "HOL",
       "apelido": "Van Hecke",
       "aliases_odds": [
-        "Jan Paul van Hecke"
+        "Jan Paul van Hecke",
+        "VAN HECKE J."
       ]
     },
     "124884": {
@@ -2757,7 +2761,8 @@
       "sigla": "HOL",
       "apelido": "Van Dijk",
       "aliases_odds": [
-        "Virgil van Dijk"
+        "Virgil van Dijk",
+        "VAN DIJK V."
       ]
     },
     "134547": {
@@ -2785,7 +2790,8 @@
       "sigla": "HOL",
       "apelido": "Dumfries",
       "aliases_odds": [
-        "Denzel Dumfries"
+        "Denzel Dumfries",
+        "DUMFRIES D."
       ]
     },
     "102388": {
@@ -2828,7 +2834,8 @@
       "sigla": "HOL",
       "apelido": "De Jong",
       "aliases_odds": [
-        "Frenkie De Jong"
+        "Frenkie De Jong",
+        "DE JONG FRENKIE"
       ]
     },
     "85048": {
@@ -2967,13 +2974,17 @@
     },
     "120776": {
       "sigla": "SUE",
-      "apelido": "Hien"
+      "apelido": "Hien",
+      "aliases_odds": [
+        "HIEN ISAK"
+      ]
     },
     "123599": {
       "sigla": "CDM",
       "apelido": "Ousmane Diomandé",
       "aliases_odds": [
-        "Ousmane Diomande"
+        "Ousmane Diomande",
+        "DIOMANDE O."
       ]
     },
     "108975": {
@@ -2987,21 +2998,24 @@
       "sigla": "CDM",
       "apelido": "Yan Diomandé",
       "aliases_odds": [
-        "Yan Diomande"
+        "Yan Diomande",
+        "DIOMANDE Y."
       ]
     },
     "93003": {
       "sigla": "CDM",
       "apelido": "Seko Fofana",
       "aliases_odds": [
-        "Seko Fofana"
+        "Seko Fofana",
+        "FOFANA S."
       ]
     },
     "150909": {
       "sigla": "CDM",
       "apelido": "Inao Oulaï",
       "aliases_odds": [
-        "Christ Inao Oulai"
+        "Christ Inao Oulai",
+        "INAO OULAI C. R."
       ]
     },
     "106384": {
@@ -3099,7 +3113,8 @@
       "sigla": "CDM",
       "apelido": "Diakité",
       "aliases_odds": [
-        "Oumar Diakite"
+        "Oumar Diakite",
+        "DIAKITE OUMAR"
       ]
     },
     "126320": {
@@ -3122,14 +3137,16 @@
       "sigla": "CDM",
       "apelido": "Diallo",
       "aliases_odds": [
-        "Amad Diallo"
+        "Amad Diallo",
+        "DIALLO TRAORE A."
       ]
     },
     "103898": {
       "sigla": "ALE",
       "apelido": "Nmecha",
       "aliases_odds": [
-        "Felix Nmecha"
+        "Felix Nmecha",
+        "NMECHA FELIX"
       ]
     },
     "97128": {
@@ -3215,7 +3232,8 @@
       "sigla": "ALE",
       "apelido": "Beier",
       "aliases_odds": [
-        "Maximilian Beier"
+        "Maximilian Beier",
+        "BEIER MAXIMILIAN"
       ]
     },
     "89889": {
@@ -3580,7 +3598,8 @@
       "sigla": "JAP",
       "apelido": "Junnosuke Suzuki",
       "aliases_odds": [
-        "Junnosuke Suzuki"
+        "Junnosuke Suzuki",
+        "SUZUKI J."
       ]
     },
     "146455": {
@@ -3595,7 +3614,8 @@
       "sigla": "JAP",
       "apelido": "Yuito Suzuki",
       "aliases_odds": [
-        "Yuito Suzuki"
+        "Yuito Suzuki",
+        "SUZUKI YUITO"
       ]
     },
     "120630": {
@@ -3625,21 +3645,24 @@
       "sigla": "TUN",
       "apelido": "Ben Ouanes",
       "aliases_odds": [
-        "Mortadha Ben Ouanes"
+        "Mortadha Ben Ouanes",
+        "BEN OUANES M."
       ]
     },
     "118314": {
       "sigla": "JAP",
       "apelido": "Taniguchi",
       "aliases_odds": [
-        "Shogo Taniguchi"
+        "Shogo Taniguchi",
+        "TANIGUCHI SHOGO"
       ]
     },
     "106421": {
       "sigla": "JAP",
       "apelido": "Junya Ito",
       "aliases_odds": [
-        "Junya Ito"
+        "Junya Ito",
+        "ITO J."
       ]
     },
     "150915": {
@@ -3653,14 +3676,16 @@
       "sigla": "JAP",
       "apelido": "Tomiyasu",
       "aliases_odds": [
-        "Takehiro Tomiyasu"
+        "Takehiro Tomiyasu",
+        "TOMIYASU T."
       ]
     },
     "129651": {
       "sigla": "JAP",
       "apelido": "Watanabe",
       "aliases_odds": [
-        "Tsuyoshi Watanabe"
+        "Tsuyoshi Watanabe",
+        "WATANABE TSUYOSHI"
       ]
     },
     "116581": {
@@ -3674,7 +3699,8 @@
       "sigla": "JAP",
       "apelido": "Nakamura",
       "aliases_odds": [
-        "Keito Nakamura"
+        "Keito Nakamura",
+        "NAKAMURA KEITO"
       ]
     },
     "118310": {
@@ -3731,7 +3757,8 @@
       "sigla": "JAP",
       "apelido": "Shiogai",
       "aliases_odds": [
-        "Kento Shiogai"
+        "Kento Shiogai",
+        "Shiogai, Kento"
       ]
     },
     "105736": {
@@ -3752,7 +3779,8 @@
       "sigla": "TUN",
       "apelido": "Elloumi",
       "aliases_odds": [
-        "Rayan Elloumi"
+        "Rayan Elloumi",
+        "Elloumi, Rayan"
       ]
     },
     "90043": {
@@ -3788,28 +3816,32 @@
       "sigla": "JAP",
       "apelido": "Tanaka",
       "aliases_odds": [
-        "Ao Tanaka"
+        "Ao Tanaka",
+        "TANAKA AO"
       ]
     },
     "120637": {
       "sigla": "TUN",
       "apelido": "Rekik",
       "aliases_odds": [
-        "Omar Rekik"
+        "Omar Rekik",
+        "REKIK OMAR"
       ]
     },
     "105729": {
       "sigla": "JAP",
       "apelido": "Maeda",
       "aliases_odds": [
-        "Daizen Maeda"
+        "Daizen Maeda",
+        "MAEDA DAIZEN"
       ]
     },
     "96330": {
       "sigla": "JAP",
       "apelido": "Ogawa",
       "aliases_odds": [
-        "Koki Ogawa"
+        "Koki Ogawa",
+        "OGAWA KOKI"
       ]
     },
     "120638": {
@@ -3830,7 +3862,8 @@
       "sigla": "TUN",
       "apelido": "Arous",
       "aliases_odds": [
-        "Adem Arous"
+        "Adem Arous",
+        "AROUS A."
       ]
     },
     "150916": {
@@ -3851,7 +3884,8 @@
       "sigla": "JAP",
       "apelido": "Ueda",
       "aliases_odds": [
-        "Ayase Ueda"
+        "Ayase Ueda",
+        "UEDA AYASE"
       ]
     },
     "105730": {
@@ -3865,7 +3899,8 @@
       "sigla": "TUN",
       "apelido": "Abdi",
       "aliases_odds": [
-        "Ali Abdi"
+        "Ali Abdi",
+        "ABDI ALI"
       ]
     },
     "129654": {
@@ -3893,7 +3928,8 @@
       "sigla": "JAP",
       "apelido": "Seko",
       "aliases_odds": [
-        "Ayumu Seko"
+        "Ayumu Seko",
+        "SEKO AYUMU"
       ]
     },
     "114321": {
@@ -5066,7 +5102,8 @@
       "sigla": "EGI",
       "apelido": "Zizo",
       "aliases_odds": [
-        "Ahmed Sayed \"Zizo\""
+        "Ahmed Sayed \"Zizo\"",
+        "Zizo"
       ]
     },
     "114015": {
@@ -6431,7 +6468,8 @@
       "sigla": "POR",
       "apelido": "Vitinha",
       "aliases_odds": [
-        "Vitinha"
+        "Vitinha",
+        "Vitinha Ferreira"
       ]
     },
     "109569": {
@@ -6586,7 +6624,8 @@
       "sigla": "GAN",
       "apelido": "Adjetey",
       "aliases_odds": [
-        "Jonas Adjetey"
+        "Jonas Adjetey",
+        "Jonas Adjei Adjetey"
       ]
     },
     "120618": {
@@ -6699,7 +6738,8 @@
       "sigla": "GAN",
       "apelido": "Mumin",
       "aliases_odds": [
-        "Abdul Mumin"
+        "Abdul Mumin",
+        "Khalid Abdul Mumin"
       ]
     },
     "120621": {
@@ -6713,7 +6753,8 @@
       "sigla": "GAN",
       "apelido": "Opoku",
       "aliases_odds": [
-        "Jerome Opoku"
+        "Jerome Opoku",
+        "Opoku, Jerome"
       ]
     },
     "92809": {
@@ -6785,7 +6826,8 @@
       "sigla": "PAN",
       "apelido": "Cristian Martínez",
       "aliases_odds": [
-        "Cristian Martinez"
+        "Cristian Martinez",
+        "Cristian Martinez Borja"
       ]
     },
     "141967": {
