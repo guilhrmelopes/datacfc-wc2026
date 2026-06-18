@@ -9,7 +9,12 @@ from pathlib import Path
 from scrapers.fotmob_copa import (
     buscar_metricas_coletivas_time,
 )
-from pipeline.cartola_copa_sync import aplicar_dados_cartola, rebuild_extras_fotmob, reprocessar_cedido_cartola
+from pipeline.cartola_copa_sync import (
+    aplicar_dados_cartola,
+    enriquecer_valida_cartola_confrontos,
+    rebuild_extras_fotmob,
+    reprocessar_cedido_cartola,
+)
 from scrapers.cartola_copa import buscar_dados_cartola_copa
 from scrapers.fotmob_fixtures import (
     PartidaCalendario,
@@ -302,11 +307,18 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     if novas:
         processadas.extend(novas)
 
-    selecoes = _carregar_json(caminho_selecoes)
     estrearam = limpar_metricas_selecoes_copa(caminho_selecoes, caminho_classificacao)
 
     dados_cartola = buscar_dados_cartola_copa()
     resumo_cartola = aplicar_dados_cartola(pasta_dados, dados_cartola, estado)
+
+    selecoes = _carregar_json(caminho_selecoes)
+    confrontos_valida_atualizados = enriquecer_valida_cartola_confrontos(
+        dados_cartola,
+        selecoes,
+        caminho_grupos,
+        caminho_selecoes,
+    )
 
     if processadas:
         rebuild_extras_fotmob(processadas, caminho_mercado, selecoes)

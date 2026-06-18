@@ -86,7 +86,8 @@
       "utc": "2026-06-11T19:00:00Z",
       "match_id": "4667751",
       "finalizada": true,
-      "placar": "2 - 0"
+      "placar": "2 - 0",
+      "valida_cartola": true
     },
     {
       "grupo": "A",
@@ -98,7 +99,8 @@
       "utc": "2026-06-12T02:00:00Z",
       "match_id": "4667752",
       "finalizada": true,
-      "placar": "2 - 1"
+      "placar": "2 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "B",
@@ -110,7 +112,8 @@
       "utc": "2026-06-12T19:00:00Z",
       "match_id": "4667757",
       "finalizada": true,
-      "placar": "1 - 1"
+      "placar": "1 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "D",
@@ -122,7 +125,8 @@
       "utc": "2026-06-13T01:00:00Z",
       "match_id": "4667771",
       "finalizada": true,
-      "placar": "4 - 1"
+      "placar": "4 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "B",
@@ -134,7 +138,8 @@
       "utc": "2026-06-13T19:00:00Z",
       "match_id": "4667758",
       "finalizada": true,
-      "placar": "1 - 1"
+      "placar": "1 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "C",
@@ -146,7 +151,8 @@
       "utc": "2026-06-13T22:00:00Z",
       "match_id": "4667764",
       "finalizada": true,
-      "placar": "1 - 1"
+      "placar": "1 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "C",
@@ -158,7 +164,8 @@
       "utc": "2026-06-14T01:00:00Z",
       "match_id": "4667765",
       "finalizada": true,
-      "placar": "0 - 1"
+      "placar": "0 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "D",
@@ -170,7 +177,8 @@
       "utc": "2026-06-14T04:00:00Z",
       "match_id": "4667772",
       "finalizada": true,
-      "placar": "2 - 0"
+      "placar": "2 - 0",
+      "valida_cartola": true
     },
     {
       "grupo": "E",
@@ -182,7 +190,8 @@
       "utc": "2026-06-14T17:00:00Z",
       "match_id": "4667777",
       "finalizada": true,
-      "placar": "7 - 1"
+      "placar": "7 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "F",
@@ -194,7 +203,8 @@
       "utc": "2026-06-14T20:00:00Z",
       "match_id": "4667783",
       "finalizada": true,
-      "placar": "2 - 2"
+      "placar": "2 - 2",
+      "valida_cartola": true
     },
     {
       "grupo": "E",
@@ -206,7 +216,8 @@
       "utc": "2026-06-14T23:00:00Z",
       "match_id": "4667778",
       "finalizada": true,
-      "placar": "1 - 0"
+      "placar": "1 - 0",
+      "valida_cartola": true
     },
     {
       "grupo": "F",
@@ -218,7 +229,8 @@
       "utc": "2026-06-15T02:00:00Z",
       "match_id": "4667784",
       "finalizada": true,
-      "placar": "5 - 1"
+      "placar": "5 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "H",
@@ -230,7 +242,8 @@
       "utc": "2026-06-15T16:00:00Z",
       "match_id": "4667798",
       "finalizada": true,
-      "placar": "0 - 0"
+      "placar": "0 - 0",
+      "valida_cartola": true
     },
     {
       "grupo": "G",
@@ -242,7 +255,8 @@
       "utc": "2026-06-15T19:00:00Z",
       "match_id": "4667790",
       "finalizada": true,
-      "placar": "1 - 1"
+      "placar": "1 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "H",
@@ -254,7 +268,8 @@
       "utc": "2026-06-15T22:00:00Z",
       "match_id": "4667799",
       "finalizada": true,
-      "placar": "1 - 1"
+      "placar": "1 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "G",
@@ -266,7 +281,8 @@
       "utc": "2026-06-16T01:00:00Z",
       "match_id": "4667791",
       "finalizada": true,
-      "placar": "2 - 2"
+      "placar": "2 - 2",
+      "valida_cartola": true
     },
     {
       "grupo": "I",
@@ -278,7 +294,8 @@
       "utc": "2026-06-16T19:00:00Z",
       "match_id": "4667804",
       "finalizada": true,
-      "placar": "3 - 1"
+      "placar": "3 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "I",
@@ -290,7 +307,8 @@
       "utc": "2026-06-16T22:00:00Z",
       "match_id": "4667805",
       "finalizada": true,
-      "placar": "1 - 4"
+      "placar": "1 - 4",
+      "valida_cartola": true
     },
     {
       "grupo": "J",
@@ -302,7 +320,8 @@
       "utc": "2026-06-17T01:00:00Z",
       "match_id": "4667812",
       "finalizada": true,
-      "placar": "3 - 0"
+      "placar": "3 - 0",
+      "valida_cartola": true
     },
     {
       "grupo": "J",
@@ -314,7 +333,8 @@
       "utc": "2026-06-17T04:00:00Z",
       "match_id": "4667813",
       "finalizada": true,
-      "placar": "3 - 1"
+      "placar": "3 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "K",
@@ -326,7 +346,8 @@
       "utc": "2026-06-17T17:00:00Z",
       "match_id": "4667819",
       "finalizada": true,
-      "placar": "1 - 1"
+      "placar": "1 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "L",
@@ -338,7 +359,8 @@
       "utc": "2026-06-17T20:00:00Z",
       "match_id": "4667825",
       "finalizada": true,
-      "placar": "4 - 2"
+      "placar": "4 - 2",
+      "valida_cartola": true
     },
     {
       "grupo": "L",
@@ -350,7 +372,8 @@
       "utc": "2026-06-17T23:00:00Z",
       "match_id": "4667826",
       "finalizada": true,
-      "placar": "1 - 0"
+      "placar": "1 - 0",
+      "valida_cartola": true
     },
     {
       "grupo": "K",
@@ -362,7 +385,8 @@
       "utc": "2026-06-18T02:00:00.000Z",
       "match_id": "4667820",
       "finalizada": true,
-      "placar": "1 - 3"
+      "placar": "1 - 3",
+      "valida_cartola": true
     },
     {
       "grupo": "A",
@@ -374,7 +398,8 @@
       "utc": "2026-06-18T16:00:00.000Z",
       "match_id": "4667753",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": false
     },
     {
       "grupo": "B",
@@ -386,7 +411,8 @@
       "utc": "2026-06-18T19:00:00.000Z",
       "match_id": "4667759",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": false
     },
     {
       "grupo": "B",
@@ -398,7 +424,8 @@
       "utc": "2026-06-18T22:00:00.000Z",
       "match_id": "4667760",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": false
     },
     {
       "grupo": "A",
@@ -410,7 +437,8 @@
       "utc": "2026-06-19T01:00:00Z",
       "match_id": "4667754",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": false
     },
     {
       "grupo": "D",
@@ -422,7 +450,8 @@
       "utc": "2026-06-19T19:00:00Z",
       "match_id": "4667774",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "C",
@@ -434,7 +463,8 @@
       "utc": "2026-06-19T22:00:00Z",
       "match_id": "4667766",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "C",
@@ -446,7 +476,8 @@
       "utc": "2026-06-20T00:30:00Z",
       "match_id": "4667767",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "D",
@@ -458,7 +489,8 @@
       "utc": "2026-06-20T03:00:00Z",
       "match_id": "4667773",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "F",
@@ -470,7 +502,8 @@
       "utc": "2026-06-20T17:00:00Z",
       "match_id": "4667786",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "E",
@@ -482,7 +515,8 @@
       "utc": "2026-06-20T20:00:00Z",
       "match_id": "4667780",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "E",
@@ -494,7 +528,8 @@
       "utc": "2026-06-21T00:00:00Z",
       "match_id": "4667779",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "F",
@@ -506,7 +541,8 @@
       "utc": "2026-06-21T04:00:00Z",
       "match_id": "4667785",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "H",
@@ -518,7 +554,8 @@
       "utc": "2026-06-21T16:00:00Z",
       "match_id": "4667801",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "G",
@@ -530,7 +567,8 @@
       "utc": "2026-06-21T19:00:00Z",
       "match_id": "4667793",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "H",
@@ -542,7 +580,8 @@
       "utc": "2026-06-21T22:00:00Z",
       "match_id": "4667800",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "G",
@@ -554,7 +593,8 @@
       "utc": "2026-06-22T01:00:00Z",
       "match_id": "4667792",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "J",
@@ -566,7 +606,8 @@
       "utc": "2026-06-22T17:00:00Z",
       "match_id": "4667815",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "I",
@@ -578,7 +619,8 @@
       "utc": "2026-06-22T21:00:00Z",
       "match_id": "4667807",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "I",
@@ -590,7 +632,8 @@
       "utc": "2026-06-23T00:00:00Z",
       "match_id": "4667806",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "J",
@@ -602,7 +645,8 @@
       "utc": "2026-06-23T03:00:00Z",
       "match_id": "4667814",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "K",
@@ -614,7 +658,8 @@
       "utc": "2026-06-23T17:00:00Z",
       "match_id": "4667822",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "L",
@@ -626,7 +671,8 @@
       "utc": "2026-06-23T20:00:00Z",
       "match_id": "4667828",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "L",
@@ -638,7 +684,8 @@
       "utc": "2026-06-23T23:00:00Z",
       "match_id": "4667827",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": false
     },
     {
       "grupo": "K",
@@ -650,7 +697,8 @@
       "utc": "2026-06-24T02:00:00Z",
       "match_id": "4667821",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": false
     },
     {
       "grupo": "B",
@@ -662,7 +710,8 @@
       "utc": "2026-06-24T19:00:00Z",
       "match_id": "4667761",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "B",
@@ -674,7 +723,8 @@
       "utc": "2026-06-24T19:00:00Z",
       "match_id": "4667762",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "C",
@@ -686,7 +736,8 @@
       "utc": "2026-06-24T22:00:00Z",
       "match_id": "4667768",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "C",
@@ -698,7 +749,8 @@
       "utc": "2026-06-24T22:00:00Z",
       "match_id": "4667769",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "A",
@@ -710,7 +762,8 @@
       "utc": "2026-06-25T01:00:00Z",
       "match_id": "4667755",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "A",
@@ -722,7 +775,8 @@
       "utc": "2026-06-25T01:00:00Z",
       "match_id": "4667756",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "E",
@@ -734,7 +788,8 @@
       "utc": "2026-06-25T20:00:00Z",
       "match_id": "4667781",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "E",
@@ -746,7 +801,8 @@
       "utc": "2026-06-25T20:00:00Z",
       "match_id": "4667782",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "F",
@@ -758,7 +814,8 @@
       "utc": "2026-06-25T23:00:00Z",
       "match_id": "4667787",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "F",
@@ -770,7 +827,8 @@
       "utc": "2026-06-25T23:00:00Z",
       "match_id": "4667788",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "D",
@@ -782,7 +840,8 @@
       "utc": "2026-06-26T02:00:00Z",
       "match_id": "4667775",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "D",
@@ -794,7 +853,8 @@
       "utc": "2026-06-26T02:00:00Z",
       "match_id": "4667776",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "I",
@@ -806,7 +866,8 @@
       "utc": "2026-06-26T19:00:00Z",
       "match_id": "4667808",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "I",
@@ -818,7 +879,8 @@
       "utc": "2026-06-26T19:00:00Z",
       "match_id": "4667809",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "H",
@@ -830,7 +892,8 @@
       "utc": "2026-06-27T00:00:00Z",
       "match_id": "4667802",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "H",
@@ -842,7 +905,8 @@
       "utc": "2026-06-27T00:00:00Z",
       "match_id": "4667803",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "G",
@@ -854,7 +918,8 @@
       "utc": "2026-06-27T03:00:00Z",
       "match_id": "4667794",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "G",
@@ -866,7 +931,8 @@
       "utc": "2026-06-27T03:00:00Z",
       "match_id": "4667795",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "L",
@@ -878,7 +944,8 @@
       "utc": "2026-06-27T21:00:00Z",
       "match_id": "4667829",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "L",
@@ -890,7 +957,8 @@
       "utc": "2026-06-27T21:00:00Z",
       "match_id": "4667830",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "K",
@@ -902,7 +970,8 @@
       "utc": "2026-06-27T23:30:00Z",
       "match_id": "4667823",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "K",
@@ -914,7 +983,8 @@
       "utc": "2026-06-27T23:30:00Z",
       "match_id": "4667824",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "J",
@@ -926,7 +996,8 @@
       "utc": "2026-06-28T02:00:00Z",
       "match_id": "4667816",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     },
     {
       "grupo": "J",
@@ -938,7 +1009,8 @@
       "utc": "2026-06-28T02:00:00Z",
       "match_id": "4667817",
       "finalizada": false,
-      "placar": null
+      "placar": null,
+      "valida_cartola": true
     }
   ]
 }

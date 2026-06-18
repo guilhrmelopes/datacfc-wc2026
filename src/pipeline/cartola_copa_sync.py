@@ -228,6 +228,92 @@ def _partidas_encerradas(dados: DadosCartolaCopa) -> list[dict]:
     ]
 
 
+def _mapa_valida_cartola_por_clube(dados: DadosCartolaCopa) -> dict[tuple[int, int], bool]:
+    """Par ordenado (clube_id menor, maior) → partida válida na rodada fantasy Cartola."""
+    saida: dict[tuple[int, int], bool] = {}
+    for partida in dados.partidas.get("partidas") or []:
+        try:
+            casa = int(partida["clube_casa_id"])
+            visitante = int(partida["clube_visitante_id"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        par = (min(casa, visitante), max(casa, visitante))
+        saida[par] = bool(partida.get("valida", True))
+    return saida
+
+
+def _par_clubes_selecao(
+    mandante: dict,
+    visitante: dict,
+) -> tuple[int, int] | None:
+    try:
+        casa = int(mandante["clube_id"])
+        visit = int(visitante["clube_id"])
+    except (KeyError, TypeError, ValueError):
+        return None
+    return min(casa, visit), max(casa, visit)
+
+
+def enriquecer_valida_cartola_confrontos(
+    dados: DadosCartolaCopa,
+    selecoes: list[dict],
+    caminho_grupos: Path,
+    caminho_selecoes: Path,
+) -> int:
+    """
+    Marca valida_cartola em grupos_wc2026 e selecoes a partir de /copa/partidas.
+    Confrontos fora da janela atual da API mantêm o valor já persistido (default True).
+    """
+    mapa_sel = {s["selecao"]: s for s in selecoes}
+    valida_por_par = _mapa_valida_cartola_por_clube(dados)
+    grupos = _carregar_json(caminho_grupos)
+    atualizados = 0
+
+    for confronto in grupos.get("confrontos") or []:
+        mandante = mapa_sel.get(confronto.get("mandante", ""))
+        visitante = mapa_sel.get(confronto.get("visitante", ""))
+        if not mandante or not visitante:
+            continue
+        par = _par_clubes_selecao(mandante, visitante)
+        if par is None:
+            continue
+
+        if par in valida_por_par:
+            novo = valida_por_par[par]
+        else:
+            novo = confronto.get("valida_cartola", True)
+
+        if confronto.get("valida_cartola") != novo:
+            confronto["valida_cartola"] = novo
+            atualizados += 1
+        elif "valida_cartola" not in confronto:
+            confronto["valida_cartola"] = novo
+
+    _salvar_json(caminho_grupos, grupos)
+
+    valida_por_match = {
+        str(c.get("match_id")): bool(c.get("valida_cartola", True))
+        for c in (grupos.get("confrontos") or [])
+        if c.get("match_id")
+    }
+
+    for selecao in selecoes:
+        for confronto in selecao.get("confrontos_agendados") or []:
+            match_id = str(confronto.get("match_id") or "")
+            if match_id in valida_por_match:
+                novo = valida_por_match[match_id]
+            else:
+                novo = confronto.get("valida_cartola", True)
+            if confronto.get("valida_cartola") != novo:
+                confronto["valida_cartola"] = novo
+                atualizados += 1
+            elif "valida_cartola" not in confronto:
+                confronto["valida_cartola"] = novo
+
+    _salvar_json(caminho_selecoes, selecoes)
+    return atualizados
+
+
 def _mapa_clube_sigla(dados: DadosCartolaCopa, selecoes: list[dict]) -> dict[int, str]:
     por_id: dict[int, str] = {}
     for origem in (

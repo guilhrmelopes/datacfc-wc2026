@@ -28,6 +28,8 @@ export interface ConfrontoAgendado {
   estadio: string;
   rodada?: number;
   match_id?: string;
+  /** False quando o confronto não entra na rodada fantasy do Cartola FC. */
+  valida_cartola?: boolean;
 }
 
 export interface Selecao {

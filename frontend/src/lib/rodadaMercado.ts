@@ -69,12 +69,22 @@ export function confrontoRodada(
   return c ?? null;
 }
 
+/** Confronto da rodada fantasy que pontua no Cartola FC. */
+export function confrontoValidoRodada(
+  selecao: Selecao | undefined,
+  rodada: number,
+): ConfrontoAgendado | null {
+  const c = confrontoRodada(selecao, rodada);
+  if (!c || c.valida_cartola === false) return null;
+  return c;
+}
+
 export function jogadorNaRodada(
   j: JogadorMercado,
   mapa: Map<string, Selecao>,
   rodada: number,
 ): boolean {
-  return confrontoRodada(mapa.get(j.selecao), rodada) != null;
+  return confrontoValidoRodada(mapa.get(j.selecao), rodada) != null;
 }
 
 export interface AdversarioRodada {
@@ -88,7 +98,7 @@ export function adversarioRodada(
   mapa: Map<string, Selecao>,
   rodada: number,
 ): AdversarioRodada | null {
-  const c = confrontoRodada(mapa.get(j.selecao), rodada);
+  const c = confrontoValidoRodada(mapa.get(j.selecao), rodada);
   if (!c) return null;
   return {
     sigla: c.adversario_sigla,
