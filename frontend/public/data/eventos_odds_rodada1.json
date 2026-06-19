@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-19T19:43:30.964810+00:00",
+  "atualizado_em": "2026-06-19T21:06:55.030862+00:00",
   "rodada": 3,
   "eventos": [
     {
@@ -379,6 +379,20 @@
       "away": "SOUTH KOREA",
       "date": "2026-06-25T01:00:00Z",
       "fixture_id": "4667756"
+    },
+    {
+      "id": 66456948,
+      "home": "TURKIYE",
+      "away": "UNITED STATES",
+      "date": "2026-06-26T02:00:00Z",
+      "fixture_id": "4667775"
+    },
+    {
+      "id": 66456950,
+      "home": "PARAGUAY",
+      "away": "AUSTRALIA",
+      "date": "2026-06-26T02:00:00Z",
+      "fixture_id": "4667776"
     }
   ]
 }
