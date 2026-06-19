@@ -136,11 +136,19 @@ NOMES_MERCADOS_CONHECIDOS: frozenset[str] = frozenset({
     "Asian Handicap", "Draw No Bet",
 })
 
-# Bookmakers tier 1 (menor margem)
-BOOKMAKERS_T1: list[str] = ["pinnacle", "betfair exchange", "betfair", "1xbet"]
-BOOKMAKERS_T2: list[str] = ["bet365", "betano", "unibet", "william hill", "bwin",
-                             "betway", "888sport", "betclic", "kambi", "ladbrokes",
-                             "leovegas", "betmgm", "sisal", "paddy power"]
+# Prioridade de casas (via hub OddsNotifier — espelha betfair.bet.br / pinnacle.bet.br / 1xbet.bet.br):
+# 1) Pinnacle ou Betfair  2) 1xbet  3) secundárias  4) demais
+BOOKMAKERS_PRIMARIOS: list[str] = ["pinnacle", "betfair exchange", "betfair"]
+BOOKMAKERS_FALLBACK_1XBET: list[str] = ["1xbet"]
+BOOKMAKERS_SECUNDARIOS: list[str] = [
+    "bet365", "betano", "unibet", "william hill", "bwin",
+    "betway", "888sport", "betclic", "kambi", "ladbrokes",
+    "leovegas", "betmgm", "sisal", "paddy power",
+]
+
+# Legado — usado em logs e compatibilidade
+BOOKMAKERS_T1: list[str] = BOOKMAKERS_PRIMARIOS + BOOKMAKERS_FALLBACK_1XBET
+BOOKMAKERS_T2: list[str] = BOOKMAKERS_SECUNDARIOS
 
 MAX_EVENTOS: int = int(os.environ.get("ODDS_MAX_EVENTOS", "40"))
 RODADA_ALVO: int = int(os.environ.get("ODDS_RODADA", "1"))
@@ -886,13 +894,20 @@ _PAT_MARKET_BLOCK = re.compile(
 )
 
 
-def _bookmaker_tier(nome: str) -> int:
+def _casa_prioridade(nome: str) -> int:
+    """0 = Pinnacle/Betfair, 1 = 1xbet, 2 = secundárias, 3 = demais."""
     n = _norm(nome)
-    if any(t in n for t in BOOKMAKERS_T1):
+    if any(t in n for t in BOOKMAKERS_PRIMARIOS):
+        return 0
+    if any(t in n for t in BOOKMAKERS_FALLBACK_1XBET):
         return 1
-    if any(t in n for t in BOOKMAKERS_T2):
+    if any(t in n for t in BOOKMAKERS_SECUNDARIOS):
         return 2
     return 3
+
+
+def _bookmaker_tier(nome: str) -> int:
+    return _casa_prioridade(nome) + 1
 
 
 def _melhor_odd(
@@ -900,13 +915,28 @@ def _melhor_odd(
     nova_odd: float,
     nova_bk: str,
 ) -> tuple[float, str]:
-    """Prefere maior odd; empate favorece bookmaker tier menor."""
+    """
+    Seleciona odd por prioridade de casa (Pinnacle/Betfair → 1xbet → secundárias).
+    Dentro do mesmo nível, prefere a maior odd decimal.
+    """
     if atual is None:
         return nova_odd, nova_bk
+    pa, pn = _casa_prioridade(atual[1]), _casa_prioridade(nova_bk)
+    if pn < pa:
+        return nova_odd, nova_bk
+    if pn > pa:
+        return atual
     if nova_odd > atual[0] + 0.001:
         return nova_odd, nova_bk
-    if abs(nova_odd - atual[0]) <= 0.001 and _bookmaker_tier(nova_bk) < _bookmaker_tier(atual[1]):
-        return nova_odd, nova_bk
+    if abs(nova_odd - atual[0]) <= 0.001 and pn == 0:
+        pref = ("pinnacle", "betfair exchange", "betfair")
+        na = _norm(nova_bk)
+        aa = _norm(atual[1])
+        for marca in pref:
+            if marca in na and marca not in aa:
+                return nova_odd, nova_bk
+            if marca in aa and marca not in na:
+                return atual
     return atual
 
 
@@ -1372,8 +1402,11 @@ def consolidar_nomes_odds(
     agrupado: dict[str, tuple[float, str, str]] = {}  # norm → (odd, bk, nome_original)
     for nome_orig, (odd_val, bk) in odds.items():
         chave = _normalizar_nome_odds(nome_orig)
-        if chave not in agrupado or odd_val > agrupado[chave][0]:
+        if chave not in agrupado:
             agrupado[chave] = (odd_val, bk, nome_orig)
+        else:
+            melhor = _melhor_odd((agrupado[chave][0], agrupado[chave][1]), odd_val, bk)
+            agrupado[chave] = (melhor[0], melhor[1], nome_orig)
     return {nome_orig: (odd_val, bk) for _, (odd_val, bk, nome_orig) in agrupado.items()}
 
 
@@ -2023,6 +2056,13 @@ def processar_evento(
         )
 
     logger.info("  %d atletas (G+A+GA+SG).", adicionados)
+
+    from scrapers.odds_ga_fallback import enriquecer_odds_entrada
+
+    for entrada in resultado.values():
+        if isinstance(entrada, dict):
+            enriquecer_odds_entrada(entrada)
+
     return adicionados
 
 
@@ -2464,6 +2504,9 @@ def _salvar(odds: dict[str, dict], *, referencia_data: str | None = None) -> Non
 
     CAMINHO_SAIDA.parent.mkdir(parents=True, exist_ok=True)
     ref = referencia_data or referencia_hoje().isoformat()
+    from scrapers.odds_ga_fallback import enriquecer_mapa_odds
+
+    enriquecer_mapa_odds(odds)
     payload = {
         "atualizado_em": datetime.now(tz=timezone.utc).isoformat(),
         "referencia_data": ref,

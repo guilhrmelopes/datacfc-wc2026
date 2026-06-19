@@ -326,12 +326,159 @@ def confronto_atual_por_sigla(
     return atual
 
 
+def _entrada_odds_util(entrada: dict, posicao_id: int) -> bool:
+    """True se a entrada tem odds mínimas para a posição."""
+    if posicao_id in _POS_LINHA:
+        return bool(
+            entrada.get("ga_pct")
+            or entrada.get("g_pct")
+            or entrada.get("a_pct")
+        )
+    if posicao_id in _POS_SG:
+        return bool(entrada.get("sg_pct"))
+    return False
+
+
+def _mediana(vals: list[float]) -> float | None:
+    if not vals:
+        return None
+    ordenado = sorted(vals)
+    n = len(ordenado)
+    meio = n // 2
+    if n % 2:
+        return round(ordenado[meio], 2)
+    return round((ordenado[meio - 1] + ordenado[meio]) / 2, 2)
+
+
+def _imputar_odds_de_pares(peers: list[dict], posicao_id: int) -> dict:
+    """Mediana das odds dos colegas no mesmo evento (fallback quando a casa não lista o jogador)."""
+    entrada: dict[str, Any] = {"imputado": True}
+    if posicao_id in _POS_LINHA:
+        for pct_key, odds_key, casa_key in (
+            ("g_pct", "odds_g", "casa_g"),
+            ("a_pct", "odds_a", "casa_a"),
+            ("ga_pct", "odds_ga", "casa_ga"),
+        ):
+            pcts = [float(p[pct_key]) for p in peers if p.get(pct_key) is not None]
+            odds_vals = [float(p[odds_key]) for p in peers if p.get(odds_key) is not None]
+            casas = [str(p[casa_key]) for p in peers if p.get(casa_key)]
+            if pcts:
+                entrada[pct_key] = _mediana(pcts)
+            if odds_vals:
+                entrada[odds_key] = _mediana(odds_vals)
+            if casas:
+                entrada[casa_key] = casas[0]
+    elif posicao_id in _POS_SG:
+        pcts = [float(p["sg_pct"]) for p in peers if p.get("sg_pct") is not None]
+        odds_vals = [float(p["odds_sg"]) for p in peers if p.get("odds_sg") is not None]
+        casas = [str(p["casa_sg"]) for p in peers if p.get("casa_sg")]
+        if pcts:
+            entrada["sg_pct"] = _mediana(pcts)
+        if odds_vals:
+            entrada["odds_sg"] = _mediana(odds_vals)
+        if casas:
+            entrada["casa_sg"] = casas[0]
+    return entrada
+
+
+def imputar_odds_faltantes(
+    resultado: dict[str, dict],
+    jogadores: list[dict],
+    eventos_list: list[dict],
+    atuais: dict[str, dict],
+) -> int:
+    """Preenche jogadores com ADV sem odds usando mediana dos colegas no confronto atual."""
+    from scrapers.odds_ga_fallback import enriquecer_odds_entrada
+
+    por_id = {str(j.get("atleta_id")): j for j in jogadores if j.get("atleta_id") is not None}
+    imputados = 0
+
+    for aid, jog in por_id.items():
+        pos = int(jog.get("posicao_id") or 0)
+        if pos not in _POS_ODDS_ALVO:
+            continue
+        prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
+        if not prox:
+            continue
+        if aid in resultado and _entrada_odds_util(resultado[aid], pos):
+            continue
+
+        sigla = (jog.get("sigla") or "").upper()
+        ev = atuais.get(sigla)
+        if not ev:
+            continue
+        sig_m = (ev.get("sigla_mandante") or "").upper()
+        sig_v = (ev.get("sigla_visitante") or "").upper()
+        adv_ev = sig_v if sigla == sig_m else sig_m
+        if adv_ev != prox:
+            continue
+
+        bucket = jog.get("bucket_posicao")
+        event_odds = ev.get("odds") or {}
+        peers: list[dict] = []
+        for peer_aid, peer_ent in event_odds.items():
+            if peer_aid == aid or not isinstance(peer_ent, dict):
+                continue
+            peer_jog = por_id.get(str(peer_aid))
+            if not peer_jog or (peer_jog.get("sigla") or "").upper() != sigla:
+                continue
+            if pos in _POS_LINHA and peer_jog.get("bucket_posicao") != bucket:
+                continue
+            peer_copy = enriquecer_odds_entrada(dict(peer_ent))
+            if _entrada_odds_util(peer_copy, int(peer_jog.get("posicao_id") or 0)):
+                peers.append(peer_copy)
+
+        if not peers:
+            for peer_aid, peer_ent in event_odds.items():
+                if peer_aid == aid or not isinstance(peer_ent, dict):
+                    continue
+                peer_jog = por_id.get(str(peer_aid))
+                if not peer_jog or (peer_jog.get("sigla") or "").upper() != sigla:
+                    continue
+                peer_copy = enriquecer_odds_entrada(dict(peer_ent))
+                if _entrada_odds_util(peer_copy, int(peer_jog.get("posicao_id") or 0)):
+                    peers.append(peer_copy)
+
+        if not peers:
+            continue
+
+        entrada = _imputar_odds_de_pares(peers, pos)
+        entrada = _montar_entrada_dashboard(entrada, ev, sigla)
+        enriquecer_odds_entrada(entrada)
+        if _entrada_odds_util(entrada, pos):
+            resultado[aid] = entrada
+            imputados += 1
+
+    if imputados:
+        logger.info("Odds imputadas (mediana colegas): %d jogadores.", imputados)
+    return imputados
+
+
+def _montar_entrada_dashboard(
+    entrada_bruta: dict,
+    ev: dict,
+    sigla: str,
+) -> dict:
+    sig_m = (ev.get("sigla_mandante") or "").upper()
+    sig_v = (ev.get("sigla_visitante") or "").upper()
+    adv = sig_v if sigla == sig_m else sig_m
+
+    entrada = dict(entrada_bruta)
+    entrada["event_id"] = ev.get("event_id")
+    entrada["adversario_sigla"] = adv or entrada.get("adversario_sigla")
+    entrada["data_confronto"] = ev.get("data")
+    entrada["rodada"] = ev.get("rodada")
+    return entrada
+
+
 def compilar_dashboard(
     armazenamento: dict[str, Any],
     jogadores: list[dict] | None = None,
     hoje: date | None = None,
 ) -> dict[str, dict]:
     """Monta odds_jogadores (chave atleta_id) só dos confrontos atuais por seleção."""
+    from scrapers.odds_ga_fallback import enriquecer_odds_entrada
+
     ref = hoje or referencia_hoje()
     if jogadores is None:
         if not CAMINHO_MERCADO.is_file():
@@ -356,16 +503,56 @@ def compilar_dashboard(
         entrada_bruta = (ev.get("odds") or {}).get(aid)
         if not isinstance(entrada_bruta, dict):
             continue
-        sig_m = (ev.get("sigla_mandante") or "").upper()
-        sig_v = (ev.get("sigla_visitante") or "").upper()
-        adv = sig_v if sigla == sig_m else sig_m
+        resultado[aid] = _montar_entrada_dashboard(entrada_bruta, ev, sigla)
 
-        entrada = dict(entrada_bruta)
-        entrada["event_id"] = ev.get("event_id")
-        entrada["adversario_sigla"] = adv or entrada.get("adversario_sigla")
-        entrada["data_confronto"] = ev.get("data")
-        entrada["rodada"] = ev.get("rodada")
-        resultado[aid] = entrada
+    # Backfill: jogadores com ADV ainda sem odds no confronto atual
+    prox_por_sigla = {
+        (j.get("selecao") or "").upper(): j
+        for j in jogadores
+        if j.get("proximo_adversario_sigla")
+    }
+    eventos_ordenados = sorted(
+        eventos_list,
+        key=lambda e: (e.get("data", ""), int(e.get("event_id") or 0)),
+    )
+    for aid, sigla in sigla_por_atleta.items():
+        if aid in resultado:
+            continue
+        jog = next((j for j in jogadores if str(j.get("atleta_id")) == aid), None)
+        if not jog:
+            continue
+        pos = int(jog.get("posicao_id") or 0)
+        if pos not in _POS_ODDS_ALVO:
+            continue
+        prox_adv = (jog.get("proximo_adversario_sigla") or "").strip().upper()
+        if not prox_adv:
+            continue
+        prox_data = (jog.get("proximo_adversario_data") or "").strip()
+        for ev in eventos_ordenados:
+            d = parse_data_calendario(ev.get("data"))
+            if d is None or d < ref:
+                continue
+            sig_m = (ev.get("sigla_mandante") or "").upper()
+            sig_v = (ev.get("sigla_visitante") or "").upper()
+            if sigla not in (sig_m, sig_v):
+                continue
+            adv_ev = sig_v if sigla == sig_m else sig_m
+            if adv_ev != prox_adv:
+                continue
+            if prox_data and ev.get("data") != prox_data:
+                continue
+            entrada_bruta = (ev.get("odds") or {}).get(aid)
+            if not isinstance(entrada_bruta, dict):
+                continue
+            if not _entrada_odds_util(entrada_bruta, pos):
+                continue
+            resultado[aid] = _montar_entrada_dashboard(entrada_bruta, ev, sigla)
+            break
+
+    imputar_odds_faltantes(resultado, jogadores, eventos_list, atuais)
+
+    for entrada in resultado.values():
+        enriquecer_odds_entrada(entrada)
 
     logger.info(
         "Compilado dashboard: %d atletas | %d seleções com confronto atual (ref=%s).",
@@ -431,6 +618,9 @@ def compilar_e_salvar(
     salvar_armazenamento(armaz)
 
     odds = compilar_dashboard(armaz, hoje=ref)
+    from scrapers.odds_ga_fallback import enriquecer_mapa_odds
+
+    enriquecer_mapa_odds(odds)
     if len(odds) < min_jogadores and CAMINHO_SAIDA.is_file():
         logger.warning(
             "Compilação com %d atletas (< %d) — preservando odds_jogadores anterior.",

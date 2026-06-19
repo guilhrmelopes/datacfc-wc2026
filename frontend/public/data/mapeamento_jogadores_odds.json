@@ -2751,7 +2751,8 @@
       "sigla": "SUE",
       "apelido": "Lindelöf",
       "aliases_odds": [
-        "Victor Lindelof"
+        "Victor Lindelof",
+        "Victor Nilsson Lindelof"
       ]
     },
     "103110": {
@@ -2938,7 +2939,8 @@
       "apelido": "Isak",
       "aliases_odds": [
         "Isak Hien",
-        "Alexander Isak"
+        "Alexander Isak",
+        "HIEN ISAK"
       ]
     },
     "128719": {
@@ -4028,7 +4030,8 @@
       "sigla": "ESP",
       "apelido": "Dani Olmo",
       "aliases_odds": [
-        "Dani Olmo"
+        "Dani Olmo",
+        "OLMO D."
       ]
     },
     "93334": {
@@ -4086,7 +4089,8 @@
       "sigla": "ESP",
       "apelido": "Llorente",
       "aliases_odds": [
-        "Marcos Llorente"
+        "Marcos Llorente",
+        "LLORENTE MARCOS"
       ]
     },
     "121406": {
@@ -4164,7 +4168,8 @@
       "sigla": "ESP",
       "apelido": "Merino",
       "aliases_odds": [
-        "Mikel Merino"
+        "Mikel Merino",
+        "MERINO M."
       ]
     },
     "126359": {
@@ -4540,56 +4545,64 @@
       "sigla": "CAB",
       "apelido": "Jamiro Monteiro",
       "aliases_odds": [
-        "Jamiro Monteiro"
+        "Jamiro Monteiro",
+        "MONTEIRO J."
       ]
     },
     "94073": {
       "sigla": "URU",
       "apelido": "Mathías Olivera",
       "aliases_odds": [
-        "Mathías Olivera"
+        "Mathías Olivera",
+        "OLIVERA M."
       ]
     },
     "102931": {
       "sigla": "URU",
       "apelido": "Brian Rodríguez",
       "aliases_odds": [
-        "Brian Rodriguez"
+        "Brian Rodriguez",
+        "RODRIGUEZ BRIAN"
       ]
     },
     "87722": {
       "sigla": "CAB",
       "apelido": "Garry Rodrigues",
       "aliases_odds": [
-        "Garry Rodrigues"
+        "Garry Rodrigues",
+        "RODRIGUES G."
       ]
     },
     "88559": {
       "sigla": "CAB",
       "apelido": "Steven Moreira",
       "aliases_odds": [
-        "Steven Moreira"
+        "Steven Moreira",
+        "MOREIRA S."
       ]
     },
     "150927": {
       "sigla": "CAB",
       "apelido": "Yannick Semedo",
       "aliases_odds": [
-        "Yannick Semedo"
+        "Yannick Semedo",
+        "SEMEDO Y."
       ]
     },
     "113504": {
       "sigla": "CAB",
       "apelido": "Telmo Arcanjo",
       "aliases_odds": [
-        "Telmo Arcanjo"
+        "Telmo Arcanjo",
+        "ARCANJO T."
       ]
     },
     "109097": {
       "sigla": "CAB",
       "apelido": "Jovane Cabral",
       "aliases_odds": [
-        "Jovane Cabral"
+        "Jovane Cabral",
+        "CABRAL JOVANE"
       ]
     },
     "100815": {
@@ -4611,7 +4624,8 @@
       "sigla": "URU",
       "apelido": "Darwin Núñez",
       "aliases_odds": [
-        "Darwin Nunez"
+        "Darwin Nunez",
+        "NUNEZ DARWIN"
       ]
     },
     "113500": {
@@ -4625,56 +4639,64 @@
       "sigla": "CAB",
       "apelido": "Sidny Cabral",
       "aliases_odds": [
-        "Sidny Cabral"
+        "Sidny Cabral",
+        "CABRAL SIDNY"
       ]
     },
     "129857": {
       "sigla": "CAB",
       "apelido": "Laros Duarte",
       "aliases_odds": [
-        "Laros Duarte"
+        "Laros Duarte",
+        "DUARTE LAROS"
       ]
     },
     "113503": {
       "sigla": "CAB",
       "apelido": "Willy Semedo",
       "aliases_odds": [
-        "Willy Semedo"
+        "Willy Semedo",
+        "SEMEDO W."
       ]
     },
     "129855": {
       "sigla": "CAB",
       "apelido": "Deroy Duarte",
       "aliases_odds": [
-        "Deroy Duarte"
+        "Deroy Duarte",
+        "DUARTE DEROY"
       ]
     },
     "150925": {
       "sigla": "CAB",
       "apelido": "Hélio Varela",
       "aliases_odds": [
-        "Hélio Varela"
+        "Hélio Varela",
+        "VARELA H."
       ]
     },
     "85056": {
       "sigla": "URU",
       "apelido": "José Giménez",
       "aliases_odds": [
-        "Jose Gimenez"
+        "Jose Gimenez",
+        "GIMENEZ J."
       ]
     },
     "150928": {
       "sigla": "CAB",
       "apelido": "Kelvin Pires",
       "aliases_odds": [
-        "Kelvin Pires"
+        "Kelvin Pires",
+        "PIRES K."
       ]
     },
     "86260": {
       "sigla": "CAB",
       "apelido": "Ryan Mendes",
       "aliases_odds": [
-        "Ryan Mendes"
+        "Ryan Mendes",
+        "MENDES R."
       ]
     },
     "120416": {
@@ -4688,7 +4710,8 @@
       "sigla": "CAB",
       "apelido": "Wagner Pina",
       "aliases_odds": [
-        "Wagner Pina"
+        "Wagner Pina",
+        "WAGNER P."
       ]
     },
     "113509": {
@@ -4702,7 +4725,8 @@
       "sigla": "URU",
       "apelido": "De la Cruz",
       "aliases_odds": [
-        "Nicolas De la Cruz"
+        "Nicolas De la Cruz",
+        "DE LA CRUZ N."
       ]
     },
     "137282": {
@@ -4725,7 +4749,8 @@
       "sigla": "URU",
       "apelido": "Arrascaeta",
       "aliases_odds": [
-        "Giorgian De Arrascaeta"
+        "Giorgian De Arrascaeta",
+        "DE ARRASCAETA G."
       ]
     },
     "91886": {
@@ -4775,7 +4800,8 @@
       "sigla": "URU",
       "apelido": "Piquerez",
       "aliases_odds": [
-        "Joaquin Piquerez"
+        "Joaquin Piquerez",
+        "PIQUEREZ M.J"
       ]
     },
     "104781": {
@@ -4826,7 +4852,8 @@
       "sigla": "URU",
       "apelido": "Viñas",
       "aliases_odds": [
-        "Federico Viñas"
+        "Federico Viñas",
+        "BARBOZA VINAS F."
       ]
     },
     "98974": {
@@ -4840,7 +4867,8 @@
       "sigla": "NZE",
       "apelido": "Ryan Thomas",
       "aliases_odds": [
-        "Ryan Thomas"
+        "Ryan Thomas",
+        "Thomas R."
       ]
     },
     "134369": {
@@ -4876,7 +4904,8 @@
       "sigla": "EGI",
       "apelido": "Tarek Alaa",
       "aliases_odds": [
-        "Tarek Alaa"
+        "Tarek Alaa",
+        "TAREK A."
       ]
     },
     "82039": {
@@ -4921,14 +4950,16 @@
       "sigla": "NZE",
       "apelido": "De Vries",
       "aliases_odds": [
-        "Francis De Vries"
+        "Francis De Vries",
+        "DE VRIES F."
       ]
     },
     "133988": {
       "sigla": "NZE",
       "apelido": "Randall",
       "aliases_odds": [
-        "Jesse Randall"
+        "Jesse Randall",
+        "RANDALL JESSE"
       ]
     },
     "136084": {
@@ -5008,14 +5039,16 @@
       "apelido": "Hassan",
       "aliases_odds": [
         "Haissem Hassan",
-        "Hassan Saber"
+        "Hassan Saber",
+        "HASSAN H."
       ]
     },
     "105919": {
       "sigla": "NZE",
       "apelido": "Singh",
       "aliases_odds": [
-        "Sarpreet Singh"
+        "Sarpreet Singh",
+        "SINGH S."
       ]
     },
     "111052": {
@@ -5084,7 +5117,8 @@
       "sigla": "NZE",
       "apelido": "Smith",
       "aliases_odds": [
-        "Tommy Smith"
+        "Tommy Smith",
+        "SMITH TOMMY"
       ]
     },
     "134353": {
@@ -5137,7 +5171,8 @@
       "sigla": "EGI",
       "apelido": "Adel",
       "aliases_odds": [
-        "Ibrahim Adel"
+        "Ibrahim Adel",
+        "ADEL IBRAHIM"
       ]
     },
     "114033": {
@@ -5999,7 +6034,8 @@
       "apelido": "Wolfe",
       "aliases_odds": [
         "David Møller Wolfe",
-        "David Wolfe"
+        "David Wolfe",
+        "David Moller Wolfe"
       ]
     },
     "114901": {
@@ -7326,6 +7362,20 @@
       "apelido": "Zwane",
       "aliases_odds": [
         "Themba Zwane"
+      ]
+    },
+    "107563": {
+      "sigla": "URU",
+      "apelido": "Santi Bueno",
+      "aliases_odds": [
+        "BUENO S."
+      ]
+    },
+    "146228": {
+      "sigla": "EGI",
+      "apelido": "Zico",
+      "aliases_odds": [
+        "ZICO MOSTAFA"
       ]
     }
   }

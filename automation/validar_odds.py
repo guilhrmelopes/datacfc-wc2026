@@ -12,7 +12,7 @@ MIN_G = 200
 MIN_A = 200
 MIN_GA = 400
 MIN_SG = 400
-MIN_VIGENTES_PCT = float(os.environ.get("ODDS_MIN_VIGENTES_PCT", "0.80"))
+MIN_VIGENTES_PCT = float(os.environ.get("ODDS_MIN_VIGENTES_PCT", "1.0"))
 
 POS_LINHA = frozenset({2, 3, 4, 5})
 POS_SG = frozenset({1, 2, 3})
@@ -29,16 +29,25 @@ def validar(caminho: Path | None = None) -> tuple[int, int, int, int, int]:
         raise FileNotFoundError(f"Arquivo não encontrado: {path}")
 
     data = json.loads(path.read_text(encoding="utf-8"))
+    from scrapers.odds_ga_fallback import enriquecer_odds_entrada
+
     odds = data.get("odds", {})
     total = len(odds)
     g = sum(1 for v in odds.values() if v.get("g_pct"))
     a = sum(1 for v in odds.values() if v.get("a_pct"))
-    ga = sum(1 for v in odds.values() if v.get("ga_pct"))
+    ga = sum(
+        1
+        for v in odds.values()
+        if enriquecer_odds_entrada(dict(v)).get("ga_pct")
+    )
     sg = sum(1 for v in odds.values() if v.get("sg_pct"))
     return total, g, a, ga, sg
 
 
 def _entrada_vigente(jog: dict, entrada: dict) -> bool:
+    from scrapers.odds_ga_fallback import enriquecer_odds_entrada
+
+    entrada = enriquecer_odds_entrada(dict(entrada))
     from scrapers.odds_armazenamento import referencia_hoje
 
     data_odds = (entrada.get("data_confronto") or "").strip()
@@ -110,6 +119,8 @@ def validar_odds_vigentes(
             continue
         if _entrada_vigente(jog, entrada):
             vigentes += 1
+        else:
+            sem_odd += 1
 
     return alvo, vigentes, sem_odd
 
@@ -138,6 +149,10 @@ def main() -> None:
             f"para jogadores com ADV ({vigentes}/{alvo}). "
             "Abortando commit."
         )
+        sys.exit(1)
+
+    if sem_odd > 0:
+        print(f"{sem_odd} jogador(es) com ADV sem odds no arquivo — abortando commit.")
         sys.exit(1)
 
 
