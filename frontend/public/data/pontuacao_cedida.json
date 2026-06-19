@@ -328,7 +328,7 @@
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 6.2,
+        "valor": 6.39,
         "cor": "bg-green-500"
       }
     },
@@ -348,18 +348,18 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 4.84,
+        "valor": 5.14,
         "cor": "bg-yellow-500"
       }
     },
     "ATA": {
       "cedido": {
-        "valor": 1.11,
+        "valor": 0.98,
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 4.04,
-        "cor": "bg-yellow-500"
+        "valor": 3.77,
+        "cor": "bg-orange-500"
       }
     }
   },
@@ -740,7 +740,7 @@
     },
     "LAT": {
       "cedido": {
-        "valor": 5.0,
+        "valor": 5.19,
         "cor": "bg-yellow-500"
       },
       "conquistado": {
@@ -760,7 +760,7 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 4.02,
+        "valor": 4.32,
         "cor": "bg-yellow-500"
       },
       "conquistado": {
@@ -770,11 +770,11 @@
     },
     "ATA": {
       "cedido": {
-        "valor": 0.49,
+        "valor": 0.22,
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 1.94,
+        "valor": 1.81,
         "cor": "bg-red-500"
       }
     }

@@ -136,33 +136,33 @@
   "C": [
     {
       "posicao": 1,
+      "selecao": "MOROCCO",
+      "sigla": "MAR",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
+      "P": 4,
+      "J": 2,
+      "V": 1,
+      "E": 1,
+      "D": 0,
+      "GM": 2,
+      "GS": 1,
+      "SG": 1,
+      "aprov": 66.7
+    },
+    {
+      "posicao": 2,
       "selecao": "SCOTLAND",
       "sigla": "ESC",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESC/60x60.png",
       "P": 3,
-      "J": 1,
+      "J": 2,
       "V": 1,
       "E": 0,
-      "D": 0,
-      "GM": 1,
-      "GS": 0,
-      "SG": 1,
-      "aprov": 100.0
-    },
-    {
-      "posicao": 2,
-      "selecao": "MOROCCO",
-      "sigla": "MAR",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
-      "P": 1,
-      "J": 1,
-      "V": 0,
-      "E": 1,
-      "D": 0,
+      "D": 1,
       "GM": 1,
       "GS": 1,
       "SG": 0,
-      "aprov": 33.3
+      "aprov": 50.0
     },
     {
       "posicao": 3,
