@@ -15,14 +15,14 @@
       "selecao": "MEXICO",
       "sigla": "MEX",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MEX/60x60.png",
-      "P": 3,
-      "J": 1,
-      "V": 1,
+      "P": 6,
+      "J": 2,
+      "V": 2,
       "E": 0,
       "D": 0,
-      "GM": 2,
+      "GM": 3,
       "GS": 0,
-      "SG": 2,
+      "SG": 3,
       "aprov": 100.0
     },
     {
@@ -31,14 +31,14 @@
       "sigla": "COR",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COR/60x60.png",
       "P": 3,
-      "J": 1,
+      "J": 2,
       "V": 1,
       "E": 0,
-      "D": 0,
+      "D": 1,
       "GM": 2,
-      "GS": 1,
-      "SG": 1,
-      "aprov": 100.0
+      "GS": 2,
+      "SG": 0,
+      "aprov": 50.0
     },
     {
       "posicao": 3,
@@ -82,9 +82,9 @@
       "V": 1,
       "E": 1,
       "D": 0,
-      "GM": 5,
+      "GM": 7,
       "GS": 1,
-      "SG": 4,
+      "SG": 6,
       "aprov": 66.7
     },
     {
@@ -128,8 +128,8 @@
       "E": 1,
       "D": 1,
       "GM": 1,
-      "GS": 5,
-      "SG": -4,
+      "GS": 7,
+      "SG": -6,
       "aprov": 16.7
     }
   ],
