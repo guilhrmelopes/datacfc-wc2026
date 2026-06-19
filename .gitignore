@@ -18,6 +18,7 @@
 !/src/scrapers/mapeamento_selecoes_odds.py
 !/src/scrapers/resolucao_eventos_odds.py
 !/src/scrapers/captura_odds_api.py
+!/src/scrapers/odds_ga_fallback.py
 !/src/scrapers/fotmob_copa.py
 !/src/scrapers/fotmob_fixtures.py
 !/src/scrapers/fotmob_mapa.py
