@@ -6177,7 +6177,8 @@
       "sigla": "JOR",
       "apelido": "Abu Dahab",
       "aliases_odds": [
-        "Husam Abu Dahab"
+        "Husam Abu Dahab",
+        "ABU DAHAB H."
       ]
     },
     "151028": {
@@ -6355,7 +6356,8 @@
       "sigla": "JOR",
       "apelido": "Nasib",
       "aliases_odds": [
-        "Abdallah Nasib"
+        "Abdallah Nasib",
+        "MOUSSA MUSALLAM NASIB A."
       ]
     },
     "121458": {
@@ -6384,14 +6386,16 @@
       "sigla": "JOR",
       "apelido": "Olwan",
       "aliases_odds": [
-        "Ali Olwan"
+        "Ali Olwan",
+        "OLWAN ALI"
       ]
     },
     "151026": {
       "sigla": "AGL",
       "apelido": "Abada",
       "aliases_odds": [
-        "Achref Abada"
+        "Achref Abada",
+        "ABADA A."
       ]
     },
     "145887": {
@@ -7412,6 +7416,21 @@
       "aliases_odds": [
         "Jose Ederson Silva",
         "Ederson Silva"
+      ]
+    },
+    "123966": {
+      "sigla": "TUR",
+      "apelido": "Elmali",
+      "aliases_odds": [
+        "Eren Elmali",
+        "Evren Elmali"
+      ]
+    },
+    "133210": {
+      "sigla": "TUR",
+      "apelido": "Uzun",
+      "aliases_odds": [
+        "Can Uzun"
       ]
     }
   }
