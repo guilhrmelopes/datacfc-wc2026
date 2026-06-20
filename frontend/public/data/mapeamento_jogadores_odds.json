@@ -24,7 +24,8 @@
         "L. Martínez",
         "Martínez L",
         "Lautaro Martínez",
-        "Lautaro Martinez"
+        "Lautaro Martinez",
+        "MARTINEZ LAUTARO"
       ]
     },
     "104776": {
@@ -5195,28 +5196,32 @@
       "sigla": "AUT",
       "apelido": "Xaver Schlager",
       "aliases_odds": [
-        "Xaver Schlager"
+        "Xaver Schlager",
+        "SCHLAGER XAVER"
       ]
     },
     "103687": {
       "sigla": "ARG",
       "apelido": "Julián Álvarez",
       "aliases_odds": [
-        "Julian Alvarez"
+        "Julian Alvarez",
+        "ALVAREZ JULIAN"
       ]
     },
     "108643": {
       "sigla": "ARG",
       "apelido": "Enzo Fernández",
       "aliases_odds": [
-        "Enzo Fernández"
+        "Enzo Fernández",
+        "FERNANDEZ ENZO"
       ]
     },
     "105952": {
       "sigla": "ARG",
       "apelido": "Mac Allister",
       "aliases_odds": [
-        "Alexis Mac Allister"
+        "Alexis Mac Allister",
+        "MAC ALLISTER A."
       ]
     },
     "113059": {
@@ -5329,7 +5334,8 @@
       "sigla": "ARG",
       "apelido": "De Paul",
       "aliases_odds": [
-        "Rodrigo De Paul"
+        "Rodrigo De Paul",
+        "DE PAUL J.R."
       ]
     },
     "97614": {
@@ -5491,7 +5497,8 @@
       "sigla": "IRQ",
       "apelido": "Aymen Hussein",
       "aliases_odds": [
-        "Aymen Hussein"
+        "Aymen Hussein",
+        "HUSSEIN AYMEN"
       ]
     },
     "138786": {
@@ -5505,7 +5512,8 @@
       "sigla": "IRQ",
       "apelido": "Zaid Ismail",
       "aliases_odds": [
-        "Zaid Ismail"
+        "Zaid Ismail",
+        "Ismail, Zaid"
       ]
     },
     "129972": {
@@ -5520,7 +5528,8 @@
       "sigla": "IRQ",
       "apelido": "Akam Hashem",
       "aliases_odds": [
-        "Akam Hashem"
+        "Akam Hashem",
+        "HASHEM AKAM"
       ]
     },
     "103536": {
@@ -5555,7 +5564,8 @@
       "sigla": "IRQ",
       "apelido": "Al-Hamadi",
       "aliases_odds": [
-        "Ali Al-Hamadi"
+        "Ali Al-Hamadi",
+        "AL HAMADI A."
       ]
     },
     "129964": {
@@ -5597,14 +5607,16 @@
       "sigla": "FRA",
       "apelido": "Dembélé",
       "aliases_odds": [
-        "Ousmane Dembélé"
+        "Ousmane Dembélé",
+        "DEMBELE OUSMANE"
       ]
     },
     "120644": {
       "sigla": "FRA",
       "apelido": "Barcola",
       "aliases_odds": [
-        "Bradley Barcola"
+        "Bradley Barcola",
+        "BARCOLA B."
       ]
     },
     "134492": {
@@ -5692,7 +5704,8 @@
       "sigla": "FRA",
       "apelido": "Thuram",
       "aliases_odds": [
-        "Marcus Thuram"
+        "Marcus Thuram",
+        "THURAM MARCUS"
       ]
     },
     "96833": {
@@ -5735,7 +5748,8 @@
       "sigla": "IRQ",
       "apelido": "Iqbal",
       "aliases_odds": [
-        "Zidane Iqbal"
+        "Zidane Iqbal",
+        "IQBAL ZIDANE"
       ]
     },
     "112200": {
@@ -5771,7 +5785,8 @@
       "sigla": "FRA",
       "apelido": "Doué",
       "aliases_odds": [
-        "Désiré Doué"
+        "Désiré Doué",
+        "DOUE D."
       ]
     },
     "149842": {
@@ -5807,14 +5822,16 @@
       "sigla": "SEN",
       "apelido": "Iliman Ndiaye",
       "aliases_odds": [
-        "Iliman Ndiaye"
+        "Iliman Ndiaye",
+        "NDIAYE I."
       ]
     },
     "120854": {
       "sigla": "SEN",
       "apelido": "Antoine Mendy",
       "aliases_odds": [
-        "Antoine Mendy"
+        "Antoine Mendy",
+        "MENDY ANTOINE"
       ]
     },
     "127112": {
@@ -5822,7 +5839,8 @@
       "apelido": "Chérif Ndiaye",
       "aliases_odds": [
         "Cherif Ndiaye",
-        "Ndiaye, Cherif"
+        "Ndiaye, Cherif",
+        "NDIAYE C."
       ]
     },
     "147890": {
@@ -5836,21 +5854,24 @@
       "sigla": "SEN",
       "apelido": "Ismaïla Sarr",
       "aliases_odds": [
-        "Ismaïla Sarr"
+        "Ismaïla Sarr",
+        "SARR I."
       ]
     },
     "126759": {
       "sigla": "SEN",
       "apelido": "Mamadou Sarr",
       "aliases_odds": [
-        "Mamadou Sarr"
+        "Mamadou Sarr",
+        "SARR M."
       ]
     },
     "123096": {
       "sigla": "NOR",
       "apelido": "Schjelderup",
       "aliases_odds": [
-        "Andreas Schjelderup"
+        "Andreas Schjelderup",
+        "SCHJELDERUP RAEDERGARD A."
       ]
     },
     "109852": {
@@ -5878,14 +5899,16 @@
       "sigla": "SEN",
       "apelido": "Koulibaly",
       "aliases_odds": [
-        "Kalidou Koulibaly"
+        "Kalidou Koulibaly",
+        "KOULIBALY K."
       ]
     },
     "112901": {
       "sigla": "SEN",
       "apelido": "Pape Sarr",
       "aliases_odds": [
-        "Pape Sarr"
+        "Pape Sarr",
+        "SARR PAPE"
       ]
     },
     "149804": {
@@ -5907,7 +5930,8 @@
       "sigla": "NOR",
       "apelido": "Odegaard",
       "aliases_odds": [
-        "Martin Odegaard"
+        "Martin Odegaard",
+        "ODEGAARD MARTIN"
       ]
     },
     "115094": {
@@ -5937,7 +5961,8 @@
       "sigla": "SEN",
       "apelido": "Jackson",
       "aliases_odds": [
-        "Nicolas Jackson"
+        "Nicolas Jackson",
+        "JACKSON NICOLAS"
       ]
     },
     "115096": {
@@ -6080,14 +6105,16 @@
       "sigla": "SEN",
       "apelido": "Mané",
       "aliases_odds": [
-        "Sadio Mane"
+        "Sadio Mane",
+        "MANE SADIO"
       ]
     },
     "114922": {
       "sigla": "SEN",
       "apelido": "Ciss",
       "aliases_odds": [
-        "Pathé Ciss"
+        "Pathé Ciss",
+        "CISS PATHE"
       ]
     },
     "118741": {
@@ -6108,7 +6135,8 @@
       "sigla": "SEN",
       "apelido": "Diao",
       "aliases_odds": [
-        "Assane Diao"
+        "Assane Diao",
+        "DIAO ASSANE"
       ]
     },
     "117470": {
@@ -6785,7 +6813,8 @@
       "apelido": "Fatawu",
       "aliases_odds": [
         "Abdul Fatawu Issahaku",
-        "Abdul Fatawu"
+        "Abdul Fatawu",
+        "Issahaku Fatawu"
       ]
     },
     "114236": {
