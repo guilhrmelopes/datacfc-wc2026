@@ -34,7 +34,7 @@
     "4667767",
     "4667773"
   ],
-  "atualizado_em": "2026-06-20T10:54:52.954467+00:00",
+  "atualizado_em": "2026-06-20T12:15:06.055234+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -6566,13 +6566,12 @@
         "clube_id": 2365
       },
       "106699": {
-        "pontuacao": 11.3,
+        "pontuacao": 8.3,
         "scout": {
           "DS": 4,
           "FC": 1,
           "FF": 2,
-          "FS": 2,
-          "FT": 1
+          "FS": 2
         },
         "posicao_id": 2,
         "clube_id": 2328
@@ -7558,5 +7557,5 @@
   },
   "status_mercado": 2,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-06-20T10:10:51.678142+00:00"
+  "cartola_atualizado_em": "2026-06-20T12:14:47.956204+00:00"
 }

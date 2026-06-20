@@ -376,7 +376,7 @@
     },
     "LAT": {
       "cedido": {
-        "valor": 3.85,
+        "valor": 3.35,
         "cor": "bg-orange-500"
       },
       "conquistado": {
@@ -796,8 +796,8 @@
         "cor": "bg-green-500"
       },
       "conquistado": {
-        "valor": 2.65,
-        "cor": "bg-orange-500"
+        "valor": 2.15,
+        "cor": "bg-red-500"
       }
     },
     "ZAG": {
