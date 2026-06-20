@@ -2488,7 +2488,8 @@
         "Maurício Magalhães Prado",
         "Prado Mauricio",
         "Mauricio Prado",
-        "Mauricio"
+        "Mauricio",
+        "Mauricio Magalhães"
       ]
     },
     "97089": {
@@ -2547,7 +2548,8 @@
       "apelido": "Galarza",
       "aliases_odds": [
         "Matias Galarza",
-        "Matias Galarza Fonda"
+        "Matias Galarza Fonda",
+        "Matias Galarza (11.02.02)"
       ]
     },
     "120751": {
@@ -2584,7 +2586,8 @@
       "apelido": "Canale",
       "aliases_odds": [
         "José Maria Canale Domínguez",
-        "Jose Canale"
+        "Jose Canale",
+        "CANALE DOMINGUEZ J."
       ]
     },
     "112741": {
@@ -7401,6 +7404,14 @@
       "apelido": "Pico Lopes",
       "aliases_odds": [
         "Pico Lopes"
+      ]
+    },
+    "103099": {
+      "sigla": "BRA",
+      "apelido": "Éderson",
+      "aliases_odds": [
+        "Jose Ederson Silva",
+        "Ederson Silva"
       ]
     }
   }
