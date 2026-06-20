@@ -2269,7 +2269,8 @@
       "apelido": "Endrick",
       "aliases_odds": [
         "Endrick Moreira de Sousa",
-        "Endrick"
+        "Endrick",
+        "Endrick Felipe"
       ]
     },
     "97803": {
@@ -2277,7 +2278,8 @@
       "apelido": "Ibañez",
       "aliases_odds": [
         "Roger Ibañez da Silva",
-        "Roger Ibanez"
+        "Roger Ibanez",
+        "Ibañez"
       ]
     },
     "69783": {
@@ -4097,7 +4099,8 @@
       "sigla": "ARS",
       "apelido": "Tambakti",
       "aliases_odds": [
-        "Hassan Tambakti"
+        "Hassan Tambakti",
+        "Hassan Al Tambakti"
       ]
     },
     "126868": {
@@ -4742,7 +4745,8 @@
       "apelido": "João Paulo",
       "aliases_odds": [
         "Joao Paulo Fernandes",
-        "Joao Paulo Moreira"
+        "Joao Paulo Moreira",
+        "Joao Paulo"
       ]
     },
     "87863": {
@@ -7383,6 +7387,20 @@
       "apelido": "Leckie",
       "aliases_odds": [
         "Mathew Leckie"
+      ]
+    },
+    "105969": {
+      "sigla": "URU",
+      "apelido": "Maxi Araújo",
+      "aliases_odds": [
+        "Maxi Araujo"
+      ]
+    },
+    "113494": {
+      "sigla": "CAB",
+      "apelido": "Pico Lopes",
+      "aliases_odds": [
+        "Pico Lopes"
       ]
     }
   }
