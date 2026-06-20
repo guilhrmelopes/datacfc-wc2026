@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-20T06:59:38.472069+00:00",
+  "atualizado_em": "2026-06-20T10:11:43.460673+00:00",
   "rodada": 3,
   "eventos": [
     {
@@ -230,14 +230,14 @@
       "id": 66456972,
       "home": "NETHERLANDS",
       "away": "SWEDEN",
-      "date": "2026-06-20T17:00:00Z",
+      "date": "2026-06-20T17:00:00.000Z",
       "fixture_id": "4667786"
     },
     {
       "id": 66457074,
       "home": "GERMANY",
       "away": "IVORY COAST",
-      "date": "2026-06-20T20:00:00Z",
+      "date": "2026-06-20T20:00:00.000Z",
       "fixture_id": "4667780"
     },
     {
