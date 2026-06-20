@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-20T20:50:49.249377+00:00",
+  "atualizado_em": "2026-06-20T22:04:31.686879+00:00",
   "rodada": 3,
   "eventos": [
     {
@@ -379,6 +379,20 @@
       "away": "SOUTH KOREA",
       "date": "2026-06-25T01:00:00Z",
       "fixture_id": "4667756"
+    },
+    {
+      "id": 66457078,
+      "home": "ECUADOR",
+      "away": "GERMANY",
+      "date": "2026-06-25T20:00:00Z",
+      "fixture_id": "4667781"
+    },
+    {
+      "id": 66457080,
+      "home": "CURACAO",
+      "away": "IVORY COAST",
+      "date": "2026-06-25T20:00:00Z",
+      "fixture_id": "4667782"
     },
     {
       "id": 66456976,
