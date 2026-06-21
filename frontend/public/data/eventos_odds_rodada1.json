@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-21T20:28:18.928544+00:00",
+  "atualizado_em": "2026-06-21T21:08:36.475469+00:00",
   "rodada": 3,
   "eventos": [
     {
@@ -435,6 +435,20 @@
       "away": "SAUDI ARABIA",
       "date": "2026-06-27T00:00:00Z",
       "fixture_id": "4667803"
+    },
+    {
+      "id": 66456990,
+      "home": "NEW ZEALAND",
+      "away": "BELGIUM",
+      "date": "2026-06-27T03:00:00Z",
+      "fixture_id": "4667794"
+    },
+    {
+      "id": 66456992,
+      "home": "EGYPT",
+      "away": "IRAN",
+      "date": "2026-06-27T03:00:00Z",
+      "fixture_id": "4667795"
     }
   ]
 }
