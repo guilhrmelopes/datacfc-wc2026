@@ -298,6 +298,14 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     sincronizar_calendario(partidas, caminho_grupos, caminho_selecoes)
     atualizar_classificacao(caminho_classificacao, caminho_selecoes)
 
+    selecoes_pre = _carregar_json(caminho_selecoes)
+    from scrapers.elo_ratings import atualizar_selecoes_elo
+
+    elo_atualizados, elo_faltando = atualizar_selecoes_elo(selecoes_pre)
+    if elo_faltando:
+        raise ValueError(f"Seleções sem Elo: {elo_faltando}")
+    _salvar_json(caminho_selecoes, selecoes_pre)
+
     novas = [
         p.match_id
         for p in partidas
@@ -354,4 +362,5 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         "novas_partidas": novas,
         "total_calendario": len(partidas),
         "cartola": resumo_cartola,
+        "elo_selecoes_atualizadas": elo_atualizados,
     }

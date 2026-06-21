@@ -39,9 +39,14 @@ export interface Selecao {
   clube_id: number;
   grupo: string;
   competicao: string | null;
-  rating_elo_100: number | null;
   url_escudo: string | null;
   metricas_coletivas: MetricasColetivas;
+  /** Elo 0–100 normalizado entre as 48 seleções (eloratings.net). */
+  rating_elo_100: number | null;
+  /** Elo bruto eloratings.net. */
+  elo_rating?: number | null;
+  elo_rank?: number | null;
+  elo_atualizado_em?: string | null;
   confrontos_agendados: ConfrontoAgendado[];
 }
 

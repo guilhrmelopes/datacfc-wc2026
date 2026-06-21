@@ -25,6 +25,10 @@ export type EscalasRating = ContextoRating;
 const NIVEL_NEUTRO = 50;
 /** Ajuste máximo ±30% conforme força média dos adversários (0 → −30%, 100 → +30%). */
 const PONDERACAO_MAX = 0.3;
+/** Teto de rating acima do nível Elo da seleção (exceções raras podem extrapolar um pouco). */
+const MARGEM_SOBRE_SELECAO = 15;
+const EXCECAO_MG = 6.5;
+const EXCECAO_EXTRA = 8;
 
 /** Rating 0–100 a partir da MG por jogo (escala Cartola absoluta). */
 function mgParaRating(mg: number): number {
@@ -47,7 +51,23 @@ function mgParaRating(mg: number): number {
 }
 
 function nivelSelecao(s: Selecao, pool: Selecao[]): number {
-  return calcularRatingSelecaoCopa(s, pool) ?? s.rating_elo_100 ?? NIVEL_NEUTRO;
+  if (s.rating_elo_100 != null) return s.rating_elo_100;
+  return calcularRatingSelecaoCopa(s, pool) ?? NIVEL_NEUTRO;
+}
+
+function aplicarTetoSelecao(
+  historico: number,
+  j: JogadorMercado,
+  nivelSel: number,
+): number {
+  const media = mediaPerformanceCopa(j);
+  const excecao = media !== null && media >= EXCECAO_MG;
+  const teto = Math.min(100, nivelSel + MARGEM_SOBRE_SELECAO);
+  if (historico <= teto) return historico;
+  if (excecao) {
+    return Math.min(historico, teto + EXCECAO_EXTRA);
+  }
+  return teto;
 }
 
 export function construirContextoRating(
@@ -127,7 +147,9 @@ export function calcularRatingHistorico(
   if (mediaAdv === null) return base;
 
   const ponderado = base * fatorPonderacaoAdversarios(mediaAdv);
-  return Math.round(Math.min(100, Math.max(1, ponderado)) * 10) / 10;
+  const historico = Math.round(Math.min(100, Math.max(1, ponderado)) * 10) / 10;
+  const nivelSel = ctx.nivelPorSigla.get(j.sigla) ?? NIVEL_NEUTRO;
+  return aplicarTetoSelecao(historico, j, nivelSel);
 }
 
 export function calcularRatingJogador(

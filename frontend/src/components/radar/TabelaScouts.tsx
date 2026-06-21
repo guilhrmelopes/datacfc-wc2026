@@ -8,7 +8,7 @@ import {
   valorNormalizadoMetricaSelecao,
 } from "@/lib/formatacaoMetricas";
 import { formatarValorMetrica, valorNumericoOuNull } from "@/lib/exibirValor";
-import { estreouCopa, calcularRatingSelecaoCopa } from "@/lib/ratingSelecao";
+import { estreouCopa, calcularRatingSelecaoCopa, ratingSelecaoExibicao } from "@/lib/ratingSelecao";
 import { TOOLTIPS_METRICAS, traduzirSelecao } from "@/lib/traducoes";
 import type { Selecao } from "@/types/dados";
 
@@ -106,8 +106,8 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
       }
       if (ordenarPor === "rating_elo_100") {
         return compararNumero(
-          calcularRatingSelecaoCopa(a, linhasFiltradas),
-          calcularRatingSelecaoCopa(b, linhasFiltradas),
+          ratingSelecaoExibicao(a, linhasFiltradas),
+          ratingSelecaoExibicao(b, linhasFiltradas),
         );
       }
       if (ordenarPor === "J") {
@@ -203,7 +203,7 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
               </td>
               <td className="px-2 py-2">
                 {(() => {
-                  const rating = calcularRatingSelecaoCopa(s, selecoes);
+                  const rating = ratingSelecaoExibicao(s, selecoes);
                   if (rating === null) {
                     return <span className="text-[var(--color-muted)]">N/A</span>;
                   }

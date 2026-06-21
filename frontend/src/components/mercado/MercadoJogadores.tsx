@@ -21,10 +21,15 @@ import {
 } from "@/lib/potencialRodada";
 import {
   cedidoAdversarioCopa,
+  dePctPor90Copa,
   mediaBaseCopa,
   mediaGeralCopa,
+  minutosPorJogoCopa,
   oddsVigentes,
+  scoutPorJogoCopa,
   temCopa,
+  xaPor90Copa,
+  xgPor90Copa,
   xgXaPor90Copa,
 } from "@/lib/copaJogador";
 import {
@@ -372,70 +377,62 @@ const COL_MIN = copaCol(
   "min",
   "MIN",
   "Minutos por jogo",
-  (j) => (temCopa(j) && j.copa_jogos_num ? (j.copa_mins_played ?? 0) / j.copa_jogos_num : null),
+  (j) => minutosPorJogoCopa(j),
   1,
 );
-const COL_G = copaCol("g", "G", "Gols", (j) =>
-  temCopa(j) ? (j.copa_goals ?? 0) : null,
+const COL_G = copaCol("g", "G", "Gols por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_goals),
 );
-const COL_A = copaCol("a", "A", "Assistências", (j) =>
-  temCopa(j) ? (j.copa_goal_assist ?? 0) : null,
+const COL_A = copaCol("a", "A", "Assistências por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_goal_assist),
 );
-const COL_SG = copaCol("sg", "SG", "Jogos sem sofrer gols", (j) =>
-  temCopa(j) ? (j.copa_clean_sheet ?? 0) : null,
+const COL_SG = copaCol("sg", "SG", "SG por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_clean_sheet),
 );
-const COL_DE = copaCol("de", "DE", "Defesas", (j) =>
-  temCopa(j) ? (j.copa_de ?? 0) : null,
+const COL_DE = copaCol("de", "DE", "Defesas por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_de),
 );
 const COL_DE_PCT = copaCol(
   "de_pct",
   "DE%",
   "Defesas por 90 minutos",
-  (j) => {
-    if (!temCopa(j)) return null;
-    if (j.copa_de_pct != null) return j.copa_de_pct;
-    const mins = j.copa_mins_played ?? 0;
-    if (j.bucket_posicao === "GOL" && mins > 0) {
-      return ((j.copa_de ?? 0) / mins) * 90;
-    }
-    return j.bucket_posicao === "GOL" ? 0 : null;
-  },
+  (j) => dePctPor90Copa(j),
   2,
 );
 const COL_GE = copaCol(
   "ge",
   "GE",
-  "Gols evitados",
-  (j) => (temCopa(j) ? (j.copa_ge ?? 0) : null),
+  "Gols evitados por jogo",
+  (j) => scoutPorJogoCopa(j, j.copa_ge),
   2,
 );
-const COL_GS = copaCol("gs", "GS", "Gols sofridos na Copa", (j) =>
-  temCopa(j) ? (j.copa_gs ?? 0) : null,
+const COL_GS = copaCol("gs", "GS", "Gols sofridos por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_gs),
 );
-const COL_DS = copaCol("ds", "DS", "Desarmes", (j) =>
-  temCopa(j) ? (j.copa_ds ?? 0) : null,
+const COL_DS = copaCol("ds", "DS", "Desarmes por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_ds),
 );
-const COL_INT = copaCol("int", "INT", "Interceptações", (j) =>
-  temCopa(j) ? (j.copa_int ?? 0) : null,
+const COL_INT = copaCol("int", "INT", "Interceptações por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_int),
 );
-const COL_C = copaCol("c", "C", "Cortes", (j) =>
-  temCopa(j) ? (j.copa_c ?? 0) : null,
+const COL_C = copaCol("c", "C", "Cortes por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_c),
 );
-const COL_BR = copaCol("br", "BR", "Bolas recuperadas", (j) =>
-  temCopa(j) ? (j.copa_br ?? 0) : null,
+const COL_BR = copaCol("br", "BR", "Bolas recuperadas por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_br),
 );
-const COL_FD = copaCol("fd", "FD", "Finalizações defendidas", (j) =>
-  temCopa(j) ? (j.copa_fd ?? 0) : null,
+const COL_FD = copaCol("fd", "FD", "Finalizações defendidas por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_fd),
 );
-const COL_GCC = copaCol("gcc", "GCC", "Grandes chances criadas", (j) =>
-  temCopa(j) ? (j.copa_gcc ?? 0) : null,
+const COL_GCC = copaCol("gcc", "GCC", "Grandes chances criadas por jogo", (j) =>
+  scoutPorJogoCopa(j, j.copa_gcc),
 );
-const COL_XG = copaCol("xg", "xG", "Gols esperados", (j) =>
-  temCopa(j) ? (j.copa_xg ?? 0) : null,
+const COL_XG = copaCol("xg", "xG", "Gols esperados por 90 minutos", (j) =>
+  xgPor90Copa(j),
   2,
 );
-const COL_XA = copaCol("xa", "xA", "Assistências esperadas", (j) =>
-  temCopa(j) ? (j.copa_xa ?? 0) : null,
+const COL_XA = copaCol("xa", "xA", "Assistências esperadas por 90 minutos", (j) =>
+  xaPor90Copa(j),
   2,
 );
 const COL_XGXA90 = copaCol(
@@ -544,30 +541,29 @@ function classeCelulaHub(
     );
     return classeCelulaScoutJogador("j", jogos, amostra);
   }
-  if (colKey === "min" && j.copa_jogos_num) {
-    const min = (j.copa_mins_played ?? 0) / j.copa_jogos_num;
-    const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
-      x.copa_jogos_num ? (x.copa_mins_played ?? 0) / x.copa_jogos_num : null,
-    );
+  if (colKey === "min") {
+    const min = minutosPorJogoCopa(j);
+    if (min === null) return "";
+    const amostra = amostraScoutPorPosicao(jogadores, pos, (x) => minutosPorJogoCopa(x));
     return classeCelulaScoutJogador("min", min, amostra);
   }
 
   const scoutMap: Record<string, (x: JogadorMercado) => number | null> = {
-    g: (x) => x.copa_goals ?? 0,
-    a: (x) => x.copa_goal_assist ?? 0,
-    sg: (x) => x.copa_clean_sheet ?? 0,
-    de: (x) => x.copa_de ?? 0,
-    de_pct: (x) => x.copa_de_pct ?? null,
-    ge: (x) => x.copa_ge ?? 0,
-    gs: (x) => x.copa_gs ?? 0,
-    ds: (x) => x.copa_ds ?? 0,
-    int: (x) => x.copa_int ?? 0,
-    c: (x) => x.copa_c ?? 0,
-    br: (x) => x.copa_br ?? 0,
-    fd: (x) => x.copa_fd ?? 0,
-    gcc: (x) => x.copa_gcc ?? 0,
-    xg: (x) => x.copa_xg ?? 0,
-    xa: (x) => x.copa_xa ?? 0,
+    g: (x) => scoutPorJogoCopa(x, x.copa_goals),
+    a: (x) => scoutPorJogoCopa(x, x.copa_goal_assist),
+    sg: (x) => scoutPorJogoCopa(x, x.copa_clean_sheet),
+    de: (x) => scoutPorJogoCopa(x, x.copa_de),
+    de_pct: (x) => dePctPor90Copa(x),
+    ge: (x) => scoutPorJogoCopa(x, x.copa_ge),
+    gs: (x) => scoutPorJogoCopa(x, x.copa_gs),
+    ds: (x) => scoutPorJogoCopa(x, x.copa_ds),
+    int: (x) => scoutPorJogoCopa(x, x.copa_int),
+    c: (x) => scoutPorJogoCopa(x, x.copa_c),
+    br: (x) => scoutPorJogoCopa(x, x.copa_br),
+    fd: (x) => scoutPorJogoCopa(x, x.copa_fd),
+    gcc: (x) => scoutPorJogoCopa(x, x.copa_gcc),
+    xg: (x) => xgPor90Copa(x),
+    xa: (x) => xaPor90Copa(x),
     xgx_a90: (x) => xgXaPor90Copa(x),
   };
 
@@ -623,39 +619,37 @@ function valorOrdenacao(
     case "j":
       return temCopa(j) ? (j.copa_jogos_num ?? null) : null;
     case "min":
-      return temCopa(j) && j.copa_jogos_num
-        ? (j.copa_mins_played ?? 0) / j.copa_jogos_num
-        : null;
+      return minutosPorJogoCopa(j);
     case "g":
-      return temCopa(j) ? (j.copa_goals ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_goals);
     case "a":
-      return temCopa(j) ? (j.copa_goal_assist ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_goal_assist);
     case "sg":
-      return temCopa(j) ? (j.copa_clean_sheet ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_clean_sheet);
     case "de":
-      return temCopa(j) ? (j.copa_de ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_de);
     case "de_pct":
-      return temCopa(j) ? (j.copa_de_pct ?? null) : null;
+      return dePctPor90Copa(j);
     case "ge":
-      return temCopa(j) ? (j.copa_ge ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_ge);
     case "gs":
-      return temCopa(j) ? (j.copa_gs ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_gs);
     case "ds":
-      return temCopa(j) ? (j.copa_ds ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_ds);
     case "int":
-      return temCopa(j) ? (j.copa_int ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_int);
     case "c":
-      return temCopa(j) ? (j.copa_c ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_c);
     case "br":
-      return temCopa(j) ? (j.copa_br ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_br);
     case "fd":
-      return temCopa(j) ? (j.copa_fd ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_fd);
     case "gcc":
-      return temCopa(j) ? (j.copa_gcc ?? 0) : null;
+      return scoutPorJogoCopa(j, j.copa_gcc);
     case "xg":
-      return temCopa(j) ? (j.copa_xg ?? 0) : null;
+      return xgPor90Copa(j);
     case "xa":
-      return temCopa(j) ? (j.copa_xa ?? 0) : null;
+      return xaPor90Copa(j);
     case "xgx_a90":
       return temCopa(j) ? xgXaPor90Copa(j) : null;
     default:

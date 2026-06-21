@@ -65,3 +65,8 @@ export function calcularRatingSelecaoCopa(s: Selecao, pool: Selecao[]): number |
   const media = percentis.reduce((a, b) => a + b, 0) / percentis.length;
   return Math.round(media * 10) / 10;
 }
+
+/** Rating Copa (scouts) ou Elo eloratings.net antes da estreia. */
+export function ratingSelecaoExibicao(s: Selecao, pool: Selecao[]): number | null {
+  return calcularRatingSelecaoCopa(s, pool) ?? s.rating_elo_100 ?? null;
+}
