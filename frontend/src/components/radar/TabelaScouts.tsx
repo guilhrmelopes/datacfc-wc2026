@@ -8,7 +8,7 @@ import {
   valorNormalizadoMetricaSelecao,
 } from "@/lib/formatacaoMetricas";
 import { formatarValorMetrica, valorNumericoOuNull } from "@/lib/exibirValor";
-import { estreouCopa, calcularRatingSelecaoCopa, ratingSelecaoExibicao } from "@/lib/ratingSelecao";
+import { estreouCopa, ratingSelecaoExibicao } from "@/lib/ratingSelecao";
 import { TOOLTIPS_METRICAS, traduzirSelecao } from "@/lib/traducoes";
 import type { Selecao } from "@/types/dados";
 

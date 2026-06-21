@@ -13,18 +13,13 @@ export function temCopa(j: JogadorMercado): boolean {
 export function mediaGeralCopa(j: JogadorMercado): number | null {
   if (!temCopa(j)) return null;
   const mg = j.copa_media_geral;
-  if (mg !== null && mg !== undefined) return mg;
-  const jogos = j.copa_jogos_num ?? 0;
-  if (jogos > 0) return round2((j.copa_pontos_total ?? 0) / jogos);
-  return null;
+  return mg !== null && mg !== undefined ? mg : null;
 }
 
 export function mediaBaseCopa(j: JogadorMercado): number | null {
   if (!temCopa(j)) return null;
   const mb = j.copa_media_base;
-  if (mb !== null && mb !== undefined) return mb;
-  const mg = mediaGeralCopa(j);
-  return mg !== null ? mg : 0;
+  return mb !== null && mb !== undefined ? mb : null;
 }
 
 function round2(n: number): number {

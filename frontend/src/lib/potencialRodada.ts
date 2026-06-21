@@ -70,8 +70,9 @@ export function ratingBase(
   escalas: EscalasRating,
   mlCtx?: ContextoMlRodada | null,
   siglaSelecao?: string | null,
+  odds?: OddsJogadorEntry | null,
 ): number {
-  return calcularRatingJogador(j, escalas, mlCtx, siglaSelecao);
+  return calcularRatingJogador(j, escalas, mlCtx, siglaSelecao, odds);
 }
 
 export function fatorStatus(statusId: number): number {
@@ -90,10 +91,10 @@ export function calcularPotencialBruto(
 
   const sigla = siglaSelecao ?? j.sigla;
   const fatorMl = fatorMlSelecao(sigla, mlCtx);
-  const r = ratingBase(j, escalas, mlCtx, sigla);
+  const oddsValidas = confiarOdds ? odds : oddsVigentes(j, odds) ? odds : null;
+  const r = ratingBase(j, escalas, mlCtx, sigla, oddsValidas);
   if (r <= 0) return null;
 
-  const oddsValidas = confiarOdds ? odds : oddsVigentes(j, odds) ? odds : null;
   const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
   if (o !== null) {
     const oAjust = Math.round(o * Math.pow(fatorMl, FATOR_ML_GAMMA) * 10) / 10;
@@ -138,8 +139,8 @@ export function tooltipPotencialRodada(
 
   const sigla = siglaSelecao ?? j.sigla;
   const fatorMl = fatorMlSelecao(sigla, mlCtx);
-  const r = ratingBase(j, escalas, mlCtx, sigla);
   const oddsValidas = confiarOdds ? odds : oddsVigentes(j, odds) ? odds : null;
+  const r = ratingBase(j, escalas, mlCtx, sigla, oddsValidas);
   const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
   const bruto = calcularPotencialBruto(j, odds, escalas, confiarOdds, mlCtx, sigla) ?? 0;
   const fator = fatorStatus(j.status_id);

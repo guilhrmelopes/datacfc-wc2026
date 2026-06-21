@@ -66,7 +66,7 @@ export function calcularRatingSelecaoCopa(s: Selecao, pool: Selecao[]): number |
   return Math.round(media * 10) / 10;
 }
 
-/** Rating Copa (scouts) ou Elo eloratings.net antes da estreia. */
-export function ratingSelecaoExibicao(s: Selecao, pool: Selecao[]): number | null {
-  return calcularRatingSelecaoCopa(s, pool) ?? s.rating_elo_100 ?? null;
+/** Rating exibido no HUB Seleções — sempre Elo eloratings.net (atualizado pelo pipeline). */
+export function ratingSelecaoExibicao(s: Selecao, _pool: Selecao[]): number | null {
+  return s.rating_elo_100 ?? null;
 }

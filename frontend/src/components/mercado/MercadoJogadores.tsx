@@ -518,10 +518,18 @@ function classeCelulaHub(
   if (!temCopa(j)) return "";
 
   if (colKey === "rating") {
-    const valor = calcularRatingJogador(j, escalas, mlCtx, j.sigla);
+    const oddsVal = oddsAtiva(odds) ? odds : null;
+    const valor = calcularRatingJogador(j, escalas, mlCtx, j.sigla, oddsVal);
     if (valor <= 0) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) => {
-      const r = calcularRatingJogador(x, escalas, mlCtx, x.sigla);
+      const o = oddsResolver(x);
+      const r = calcularRatingJogador(
+        x,
+        escalas,
+        mlCtx,
+        x.sigla,
+        oddsAtiva(o) ? o : null,
+      );
       return r > 0 ? r : null;
     });
     return classeCelulaIndice100(valor, amostra);
@@ -592,7 +600,9 @@ function valorOrdenacao(
 ): number | null {
   switch (colKey) {
     case "rating":
-      return temCopa(j) ? calcularRatingJogador(j, escalas, mlCtx, j.sigla) : null;
+      return temCopa(j)
+        ? calcularRatingJogador(j, escalas, mlCtx, j.sigla, oddsAtiva(odds) ? odds : null)
+        : null;
     case "mg":
       return mediaGeralCopa(j);
     case "mb":
@@ -867,9 +877,13 @@ export function MercadoJogadores({
         return {
           ...col,
           render: (j: JogadorMercado) => {
-            const valor = calcularRatingJogador(j, escalasRating, mlCtxRodada, j.sigla);
+            const oddsVal = oddsAtiva(resolverOdds(j)) ? resolverOdds(j) : null;
+            const valor = calcularRatingJogador(j, escalasRating, mlCtxRodada, j.sigla, oddsVal);
             return (
-              <span className="tabular-nums" title={tooltipRating(j, valor, escalasRating, mlCtxRodada, j.sigla)}>
+              <span
+                className="tabular-nums"
+                title={tooltipRating(j, valor, escalasRating, mlCtxRodada, j.sigla, oddsVal)}
+              >
                 {temCopa(j) && valor > 0 ? fmt(valor, 1) : <Dash />}
               </span>
             );

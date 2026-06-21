@@ -1,11 +1,11 @@
-import { mediaBaseCopa, mediaGeralCopa, temCopa } from "@/lib/copaJogador";
+import { mediaGeralCopa, temCopa } from "@/lib/copaJogador";
 import {
   fatorMlSelecao,
   pVitSelecaoRodada,
   type ContextoMlRodada,
 } from "@/lib/fatorMoneylineRodada";
 import { calcularRatingSelecaoCopa } from "@/lib/ratingSelecao";
-import type { JogadorMercado, Selecao } from "@/types/dados";
+import type { JogadorMercado, OddsJogadorEntry, Selecao } from "@/types/dados";
 
 export interface ConfrontoCopa {
   mandante: string;
@@ -60,8 +60,8 @@ function aplicarTetoSelecao(
   j: JogadorMercado,
   nivelSel: number,
 ): number {
-  const media = mediaPerformanceCopa(j);
-  const excecao = media !== null && media >= EXCECAO_MG;
+  const mg = mediaGeralCopa(j);
+  const excecao = mg !== null && mg >= EXCECAO_MG;
   const teto = Math.min(100, nivelSel + MARGEM_SOBRE_SELECAO);
   if (historico <= teto) return historico;
   if (excecao) {
@@ -124,27 +124,69 @@ function fatorPonderacaoAdversarios(mediaNivel: number): number {
   return 1 + PONDERACAO_MAX * ((mediaNivel - NIVEL_NEUTRO) / NIVEL_NEUTRO);
 }
 
-/** MG (75%) + MB (25%) quando MB disponível — equilibra bônus e consistência de scouts. */
-function mediaPerformanceCopa(j: JogadorMercado): number | null {
-  const mg = mediaGeralCopa(j);
-  if (mg === null) return null;
-  const mb = mediaBaseCopa(j);
-  if (mb === null) return mg;
-  return Math.round((0.75 * mg + 0.25 * mb) * 100) / 100;
+/** Odds 0–100 para compor Performance (60% MG + 25% odds + 15% seleção). */
+function sinalOddsPerformance(
+  bucket: string,
+  odds: OddsJogadorEntry | null | undefined,
+): number | null {
+  if (!odds) return null;
+  const g = odds.g_pct ?? null;
+  const a = odds.a_pct ?? null;
+  const sg = odds.sg_pct ?? null;
+
+  if (bucket === "GOL") return sg;
+
+  if (bucket === "MEI" || bucket === "ATA") {
+    if (g !== null && a !== null) {
+      return Math.round((0.55 * g + 0.45 * a) * 10) / 10;
+    }
+    return g ?? a ?? null;
+  }
+
+  if (bucket === "LAT" || bucket === "ZAG") {
+    const partes = [g, a, sg].filter((v): v is number => v !== null);
+    if (partes.length === 0) return null;
+    return Math.round((partes.reduce((s, v) => s + v, 0) / partes.length) * 10) / 10;
+  }
+
+  return null;
 }
 
-/** Rating histórico na Copa (MG/MB + adversários já jogados), sem moneyline da rodada. */
+/** 60% MG + 25% odds posicionais + 15% Elo da seleção (escala 0–100). */
+function performanceScore(
+  j: JogadorMercado,
+  ctx: ContextoRating,
+  odds?: OddsJogadorEntry | null,
+): number | null {
+  const mg = mediaGeralCopa(j);
+  if (mg === null) return null;
+
+  const mgScore = mgParaRating(mg);
+  const oddsScore = sinalOddsPerformance(j.bucket_posicao, odds);
+  const selScore = ctx.nivelPorSigla.get(j.sigla) ?? NIVEL_NEUTRO;
+
+  let score = 0.6 * mgScore + 0.15 * selScore;
+  if (oddsScore !== null) {
+    score += 0.25 * oddsScore;
+  }
+  return Math.round(score * 10) / 10;
+}
+
+/** Rating histórico na Copa (performance + adversários já jogados), sem moneyline da rodada. */
 export function calcularRatingHistorico(
   j: JogadorMercado,
   ctx: ContextoRating,
+  odds?: OddsJogadorEntry | null,
 ): number {
   if (!temCopa(j)) return 0;
-  const media = mediaPerformanceCopa(j);
-  if (media === null) return 0;
+  const base = performanceScore(j, ctx, odds);
+  if (base === null) return 0;
 
-  const base = mgParaRating(media);
   const mediaAdv = mediaNivelAdversarios(j, ctx);
-  if (mediaAdv === null) return base;
+  if (mediaAdv === null) {
+    const nivelSel = ctx.nivelPorSigla.get(j.sigla) ?? NIVEL_NEUTRO;
+    return aplicarTetoSelecao(base, j, nivelSel);
+  }
 
   const ponderado = base * fatorPonderacaoAdversarios(mediaAdv);
   const historico = Math.round(Math.min(100, Math.max(1, ponderado)) * 10) / 10;
@@ -157,8 +199,9 @@ export function calcularRatingJogador(
   ctx: ContextoRating,
   mlCtx?: ContextoMlRodada | null,
   siglaSelecao?: string | null,
+  odds?: OddsJogadorEntry | null,
 ): number {
-  const historico = calcularRatingHistorico(j, ctx);
+  const historico = calcularRatingHistorico(j, ctx, odds);
   if (historico <= 0) return 0;
 
   const fator = fatorMlSelecao(siglaSelecao ?? j.sigla, mlCtx);
@@ -174,32 +217,33 @@ export function tooltipRating(
   ctx: ContextoRating,
   mlCtx?: ContextoMlRodada | null,
   siglaSelecao?: string | null,
+  odds?: OddsJogadorEntry | null,
 ): string {
-  const media = mediaPerformanceCopa(j);
-  if (media === null) {
+  const mg = mediaGeralCopa(j);
+  if (mg === null) {
     return "Nível de atuação do jogador durante a Copa";
   }
 
-  const historico = calcularRatingHistorico(j, ctx);
+  const perf = performanceScore(j, ctx, odds);
+  const historico = calcularRatingHistorico(j, ctx, odds);
   const sigla = siglaSelecao ?? j.sigla;
   const pVit = pVitSelecaoRodada(sigla, mlCtx);
   const fator = fatorMlSelecao(sigla, mlCtx);
 
-  const base = mgParaRating(media);
   const mediaAdv = mediaNivelAdversarios(j, ctx);
   if (mediaAdv === null && pVit == null) {
-    return `Nível de atuação na Copa (MG/MB ${media.toFixed(2)})`;
+    return `Performance ${perf?.toFixed(1) ?? "—"} (MG ${mg.toFixed(2)})`;
   }
 
   const partes: string[] = [];
   if (mediaAdv !== null) {
     const siglas = ctx.adversariosPorSelecao.get(j.selecao) ?? [];
     partes.push(
-      `Performance ${media.toFixed(2)} → ${base.toFixed(1)} → ${historico.toFixed(1)} ` +
+      `Performance ${perf?.toFixed(1) ?? "—"} → ${historico.toFixed(1)} ` +
         `(adversários ${siglas.join(", ") || "—"} · média ${mediaAdv.toFixed(0)})`,
     );
   } else {
-    partes.push(`Performance ${media.toFixed(2)} → ${historico.toFixed(1)}`);
+    partes.push(`Performance ${perf?.toFixed(1) ?? "—"} → ${historico.toFixed(1)}`);
   }
 
   if (pVit != null && fator !== 1) {

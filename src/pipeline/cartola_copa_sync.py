@@ -171,15 +171,6 @@ def finalizar_metricas_copa(mercado: list[dict]) -> None:
                     else 0
                 )
 
-        pontos = float(entry.get("copa_pontos_total") or 0)
-        if entry.get("copa_media_geral") is None:
-            entry["copa_media_geral"] = round(pontos / jogos, 2)
-
-        if entry.get("copa_media_base") is None:
-            sc = _scouts_partida_de_entry(entry)
-            _, mb = calcular_medias_copa(pontos, jogos, sc, bucket)  # type: ignore[arg-type]
-            entry["copa_media_base"] = mb if mb is not None else 0.0
-
         if bucket == "GOL":
             mins = int(entry.get("copa_mins_played") or 0)
             if mins > 0 and entry.get("copa_de_pct") is None:
@@ -764,6 +755,7 @@ def rebuild_copa_oficial(
     }
 
     acum_mb: dict[int, float] = {}
+    acum_jogos_mb: dict[int, int] = {}
     rodadas = estado.get("pontuados_por_rodada") or {}
 
     for _rodada, snapshot in sorted(rodadas.items(), key=lambda x: int(x[0])):
@@ -789,6 +781,7 @@ def rebuild_copa_oficial(
             )
             _aplicar_scouts_copa(entry, scout)
             acum_mb[aid] = acum_mb.get(aid, 0.0) + mb_rodada_oficial(pontuacao, scout, posicao_id)
+            acum_jogos_mb[aid] = acum_jogos_mb.get(aid, 0) + 1
 
     for entry in mercado:
         aid = entry.get("atleta_id")
@@ -815,10 +808,11 @@ def rebuild_copa_oficial(
         if jogos <= 0:
             continue
 
-        if entry.get("copa_media_geral") is None:
+        if entry.get("copa_media_geral") is None and jogos > 0:
             entry["copa_media_geral"] = round(float(entry.get("copa_pontos_total") or 0) / jogos, 2)
 
-        if aid_int in acum_mb:
+        jogos_mb = acum_jogos_mb.get(aid_int, 0)
+        if aid_int in acum_mb and jogos_mb > 0 and jogos_mb == jogos:
             entry["copa_media_base"] = round(acum_mb[aid_int] / jogos, 2)
 
     finalizar_metricas_copa(mercado)
