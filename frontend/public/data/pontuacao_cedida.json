@@ -1020,11 +1020,11 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 3.5,
+        "valor": 3.58,
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 5.21,
+        "valor": 5.15,
         "cor": "bg-yellow-500"
       }
     },
@@ -1228,11 +1228,11 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 6.97,
+        "valor": 6.92,
         "cor": "bg-green-500"
       },
       "conquistado": {
-        "valor": 2.79,
+        "valor": 2.88,
         "cor": "bg-orange-500"
       }
     },
