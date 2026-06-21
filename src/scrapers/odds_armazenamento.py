@@ -381,13 +381,79 @@ def _imputar_odds_de_pares(peers: list[dict], posicao_id: int) -> dict:
     return entrada
 
 
+def _colegas_mesma_posicao(
+    aid: str,
+    sigla: str,
+    bucket: str | None,
+    pos: int,
+    event_odds: dict,
+    por_id: dict[str, dict],
+) -> list[dict]:
+    """Colegas de seleção e posição com odds utilizáveis no mesmo evento."""
+    from scrapers.odds_ga_fallback import enriquecer_odds_entrada
+
+    peers: list[dict] = []
+    for peer_aid, peer_ent in event_odds.items():
+        if peer_aid == aid or not isinstance(peer_ent, dict):
+            continue
+        peer_jog = por_id.get(str(peer_aid))
+        if not peer_jog or (peer_jog.get("sigla") or "").upper() != sigla:
+            continue
+        if pos in _POS_LINHA and peer_jog.get("bucket_posicao") != bucket:
+            continue
+        if pos in _POS_SG and int(peer_jog.get("posicao_id") or 0) not in _POS_SG:
+            continue
+        peer_copy = enriquecer_odds_entrada(dict(peer_ent))
+        if _entrada_odds_util(peer_copy, int(peer_jog.get("posicao_id") or 0)):
+            peers.append(peer_copy)
+    return peers
+
+
+def _imputar_campos_faltantes(entrada: dict, peers: list[dict], pos: int) -> bool:
+    """Preenche G%/A% (e SG% se defesa) ausentes com mediana dos colegas."""
+    alterou = False
+    if pos in _POS_LINHA:
+        for pct_key, odds_key, casa_key in (
+            ("g_pct", "odds_g", "casa_g"),
+            ("a_pct", "odds_a", "casa_a"),
+            ("ga_pct", "odds_ga", "casa_ga"),
+        ):
+            if entrada.get(pct_key) is not None:
+                continue
+            pcts = [float(p[pct_key]) for p in peers if p.get(pct_key) is not None]
+            odds_vals = [float(p[odds_key]) for p in peers if p.get(odds_key) is not None]
+            casas = [str(p[casa_key]) for p in peers if p.get(casa_key)]
+            if pcts:
+                entrada[pct_key] = _mediana(pcts)
+                alterou = True
+            if odds_vals and entrada.get(odds_key) is None:
+                entrada[odds_key] = _mediana(odds_vals)
+            if casas and entrada.get(casa_key) is None:
+                entrada[casa_key] = casas[0]
+        if alterou:
+            entrada["imputado"] = True
+    elif pos in _POS_SG and entrada.get("sg_pct") is None:
+        pcts = [float(p["sg_pct"]) for p in peers if p.get("sg_pct") is not None]
+        odds_vals = [float(p["odds_sg"]) for p in peers if p.get("odds_sg") is not None]
+        casas = [str(p["casa_sg"]) for p in peers if p.get("casa_sg")]
+        if pcts:
+            entrada["sg_pct"] = _mediana(pcts)
+            entrada["imputado"] = True
+        if odds_vals and entrada.get("odds_sg") is None:
+            entrada["odds_sg"] = _mediana(odds_vals)
+        if casas and entrada.get("casa_sg") is None:
+            entrada["casa_sg"] = casas[0]
+        alterou = bool(pcts)
+    return alterou
+
+
 def imputar_odds_faltantes(
     resultado: dict[str, dict],
     jogadores: list[dict],
     eventos_list: list[dict],
     atuais: dict[str, dict],
 ) -> int:
-    """Preenche jogadores com ADV sem odds usando mediana dos colegas no confronto atual."""
+    """Preenche G%/A% ausentes com colega da mesma posição e seleção."""
     from scrapers.odds_ga_fallback import enriquecer_odds_entrada
 
     por_id = {str(j.get("atleta_id")): j for j in jogadores if j.get("atleta_id") is not None}
@@ -399,8 +465,6 @@ def imputar_odds_faltantes(
             continue
         prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
         if not prox:
-            continue
-        if aid in resultado and _entrada_odds_util(resultado[aid], pos):
             continue
 
         sigla = (jog.get("sigla") or "").upper()
@@ -415,31 +479,16 @@ def imputar_odds_faltantes(
 
         bucket = jog.get("bucket_posicao")
         event_odds = ev.get("odds") or {}
-        peers: list[dict] = []
-        for peer_aid, peer_ent in event_odds.items():
-            if peer_aid == aid or not isinstance(peer_ent, dict):
-                continue
-            peer_jog = por_id.get(str(peer_aid))
-            if not peer_jog or (peer_jog.get("sigla") or "").upper() != sigla:
-                continue
-            if pos in _POS_LINHA and peer_jog.get("bucket_posicao") != bucket:
-                continue
-            peer_copy = enriquecer_odds_entrada(dict(peer_ent))
-            if _entrada_odds_util(peer_copy, int(peer_jog.get("posicao_id") or 0)):
-                peers.append(peer_copy)
-
+        peers = _colegas_mesma_posicao(aid, sigla, bucket, pos, event_odds, por_id)
         if not peers:
-            for peer_aid, peer_ent in event_odds.items():
-                if peer_aid == aid or not isinstance(peer_ent, dict):
-                    continue
-                peer_jog = por_id.get(str(peer_aid))
-                if not peer_jog or (peer_jog.get("sigla") or "").upper() != sigla:
-                    continue
-                peer_copy = enriquecer_odds_entrada(dict(peer_ent))
-                if _entrada_odds_util(peer_copy, int(peer_jog.get("posicao_id") or 0)):
-                    peers.append(peer_copy)
+            continue
 
-        if not peers:
+        if aid in resultado:
+            entrada = dict(resultado[aid])
+            if _imputar_campos_faltantes(entrada, peers, pos):
+                enriquecer_odds_entrada(entrada)
+                resultado[aid] = entrada
+                imputados += 1
             continue
 
         entrada = _imputar_odds_de_pares(peers, pos)
@@ -450,7 +499,7 @@ def imputar_odds_faltantes(
             imputados += 1
 
     if imputados:
-        logger.info("Odds imputadas (mediana colegas): %d jogadores.", imputados)
+        logger.info("Odds imputadas (colega mesma posição/seleção): %d jogadores.", imputados)
     return imputados
 
 

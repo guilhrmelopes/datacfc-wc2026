@@ -25,7 +25,41 @@ function mediana(vals: number[]): number {
     : (ordenado[meio - 1] + ordenado[meio]) / 2;
 }
 
-/** P(vitória) por seleção na rodada Cartola, a partir do ML armazenado por evento. */
+function hojeCalendario(): string {
+  return new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
+}
+
+/** P(vitória) por seleção nos confrontos futuros armazenados (sem filtro de rodada Cartola). */
+export function compilarContextoMlProximo(
+  armazenamento: OddsArmazenamentoData | null | undefined,
+): ContextoMlRodada | null {
+  const eventos = armazenamento?.eventos;
+  if (!eventos) return null;
+
+  const hoje = hojeCalendario();
+  const pVitPorSigla = new Map<string, number>();
+  const probsRodada: number[] = [];
+
+  for (const ev of Object.values(eventos) as EventoOddsArmazenado[]) {
+    const dataEvento = ev.data?.trim();
+    if (!dataEvento || dataEvento < hoje) continue;
+
+    const pHome = ev.p_vit_home;
+    const pAway = ev.p_vit_away;
+    const sigHome = ev.sigla_mandante?.toUpperCase();
+    const sigAway = ev.sigla_visitante?.toUpperCase();
+    if (pHome == null || pAway == null || !sigHome || !sigAway) continue;
+
+    pVitPorSigla.set(sigHome, pHome);
+    pVitPorSigla.set(sigAway, pAway);
+    probsRodada.push(pHome, pAway);
+  }
+
+  if (probsRodada.length === 0) return null;
+  return { pVitPorSigla, pMediana: mediana(probsRodada) };
+}
+
+/** @deprecated use compilarContextoMlProximo — mantido para Recorrência/outros. */
 export function compilarContextoMlRodada(
   armazenamento: OddsArmazenamentoData | null | undefined,
   rodada: number,

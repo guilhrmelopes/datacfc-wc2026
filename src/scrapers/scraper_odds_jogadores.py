@@ -136,17 +136,31 @@ NOMES_MERCADOS_CONHECIDOS: frozenset[str] = frozenset({
     "Asian Handicap", "Draw No Bet",
 })
 
-# Prioridade de casas (via hub OddsNotifier — espelha betfair.bet.br / pinnacle.bet.br / 1xbet.bet.br):
-# 1) Pinnacle ou Betfair  2) 1xbet  3) secundárias  4) demais
-BOOKMAKERS_PRIMARIOS: list[str] = ["pinnacle", "betfair exchange", "betfair"]
-BOOKMAKERS_FALLBACK_1XBET: list[str] = ["1xbet"]
-BOOKMAKERS_SECUNDARIOS: list[str] = [
-    "bet365", "betano", "unibet", "william hill", "bwin",
-    "betway", "888sport", "betclic", "kambi", "ladbrokes",
-    "leovegas", "betmgm", "sisal", "paddy power",
+# Casas permitidas — somente estas entram no pipeline de odds.
+BOOKMAKERS_PERMITIDOS: list[str] = [
+    "pinnacle",
+    "betfair",
+    "betfair exchange",
+    "1xbet",
+    "betano",
+    "kalshi",
+    "bet365",
+]
+# Prioridade dentro do grupo permitido (menor índice = maior prioridade).
+BOOKMAKERS_ORDEM: list[str] = [
+    "pinnacle",
+    "betfair exchange",
+    "betfair",
+    "1xbet",
+    "bet365",
+    "betano",
+    "kalshi",
 ]
 
-# Legado — usado em logs e compatibilidade
+# Legado — aliases para logs e testes
+BOOKMAKERS_PRIMARIOS: list[str] = ["pinnacle", "betfair exchange", "betfair"]
+BOOKMAKERS_FALLBACK_1XBET: list[str] = ["1xbet"]
+BOOKMAKERS_SECUNDARIOS: list[str] = ["bet365", "betano", "kalshi"]
 BOOKMAKERS_T1: list[str] = BOOKMAKERS_PRIMARIOS + BOOKMAKERS_FALLBACK_1XBET
 BOOKMAKERS_T2: list[str] = BOOKMAKERS_SECUNDARIOS
 
@@ -894,16 +908,21 @@ _PAT_MARKET_BLOCK = re.compile(
 )
 
 
-def _casa_prioridade(nome: str) -> int:
-    """0 = Pinnacle/Betfair, 1 = 1xbet, 2 = secundárias, 3 = demais."""
+def _bookmaker_permitido(nome: str) -> bool:
+    """True se a casa faz parte do grupo autorizado."""
     n = _norm(nome)
-    if any(t in n for t in BOOKMAKERS_PRIMARIOS):
-        return 0
-    if any(t in n for t in BOOKMAKERS_FALLBACK_1XBET):
-        return 1
-    if any(t in n for t in BOOKMAKERS_SECUNDARIOS):
-        return 2
-    return 3
+    return any(marca in n for marca in BOOKMAKERS_PERMITIDOS)
+
+
+def _casa_prioridade(nome: str) -> int:
+    """Prioridade entre casas permitidas; 999 = ignorar."""
+    if not _bookmaker_permitido(nome):
+        return 999
+    n = _norm(nome)
+    for i, marca in enumerate(BOOKMAKERS_ORDEM):
+        if marca in n:
+            return i
+    return len(BOOKMAKERS_ORDEM)
 
 
 def _bookmaker_tier(nome: str) -> int:
@@ -922,6 +941,10 @@ def _melhor_odd(
     if atual is None:
         return nova_odd, nova_bk
     pa, pn = _casa_prioridade(atual[1]), _casa_prioridade(nova_bk)
+    if pn >= 999:
+        return atual
+    if pa >= 999:
+        return nova_odd, nova_bk
     if pn < pa:
         return nova_odd, nova_bk
     if pn > pa:
@@ -1003,6 +1026,8 @@ def extrair_odds_rsc(
         return resultado
 
     for bk_name, mercados in bookmakers.items():
+        if not _bookmaker_permitido(str(bk_name)):
+            continue
         if not isinstance(mercados, list):
             continue
         for mercado in mercados:
@@ -1082,6 +1107,8 @@ def extrair_sg_times(rsc_conteudo: str) -> tuple[tuple[float, str] | None, tuple
     sg_away: tuple[float, str] | None = None
 
     for bk_name, mercados in bookmakers.items():
+        if not _bookmaker_permitido(str(bk_name)):
+            continue
         if not isinstance(mercados, list):
             continue
         for mercado in mercados:
@@ -1190,6 +1217,8 @@ def extrair_ml_times(
 
     candidatos: list[tuple[int, int, str, float, float | None, float]] = []
     for bk_name, mercados in bookmakers.items():
+        if not _bookmaker_permitido(str(bk_name)):
+            continue
         if not isinstance(mercados, list):
             continue
         tier = _bookmaker_tier(str(bk_name))
@@ -1312,6 +1341,8 @@ def _extrair_odds_rsc_regex(
         )
         for match in pat_bk_mkt.finditer(rsc_conteudo):
             bk_name, odds_raw = match.group(1), match.group(2)
+            if not _bookmaker_permitido(bk_name):
+                continue
             for player_match in _PAT_LABEL_OVER.finditer(odds_raw):
                 player_nome = player_match.group(1)
                 try:

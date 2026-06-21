@@ -4,7 +4,7 @@ import {
   fatorMlSelecao,
   type ContextoMlRodada,
 } from "@/lib/fatorMoneylineRodada";
-import { gaPctEfetivo } from "@/lib/oddsGaFallback";
+import { labelOddsPosicional, sinalOddsPosicional } from "@/lib/oddsPosicional";
 import {
   calcularRatingJogador,
   type EscalasRating,
@@ -12,21 +12,19 @@ import {
 import type { JogadorMercado, OddsJogadorEntry } from "@/types/dados";
 
 /**
- * Potencial para Rodada (coluna ⓘ) — índice híbrido 0–100 (somente após estreia na Copa).
+ * SCORE (coluna SCORE) — índice híbrido 0–100 para a rodada (somente após estreia na Copa).
+ * 65% Rating + 35% odds posicionais, com ML e status.
  */
 
 export const POTENCIAL_ALPHA = 0.65;
 
-export const PESOS_ODDS: Record<
-  string,
-  { sg: number; ga: number; descricao: string }
-> = {
-  GOL: { sg: 1, ga: 0, descricao: "SG% (clean sheet)" },
-  ZAG: { sg: 0.65, ga: 0.35, descricao: "65% SG% + 35% GA%" },
-  LAT: { sg: 0.55, ga: 0.45, descricao: "55% SG% + 45% GA%" },
-  MEI: { sg: 0, ga: 1, descricao: "GA% (marcar ou assistir)" },
-  ATA: { sg: 0, ga: 1, descricao: "GA% (marcar ou assistir)" },
-};
+/** @deprecated use sinalOddsPosicional */
+export function sinalOddsRodada(
+  bucket: string,
+  odds: OddsJogadorEntry | null | undefined,
+): number | null {
+  return sinalOddsPosicional(bucket, odds);
+}
 
 export const FATOR_STATUS: Record<number, number> = {
   6: 1.0,
@@ -38,41 +36,14 @@ export const FATOR_STATUS: Record<number, number> = {
 
 const FATOR_STATUS_PADRAO = 0.72;
 
-export function sinalOddsRodada(
-  bucket: string,
-  odds: OddsJogadorEntry | null | undefined,
-): number | null {
-  const ga = gaPctEfetivo(odds);
-  const sg = odds?.sg_pct ?? null;
-  const g = odds?.g_pct ?? null;
-  const a = odds?.a_pct ?? null;
-  const pesos = PESOS_ODDS[bucket];
-
-  if (!pesos) return ga ?? sg;
-
-  if (pesos.ga === 0) return sg;
-
-  if (pesos.sg === 0) {
-    if (g !== null && a !== null) {
-      return Math.round((0.55 * g + 0.45 * a) * 10) / 10;
-    }
-    return ga ?? g ?? a;
-  }
-
-  if (sg !== null && ga !== null) {
-    return Math.round((pesos.sg * sg + pesos.ga * ga) * 10) / 10;
-  }
-  return sg ?? ga;
-}
-
 export function ratingBase(
   j: JogadorMercado,
   escalas: EscalasRating,
-  mlCtx?: ContextoMlRodada | null,
-  siglaSelecao?: string | null,
+  _mlCtx?: ContextoMlRodada | null,
+  _siglaSelecao?: string | null,
   odds?: OddsJogadorEntry | null,
 ): number {
-  return calcularRatingJogador(j, escalas, mlCtx, siglaSelecao, odds);
+  return calcularRatingJogador(j, escalas, null, null, odds);
 }
 
 export function fatorStatus(statusId: number): number {
@@ -92,10 +63,10 @@ export function calcularPotencialBruto(
   const sigla = siglaSelecao ?? j.sigla;
   const fatorMl = fatorMlSelecao(sigla, mlCtx);
   const oddsValidas = confiarOdds ? odds : oddsVigentes(j, odds) ? odds : null;
-  const r = ratingBase(j, escalas, mlCtx, sigla, oddsValidas);
+  const r = ratingBase(j, escalas, null, sigla, oddsValidas);
   if (r <= 0) return null;
 
-  const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
+  const o = sinalOddsPosicional(j.bucket_posicao, oddsValidas);
   if (o !== null) {
     const oAjust = Math.round(o * Math.pow(fatorMl, FATOR_ML_GAMMA) * 10) / 10;
     return Math.round((POTENCIAL_ALPHA * r + (1 - POTENCIAL_ALPHA) * oAjust) * 10) / 10;
@@ -103,6 +74,7 @@ export function calcularPotencialBruto(
   return Math.round(r * 10) / 10;
 }
 
+/** SCORE da rodada (ex-Potencial). */
 export function calcularPotencialRodada(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
@@ -140,15 +112,14 @@ export function tooltipPotencialRodada(
   const sigla = siglaSelecao ?? j.sigla;
   const fatorMl = fatorMlSelecao(sigla, mlCtx);
   const oddsValidas = confiarOdds ? odds : oddsVigentes(j, odds) ? odds : null;
-  const r = ratingBase(j, escalas, mlCtx, sigla, oddsValidas);
-  const o = sinalOddsRodada(j.bucket_posicao, oddsValidas);
+  const r = ratingBase(j, escalas, null, sigla, oddsValidas);
+  const o = sinalOddsPosicional(j.bucket_posicao, oddsValidas);
   const bruto = calcularPotencialBruto(j, odds, escalas, confiarOdds, mlCtx, sigla) ?? 0;
   const fator = fatorStatus(j.status_id);
-  const pesos = PESOS_ODDS[j.bucket_posicao];
+  const oddsLabel = labelOddsPosicional(j.bucket_posicao);
 
   let base: string;
   if (o !== null) {
-    const oddsLabel = pesos?.descricao ?? "odds";
     const oAjust = Math.round(o * Math.pow(fatorMl, FATOR_ML_GAMMA) * 10) / 10;
     if (fatorMl !== 1) {
       base = `${Math.round(POTENCIAL_ALPHA * 100)}% Rating ${r.toFixed(1)} + ${Math.round((1 - POTENCIAL_ALPHA) * 100)}% ${oddsLabel} ${o.toFixed(1)}→${oAjust.toFixed(1)} (ML ×${fatorMl.toFixed(2)})`;
@@ -173,8 +144,8 @@ export function tooltipPotencialRodada(
             : j.status_id === 3
               ? "Lesionado"
               : "Indisponível";
-    return `Potencial: ${potencial.toFixed(1)} (${base}; bruto ${bruto.toFixed(1)} × ${Math.round(fator * 100)}% ${status})`;
+    return `SCORE: ${potencial.toFixed(1)} (${base}; bruto ${bruto.toFixed(1)} × ${Math.round(fator * 100)}% ${status})`;
   }
 
-  return `Potencial para Rodada: ${potencial.toFixed(1)} (${base})`;
+  return `SCORE: ${potencial.toFixed(1)} (${base})`;
 }

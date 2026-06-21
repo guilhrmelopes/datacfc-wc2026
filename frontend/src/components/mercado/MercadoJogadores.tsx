@@ -12,7 +12,7 @@ import {
   type CobradoresCopaData,
 } from "@/lib/cobradoresCopa";
 import {
-  compilarContextoMlRodada,
+  compilarContextoMlProximo,
   type ContextoMlRodada,
 } from "@/lib/fatorMoneylineRodada";
 import {
@@ -46,21 +46,8 @@ import {
 import { classeCorPerformance } from "@/lib/cores";
 import { classeCelulaIndice100 } from "@/lib/formatacaoMetricas";
 import { traduzirSelecao } from "@/lib/traducoes";
-import {
-  compilarOddsPorRodada,
-  oddsAtivaNaRodada,
-  oddsParaRodada,
-  type OddsArmazenamentoData,
-} from "@/lib/oddsRodada";
+import type { OddsArmazenamentoData } from "@/lib/oddsRodada";
 import { gaPctCalculado, gaPctEfetivo } from "@/lib/oddsGaFallback";
-import {
-  adversarioRodada,
-  jogadorNaRodada,
-  mapaSelecoes,
-  rodadaFiltroInicial,
-  RODADAS_CARTOLA_FILTRO,
-  type RodadaCartolaFiltro,
-} from "@/lib/rodadaMercado";
 import type {
   JogadorMercado,
   OddsJogadoresData,
@@ -83,14 +70,7 @@ interface ColDef {
   render: (j: JogadorMercado, ced: number | null, odds: OddsJogadorEntry | null) => React.ReactNode;
 }
 
-const HEADER_POTENCIAL_RODADA = (
-  <span
-    className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-current text-[10px] font-serif italic leading-none"
-    aria-hidden
-  >
-    i
-  </span>
-);
+const HEADER_SCORE = "SCORE";
 
 type Ordem = "asc" | "desc";
 
@@ -256,7 +236,7 @@ const COL_MB: ColDef = {
 const COL_CED: ColDef = {
   key: "ced",
   header: "CED",
-  title: "Pontuação cedida acumulada na Copa pelo adversário da rodada",
+  title: "Pontuação cedida acumulada na Copa pelo próximo adversário",
   render: (_j, ced) =>
     ced != null ? <span className="tabular-nums">{fmt(ced, 2)}</span> : <Dash />,
 };
@@ -284,10 +264,10 @@ const COL_ADV: ColDef = {
     ),
 };
 
-const COL_POTENCIAL_RODADA: ColDef = {
-  key: "potencial_r1",
-  header: HEADER_POTENCIAL_RODADA,
-  title: "Potencial para Rodada",
+const COL_SCORE: ColDef = {
+  key: "score",
+  header: HEADER_SCORE,
+  title: "SCORE — 65% Rating + 35% odds da rodada (ajustado por status e ML)",
   render: () => null,
 };
 
@@ -450,7 +430,7 @@ function classeCelulaHub(
   jogadores: JogadorMercado[],
   odds: OddsJogadorEntry | null,
   oddsResolver: (x: JogadorMercado) => OddsJogadorEntry | null,
-  oddsAtiva: (o: OddsJogadorEntry | null | undefined) => boolean,
+  oddsAtiva: (j: JogadorMercado, o: OddsJogadorEntry | null | undefined) => boolean,
   temAdv: boolean,
   escalas: ReturnType<typeof construirContextoRating>,
   mlCtx: ContextoMlRodada | null,
@@ -466,14 +446,14 @@ function classeCelulaHub(
   const pos = j.bucket_posicao;
 
   if (colKey === "g_pct") {
-    if (!oddsAtiva(odds) || odds?.g_pct == null) return "";
+    if (!oddsAtiva(j, odds) || odds?.g_pct == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       oddsResolver(x)?.g_pct ?? null,
     );
     return classeCelulaIndice100(odds.g_pct, amostra);
   }
   if (colKey === "a_pct") {
-    if (!oddsAtiva(odds) || odds?.a_pct == null) return "";
+    if (!oddsAtiva(j, odds) || odds?.a_pct == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       oddsResolver(x)?.a_pct ?? null,
     );
@@ -481,21 +461,21 @@ function classeCelulaHub(
   }
   if (colKey === "ga_pct") {
     const ga = gaPctEfetivo(odds);
-    if (!oddsAtiva(odds) || ga == null) return "";
+    if (!oddsAtiva(j, odds) || ga == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       gaPctEfetivo(oddsResolver(x)),
     );
     return classeCelulaIndice100(ga, amostra);
   }
   if (colKey === "sg_pct") {
-    if (!oddsAtiva(odds) || odds?.sg_pct == null) return "";
+    if (!oddsAtiva(j, odds) || odds?.sg_pct == null) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) =>
       oddsResolver(x)?.sg_pct ?? null,
     );
     return classeCelulaIndice100(odds.sg_pct, amostra);
   }
-  if (colKey === "potencial_r1") {
-    const oddsVal = oddsAtiva(odds) ? odds : null;
+  if (colKey === "score") {
+    const oddsVal = oddsAtiva(j, odds) ? odds : null;
     const valor = calcularPotencialRodada(j, oddsVal, escalas, true, mlCtx, j.sigla);
     if (valor == null) return "";
     const amostra = jogadores
@@ -504,7 +484,7 @@ function classeCelulaHub(
         const o = oddsResolver(x);
         return calcularPotencialRodada(
           x,
-          oddsAtiva(o) ? o : null,
+          oddsAtiva(x, o) ? o : null,
           escalas,
           true,
           mlCtx,
@@ -518,7 +498,7 @@ function classeCelulaHub(
   if (!temCopa(j)) return "";
 
   if (colKey === "rating") {
-    const oddsVal = oddsAtiva(odds) ? odds : null;
+    const oddsVal = oddsAtiva(j, odds) ? odds : null;
     const valor = calcularRatingJogador(j, escalas, mlCtx, j.sigla, oddsVal);
     if (valor <= 0) return "";
     const amostra = amostraScoutPorPosicao(jogadores, pos, (x) => {
@@ -528,7 +508,7 @@ function classeCelulaHub(
         escalas,
         mlCtx,
         x.sigla,
-        oddsAtiva(o) ? o : null,
+        oddsAtiva(x, o) ? o : null,
       );
       return r > 0 ? r : null;
     });
@@ -592,7 +572,7 @@ function valorOrdenacao(
   j: JogadorMercado,
   colKey: string,
   odds: OddsJogadorEntry | null,
-  oddsAtiva: (o: OddsJogadorEntry | null | undefined) => boolean,
+  oddsAtiva: (j: JogadorMercado, o: OddsJogadorEntry | null | undefined) => boolean,
   escalas: ReturnType<typeof construirContextoRating>,
   pontuacaoCedida: PontuacaoCedida,
   advSigla: string | null,
@@ -601,7 +581,7 @@ function valorOrdenacao(
   switch (colKey) {
     case "rating":
       return temCopa(j)
-        ? calcularRatingJogador(j, escalas, mlCtx, j.sigla, oddsAtiva(odds) ? odds : null)
+        ? calcularRatingJogador(j, escalas, mlCtx, j.sigla, oddsAtiva(j, odds) ? odds : null)
         : null;
     case "mg":
       return mediaGeralCopa(j);
@@ -610,17 +590,17 @@ function valorOrdenacao(
     case "ced":
       return cedidoAdversarioCopa(j, pontuacaoCedida, advSigla);
     case "g_pct":
-      return oddsAtiva(odds) ? (odds?.g_pct ?? null) : null;
+      return oddsAtiva(j, odds) ? (odds?.g_pct ?? null) : null;
     case "a_pct":
-      return oddsAtiva(odds) ? (odds?.a_pct ?? null) : null;
+      return oddsAtiva(j, odds) ? (odds?.a_pct ?? null) : null;
     case "ga_pct":
-      return oddsAtiva(odds) ? gaPctEfetivo(odds) : null;
+      return oddsAtiva(j, odds) ? gaPctEfetivo(odds) : null;
     case "sg_pct":
-      return oddsAtiva(odds) ? (odds?.sg_pct ?? null) : null;
-    case "potencial_r1":
+      return oddsAtiva(j, odds) ? (odds?.sg_pct ?? null) : null;
+    case "score":
       return calcularPotencialRodada(
         j,
-        oddsAtiva(odds) ? odds : null,
+        oddsAtiva(j, odds) ? odds : null,
         escalas,
         true,
         mlCtx,
@@ -682,31 +662,31 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG_PCT,
     COL_SG, COL_DE, COL_DE_PCT, COL_GE, COL_GS,
-    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
+    COL_CED, COL_ADV, COL_SCORE,
   ],
   ZAG: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_INT, COL_C, COL_BR, COL_FD,
     COL_SG_PCT, COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
+    COL_CED, COL_ADV, COL_SCORE,
   ],
   LAT: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_G, COL_A, COL_XGXA90, COL_GCC, COL_FD, COL_BR,
     COL_SG_PCT, COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
+    COL_CED, COL_ADV, COL_SCORE,
   ],
   MEI: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_GCC, COL_XG, COL_XA, COL_XGXA90, COL_FD, COL_DS,
     COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
+    COL_CED, COL_ADV, COL_SCORE,
   ],
   ATA: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_FD, COL_XG, COL_XA, COL_XGXA90,
     COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
+    COL_CED, COL_ADV, COL_SCORE,
   ],
 };
 
@@ -714,7 +694,7 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
 const COLUNAS_COMPARACAO: ColDef[] = [
   COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
   COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-  COL_CED, COL_ADV, COL_POTENCIAL_RODADA,
+  COL_CED, COL_ADV, COL_SCORE,
 ];
 
 // ---------------------------------------------------------------------------
@@ -728,21 +708,12 @@ export function MercadoJogadores({
   oddsJogadores,
   oddsArmazenamento,
   cobradoresCopa,
-  rodadaCartolaAtual = 2,
   pontuacaoCedida,
 }: Props) {
   const oddsMap = oddsJogadores?.odds ?? null;
-  const mapaSel = useMemo(() => mapaSelecoes(selecoes), [selecoes]);
-  const indiceOddsRodada = useMemo(
-    () => compilarOddsPorRodada(oddsArmazenamento, [...RODADAS_CARTOLA_FILTRO]),
-    [oddsArmazenamento],
-  );
-  const [rodadaFiltro, setRodadaFiltro] = useState<RodadaCartolaFiltro>(() =>
-    rodadaFiltroInicial(rodadaCartolaAtual),
-  );
   const mlCtxRodada = useMemo(
-    () => compilarContextoMlRodada(oddsArmazenamento, rodadaFiltro),
-    [oddsArmazenamento, rodadaFiltro],
+    () => compilarContextoMlProximo(oddsArmazenamento),
+    [oddsArmazenamento],
   );
   const indiceCobradores = useMemo(
     () => compilarIndiceCobradores(cobradoresCopa),
@@ -750,11 +721,13 @@ export function MercadoJogadores({
   );
 
   const resolverOdds = useMemo(() => {
-    return (j: JogadorMercado) =>
-      oddsParaRodada(j.atleta_id, rodadaFiltro, indiceOddsRodada, oddsMap);
-  }, [rodadaFiltro, indiceOddsRodada, oddsMap]);
+    return (j: JogadorMercado): OddsJogadorEntry | null => {
+      const raw = oddsMap?.[String(j.atleta_id)] ?? null;
+      return raw;
+    };
+  }, [oddsMap]);
 
-  const oddsAtiva = oddsAtivaNaRodada;
+  const oddsAtiva = oddsVigentes;
   const escalasRating = useMemo(
     () => construirContextoRating(selecoes, confrontosCopa, partidasProcessadas),
     [selecoes, confrontosCopa, partidasProcessadas],
@@ -817,7 +790,6 @@ export function MercadoJogadores({
     const filtradas = jogadores
       .filter((j) => modoComparacao || j.bucket_posicao === posicao)
       .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
-      .filter((j) => jogadorNaRodada(j, mapaSel, rodadaFiltro))
       .filter((j) => passaFiltroStatus(j.status_id, statusFiltro))
       .filter((j) => !modoComparacao || selecionados.has(j.atleta_id));
 
@@ -825,8 +797,8 @@ export function MercadoJogadores({
     dados.sort((a, b) => {
       const oddsA = resolverOdds(a);
       const oddsB = resolverOdds(b);
-      const advA = adversarioRodada(a, mapaSel, rodadaFiltro)?.sigla ?? null;
-      const advB = adversarioRodada(b, mapaSel, rodadaFiltro)?.sigla ?? null;
+      const advA = a.proximo_adversario_sigla ?? null;
+      const advB = b.proximo_adversario_sigla ?? null;
       const cmp = compararValores(
         valorOrdenacao(a, ordenarPor, oddsA, oddsAtiva, escalasRating, pontuacaoCedida, advA, mlCtxRodada),
         valorOrdenacao(b, ordenarPor, oddsB, oddsAtiva, escalasRating, pontuacaoCedida, advB, mlCtxRodada),
@@ -842,8 +814,6 @@ export function MercadoJogadores({
     posicao,
     selecaoFiltro,
     statusFiltro,
-    rodadaFiltro,
-    mapaSel,
     ordenarPor,
     ordem,
     resolverOdds,
@@ -877,7 +847,7 @@ export function MercadoJogadores({
         return {
           ...col,
           render: (j: JogadorMercado) => {
-            const oddsVal = oddsAtiva(resolverOdds(j)) ? resolverOdds(j) : null;
+            const oddsVal = oddsAtiva(j, resolverOdds(j)) ? resolverOdds(j) : null;
             const valor = calcularRatingJogador(j, escalasRating, mlCtxRodada, j.sigla, oddsVal);
             return (
               <span
@@ -890,36 +860,11 @@ export function MercadoJogadores({
           },
         };
       }
-      if (col.key === "adv") {
+      if (col.key === "score") {
         return {
           ...col,
-          title: `Adversário na Rodada ${rodadaFiltro}`,
-          render: (j: JogadorMercado) => {
-            const adv = adversarioRodada(j, mapaSel, rodadaFiltro);
-            return adv?.escudo ? (
-              <div className="flex flex-col items-center gap-0.5">
-                <img
-                  src={adv.escudo}
-                  alt={adv.sigla}
-                  className="h-6 w-6 object-contain"
-                  title={adv.sigla}
-                />
-                <span className="text-[9px] font-bold text-[var(--color-muted)]">
-                  {adv.sigla}
-                </span>
-              </div>
-            ) : (
-              <Dash />
-            );
-          },
-        };
-      }
-      if (col.key === "potencial_r1") {
-        return {
-          ...col,
-          title: `Potencial para Rodada ${rodadaFiltro}`,
           render: (j: JogadorMercado, _ced: number | null, odds: OddsJogadorEntry | null) => {
-            const oddsVal = oddsAtiva(odds) ? odds : null;
+            const oddsVal = oddsAtiva(j, odds) ? odds : null;
             const valor = calcularPotencialRodada(j, oddsVal, escalasRating, true, mlCtxRodada, j.sigla);
             return (
               <span
@@ -935,8 +880,8 @@ export function MercadoJogadores({
       if (["g_pct", "a_pct", "ga_pct", "sg_pct"].includes(col.key)) {
         return {
           ...col,
-          render: (_j: JogadorMercado, _ced: number | null, odds: OddsJogadorEntry | null) => {
-            const ativo = oddsAtiva(odds);
+          render: (j: JogadorMercado, _ced: number | null, odds: OddsJogadorEntry | null) => {
+            const ativo = oddsAtiva(j, odds);
             if (col.key === "ga_pct") {
               const ga = gaPctEfetivo(odds);
               const calculado = gaPctCalculado(odds);
@@ -967,7 +912,7 @@ export function MercadoJogadores({
       }
       return col;
     });
-  }, [posicao, escalasRating, rodadaFiltro, mapaSel, mlCtxRodada, modoComparacao, linhas]);
+  }, [posicao, escalasRating, mlCtxRodada, resolverOdds, modoComparacao, linhas]);
   const totalCols = 1 + colunas.length; // 1 = coluna JOGADOR
 
   return (
@@ -1012,28 +957,6 @@ export function MercadoJogadores({
               {listaSelecoes.map((s) => (
                 <SelectItem key={s} value={s}>
                   {traduzirSelecao(s)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Rodada Cartola */}
-        <div>
-          <label className="mb-1 block text-xs text-[var(--color-muted)]">
-            Rodada
-          </label>
-          <Select
-            value={String(rodadaFiltro)}
-            onValueChange={(v) => setRodadaFiltro(Number(v) as RodadaCartolaFiltro)}
-          >
-            <SelectTrigger className="w-[120px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {RODADAS_CARTOLA_FILTRO.map((r) => (
-                <SelectItem key={r} value={String(r)}>
-                  Rodada {r}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -1192,8 +1115,11 @@ export function MercadoJogadores({
                   {/* COLUNAS DINÂMICAS */}
                   {colunas.map((col) => {
                     const odds = resolverOdds(j);
-                    const adv = adversarioRodada(j, mapaSel, rodadaFiltro);
-                    const ced = cedidoAdversarioCopa(j, pontuacaoCedida, adv?.sigla);
+                    const ced = cedidoAdversarioCopa(
+                      j,
+                      pontuacaoCedida,
+                      j.proximo_adversario_sigla ?? null,
+                    );
                     const corCelula = classeCelulaHub(
                       col.key,
                       j,
@@ -1202,7 +1128,7 @@ export function MercadoJogadores({
                       odds,
                       resolverOdds,
                       oddsAtiva,
-                      Boolean(adv?.escudo),
+                      Boolean(j.proximo_adversario_escudo),
                       escalasRating,
                       mlCtxRodada,
                     );
