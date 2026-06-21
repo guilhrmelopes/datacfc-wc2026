@@ -5,9 +5,9 @@
     "PARAGUAY",
     "BELGIUM",
     "PORTUGAL",
-    "SPAIN",
     "CZECHIA",
-    "ECUADOR"
+    "ECUADOR",
+    "BOSNIA AND HERZEGOVINA"
   ],
   "A": [
     {
@@ -446,6 +446,21 @@
   "H": [
     {
       "posicao": 1,
+      "selecao": "SPAIN",
+      "sigla": "ESP",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
+      "P": 4,
+      "J": 2,
+      "V": 1,
+      "E": 1,
+      "D": 0,
+      "GM": 3,
+      "GS": 0,
+      "SG": 3,
+      "aprov": 66.7
+    },
+    {
+      "posicao": 2,
       "selecao": "URUGUAY",
       "sigla": "URU",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/URU/60x60.png",
@@ -460,34 +475,19 @@
       "aprov": 33.3
     },
     {
-      "posicao": 2,
+      "posicao": 3,
       "selecao": "SAUDI ARABIA",
       "sigla": "ARS",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARS/60x60.png",
       "P": 1,
-      "J": 1,
+      "J": 2,
       "V": 0,
       "E": 1,
-      "D": 0,
+      "D": 1,
       "GM": 1,
-      "GS": 1,
-      "SG": 0,
-      "aprov": 33.3
-    },
-    {
-      "posicao": 3,
-      "selecao": "SPAIN",
-      "sigla": "ESP",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
-      "P": 1,
-      "J": 1,
-      "V": 0,
-      "E": 1,
-      "D": 0,
-      "GM": 0,
-      "GS": 0,
-      "SG": 0,
-      "aprov": 33.3
+      "GS": 4,
+      "SG": -3,
+      "aprov": 16.7
     },
     {
       "posicao": 4,
