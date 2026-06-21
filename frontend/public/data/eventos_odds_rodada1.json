@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-21T17:03:38.631685+00:00",
+  "atualizado_em": "2026-06-21T18:59:53.273362+00:00",
   "rodada": 3,
   "eventos": [
     {
@@ -421,6 +421,20 @@
       "away": "AUSTRALIA",
       "date": "2026-06-26T02:00:00Z",
       "fixture_id": "4667776"
+    },
+    {
+      "id": 66457002,
+      "home": "URUGUAY",
+      "away": "SPAIN",
+      "date": "2026-06-27T00:00:00Z",
+      "fixture_id": "4667802"
+    },
+    {
+      "id": 66457004,
+      "home": "CAPE VERDE",
+      "away": "SAUDI ARABIA",
+      "date": "2026-06-27T00:00:00Z",
+      "fixture_id": "4667803"
     }
   ]
 }
