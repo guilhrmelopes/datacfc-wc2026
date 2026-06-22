@@ -42,7 +42,7 @@
     "4667800",
     "4667792"
   ],
-  "atualizado_em": "2026-06-22T04:22:02.047986+00:00",
+  "atualizado_em": "2026-06-22T08:38:20.961787+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -6473,9 +6473,9 @@
         "clube_id": 2381
       },
       "101384": {
-        "pontuacao": 8.0,
+        "pontuacao": 9.5,
         "scout": {
-          "DS": 2,
+          "DS": 3,
           "SG": 1
         },
         "posicao_id": 3,
@@ -6688,12 +6688,13 @@
         "clube_id": 2334
       },
       "103059": {
-        "pontuacao": 1.9,
+        "pontuacao": 4.2,
         "scout": {
           "CA": 1,
-          "DS": 1,
+          "DS": 2,
           "FC": 1,
           "FD": 1,
+          "FF": 1,
           "FS": 1
         },
         "posicao_id": 4,
@@ -6770,9 +6771,8 @@
         "clube_id": 2392
       },
       "103629": {
-        "pontuacao": 2.7,
+        "pontuacao": 1.2,
         "scout": {
-          "DS": 1,
           "FC": 1,
           "FS": 3
         },
@@ -8139,10 +8139,10 @@
         "clube_id": 3221
       },
       "123999": {
-        "pontuacao": 5.4,
+        "pontuacao": 6.9,
         "scout": {
           "CA": 1,
-          "DS": 1,
+          "DS": 2,
           "FC": 2,
           "FS": 1,
           "SG": 1
@@ -8379,9 +8379,9 @@
         "clube_id": 2328
       },
       "128152": {
-        "pontuacao": 4.7,
+        "pontuacao": 6.2,
         "scout": {
-          "DS": 1,
+          "DS": 2,
           "FD": 2,
           "FF": 1
         },
@@ -8898,9 +8898,9 @@
         "clube_id": 3201
       },
       "150929": {
-        "pontuacao": 7.0,
+        "pontuacao": 8.5,
         "scout": {
-          "DS": 1,
+          "DS": 2,
           "FS": 1,
           "SG": 1
         },
@@ -9580,8 +9580,9 @@
         "clube_id": 2318
       },
       "94868": {
-        "pontuacao": 4.4,
+        "pontuacao": 5.9,
         "scout": {
+          "DS": 1,
           "FC": 2,
           "SG": 1
         },
@@ -9903,5 +9904,5 @@
   },
   "status_mercado": 2,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-06-22T04:21:03.513275+00:00"
+  "cartola_atualizado_em": "2026-06-22T08:37:22.399438+00:00"
 }
