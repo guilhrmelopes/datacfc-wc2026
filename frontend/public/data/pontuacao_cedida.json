@@ -1322,7 +1322,7 @@
     },
     "ZAG": {
       "cedido": {
-        "valor": 4.93,
+        "valor": 4.17,
         "cor": "bg-yellow-500"
       },
       "conquistado": {
@@ -1332,7 +1332,7 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 4.16,
+        "valor": 4.29,
         "cor": "bg-yellow-500"
       },
       "conquistado": {
@@ -1534,8 +1534,8 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 3.25,
-        "cor": "bg-orange-500"
+        "valor": 2.5,
+        "cor": "bg-red-500"
       }
     },
     "MEI": {
@@ -1544,7 +1544,7 @@
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 4.46,
+        "valor": 4.58,
         "cor": "bg-yellow-500"
       }
     },
