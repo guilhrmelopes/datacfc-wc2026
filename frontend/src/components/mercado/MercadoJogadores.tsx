@@ -12,9 +12,9 @@ import {
   type CobradoresCopaData,
 } from "@/lib/cobradoresCopa";
 import {
-  compilarContextoMlProximo,
-  type ContextoMlRodada,
-} from "@/lib/fatorMoneylineRodada";
+  mlContextoParaMapa,
+  type MlContextoRodadaData,
+} from "@/lib/mlContextoRodada";
 import {
   calcularPotencialRodada,
   tooltipPotencialRodada,
@@ -46,7 +46,7 @@ import {
 import { classeCorPerformance } from "@/lib/cores";
 import { classeCelulaIndice100 } from "@/lib/formatacaoMetricas";
 import { traduzirSelecao } from "@/lib/traducoes";
-import type { OddsArmazenamentoData } from "@/lib/oddsRodada";
+import type { ContextoMlRodada } from "@/lib/fatorMoneylineRodada";
 import { gaPctCalculado, gaPctEfetivo } from "@/lib/oddsGaFallback";
 import type {
   JogadorMercado,
@@ -82,7 +82,7 @@ interface Props {
   confrontosCopa: ConfrontoCopa[];
   partidasProcessadas: string[];
   oddsJogadores?: OddsJogadoresData | null;
-  oddsArmazenamento?: OddsArmazenamentoData | null;
+  mlContextoRodada?: MlContextoRodadaData | null;
   cobradoresCopa?: CobradoresCopaData | null;
   rodadaCartolaAtual?: number;
   pontuacaoCedida: PontuacaoCedida;
@@ -268,6 +268,7 @@ const COL_SCORE: ColDef = {
   key: "score",
   header: HEADER_SCORE,
   title: "SCORE — 65% Rating + 35% odds da rodada (ajustado por status e ML)",
+  sortable: true,
   render: () => null,
 };
 
@@ -706,14 +707,14 @@ export function MercadoJogadores({
   confrontosCopa,
   partidasProcessadas,
   oddsJogadores,
-  oddsArmazenamento,
+  mlContextoRodada,
   cobradoresCopa,
   pontuacaoCedida,
 }: Props) {
   const oddsMap = oddsJogadores?.odds ?? null;
   const mlCtxRodada = useMemo(
-    () => compilarContextoMlProximo(oddsArmazenamento),
-    [oddsArmazenamento],
+    (): ContextoMlRodada | null => mlContextoParaMapa(mlContextoRodada),
+    [mlContextoRodada],
   );
   const indiceCobradores = useMemo(
     () => compilarIndiceCobradores(cobradoresCopa),

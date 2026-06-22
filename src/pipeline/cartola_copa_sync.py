@@ -15,6 +15,7 @@ from scoring.cartola import (
     ScoutsPartida,
     calcular_cedido_conquistado_partida,
     calcular_medias_copa,
+    calcular_pontos,
 )
 from scrapers.cartola_copa import DadosCartolaCopa, POSICAO_PARA_BUCKET, payload_tem_selecoes
 from scrapers.fotmob_mapa import cartola_abrev_para_selecao, url_escudo_cartola
@@ -151,6 +152,55 @@ def _scouts_partida_de_entry(entry: dict) -> ScoutsPartida:
     )
 
 
+def _scouts_acumulados_de_entry(entry: dict) -> ScoutsPartida:
+    """Reconstrói scouts agregados a partir dos campos copa_* do mercado."""
+    return ScoutsPartida(
+        minutos=int(entry.get("copa_mins_played") or 0),
+        G=int(entry.get("copa_goals") or 0),
+        A=int(entry.get("copa_goal_assist") or 0),
+        FD=int(entry.get("copa_fd") or 0),
+        DS=int(entry.get("copa_ds") or 0),
+        DE=int(entry.get("copa_de") or 0),
+        GS=int(entry.get("copa_gs") or 0),
+        SG=int(entry.get("copa_clean_sheet") or 0),
+        INT=int(entry.get("copa_int") or 0),
+        C=int(entry.get("copa_c") or 0),
+        BR=int(entry.get("copa_br") or 0),
+        GE=float(entry.get("copa_ge") or 0),
+        GCC=int(entry.get("copa_gcc") or 0),
+    )
+
+
+def preencher_mg_mb_entry(entry: dict) -> None:
+    """
+    Preenche MG/MB faltantes: Cartola oficial quando disponível;
+    fallback FotMob (scouts × pesos Cartola) quando pontos/scouts existem.
+    """
+    jogos = int(entry.get("copa_jogos_num") or 0)
+    if jogos <= 0:
+        return
+    bucket = entry.get("bucket_posicao")
+    if bucket not in BUCKETS:
+        return
+
+    scouts = _scouts_acumulados_de_entry(entry)
+    total_bruto = entry.get("copa_pontos_total")
+    total = float(total_bruto) if total_bruto is not None else None
+
+    if (total is None or total == 0.0) and scouts.minutos > 0:
+        total = calcular_pontos(scouts, bucket)  # type: ignore[arg-type]
+        entry["copa_pontos_total"] = total
+
+    if total is None:
+        return
+
+    mg, mb = calcular_medias_copa(total, jogos, scouts, bucket)  # type: ignore[arg-type]
+    if entry.get("copa_media_geral") is None and mg is not None:
+        entry["copa_media_geral"] = mg
+    if entry.get("copa_media_base") is None and mb is not None:
+        entry["copa_media_base"] = mb
+
+
 def finalizar_metricas_copa(mercado: list[dict]) -> None:
     """Garante MG/MB/scouts numéricos para quem tem J≥1 (inclui pontuação 0)."""
     for entry in mercado:
@@ -178,6 +228,8 @@ def finalizar_metricas_copa(mercado: list[dict]) -> None:
                     (float(entry.get("copa_de") or 0) / mins) * 90,
                     2,
                 )
+
+        preencher_mg_mb_entry(entry)
 
 
 def _aplicar_scouts_copa(entry: dict, scout: dict[str, Any] | None) -> None:
@@ -856,21 +908,19 @@ def _partidas_cedido_historico(
 
 
 def _aplicar_scouts_fotmob(entry: dict, scouts: Any) -> None:
-    """Mapeia ScoutsPartida (FotMob) para campos copa_* do mercado."""
-    if int(getattr(scouts, "G", 0) or 0):
-        entry["copa_goals"] = int(entry.get("copa_goals") or 0) + int(scouts.G)
-    if int(getattr(scouts, "A", 0) or 0):
-        entry["copa_goal_assist"] = int(entry.get("copa_goal_assist") or 0) + int(scouts.A)
-    if int(getattr(scouts, "FD", 0) or 0):
-        entry["copa_fd"] = int(entry.get("copa_fd") or 0) + int(scouts.FD)
-    if int(getattr(scouts, "DS", 0) or 0):
-        entry["copa_ds"] = int(entry.get("copa_ds") or 0) + int(scouts.DS)
-    if int(getattr(scouts, "DE", 0) or 0):
-        entry["copa_de"] = int(entry.get("copa_de") or 0) + int(scouts.DE)
-    if int(getattr(scouts, "GS", 0) or 0):
-        entry["copa_gs"] = int(entry.get("copa_gs") or 0) + int(scouts.GS)
-    if int(getattr(scouts, "SG", 0) or 0):
-        entry["copa_clean_sheet"] = int(entry.get("copa_clean_sheet") or 0) + int(scouts.SG)
+    """Mapeia ScoutsPartida (FotMob) → copa_* com pesos Cartola (via calcular_pontos)."""
+    entry["copa_goals"] = int(entry.get("copa_goals") or 0) + int(getattr(scouts, "G", 0) or 0)
+    entry["copa_goal_assist"] = int(entry.get("copa_goal_assist") or 0) + int(getattr(scouts, "A", 0) or 0)
+    entry["copa_fd"] = int(entry.get("copa_fd") or 0) + int(getattr(scouts, "FD", 0) or 0)
+    entry["copa_ds"] = int(entry.get("copa_ds") or 0) + int(getattr(scouts, "DS", 0) or 0)
+    entry["copa_de"] = int(entry.get("copa_de") or 0) + int(getattr(scouts, "DE", 0) or 0)
+    entry["copa_gs"] = int(entry.get("copa_gs") or 0) + int(getattr(scouts, "GS", 0) or 0)
+    entry["copa_clean_sheet"] = int(entry.get("copa_clean_sheet") or 0) + int(getattr(scouts, "SG", 0) or 0)
+    entry["copa_int"] = int(entry.get("copa_int") or 0) + int(getattr(scouts, "INT", 0) or 0)
+    entry["copa_c"] = int(entry.get("copa_c") or 0) + int(getattr(scouts, "C", 0) or 0)
+    entry["copa_br"] = int(entry.get("copa_br") or 0) + int(getattr(scouts, "BR", 0) or 0)
+    entry["copa_gcc"] = int(entry.get("copa_gcc") or 0) + int(getattr(scouts, "GCC", 0) or 0)
+    entry["copa_ge"] = round(float(entry.get("copa_ge") or 0) + float(getattr(scouts, "GE", 0) or 0), 2)
 
 
 def _agrupar_fotmob_partida(

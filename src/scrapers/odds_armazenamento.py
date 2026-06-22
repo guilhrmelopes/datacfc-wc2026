@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
 
-logger = logging.getLogger(__name__)
+from scrapers.bookmakers_odds import bookmaker_permitido
 
 _FUSO_CALENDARIO = ZoneInfo("America/Sao_Paulo")
 _JANELA_DIAS_PADRAO = 7
@@ -33,6 +33,130 @@ CAMINHO_GRUPOS = _RAIZ / "frontend" / "public" / "data" / "grupos_wc2026.json"
 CAMINHO_MERCADO = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
 CAMINHO_SAIDA = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
 CAMINHO_ESTADO = _RAIZ / "frontend" / "public" / "data" / "copa_estado.json"
+CAMINHO_ML_CONTEXTO = _RAIZ / "frontend" / "public" / "data" / "ml_contexto_rodada.json"
+
+logger = logging.getLogger(__name__)
+
+_MERCADOS_ODDS = (
+    ("g_pct", "odds_g", "casa_g"),
+    ("a_pct", "odds_a", "casa_a"),
+    ("ga_pct", "odds_ga", "casa_ga"),
+    ("sg_pct", "odds_sg", "casa_sg"),
+)
+
+
+def sanitizar_entrada_odds(entrada: dict) -> dict:
+    """Remove mercados de casas não autorizadas; preserva demais campos."""
+    from scrapers.odds_ga_fallback import enriquecer_odds_entrada
+
+    out = dict(entrada)
+    for pct_key, odds_key, casa_key in _MERCADOS_ODDS:
+        casa = out.get(casa_key)
+        if casa and not bookmaker_permitido(str(casa)):
+            out.pop(pct_key, None)
+            out.pop(odds_key, None)
+            out.pop(casa_key, None)
+    if out.get("casa_ml") and not bookmaker_permitido(str(out["casa_ml"])):
+        for chave in ("ml_home", "ml_draw", "ml_away", "casa_ml", "p_vit_home", "p_vit_away", "p_empate"):
+            out.pop(chave, None)
+    return enriquecer_odds_entrada(out)
+
+
+def entrada_odds_tem_casa_nao_autorizada(entrada: dict) -> bool:
+    for _, _, casa_key in _MERCADOS_ODDS:
+        casa = entrada.get(casa_key)
+        if casa and not bookmaker_permitido(str(casa)):
+            return True
+    casa_ml = entrada.get("casa_ml")
+    return bool(casa_ml and not bookmaker_permitido(str(casa_ml)))
+
+
+def expurgar_eventos_nao_conformes(armazenamento: dict[str, Any]) -> int:
+    """Remove eventos cujas odds usam casas fora do grupo permitido."""
+    eventos: dict[str, dict] = armazenamento.setdefault("eventos", {})
+    removidos = 0
+    for eid in list(eventos.keys()):
+        ev = eventos[eid]
+        odds_map = ev.get("odds") or {}
+        contaminado = any(
+            isinstance(v, dict) and entrada_odds_tem_casa_nao_autorizada(v)
+            for v in odds_map.values()
+        )
+        if ev.get("casa_ml") and not bookmaker_permitido(str(ev["casa_ml"])):
+            contaminado = True
+        if contaminado:
+            del eventos[eid]
+            removidos += 1
+    if removidos:
+        logger.info("Expurgados %d eventos com casas não autorizadas.", removidos)
+    return removidos
+
+
+def limpar_armazenamento_odds() -> None:
+    """Zera cache de eventos — força re-scrape completo."""
+    payload: dict[str, Any] = {
+        "eventos": {},
+        "referencia_data": referencia_hoje().isoformat(),
+        "janela_dias": janela_dias(),
+        "atualizado_em": datetime.now(tz=_FUSO_CALENDARIO).isoformat(),
+    }
+    salvar_armazenamento(payload)
+    salvar_ml_contexto(payload)
+    logger.info("Armazenamento de odds zerado — re-scrape necessário.")
+
+
+def exportar_ml_contexto(armazenamento: dict[str, Any]) -> dict[str, Any]:
+    """Contexto ML compacto para o frontend (substitui odds_eventos_armazenados.json)."""
+    ref = referencia_hoje().isoformat()
+    eventos_list = [
+        ev for ev in armazenamento.get("eventos", {}).values()
+        if isinstance(ev, dict)
+    ]
+    p_vit: dict[str, float] = {}
+    probs: list[float] = []
+
+    for ev in eventos_list:
+        d = (ev.get("data") or "")[:10]
+        if not d or d < ref:
+            continue
+        p_home = ev.get("p_vit_home")
+        p_away = ev.get("p_vit_away")
+        sig_m = (ev.get("sigla_mandante") or "").upper()
+        sig_v = (ev.get("sigla_visitante") or "").upper()
+        if p_home is None or p_away is None or not sig_m or not sig_v:
+            continue
+        p_vit[sig_m] = float(p_home)
+        p_vit[sig_v] = float(p_away)
+        probs.extend([float(p_home), float(p_away)])
+
+    p_mediana = 0.0
+    if probs:
+        ordenado = sorted(probs)
+        meio = len(ordenado) // 2
+        p_mediana = (
+            ordenado[meio]
+            if len(ordenado) % 2
+            else (ordenado[meio - 1] + ordenado[meio]) / 2
+        )
+
+    return {
+        "referencia_data": ref,
+        "atualizado_em": datetime.now(tz=_FUSO_CALENDARIO).isoformat(),
+        "p_vit_por_sigla": p_vit,
+        "p_mediana": round(p_mediana, 4),
+    }
+
+
+def salvar_ml_contexto(armazenamento: dict[str, Any]) -> None:
+    payload = exportar_ml_contexto(armazenamento)
+    CAMINHO_ML_CONTEXTO.parent.mkdir(parents=True, exist_ok=True)
+    with CAMINHO_ML_CONTEXTO.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, ensure_ascii=False, separators=(",", ":"))
+    logger.info(
+        "ML contexto: %d seleções -> %s",
+        len(payload.get("p_vit_por_sigla", {})),
+        CAMINHO_ML_CONTEXTO,
+    )
 
 
 def referencia_hoje() -> date:
@@ -304,12 +428,22 @@ def expurgar_passados(armazenamento: dict[str, Any], hoje: date | None = None) -
 def confronto_atual_por_sigla(
     eventos: list[dict],
     hoje: date | None = None,
+    jogadores: list[dict] | None = None,
 ) -> dict[str, dict]:
     """
-    Para cada sigla, partida mais próxima com data >= hoje.
-    Usa apenas o campo `data` do calendário (ignora UTC/fuso do hub).
+    Para cada sigla, usa o confronto do próximo adversário no mercado Cartola.
+    Sem proximo no mercado, usa a partida futura mais próxima no calendário.
     """
     ref = hoje or referencia_hoje()
+    proximo_por_sigla: dict[str, tuple[str, str]] = {}
+    if jogadores:
+        for j in jogadores:
+            sig = (j.get("sigla") or "").upper()
+            adv = (j.get("proximo_adversario_sigla") or "").strip().upper()
+            data = (j.get("proximo_adversario_data") or "").strip()
+            if sig and adv and data:
+                proximo_por_sigla.setdefault(sig, (adv, data))
+
     por_sigla: dict[str, list[dict]] = defaultdict(list)
     for ev in eventos:
         d = parse_data_calendario(ev.get("data"))
@@ -319,10 +453,29 @@ def confronto_atual_por_sigla(
             s = (sig or "").upper()
             if s:
                 por_sigla[s].append(ev)
+
+    def _adv_do_evento(ev: dict, sig: str) -> str:
+        sig_m = (ev.get("sigla_mandante") or "").upper()
+        sig_v = (ev.get("sigla_visitante") or "").upper()
+        return sig_v if sig == sig_m else sig_m
+
     atual: dict[str, dict] = {}
     for sig, evs in por_sigla.items():
         evs.sort(key=lambda e: (e.get("data", ""), int(e.get("event_id") or 0)))
-        atual[sig] = evs[0]
+        escolhido: dict | None = None
+        prox = proximo_por_sigla.get(sig)
+        if prox:
+            adv_alvo, data_alvo = prox
+            for ev in evs:
+                if ev.get("data") != data_alvo:
+                    continue
+                if _adv_do_evento(ev, sig) == adv_alvo:
+                    escolhido = ev
+                    break
+        if escolhido is None and evs:
+            escolhido = evs[0]
+        if escolhido is not None:
+            atual[sig] = escolhido
     return atual
 
 
@@ -361,7 +514,10 @@ def _imputar_odds_de_pares(peers: list[dict], posicao_id: int) -> dict:
         ):
             pcts = [float(p[pct_key]) for p in peers if p.get(pct_key) is not None]
             odds_vals = [float(p[odds_key]) for p in peers if p.get(odds_key) is not None]
-            casas = [str(p[casa_key]) for p in peers if p.get(casa_key)]
+            casas = [
+                str(p[casa_key]) for p in peers
+                if p.get(casa_key) and bookmaker_permitido(str(p[casa_key]))
+            ]
             if pcts:
                 entrada[pct_key] = _mediana(pcts)
             if odds_vals:
@@ -371,7 +527,10 @@ def _imputar_odds_de_pares(peers: list[dict], posicao_id: int) -> dict:
     elif posicao_id in _POS_SG:
         pcts = [float(p["sg_pct"]) for p in peers if p.get("sg_pct") is not None]
         odds_vals = [float(p["odds_sg"]) for p in peers if p.get("odds_sg") is not None]
-        casas = [str(p["casa_sg"]) for p in peers if p.get("casa_sg")]
+        casas = [
+            str(p["casa_sg"]) for p in peers
+            if p.get("casa_sg") and bookmaker_permitido(str(p["casa_sg"]))
+        ]
         if pcts:
             entrada["sg_pct"] = _mediana(pcts)
         if odds_vals:
@@ -422,7 +581,10 @@ def _imputar_campos_faltantes(entrada: dict, peers: list[dict], pos: int) -> boo
                 continue
             pcts = [float(p[pct_key]) for p in peers if p.get(pct_key) is not None]
             odds_vals = [float(p[odds_key]) for p in peers if p.get(odds_key) is not None]
-            casas = [str(p[casa_key]) for p in peers if p.get(casa_key)]
+            casas = [
+                str(p[casa_key]) for p in peers
+                if p.get(casa_key) and bookmaker_permitido(str(p[casa_key]))
+            ]
             if pcts:
                 entrada[pct_key] = _mediana(pcts)
                 alterou = True
@@ -435,7 +597,10 @@ def _imputar_campos_faltantes(entrada: dict, peers: list[dict], pos: int) -> boo
     elif pos in _POS_SG and entrada.get("sg_pct") is None:
         pcts = [float(p["sg_pct"]) for p in peers if p.get("sg_pct") is not None]
         odds_vals = [float(p["odds_sg"]) for p in peers if p.get("odds_sg") is not None]
-        casas = [str(p["casa_sg"]) for p in peers if p.get("casa_sg")]
+        casas = [
+            str(p["casa_sg"]) for p in peers
+            if p.get("casa_sg") and bookmaker_permitido(str(p["casa_sg"]))
+        ]
         if pcts:
             entrada["sg_pct"] = _mediana(pcts)
             entrada["imputado"] = True
@@ -539,7 +704,7 @@ def compilar_dashboard(
         ev for ev in armazenamento.get("eventos", {}).values()
         if isinstance(ev, dict)
     ]
-    atuais = confronto_atual_por_sigla(eventos_list, ref)
+    atuais = confronto_atual_por_sigla(eventos_list, ref, jogadores=jogadores)
     sigla_por_atleta = mapa_sigla_por_atleta(jogadores)
 
     resultado: dict[str, dict] = {}
@@ -552,7 +717,7 @@ def compilar_dashboard(
         entrada_bruta = (ev.get("odds") or {}).get(aid)
         if not isinstance(entrada_bruta, dict):
             continue
-        resultado[aid] = _montar_entrada_dashboard(entrada_bruta, ev, sigla)
+        resultado[aid] = _montar_entrada_dashboard(sanitizar_entrada_odds(entrada_bruta), ev, sigla)
 
     # Backfill: jogadores com ADV ainda sem odds no confronto atual
     prox_por_sigla = {
@@ -595,7 +760,7 @@ def compilar_dashboard(
                 continue
             if not _entrada_odds_util(entrada_bruta, pos):
                 continue
-            resultado[aid] = _montar_entrada_dashboard(entrada_bruta, ev, sigla)
+            resultado[aid] = _montar_entrada_dashboard(sanitizar_entrada_odds(entrada_bruta), ev, sigla)
             break
 
     imputar_odds_faltantes(resultado, jogadores, eventos_list, atuais)
@@ -642,7 +807,11 @@ def montar_registro_evento(
         "home": evento.get("home", ""),
         "away": evento.get("away", ""),
         "fixture_id": confronto.get("match_id") or evento.get("fixture_id"),
-        "odds": odds,
+        "odds": {
+            str(aid): sanitizar_entrada_odds(dict(v))
+            for aid, v in odds.items()
+            if isinstance(v, dict)
+        },
     }
     if ml:
         for chave in _CAMPOS_ML:
@@ -661,10 +830,12 @@ def compilar_e_salvar(
     ref = hoje or referencia_hoje()
     armaz = carregar_armazenamento()
     expurgar_passados(armaz, ref)
+    expurgar_eventos_nao_conformes(armaz)
     armaz["referencia_data"] = ref.isoformat()
     armaz["janela_dias"] = janela_dias()
     armaz["atualizado_em"] = datetime.now(tz=_FUSO_CALENDARIO).isoformat()
     salvar_armazenamento(armaz)
+    salvar_ml_contexto(armaz)
 
     odds = compilar_dashboard(armaz, hoje=ref)
     from scrapers.odds_ga_fallback import enriquecer_mapa_odds

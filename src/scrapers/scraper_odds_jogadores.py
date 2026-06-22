@@ -136,26 +136,12 @@ NOMES_MERCADOS_CONHECIDOS: frozenset[str] = frozenset({
     "Asian Handicap", "Draw No Bet",
 })
 
-# Casas permitidas — somente estas entram no pipeline de odds.
-BOOKMAKERS_PERMITIDOS: list[str] = [
-    "pinnacle",
-    "betfair",
-    "betfair exchange",
-    "1xbet",
-    "betano",
-    "kalshi",
-    "bet365",
-]
-# Prioridade dentro do grupo permitido (menor índice = maior prioridade).
-BOOKMAKERS_ORDEM: list[str] = [
-    "pinnacle",
-    "betfair exchange",
-    "betfair",
-    "1xbet",
-    "bet365",
-    "betano",
-    "kalshi",
-]
+from scrapers.bookmakers_odds import (
+    BOOKMAKERS_ORDEM,
+    BOOKMAKERS_PERMITIDOS,
+    bookmaker_permitido as _bookmaker_permitido,
+    casa_prioridade as _casa_prioridade,
+)
 
 # Legado — aliases para logs e testes
 BOOKMAKERS_PRIMARIOS: list[str] = ["pinnacle", "betfair exchange", "betfair"]
@@ -908,23 +894,6 @@ _PAT_MARKET_BLOCK = re.compile(
 )
 
 
-def _bookmaker_permitido(nome: str) -> bool:
-    """True se a casa faz parte do grupo autorizado."""
-    n = _norm(nome)
-    return any(marca in n for marca in BOOKMAKERS_PERMITIDOS)
-
-
-def _casa_prioridade(nome: str) -> int:
-    """Prioridade entre casas permitidas; 999 = ignorar."""
-    if not _bookmaker_permitido(nome):
-        return 999
-    n = _norm(nome)
-    for i, marca in enumerate(BOOKMAKERS_ORDEM):
-        if marca in n:
-            return i
-    return len(BOOKMAKERS_ORDEM)
-
-
 def _bookmaker_tier(nome: str) -> int:
     return _casa_prioridade(nome) + 1
 
@@ -1585,45 +1554,54 @@ def _aplicar_mercado_evento(
     modo_armazenamento: bool = False,
     rodada_evento: int | None = None,
 ) -> int:
-    """Atribui odds do mercado (g/a/ga) ao elenco com matching um-a-um."""
+    """Atribui odds do mercado (g/a/ga) — matching separado por seleção (pool)."""
     if not odds_map:
         return 0
 
-    candidatos: list[dict] = []
-    for pool in pools:
-        candidatos.extend(pool)
-
-    atrib = atribuir_nomes_a_jogadores(
-        list(odds_map.keys()),
-        candidatos,
-        min_score=MIN_SCORE_ATRIBUICAO,
-    )
     adicionados = 0
     matched: set[str] = set()
+    pct_key, _, _ = _chaves_mercado(sufixo)
 
-    for nome_bk, (jog, score) in atrib.items():
-        adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
-        if not modo_armazenamento and not _deve_atualizar_odds(jog, adv):
+    for pool in pools:
+        if not pool:
             continue
-        relatorio.match(nome_bk, jog, score, desc)
-        odd_val, odd_bk = odds_map[nome_bk]
-        if _aplicar_pct_jogador(
-            resultado, eid, jog, adv, sufixo, odd_val, odd_bk,
-            modo_armazenamento=modo_armazenamento,
-            rodada_evento=rodada_evento,
-        ):
-            adicionados += 1
-            registrar_alias_aprendido(nome_bk, jog, score)
-        matched.add(nome_bk)
+        nomes_pendentes = [n for n in odds_map if n not in matched]
+        if not nomes_pendentes:
+            break
 
-    nomes_lacuna = [n for n in odds_map if n not in matched]
-    if nomes_lacuna:
-        pct_key, _, _ = _chaves_mercado(sufixo)
+        atrib = atribuir_nomes_a_jogadores(
+            nomes_pendentes,
+            pool,
+            min_score=MIN_SCORE_ATRIBUICAO,
+        )
+        for nome_bk, (jog, score) in atrib.items():
+            adv = _adversario_sigla_jogador(jog, sel_home, sel_away, selecao_sigla)
+            if not modo_armazenamento and not _deve_atualizar_odds(jog, adv):
+                continue
+            relatorio.match(nome_bk, jog, score, desc)
+            odd_val, odd_bk = odds_map[nome_bk]
+            if _aplicar_pct_jogador(
+                resultado, eid, jog, adv, sufixo, odd_val, odd_bk,
+                modo_armazenamento=modo_armazenamento,
+                rodada_evento=rodada_evento,
+            ):
+                adicionados += 1
+                registrar_alias_aprendido(nome_bk, jog, score)
+            matched.add(nome_bk)
+
+    for pool in pools:
+        if not pool:
+            continue
+        nomes_lacuna = [n for n in odds_map if n not in matched]
+        if not nomes_lacuna:
+            break
         sem_campo = [
-            j for j in candidatos
+            j for j in pool
             if modo_armazenamento
             or not (resultado.get(str(j["atleta_id"])) or {}).get(pct_key)
         ]
+        if not sem_campo:
+            continue
         lacunas = atribuir_nomes_a_jogadores(
             nomes_lacuna,
             sem_campo,
@@ -1647,6 +1625,7 @@ def _aplicar_mercado_evento(
     for nome_bk in odds_map:
         if nome_bk in matched:
             continue
+        candidatos = [j for pool in pools for j in pool]
         _, score, top3 = casar_jogador_na_equipe(nome_bk, candidatos)
         relatorio.no_match(nome_bk, score, top3, desc)
 
@@ -2137,6 +2116,8 @@ def executar() -> None:
 
     armazenamento = carregar_armazenamento()
     expurgar_passados(armazenamento, hoje)
+    from scrapers.odds_armazenamento import expurgar_eventos_nao_conformes
+    expurgar_eventos_nao_conformes(armazenamento)
     eventos_store: dict[str, dict] = armazenamento.setdefault("eventos", {})
 
     confrontos_scrape = confrontos_janela
@@ -2348,6 +2329,9 @@ def executar() -> None:
     armazenamento["atualizado_em"] = datetime.now(tz=timezone.utc).isoformat()
     salvar_armazenamento(armazenamento)
 
+    from scrapers.odds_armazenamento import salvar_ml_contexto
+    salvar_ml_contexto(armazenamento)
+
     resultado = compilar_dashboard(armazenamento, jogadores_todos, hoje)
     base_total = len(resultado)
 
@@ -2538,6 +2522,10 @@ def _salvar(odds: dict[str, dict], *, referencia_data: str | None = None) -> Non
     from scrapers.odds_ga_fallback import enriquecer_mapa_odds
 
     enriquecer_mapa_odds(odds)
+    from scrapers.odds_armazenamento import carregar_armazenamento, salvar_ml_contexto
+
+    armaz = carregar_armazenamento()
+    salvar_ml_contexto(armaz)
     payload = {
         "atualizado_em": datetime.now(tz=timezone.utc).isoformat(),
         "referencia_data": ref,

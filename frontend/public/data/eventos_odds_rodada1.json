@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-21T23:09:38.227456+00:00",
+  "atualizado_em": "2026-06-21T22:28:51.873816+00:00",
   "rodada": 3,
   "eventos": [
     {
@@ -423,6 +423,20 @@
       "fixture_id": "4667776"
     },
     {
+      "id": 66457014,
+      "home": "NORWAY",
+      "away": "FRANCE",
+      "date": "2026-06-26T19:00:00Z",
+      "fixture_id": "4667808"
+    },
+    {
+      "id": 66457016,
+      "home": "SENEGAL",
+      "away": "IRAQ",
+      "date": "2026-06-26T19:00:00Z",
+      "fixture_id": "4667809"
+    },
+    {
       "id": 66457002,
       "home": "URUGUAY",
       "away": "SPAIN",
@@ -449,6 +463,48 @@
       "away": "IRAN",
       "date": "2026-06-27T03:00:00Z",
       "fixture_id": "4667795"
+    },
+    {
+      "id": 66457050,
+      "home": "PANAMA",
+      "away": "ENGLAND",
+      "date": "2026-06-27T21:00:00Z",
+      "fixture_id": "4667829"
+    },
+    {
+      "id": 66457052,
+      "home": "CROATIA",
+      "away": "GHANA",
+      "date": "2026-06-27T21:00:00Z",
+      "fixture_id": "4667830"
+    },
+    {
+      "id": 66457038,
+      "home": "COLOMBIA",
+      "away": "PORTUGAL",
+      "date": "2026-06-27T23:30:00Z",
+      "fixture_id": "4667823"
+    },
+    {
+      "id": 66457040,
+      "home": "DR CONGO",
+      "away": "UZBEKISTAN",
+      "date": "2026-06-27T23:30:00Z",
+      "fixture_id": "4667824"
+    },
+    {
+      "id": 66457026,
+      "home": "JORDAN",
+      "away": "ARGENTINA",
+      "date": "2026-06-28T02:00:00Z",
+      "fixture_id": "4667816"
+    },
+    {
+      "id": 66457028,
+      "home": "ALGERIA",
+      "away": "AUSTRIA",
+      "date": "2026-06-28T02:00:00Z",
+      "fixture_id": "4667817"
     }
   ]
 }
