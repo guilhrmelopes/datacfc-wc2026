@@ -6,7 +6,7 @@
     "clube_id": 2338,
     "grupo": "J",
     "competicao": "Copa 2026",
-    "rating_elo_100": 46.2,
+    "rating_elo_100": 45.5,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": null,
@@ -69,7 +69,7 @@
     ],
     "elo_rating": 1759.0,
     "elo_rank": 29,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779342+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371477+00:00"
   },
   {
     "selecao": "ARGENTINA",
@@ -78,25 +78,25 @@
     "clube_id": 2357,
     "grupo": "J",
     "competicao": "Copa 2026",
-    "rating_elo_100": 99.1,
+    "rating_elo_100": 100.0,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 3.0,
+      "goals_team_match": 2.5,
       "goals_conceded_team_match": 0.0,
-      "possession_percentage_team": 47.8,
-      "clean_sheet_team": 1.0,
-      "expected_goals_team": 1.3,
-      "expected_goals_conceded_team": 0.3,
-      "ontarget_scoring_att_team": 6.0,
-      "big_chance_team": 1.0,
-      "touches_in_opp_box_team": 12.0,
-      "total_tackle_team": 27.0,
-      "poss_won_att_3rd_team": 4.0,
-      "saves_team": null,
+      "possession_percentage_team": 50.7,
+      "clean_sheet_team": 2.0,
+      "expected_goals_team": 3.9,
+      "expected_goals_conceded_team": 0.8,
+      "ontarget_scoring_att_team": 5.5,
+      "big_chance_team": 4.0,
+      "touches_in_opp_box_team": 31.0,
+      "total_tackle_team": 24.0,
+      "poss_won_att_3rd_team": 2.0,
+      "saves_team": 0.5,
       "fk_foul_lost_team": 13.0,
-      "total_yel_card_team": null,
+      "total_yel_card_team": 2.0,
       "total_red_card_team": null,
-      "J": 1.0
+      "J": 2.0
     },
     "confrontos_agendados": [
       {
@@ -139,9 +139,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 2128.0,
-    "elo_rank": 2,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779359+00:00"
+    "elo_rating": 2144.0,
+    "elo_rank": 1,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371499+00:00"
   },
   {
     "selecao": "AUSTRALIA",
@@ -150,7 +150,7 @@
     "clube_id": 2333,
     "grupo": "D",
     "competicao": "Copa 2026",
-    "rating_elo_100": 51.9,
+    "rating_elo_100": 51.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUS/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -213,7 +213,7 @@
     ],
     "elo_rating": 1799.0,
     "elo_rank": 24,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779364+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371504+00:00"
   },
   {
     "selecao": "AUSTRIA",
@@ -222,25 +222,25 @@
     "clube_id": 2391,
     "grupo": "J",
     "competicao": "Copa 2026",
-    "rating_elo_100": 60.3,
+    "rating_elo_100": 57.1,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUT/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 3.0,
-      "goals_conceded_team_match": 1.0,
-      "possession_percentage_team": 63.2,
+      "goals_team_match": 1.5,
+      "goals_conceded_team_match": 1.5,
+      "possession_percentage_team": 54.8,
       "clean_sheet_team": null,
-      "expected_goals_team": 1.7,
-      "expected_goals_conceded_team": 0.5,
-      "ontarget_scoring_att_team": 4.0,
-      "big_chance_team": 4.0,
-      "touches_in_opp_box_team": 28.0,
-      "total_tackle_team": 17.0,
-      "poss_won_att_3rd_team": 2.0,
-      "saves_team": 3.0,
-      "fk_foul_lost_team": 12.0,
-      "total_yel_card_team": 1.0,
+      "expected_goals_team": 2.2,
+      "expected_goals_conceded_team": 3.1,
+      "ontarget_scoring_att_team": 2.5,
+      "big_chance_team": 5.0,
+      "touches_in_opp_box_team": 46.0,
+      "total_tackle_team": 14.5,
+      "poss_won_att_3rd_team": 3.5,
+      "saves_team": 2.5,
+      "fk_foul_lost_team": 12.5,
+      "total_yel_card_team": 3.0,
       "total_red_card_team": null,
-      "J": 1.0
+      "J": 2.0
     },
     "confrontos_agendados": [
       {
@@ -283,9 +283,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1857.0,
-    "elo_rank": 18,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779367+00:00"
+    "elo_rating": 1841.0,
+    "elo_rank": 19,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371507+00:00"
   },
   {
     "selecao": "BELGIUM",
@@ -294,7 +294,7 @@
     "clube_id": 2392,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 62.0,
+    "rating_elo_100": 61.1,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BEL/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.5,
@@ -357,7 +357,7 @@
     ],
     "elo_rating": 1869.0,
     "elo_rank": 15,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779369+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371510+00:00"
   },
   {
     "selecao": "BOSNIA AND HERZEGOVINA",
@@ -366,7 +366,7 @@
     "clube_id": 2865,
     "grupo": "B",
     "competicao": "Copa 2026",
-    "rating_elo_100": 22.8,
+    "rating_elo_100": 22.5,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BOS/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -429,7 +429,7 @@
     ],
     "elo_rating": 1596.0,
     "elo_rank": 39,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779372+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371513+00:00"
   },
   {
     "selecao": "BRAZIL",
@@ -438,7 +438,7 @@
     "clube_id": 2318,
     "grupo": "C",
     "competicao": "Copa 2026",
-    "rating_elo_100": 78.8,
+    "rating_elo_100": 77.7,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BRA/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.0,
@@ -501,7 +501,7 @@
     ],
     "elo_rating": 1986.0,
     "elo_rank": 6,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779375+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371516+00:00"
   },
   {
     "selecao": "CANADA",
@@ -510,7 +510,7 @@
     "clube_id": 2361,
     "grupo": "B",
     "competicao": "Copa 2026",
-    "rating_elo_100": 48.8,
+    "rating_elo_100": 48.1,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 3.5,
@@ -573,7 +573,7 @@
     ],
     "elo_rating": 1777.0,
     "elo_rank": 25,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779377+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371519+00:00"
   },
   {
     "selecao": "CAPE VERDE",
@@ -582,7 +582,7 @@
     "clube_id": 3201,
     "grupo": "H",
     "competicao": "Copa 2026",
-    "rating_elo_100": 27.0,
+    "rating_elo_100": 26.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAB/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -645,7 +645,7 @@
     ],
     "elo_rating": 1625.0,
     "elo_rank": 38,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779380+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371522+00:00"
   },
   {
     "selecao": "COLOMBIA",
@@ -654,7 +654,7 @@
     "clube_id": 2373,
     "grupo": "K",
     "competicao": "Copa 2026",
-    "rating_elo_100": 80.5,
+    "rating_elo_100": 79.3,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COL/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 3.0,
@@ -717,7 +717,7 @@
     ],
     "elo_rating": 1998.0,
     "elo_rank": 5,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779382+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371525+00:00"
   },
   {
     "selecao": "CROATIA",
@@ -726,7 +726,7 @@
     "clube_id": 2379,
     "grupo": "L",
     "competicao": "Copa 2026",
-    "rating_elo_100": 63.7,
+    "rating_elo_100": 62.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CRO/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.0,
@@ -789,7 +789,7 @@
     ],
     "elo_rating": 1881.0,
     "elo_rank": 14,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779385+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371528+00:00"
   },
   {
     "selecao": "CURACAO",
@@ -861,7 +861,7 @@
     ],
     "elo_rating": 1453.0,
     "elo_rank": 47,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779388+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371531+00:00"
   },
   {
     "selecao": "CZECHIA",
@@ -870,7 +870,7 @@
     "clube_id": 2352,
     "grupo": "A",
     "competicao": "Copa 2026",
-    "rating_elo_100": 37.2,
+    "rating_elo_100": 36.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TCH/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -933,7 +933,7 @@
     ],
     "elo_rating": 1696.0,
     "elo_rank": 34,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779390+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371534+00:00"
   },
   {
     "selecao": "DR CONGO",
@@ -942,7 +942,7 @@
     "clube_id": 3184,
     "grupo": "K",
     "competicao": "Copa 2026",
-    "rating_elo_100": 34.0,
+    "rating_elo_100": 33.5,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/RDC/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -1005,7 +1005,7 @@
     ],
     "elo_rating": 1674.0,
     "elo_rank": 36,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779392+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371537+00:00"
   },
   {
     "selecao": "ECUADOR",
@@ -1014,7 +1014,7 @@
     "clube_id": 2372,
     "grupo": "E",
     "competicao": "Copa 2026",
-    "rating_elo_100": 61.3,
+    "rating_elo_100": 60.4,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": null,
@@ -1077,7 +1077,7 @@
     ],
     "elo_rating": 1864.0,
     "elo_rank": 17,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779395+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371540+00:00"
   },
   {
     "selecao": "EGYPT",
@@ -1086,7 +1086,7 @@
     "clube_id": 2324,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 39.3,
+    "rating_elo_100": 42.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.0,
@@ -1147,9 +1147,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1711.0,
-    "elo_rank": 32,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779398+00:00"
+    "elo_rating": 1740.0,
+    "elo_rank": 30,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371543+00:00"
   },
   {
     "selecao": "ENGLAND",
@@ -1158,7 +1158,7 @@
     "clube_id": 2370,
     "grupo": "L",
     "competicao": "Copa 2026",
-    "rating_elo_100": 88.7,
+    "rating_elo_100": 87.4,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ING/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 4.0,
@@ -1221,7 +1221,7 @@
     ],
     "elo_rating": 2055.0,
     "elo_rank": 4,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779400+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371546+00:00"
   },
   {
     "selecao": "FRANCE",
@@ -1230,25 +1230,25 @@
     "clube_id": 2385,
     "grupo": "I",
     "competicao": "Copa 2026",
-    "rating_elo_100": 92.8,
+    "rating_elo_100": 91.5,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/FRA/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 3.0,
-      "goals_conceded_team_match": 1.0,
-      "possession_percentage_team": 53.4,
+      "goals_team_match": 2.0,
+      "goals_conceded_team_match": 0.5,
+      "possession_percentage_team": 57.9,
       "clean_sheet_team": null,
-      "expected_goals_team": 1.8,
-      "expected_goals_conceded_team": 0.5,
-      "ontarget_scoring_att_team": 8.0,
+      "expected_goals_team": 2.0,
+      "expected_goals_conceded_team": 0.7,
+      "ontarget_scoring_att_team": 4.5,
       "big_chance_team": 4.0,
-      "touches_in_opp_box_team": 19.0,
-      "total_tackle_team": 19.0,
+      "touches_in_opp_box_team": 36.0,
+      "total_tackle_team": 11.0,
       "poss_won_att_3rd_team": 4.0,
-      "saves_team": 2.0,
-      "fk_foul_lost_team": 5.0,
+      "saves_team": 1.0,
+      "fk_foul_lost_team": 3.5,
       "total_yel_card_team": null,
       "total_red_card_team": null,
-      "J": 1.0
+      "J": 2.0
     },
     "confrontos_agendados": [
       {
@@ -1293,7 +1293,7 @@
     ],
     "elo_rating": 2084.0,
     "elo_rank": 3,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779402+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371549+00:00"
   },
   {
     "selecao": "GERMANY",
@@ -1302,7 +1302,7 @@
     "clube_id": 2384,
     "grupo": "E",
     "competicao": "Copa 2026",
-    "rating_elo_100": 74.2,
+    "rating_elo_100": 73.1,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ALE/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 4.5,
@@ -1365,7 +1365,7 @@
     ],
     "elo_rating": 1954.0,
     "elo_rank": 9,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779405+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371553+00:00"
   },
   {
     "selecao": "GHANA",
@@ -1374,7 +1374,7 @@
     "clube_id": 2375,
     "grupo": "L",
     "competicao": "Copa 2026",
-    "rating_elo_100": 17.2,
+    "rating_elo_100": 17.0,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/GAN/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -1436,8 +1436,8 @@
       }
     ],
     "elo_rating": 1557.0,
-    "elo_rank": 44,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779407+00:00"
+    "elo_rank": 43,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371556+00:00"
   },
   {
     "selecao": "HAITI",
@@ -1446,7 +1446,7 @@
     "clube_id": 2334,
     "grupo": "C",
     "competicao": "Copa 2026",
-    "rating_elo_100": 13.1,
+    "rating_elo_100": 12.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HAI/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": null,
@@ -1509,7 +1509,7 @@
     ],
     "elo_rating": 1528.0,
     "elo_rank": 45,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779410+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371559+00:00"
   },
   {
     "selecao": "IRAN",
@@ -1518,7 +1518,7 @@
     "clube_id": 2336,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 47.2,
+    "rating_elo_100": 46.5,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -1581,7 +1581,7 @@
     ],
     "elo_rating": 1766.0,
     "elo_rank": 28,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779413+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371562+00:00"
   },
   {
     "selecao": "IRAQ",
@@ -1590,25 +1590,25 @@
     "clube_id": 2342,
     "grupo": "I",
     "competicao": "Copa 2026",
-    "rating_elo_100": 22.2,
+    "rating_elo_100": 21.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRQ/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 1.0,
-      "goals_conceded_team_match": 4.0,
-      "possession_percentage_team": 38.7,
+      "goals_team_match": 0.5,
+      "goals_conceded_team_match": 2.5,
+      "possession_percentage_team": 38.1,
       "clean_sheet_team": null,
-      "expected_goals_team": 0.8,
-      "expected_goals_conceded_team": 2.5,
-      "ontarget_scoring_att_team": 1.0,
+      "expected_goals_team": 1.0,
+      "expected_goals_conceded_team": 2.7,
+      "ontarget_scoring_att_team": 0.5,
       "big_chance_team": 1.0,
-      "touches_in_opp_box_team": 18.0,
-      "total_tackle_team": 19.0,
-      "poss_won_att_3rd_team": 1.0,
-      "saves_team": 2.0,
-      "fk_foul_lost_team": 12.0,
-      "total_yel_card_team": 1.0,
+      "touches_in_opp_box_team": 22.0,
+      "total_tackle_team": 13.5,
+      "poss_won_att_3rd_team": 0.5,
+      "saves_team": 1.0,
+      "fk_foul_lost_team": 6.5,
+      "total_yel_card_team": 2.0,
       "total_red_card_team": null,
-      "J": 1.0
+      "J": 2.0
     },
     "confrontos_agendados": [
       {
@@ -1653,7 +1653,7 @@
     ],
     "elo_rating": 1592.0,
     "elo_rank": 41,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779415+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371565+00:00"
   },
   {
     "selecao": "IVORY COAST",
@@ -1662,7 +1662,7 @@
     "clube_id": 2350,
     "grupo": "E",
     "competicao": "Copa 2026",
-    "rating_elo_100": 41.8,
+    "rating_elo_100": 41.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CDM/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -1724,8 +1724,8 @@
       }
     ],
     "elo_rating": 1728.0,
-    "elo_rank": 30,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779418+00:00"
+    "elo_rank": 31,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371568+00:00"
   },
   {
     "selecao": "JAPAN",
@@ -1734,7 +1734,7 @@
     "clube_id": 2369,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 70.0,
+    "rating_elo_100": 69.0,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JAP/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 3.0,
@@ -1797,7 +1797,7 @@
     ],
     "elo_rating": 1925.0,
     "elo_rank": 11,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779420+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371571+00:00"
   },
   {
     "selecao": "JORDAN",
@@ -1806,7 +1806,7 @@
     "clube_id": 3231,
     "grupo": "J",
     "competicao": "Copa 2026",
-    "rating_elo_100": 31.0,
+    "rating_elo_100": 30.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JOR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -1869,7 +1869,7 @@
     ],
     "elo_rating": 1653.0,
     "elo_rank": 37,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779423+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371574+00:00"
   },
   {
     "selecao": "MEXICO",
@@ -1878,7 +1878,7 @@
     "clube_id": 2360,
     "grupo": "A",
     "competicao": "Copa 2026",
-    "rating_elo_100": 65.9,
+    "rating_elo_100": 64.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MEX/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.5,
@@ -1941,7 +1941,7 @@
     ],
     "elo_rating": 1896.0,
     "elo_rank": 12,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779425+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371577+00:00"
   },
   {
     "selecao": "MOROCCO",
@@ -1950,7 +1950,7 @@
     "clube_id": 2332,
     "grupo": "C",
     "competicao": "Copa 2026",
-    "rating_elo_100": 61.5,
+    "rating_elo_100": 60.7,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -2013,7 +2013,7 @@
     ],
     "elo_rating": 1866.0,
     "elo_rank": 16,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779428+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371580+00:00"
   },
   {
     "selecao": "NETHERLANDS",
@@ -2022,7 +2022,7 @@
     "clube_id": 2381,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 76.8,
+    "rating_elo_100": 75.7,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HOL/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 3.5,
@@ -2085,7 +2085,7 @@
     ],
     "elo_rating": 1972.0,
     "elo_rank": 7,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779430+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371583+00:00"
   },
   {
     "selecao": "NEW ZEALAND",
@@ -2094,7 +2094,7 @@
     "clube_id": 2340,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 20.2,
+    "rating_elo_100": 15.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NZE/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.5,
@@ -2155,9 +2155,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1578.0,
-    "elo_rank": 42,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779432+00:00"
+    "elo_rating": 1549.0,
+    "elo_rank": 44,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371586+00:00"
   },
   {
     "selecao": "NORWAY",
@@ -2166,7 +2166,7 @@
     "clube_id": 2323,
     "grupo": "I",
     "competicao": "Copa 2026",
-    "rating_elo_100": 70.6,
+    "rating_elo_100": 69.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NOR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 4.0,
@@ -2229,7 +2229,7 @@
     ],
     "elo_rating": 1929.0,
     "elo_rank": 10,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779435+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371590+00:00"
   },
   {
     "selecao": "PANAMA",
@@ -2238,7 +2238,7 @@
     "clube_id": 3062,
     "grupo": "L",
     "competicao": "Copa 2026",
-    "rating_elo_100": 35.3,
+    "rating_elo_100": 34.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/PAN/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": null,
@@ -2301,7 +2301,7 @@
     ],
     "elo_rating": 1683.0,
     "elo_rank": 35,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779438+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371592+00:00"
   },
   {
     "selecao": "PARAGUAY",
@@ -2310,7 +2310,7 @@
     "clube_id": 2354,
     "grupo": "D",
     "competicao": "Copa 2026",
-    "rating_elo_100": 54.4,
+    "rating_elo_100": 53.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/PAR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -2373,7 +2373,7 @@
     ],
     "elo_rating": 1816.0,
     "elo_rank": 22,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779440+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371595+00:00"
   },
   {
     "selecao": "PORTUGAL",
@@ -2382,7 +2382,7 @@
     "clube_id": 2390,
     "grupo": "K",
     "competicao": "Copa 2026",
-    "rating_elo_100": 76.0,
+    "rating_elo_100": 75.0,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/POR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -2445,7 +2445,7 @@
     ],
     "elo_rating": 1967.0,
     "elo_rank": 8,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779442+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371597+00:00"
   },
   {
     "selecao": "QATAR",
@@ -2517,7 +2517,7 @@
     ],
     "elo_rating": 1437.0,
     "elo_rank": 48,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779445+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371600+00:00"
   },
   {
     "selecao": "SAUDI ARABIA",
@@ -2526,7 +2526,7 @@
     "clube_id": 2344,
     "grupo": "H",
     "competicao": "Copa 2026",
-    "rating_elo_100": 22.4,
+    "rating_elo_100": 22.1,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARS/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.5,
@@ -2589,7 +2589,7 @@
     ],
     "elo_rating": 1593.0,
     "elo_rank": 40,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779447+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371603+00:00"
   },
   {
     "selecao": "SCOTLAND",
@@ -2598,7 +2598,7 @@
     "clube_id": 2327,
     "grupo": "C",
     "competicao": "Copa 2026",
-    "rating_elo_100": 47.5,
+    "rating_elo_100": 46.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESC/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.5,
@@ -2661,7 +2661,7 @@
     ],
     "elo_rating": 1768.0,
     "elo_rank": 27,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779449+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371606+00:00"
   },
   {
     "selecao": "SENEGAL",
@@ -2670,7 +2670,7 @@
     "clube_id": 2347,
     "grupo": "I",
     "competicao": "Copa 2026",
-    "rating_elo_100": 57.7,
+    "rating_elo_100": 56.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SEN/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -2733,7 +2733,7 @@
     ],
     "elo_rating": 1839.0,
     "elo_rank": 20,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779452+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371608+00:00"
   },
   {
     "selecao": "SOUTH AFRICA",
@@ -2742,7 +2742,7 @@
     "clube_id": 2358,
     "grupo": "A",
     "competicao": "Copa 2026",
-    "rating_elo_100": 12.9,
+    "rating_elo_100": 12.7,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AFS/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.5,
@@ -2805,7 +2805,7 @@
     ],
     "elo_rating": 1527.0,
     "elo_rank": 46,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779454+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371611+00:00"
   },
   {
     "selecao": "SOUTH KOREA",
@@ -2814,7 +2814,7 @@
     "clube_id": 2374,
     "grupo": "A",
     "competicao": "Copa 2026",
-    "rating_elo_100": 47.9,
+    "rating_elo_100": 47.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -2877,7 +2877,7 @@
     ],
     "elo_rating": 1771.0,
     "elo_rank": 26,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779456+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371614+00:00"
   },
   {
     "selecao": "SPAIN",
@@ -2886,7 +2886,7 @@
     "clube_id": 2326,
     "grupo": "H",
     "competicao": "Copa 2026",
-    "rating_elo_100": 100.0,
+    "rating_elo_100": 98.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.0,
@@ -2948,8 +2948,8 @@
       }
     ],
     "elo_rating": 2134.0,
-    "elo_rank": 1,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779459+00:00"
+    "elo_rank": 2,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371617+00:00"
   },
   {
     "selecao": "SWEDEN",
@@ -2958,7 +2958,7 @@
     "clube_id": 2368,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 41.6,
+    "rating_elo_100": 41.0,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUE/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 3.0,
@@ -3020,8 +3020,8 @@
       }
     ],
     "elo_rating": 1727.0,
-    "elo_rank": 31,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779461+00:00"
+    "elo_rank": 32,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371620+00:00"
   },
   {
     "selecao": "SWITZERLAND",
@@ -3030,7 +3030,7 @@
     "clube_id": 2320,
     "grupo": "B",
     "competicao": "Copa 2026",
-    "rating_elo_100": 64.3,
+    "rating_elo_100": 63.4,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.5,
@@ -3093,7 +3093,7 @@
     ],
     "elo_rating": 1885.0,
     "elo_rank": 13,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779463+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371623+00:00"
   },
   {
     "selecao": "TUNISIA",
@@ -3102,7 +3102,7 @@
     "clube_id": 2337,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 19.1,
+    "rating_elo_100": 18.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TUN/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.5,
@@ -3164,8 +3164,8 @@
       }
     ],
     "elo_rating": 1570.0,
-    "elo_rank": 43,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779466+00:00"
+    "elo_rank": 42,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371626+00:00"
   },
   {
     "selecao": "TURKIYE",
@@ -3174,7 +3174,7 @@
     "clube_id": 2328,
     "grupo": "D",
     "competicao": "Copa 2026",
-    "rating_elo_100": 53.9,
+    "rating_elo_100": 53.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TUR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": null,
@@ -3237,7 +3237,7 @@
     ],
     "elo_rating": 1813.0,
     "elo_rank": 23,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779468+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371629+00:00"
   },
   {
     "selecao": "UNITED STATES",
@@ -3246,7 +3246,7 @@
     "clube_id": 2365,
     "grupo": "D",
     "competicao": "Copa 2026",
-    "rating_elo_100": 54.9,
+    "rating_elo_100": 54.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EUA/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 3.0,
@@ -3309,7 +3309,7 @@
     ],
     "elo_rating": 1820.0,
     "elo_rank": 21,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779471+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371632+00:00"
   },
   {
     "selecao": "URUGUAY",
@@ -3318,7 +3318,7 @@
     "clube_id": 2356,
     "grupo": "H",
     "competicao": "Copa 2026",
-    "rating_elo_100": 59.4,
+    "rating_elo_100": 58.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/URU/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.5,
@@ -3380,8 +3380,8 @@
       }
     ],
     "elo_rating": 1851.0,
-    "elo_rank": 19,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779473+00:00"
+    "elo_rank": 18,
+    "elo_atualizado_em": "2026-06-22T21:30:07.371635+00:00"
   },
   {
     "selecao": "UZBEKISTAN",
@@ -3390,7 +3390,7 @@
     "clube_id": 3061,
     "grupo": "K",
     "competicao": "Copa 2026",
-    "rating_elo_100": 37.4,
+    "rating_elo_100": 36.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/UZB/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -3453,6 +3453,6 @@
     ],
     "elo_rating": 1698.0,
     "elo_rank": 33,
-    "elo_atualizado_em": "2026-06-22T08:37:17.779476+00:00"
+    "elo_atualizado_em": "2026-06-22T21:30:07.371638+00:00"
   }
 ]
