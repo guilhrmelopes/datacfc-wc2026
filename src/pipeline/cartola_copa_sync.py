@@ -14,8 +14,7 @@ from scoring.cartola import (
     AcumuladorCedidoConquistado,
     ScoutsPartida,
     calcular_cedido_conquistado_partida,
-    calcular_medias_copa,
-    calcular_pontos,
+    mb_partida_from_scouts,
 )
 from scrapers.cartola_copa import DadosCartolaCopa, POSICAO_PARA_BUCKET, payload_tem_selecoes
 from scrapers.fotmob_mapa import cartola_abrev_para_selecao, url_escudo_cartola
@@ -152,57 +151,100 @@ def _scouts_partida_de_entry(entry: dict) -> ScoutsPartida:
     )
 
 
-def _scouts_acumulados_de_entry(entry: dict) -> ScoutsPartida:
-    """Reconstrói scouts agregados a partir dos campos copa_* do mercado."""
-    return ScoutsPartida(
-        minutos=int(entry.get("copa_mins_played") or 0),
-        G=int(entry.get("copa_goals") or 0),
-        A=int(entry.get("copa_goal_assist") or 0),
-        FD=int(entry.get("copa_fd") or 0),
-        DS=int(entry.get("copa_ds") or 0),
-        DE=int(entry.get("copa_de") or 0),
-        GS=int(entry.get("copa_gs") or 0),
-        SG=int(entry.get("copa_clean_sheet") or 0),
-        INT=int(entry.get("copa_int") or 0),
-        C=int(entry.get("copa_c") or 0),
-        BR=int(entry.get("copa_br") or 0),
-        GE=float(entry.get("copa_ge") or 0),
-        GCC=int(entry.get("copa_gcc") or 0),
-    )
-
-
-def preencher_mg_mb_entry(entry: dict) -> None:
-    """
-    Preenche MG/MB faltantes: Cartola oficial quando disponível;
-    fallback FotMob (scouts × pesos Cartola) quando pontos/scouts existem.
-    """
-    jogos = int(entry.get("copa_jogos_num") or 0)
+def _aplicar_medias_copa_entry(entry: dict, acum_pts: float, acum_mb: float, jogos: int) -> None:
     if jogos <= 0:
         return
-    bucket = entry.get("bucket_posicao")
-    if bucket not in BUCKETS:
-        return
+    entry["copa_jogos_num"] = jogos
+    entry["copa_pontos_total"] = round(acum_pts, 2)
+    entry["copa_media_geral"] = round(acum_pts / jogos, 2)
+    entry["copa_media_base"] = round(acum_mb / jogos, 2)
 
-    scouts = _scouts_acumulados_de_entry(entry)
-    total_bruto = entry.get("copa_pontos_total")
-    total = float(total_bruto) if total_bruto is not None else None
 
-    if (total is None or total == 0.0) and scouts.minutos > 0:
-        total = calcular_pontos(scouts, bucket)  # type: ignore[arg-type]
-        entry["copa_pontos_total"] = total
+def recalcular_mg_mb_mercado(
+    mercado: list[dict],
+    estado: dict,
+    caminho_mercado: Path,
+    *,
+    partidas_fotmob: list[str] | None = None,
+    selecoes: list[dict] | None = None,
+) -> None:
+    """
+    MG/MB rodada a rodada: pontuação oficial Cartola quando disponível;
+    FotMob partida a partida só para quem não entrou em pontuados.
+    """
+    por_atleta = {int(j["atleta_id"]): j for j in mercado if j.get("atleta_id")}
+    acum_pts: dict[int, float] = {}
+    acum_mb: dict[int, float] = {}
+    acum_jogos: dict[int, int] = {}
 
-    if total is None:
-        return
+    for _rodada, snapshot in sorted(
+        (estado.get("pontuados_por_rodada") or {}).items(),
+        key=lambda x: int(x[0]),
+    ):
+        if not isinstance(snapshot, dict):
+            continue
+        for aid_str, row in snapshot.items():
+            try:
+                aid = int(aid_str)
+            except (TypeError, ValueError):
+                continue
+            if aid not in por_atleta:
+                continue
+            pontuacao = float(row.get("pontuacao") or 0)
+            scout = row.get("scout") or {}
+            posicao_id = row.get("posicao_id")
+            acum_pts[aid] = acum_pts.get(aid, 0.0) + pontuacao
+            acum_mb[aid] = acum_mb.get(aid, 0.0) + mb_rodada_oficial(
+                pontuacao, scout, posicao_id,
+            )
+            acum_jogos[aid] = acum_jogos.get(aid, 0) + 1
 
-    mg, mb = calcular_medias_copa(total, jogos, scouts, bucket)  # type: ignore[arg-type]
-    if entry.get("copa_media_geral") is None and mg is not None:
-        entry["copa_media_geral"] = mg
-    if entry.get("copa_media_base") is None and mb is not None:
-        entry["copa_media_base"] = mb
+    if partidas_fotmob and selecoes:
+        from scrapers.fotmob_fixtures import listar_partidas_grupos
+
+        sigla_map = _sigla_por_selecao(selecoes)
+        partidas_idx = {p.match_id: p for p in listar_partidas_grupos()}
+        for match_id in partidas_fotmob:
+            meta = partidas_idx.get(match_id)
+            if not meta:
+                continue
+            sig_m = sigla_map.get(meta.mandante)
+            sig_v = sigla_map.get(meta.visitante)
+            if not sig_m or not sig_v:
+                continue
+            try:
+                resultado = processar_partida(match_id, caminho_mercado, sig_m, sig_v)
+            except (OSError, ValueError, KeyError):
+                continue
+            for jogador in resultado.jogadores:
+                if jogador.atleta_id is None:
+                    continue
+                aid = int(jogador.atleta_id)
+                if aid not in por_atleta or acum_jogos.get(aid, 0) > 0:
+                    continue
+                sc = jogador.scouts
+                if sc.minutos <= 0:
+                    continue
+                bucket = jogador.bucket
+                if bucket not in BUCKETS:
+                    continue
+                acum_pts[aid] = acum_pts.get(aid, 0.0) + jogador.pontos
+                acum_mb[aid] = acum_mb.get(aid, 0.0) + mb_partida_from_scouts(
+                    sc, bucket,  # type: ignore[arg-type]
+                )
+                acum_jogos[aid] = acum_jogos.get(aid, 0) + 1
+
+    for aid, jogos in acum_jogos.items():
+        _aplicar_medias_copa_entry(
+            por_atleta[aid],
+            acum_pts[aid],
+            acum_mb[aid],
+            jogos,
+        )
 
 
 def finalizar_metricas_copa(mercado: list[dict]) -> None:
-    """Garante MG/MB/scouts numéricos para quem tem J≥1 (inclui pontuação 0)."""
+    """Garante scouts numéricos para quem tem J≥1 (MG/MB vêm de recalcular_mg_mb_mercado)."""
     for entry in mercado:
         jogos = int(entry.get("copa_jogos_num") or 0)
         if jogos <= 0:
@@ -228,8 +270,6 @@ def finalizar_metricas_copa(mercado: list[dict]) -> None:
                     (float(entry.get("copa_de") or 0) / mins) * 90,
                     2,
                 )
-
-        preencher_mg_mb_entry(entry)
 
 
 def _aplicar_scouts_copa(entry: dict, scout: dict[str, Any] | None) -> None:
@@ -796,18 +836,11 @@ def rebuild_copa_oficial(
     mercado: list[dict],
     estado: dict,
     dados: DadosCartolaCopa,
+    caminho_mercado: Path,
 ) -> None:
-    """Preenche copa_* apenas com campos oficiais de pontuados e /copa/atletas/mercado."""
+    """Preenche copa_* com pontuados oficiais; MG/MB rodada a rodada."""
     _zerar_copa_mercado(mercado)
     por_atleta = {int(j["atleta_id"]): j for j in mercado if j.get("atleta_id")}
-    api_mercado = {
-        int(a["atleta_id"]): a
-        for a in dados.mercado.get("atletas") or []
-        if a.get("atleta_id")
-    }
-
-    acum_mb: dict[int, float] = {}
-    acum_jogos_mb: dict[int, int] = {}
     rodadas = estado.get("pontuados_por_rodada") or {}
 
     for _rodada, snapshot in sorted(rodadas.items(), key=lambda x: int(x[0])):
@@ -821,53 +854,39 @@ def rebuild_copa_oficial(
             entry = por_atleta.get(aid)
             if not entry:
                 continue
+            _aplicar_scouts_copa(entry, row.get("scout") or {})
 
-            pontuacao = float(row.get("pontuacao") or 0)
-            scout = row.get("scout") or {}
-            posicao_id = row.get("posicao_id")
+    recalcular_mg_mb_mercado(mercado, estado, caminho_mercado)
 
-            entry["copa_jogos_num"] = int(entry.get("copa_jogos_num") or 0) + 1
-            entry["copa_pontos_total"] = round(
-                float(entry.get("copa_pontos_total") or 0) + pontuacao,
-                2,
-            )
-            _aplicar_scouts_copa(entry, scout)
-            acum_mb[aid] = acum_mb.get(aid, 0.0) + mb_rodada_oficial(pontuacao, scout, posicao_id)
-            acum_jogos_mb[aid] = acum_jogos_mb.get(aid, 0) + 1
-
+    api_mercado = {
+        int(a["atleta_id"]): a
+        for a in dados.mercado.get("atletas") or []
+        if a.get("atleta_id")
+    }
     for entry in mercado:
         aid = entry.get("atleta_id")
         if aid is None:
             continue
         aid_int = int(aid)
-        api = api_mercado.get(aid_int)
-        jogos = int(entry.get("copa_jogos_num") or 0)
-
-        if api:
-            api_jogos = int(api.get("jogos_num") or 0)
-            api_pontos = float(api.get("pontos_num") or 0)
-            api_media = float(api.get("media_num") or 0)
-            api_scout = api.get("scout") or {}
-
-            if api_jogos > 0:
-                entry["copa_jogos_num"] = api_jogos
-                entry["copa_pontos_total"] = round(api_pontos, 2)
-                entry["copa_media_geral"] = round(api_media, 2)
-                _zerar_scouts_copa_numerico(entry)
-                _aplicar_scouts_copa(entry, api_scout)
-                jogos = api_jogos
-
-        if jogos <= 0:
+        if int(entry.get("copa_jogos_num") or 0) > 0:
             continue
-
-        if entry.get("copa_media_geral") is None and jogos > 0:
-            entry["copa_media_geral"] = round(float(entry.get("copa_pontos_total") or 0) / jogos, 2)
-
-        jogos_mb = acum_jogos_mb.get(aid_int, 0)
-        if aid_int in acum_mb and jogos_mb > 0 and jogos_mb == jogos:
-            entry["copa_media_base"] = round(acum_mb[aid_int] / jogos, 2)
-
-    finalizar_metricas_copa(mercado)
+        api = api_mercado.get(aid_int)
+        if not api:
+            continue
+        api_jogos = int(api.get("jogos_num") or 0)
+        if api_jogos <= 0:
+            continue
+        api_pontos = float(api.get("pontos_num") or 0)
+        api_scout = api.get("scout") or {}
+        _zerar_scouts_copa_numerico(entry)
+        _aplicar_scouts_copa(entry, api_scout)
+        bonus = _bonus_oficial_scout(api_scout, entry.get("posicao_id"))
+        _aplicar_medias_copa_entry(
+            entry,
+            api_pontos,
+            api_pontos - bonus,
+            api_jogos,
+        )
 
 
 def _partidas_cedido_historico(
@@ -1030,8 +1049,9 @@ def rebuild_extras_fotmob(
     partidas_ids: list[str],
     caminho_mercado: Path,
     selecoes: list[dict],
+    estado: dict,
 ) -> None:
-    """Preenche scouts FotMob, xG/xA e métricas extras (fallback quando Cartola indisponível)."""
+    """Preenche scouts FotMob, xG/xA e métricas extras (sem alterar MG/MB até o recálculo final)."""
     mercado = _carregar_json(caminho_mercado)
     sigla_map = _sigla_por_selecao(selecoes)
 
@@ -1078,10 +1098,6 @@ def rebuild_extras_fotmob(
 
             if fotmob_jogos[aid] > cartola_jogos_inicial.get(aid, 0):
                 _aplicar_scouts_fotmob(entry, sc)
-                entry["copa_pontos_total"] = round(
-                    float(entry.get("copa_pontos_total") or 0) + jogador.pontos,
-                    2,
-                )
 
     for entry in mercado:
         aid = entry.get("atleta_id")
@@ -1091,8 +1107,16 @@ def rebuild_extras_fotmob(
         jogos = max(int(entry.get("copa_jogos_num") or 0), fotmob_jogos.get(aid_int, 0))
         if jogos <= 0:
             continue
-        entry["copa_jogos_num"] = jogos
+        if int(entry.get("copa_jogos_num") or 0) <= 0:
+            entry["copa_jogos_num"] = jogos
 
+    recalcular_mg_mb_mercado(
+        mercado,
+        estado,
+        caminho_mercado,
+        partidas_fotmob=partidas_ids,
+        selecoes=selecoes,
+    )
     finalizar_metricas_copa(mercado)
     _salvar_json(caminho_mercado, mercado)
 
@@ -1133,7 +1157,7 @@ def aplicar_dados_cartola(
     meta_mercado = sincronizar_mercado_metadados_selecao(mercado, selecoes, dados)
     mercado_inseridos = incorporar_atletas_ausentes_mercado(mercado, dados, selecoes)
     fotos_atualizadas = sincronizar_fotos_mercado(mercado, dados)
-    rebuild_copa_oficial(mercado, estado, dados)
+    rebuild_copa_oficial(mercado, estado, dados, caminho_mercado)
 
     caminho_grupos = pasta_dados / "grupos_wc2026.json"
     if por_rodada:

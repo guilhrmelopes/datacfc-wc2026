@@ -69,21 +69,17 @@ class PerformanceBucket:
     conquistado: float | None
 
 
-def calcular_medias_copa(
-    total_pontos: float,
-    jogos: int,
-    scouts: ScoutsPartida,
-    bucket: Bucket,
-) -> tuple[float | None, float | None]:
-    """MG e MB por jogo (Cartola): total de pontos / J; MB exclui G, A e SG."""
-    if jogos <= 0:
-        return None, None
-    mg = round(total_pontos / jogos, 2)
+def bonus_mb_scouts(scouts: ScoutsPartida, bucket: Bucket) -> float:
+    """Pontos excluídos da MB: G, A e SG (defensores)."""
     bonus = scouts.G * PONTOS["G"] + scouts.A * PONTOS["A"]
     if bucket in BUCKETS_SG:
         bonus += scouts.SG * PONTOS["SG"]
-    mb = round((total_pontos - bonus) / jogos, 2)
-    return mg, mb
+    return bonus
+
+
+def mb_partida_from_scouts(scouts: ScoutsPartida, bucket: Bucket) -> float:
+    """MB de uma partida = pontos (scout×peso) − bônus G/A/SG."""
+    return round(calcular_pontos(scouts, bucket) - bonus_mb_scouts(scouts, bucket), 2)
 
 
 def calcular_pontos(scouts: ScoutsPartida, bucket: Bucket) -> float:

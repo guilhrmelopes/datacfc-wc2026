@@ -329,7 +329,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     )
 
     if processadas:
-        rebuild_extras_fotmob(processadas, caminho_mercado, selecoes)
+        rebuild_extras_fotmob(processadas, caminho_mercado, selecoes, estado)
         reprocessar_cedido_cartola(
             dados_cartola,
             estado,
