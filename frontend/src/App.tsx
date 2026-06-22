@@ -53,6 +53,10 @@ export default function App() {
     registrarVisualizacao(aba);
   }, [aba]);
 
+  useEffect(() => {
+    void carregarDadosMercado();
+  }, []);
+
   const radar = useAbaDados(aba, "radar", carregarDadosRadar);
   const fase = useAbaDados(aba, "fase", carregarDadosFase);
   const mercado = useAbaDados<DadosMercado>(aba, "mercado", carregarDadosMercado);
