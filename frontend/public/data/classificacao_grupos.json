@@ -384,6 +384,21 @@
   "G": [
     {
       "posicao": 1,
+      "selecao": "NEW ZEALAND",
+      "sigla": "NZE",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NZE/60x60.png",
+      "P": 2,
+      "J": 2,
+      "V": 0,
+      "E": 2,
+      "D": 0,
+      "GM": 2,
+      "GS": 2,
+      "SG": 0,
+      "aprov": 33.3
+    },
+    {
+      "posicao": 2,
       "selecao": "IRAN",
       "sigla": "IRA",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
@@ -398,7 +413,7 @@
       "aprov": 33.3
     },
     {
-      "posicao": 2,
+      "posicao": 3,
       "selecao": "BELGIUM",
       "sigla": "BEL",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BEL/60x60.png",
@@ -413,29 +428,14 @@
       "aprov": 33.3
     },
     {
-      "posicao": 3,
-      "selecao": "NEW ZEALAND",
-      "sigla": "NZE",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NZE/60x60.png",
-      "P": 1,
-      "J": 1,
-      "V": 0,
-      "E": 1,
-      "D": 0,
-      "GM": 2,
-      "GS": 2,
-      "SG": 0,
-      "aprov": 33.3
-    },
-    {
       "posicao": 4,
       "selecao": "EGYPT",
       "sigla": "EGI",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
-      "P": 1,
-      "J": 1,
+      "P": 2,
+      "J": 2,
       "V": 0,
-      "E": 1,
+      "E": 2,
       "D": 0,
       "GM": 1,
       "GS": 1,
