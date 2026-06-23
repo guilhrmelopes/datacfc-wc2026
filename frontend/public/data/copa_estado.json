@@ -46,7 +46,7 @@
     "4667806",
     "4667814"
   ],
-  "atualizado_em": "2026-06-23T05:45:38.807581+00:00",
+  "atualizado_em": "2026-06-23T09:31:34.823121+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -6795,9 +6795,9 @@
         "clube_id": 2368
       },
       "103149": {
-        "pontuacao": 5.7,
+        "pontuacao": 4.2,
         "scout": {
-          "DS": 3,
+          "DS": 2,
           "FC": 2,
           "FF": 1,
           "FS": 2
@@ -8267,8 +8267,9 @@
         "clube_id": 2384
       },
       "120404": {
-        "pontuacao": 1.7,
+        "pontuacao": 3.2,
         "scout": {
+          "DS": 1,
           "FD": 1,
           "FS": 1
         },
@@ -8493,9 +8494,9 @@
         "clube_id": 3231
       },
       "121461": {
-        "pontuacao": 3.0,
+        "pontuacao": 4.5,
         "scout": {
-          "DS": 2
+          "DS": 3
         },
         "posicao_id": 3,
         "clube_id": 3231
@@ -8511,9 +8512,9 @@
         "clube_id": 3231
       },
       "121468": {
-        "pontuacao": 14.0,
+        "pontuacao": 15.5,
         "scout": {
-          "DS": 3,
+          "DS": 4,
           "FC": 1,
           "FF": 1,
           "FS": 2,
@@ -9148,9 +9149,9 @@
         "clube_id": 2324
       },
       "130113": {
-        "pontuacao": 9.0,
+        "pontuacao": 7.5,
         "scout": {
-          "DS": 6
+          "DS": 5
         },
         "posicao_id": 2,
         "clube_id": 3231
@@ -9374,11 +9375,11 @@
         "clube_id": 2350
       },
       "145887": {
-        "pontuacao": 6.7,
+        "pontuacao": 9.0,
         "scout": {
-          "DS": 2,
+          "DS": 3,
           "FD": 2,
-          "FF": 1,
+          "FF": 2,
           "FS": 1
         },
         "posicao_id": 4,
@@ -9754,10 +9755,10 @@
         "clube_id": 3231
       },
       "151065": {
-        "pontuacao": 0.7,
+        "pontuacao": 2.2,
         "scout": {
           "CA": 1,
-          "DS": 1,
+          "DS": 2,
           "FC": 1,
           "FS": 1
         },
@@ -10467,9 +10468,9 @@
         "clube_id": 2392
       },
       "92399": {
-        "pontuacao": 8.2,
+        "pontuacao": 9.7,
         "scout": {
-          "DS": 5,
+          "DS": 6,
           "FC": 1,
           "FS": 2
         },
@@ -11057,5 +11058,5 @@
   },
   "status_mercado": 2,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-06-23T05:44:54.070873+00:00"
+  "cartola_atualizado_em": "2026-06-23T09:30:19.427887+00:00"
 }

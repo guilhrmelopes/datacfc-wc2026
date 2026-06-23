@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-23T05:44:49.168918+00:00",
+  "atualizado_em": "2026-06-23T09:30:15.030406+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ARG": {
@@ -15,10 +15,10 @@
       "rating_100": 98.6
     },
     "FRA": {
-      "elo": 2084.0,
+      "elo": 2090.0,
       "rank": 3,
       "codigo_elo": "FR",
-      "rating_100": 91.5
+      "rating_100": 92.4
     },
     "ING": {
       "elo": 2055.0,
@@ -57,10 +57,10 @@
       "rating_100": 73.1
     },
     "NOR": {
-      "elo": 1929.0,
+      "elo": 1951.0,
       "rank": 10,
       "codigo_elo": "NO",
-      "rating_100": 69.6
+      "rating_100": 72.7
     },
     "JAP": {
       "elo": 1925.0,
@@ -116,17 +116,17 @@
       "codigo_elo": "AT",
       "rating_100": 57.1
     },
-    "SEN": {
-      "elo": 1839.0,
-      "rank": 20,
-      "codigo_elo": "SN",
-      "rating_100": 56.9
-    },
     "EUA": {
       "elo": 1820.0,
-      "rank": 21,
+      "rank": 20,
       "codigo_elo": "US",
       "rating_100": 54.2
+    },
+    "SEN": {
+      "elo": 1817.0,
+      "rank": 21,
+      "codigo_elo": "SN",
+      "rating_100": 53.7
     },
     "PAR": {
       "elo": 1816.0,
@@ -146,35 +146,35 @@
       "codigo_elo": "AU",
       "rating_100": 51.2
     },
+    "AGL": {
+      "elo": 1780.0,
+      "rank": 25,
+      "codigo_elo": "DZ",
+      "rating_100": 48.5
+    },
     "CAN": {
       "elo": 1777.0,
-      "rank": 25,
+      "rank": 26,
       "codigo_elo": "CA",
       "rating_100": 48.1
     },
     "COR": {
       "elo": 1771.0,
-      "rank": 26,
+      "rank": 27,
       "codigo_elo": "KR",
       "rating_100": 47.2
     },
     "ESC": {
       "elo": 1768.0,
-      "rank": 27,
+      "rank": 28,
       "codigo_elo": "SQ",
       "rating_100": 46.8
     },
     "IRA": {
       "elo": 1766.0,
-      "rank": 28,
+      "rank": 29,
       "codigo_elo": "IR",
       "rating_100": 46.5
-    },
-    "AGL": {
-      "elo": 1759.0,
-      "rank": 29,
-      "codigo_elo": "DZ",
-      "rating_100": 45.5
     },
     "EGI": {
       "elo": 1740.0,
@@ -219,10 +219,10 @@
       "rating_100": 33.5
     },
     "JOR": {
-      "elo": 1653.0,
+      "elo": 1632.0,
       "rank": 37,
       "codigo_elo": "JO",
-      "rating_100": 30.6
+      "rating_100": 27.6
     },
     "CAB": {
       "elo": 1625.0,
@@ -243,10 +243,10 @@
       "rating_100": 22.1
     },
     "IRQ": {
-      "elo": 1592.0,
+      "elo": 1586.0,
       "rank": 41,
       "codigo_elo": "IQ",
-      "rating_100": 21.9
+      "rating_100": 21.1
     },
     "TUN": {
       "elo": 1570.0,
