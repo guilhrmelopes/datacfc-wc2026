@@ -6,7 +6,7 @@
     "PARAGUAY",
     "CAPE VERDE",
     "BELGIUM",
-    "PORTUGAL",
+    "DR CONGO",
     "CZECHIA"
   ],
   "A": [
@@ -632,6 +632,21 @@
   "K": [
     {
       "posicao": 1,
+      "selecao": "PORTUGAL",
+      "sigla": "POR",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/POR/60x60.png",
+      "P": 4,
+      "J": 2,
+      "V": 1,
+      "E": 1,
+      "D": 0,
+      "GM": 4,
+      "GS": 1,
+      "SG": 3,
+      "aprov": 66.7
+    },
+    {
+      "posicao": 2,
       "selecao": "COLOMBIA",
       "sigla": "COL",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COL/60x60.png",
@@ -646,25 +661,10 @@
       "aprov": 100.0
     },
     {
-      "posicao": 2,
+      "posicao": 3,
       "selecao": "DR CONGO",
       "sigla": "RDC",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/RDC/60x60.png",
-      "P": 1,
-      "J": 1,
-      "V": 0,
-      "E": 1,
-      "D": 0,
-      "GM": 1,
-      "GS": 1,
-      "SG": 0,
-      "aprov": 33.3
-    },
-    {
-      "posicao": 3,
-      "selecao": "PORTUGAL",
-      "sigla": "POR",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/POR/60x60.png",
       "P": 1,
       "J": 1,
       "V": 0,
@@ -681,13 +681,13 @@
       "sigla": "UZB",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/UZB/60x60.png",
       "P": 0,
-      "J": 1,
+      "J": 2,
       "V": 0,
       "E": 0,
-      "D": 1,
+      "D": 2,
       "GM": 1,
-      "GS": 3,
-      "SG": -2,
+      "GS": 6,
+      "SG": -5,
       "aprov": 0.0
     }
   ],
