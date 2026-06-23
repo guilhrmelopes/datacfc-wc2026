@@ -697,30 +697,30 @@
       "selecao": "ENGLAND",
       "sigla": "ING",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ING/60x60.png",
-      "P": 3,
-      "J": 1,
+      "P": 4,
+      "J": 2,
       "V": 1,
-      "E": 0,
+      "E": 1,
       "D": 0,
       "GM": 4,
       "GS": 2,
       "SG": 2,
-      "aprov": 100.0
+      "aprov": 66.7
     },
     {
       "posicao": 2,
       "selecao": "GHANA",
       "sigla": "GAN",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/GAN/60x60.png",
-      "P": 3,
-      "J": 1,
+      "P": 4,
+      "J": 2,
       "V": 1,
-      "E": 0,
+      "E": 1,
       "D": 0,
       "GM": 1,
       "GS": 0,
       "SG": 1,
-      "aprov": 100.0
+      "aprov": 66.7
     },
     {
       "posicao": 3,
