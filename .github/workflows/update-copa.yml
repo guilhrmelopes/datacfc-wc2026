@@ -84,7 +84,8 @@ jobs:
             frontend/public/data/classificacao_grupos.json \
             frontend/public/data/pontuacao_cedida.json \
             frontend/public/data/selecoes.json \
-            frontend/public/data/jogadores_mercado.json
+            frontend/public/data/jogadores_mercado.json \
+            frontend/public/data/elo_copa_2026.json
 
           if git diff --cached --quiet; then
             echo "Nenhuma mudança em Copa/scouts."

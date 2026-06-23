@@ -302,7 +302,12 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     from scrapers.elo_ratings import atualizar_selecoes_elo
 
     elo_atualizados, elo_faltando = atualizar_selecoes_elo(selecoes_pre)
-    if elo_faltando:
+    if elo_atualizados == 0:
+        import logging
+        logging.getLogger(__name__).warning(
+            "Elo não atualizado (remoto/cache indisponível); mantendo valores em selecoes.json."
+        )
+    elif elo_faltando:
         raise ValueError(f"Seleções sem Elo: {elo_faltando}")
     _salvar_json(caminho_selecoes, selecoes_pre)
 

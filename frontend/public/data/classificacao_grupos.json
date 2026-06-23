@@ -516,9 +516,9 @@
       "V": 2,
       "E": 0,
       "D": 0,
-      "GM": 4,
+      "GM": 6,
       "GS": 1,
-      "SG": 3,
+      "SG": 5,
       "aprov": 100.0
     },
     {
@@ -526,14 +526,14 @@
       "selecao": "NORWAY",
       "sigla": "NOR",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NOR/60x60.png",
-      "P": 3,
-      "J": 1,
-      "V": 1,
+      "P": 6,
+      "J": 2,
+      "V": 2,
       "E": 0,
       "D": 0,
-      "GM": 4,
+      "GM": 5,
       "GS": 1,
-      "SG": 3,
+      "SG": 4,
       "aprov": 100.0
     },
     {
@@ -542,13 +542,13 @@
       "sigla": "SEN",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SEN/60x60.png",
       "P": 0,
-      "J": 1,
+      "J": 2,
       "V": 0,
       "E": 0,
-      "D": 1,
+      "D": 2,
       "GM": 1,
-      "GS": 3,
-      "SG": -2,
+      "GS": 4,
+      "SG": -3,
       "aprov": 0.0
     },
     {
@@ -562,8 +562,8 @@
       "E": 0,
       "D": 2,
       "GM": 1,
-      "GS": 5,
-      "SG": -4,
+      "GS": 7,
+      "SG": -6,
       "aprov": 0.0
     }
   ],
