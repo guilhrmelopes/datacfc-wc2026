@@ -126,6 +126,6 @@ export function cedidoAdversarioCopa(
   const bucket = j.bucket_posicao as keyof PerformancePorSigla;
   const celula = perf[bucket]?.cedido;
   const valor = celula?.valor;
-  if (valor === null || valor === undefined) return 0;
+  if (valor === null || valor === undefined) return null;
   return valor;
 }

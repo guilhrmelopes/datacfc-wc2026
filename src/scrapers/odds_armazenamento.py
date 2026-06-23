@@ -409,6 +409,43 @@ def salvar_armazenamento(payload: dict[str, Any]) -> None:
     logger.info("Armazenamento: %d eventos -> %s", len(payload.get("eventos", {})), CAMINHO_ARMAZENAMENTO)
 
 
+def normalizar_odds_pos_estreia(
+    resultado: dict[str, dict],
+    jogadores: list[dict],
+) -> int:
+    """
+    Remove mercados de ataque/SG obsoletos quando adversario_sigla != proximo ADV.
+    Evita exibir odds da rodada anterior após merge parcial.
+    """
+    removidos = 0
+    for jog in jogadores:
+        if int(jog.get("copa_jogos_num") or 0) <= 0:
+            continue
+        prox = (jog.get("proximo_adversario_sigla") or "").upper()
+        if not prox:
+            continue
+        aid = str(jog.get("atleta_id"))
+        entrada = resultado.get(aid)
+        if not isinstance(entrada, dict):
+            continue
+        odds_adv = (entrada.get("adversario_sigla") or "").upper()
+        if odds_adv == prox:
+            continue
+        for chave in (
+            "g_pct", "casa_g", "odds_g",
+            "a_pct", "casa_a", "odds_a",
+            "ga_pct", "casa_ga", "odds_ga",
+            "sg_pct", "casa_sg", "odds_sg",
+            "adversario_sigla", "rodada",
+        ):
+            if chave in entrada:
+                del entrada[chave]
+                removidos += 1
+    if removidos:
+        logger.info("Normalizacao pos-estreia: %d campos obsoletos removidos.", removidos)
+    return removidos
+
+
 def expurgar_passados(armazenamento: dict[str, Any], hoje: date | None = None) -> int:
     """Remove eventos com data de calendário anterior a hoje."""
     ref = hoje or referencia_hoje()
@@ -472,7 +509,7 @@ def confronto_atual_por_sigla(
                 if _adv_do_evento(ev, sig) == adv_alvo:
                     escolhido = ev
                     break
-        if escolhido is None and evs:
+        if escolhido is None and evs and not prox:
             escolhido = evs[0]
         if escolhido is not None:
             atual[sig] = escolhido
@@ -767,6 +804,8 @@ def compilar_dashboard(
 
     for entrada in resultado.values():
         enriquecer_odds_entrada(entrada)
+
+    normalizar_odds_pos_estreia(resultado, jogadores)
 
     logger.info(
         "Compilado dashboard: %d atletas | %d seleções com confronto atual (ref=%s).",
