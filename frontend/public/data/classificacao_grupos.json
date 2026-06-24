@@ -2,8 +2,8 @@
   "melhores_terceiros": [
     "BOSNIA AND HERZEGOVINA",
     "SWEDEN",
-    "SCOTLAND",
     "CROATIA",
+    "SCOTLAND",
     "ALGERIA",
     "PARAGUAY",
     "CAPE VERDE",
@@ -74,33 +74,33 @@
   "B": [
     {
       "posicao": 1,
-      "selecao": "CANADA",
-      "sigla": "CAN",
-      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
-      "P": 5,
-      "J": 3,
-      "V": 1,
-      "E": 2,
-      "D": 0,
-      "GM": 7,
-      "GS": 1,
-      "SG": 6,
-      "aprov": 55.6
-    },
-    {
-      "posicao": 2,
       "selecao": "SWITZERLAND",
       "sigla": "SUI",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
-      "P": 5,
+      "P": 7,
+      "J": 3,
+      "V": 2,
+      "E": 1,
+      "D": 0,
+      "GM": 7,
+      "GS": 3,
+      "SG": 4,
+      "aprov": 77.8
+    },
+    {
+      "posicao": 2,
+      "selecao": "CANADA",
+      "sigla": "CAN",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
+      "P": 4,
       "J": 3,
       "V": 1,
-      "E": 2,
-      "D": 0,
-      "GM": 5,
-      "GS": 2,
-      "SG": 3,
-      "aprov": 55.6
+      "E": 1,
+      "D": 1,
+      "GM": 8,
+      "GS": 3,
+      "SG": 5,
+      "aprov": 44.4
     },
     {
       "posicao": 3,
@@ -112,9 +112,9 @@
       "V": 1,
       "E": 1,
       "D": 1,
-      "GM": 4,
+      "GM": 5,
       "GS": 6,
-      "SG": -2,
+      "SG": -1,
       "aprov": 44.4
     },
     {
@@ -128,8 +128,8 @@
       "E": 1,
       "D": 2,
       "GM": 2,
-      "GS": 9,
-      "SG": -7,
+      "GS": 10,
+      "SG": -8,
       "aprov": 11.1
     }
   ],
@@ -139,15 +139,15 @@
       "selecao": "BRAZIL",
       "sigla": "BRA",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BRA/60x60.png",
-      "P": 4,
-      "J": 2,
-      "V": 1,
+      "P": 7,
+      "J": 3,
+      "V": 2,
       "E": 1,
       "D": 0,
-      "GM": 4,
+      "GM": 5,
       "GS": 1,
-      "SG": 3,
-      "aprov": 66.7
+      "SG": 4,
+      "aprov": 77.8
     },
     {
       "posicao": 2,
@@ -155,14 +155,14 @@
       "sigla": "MAR",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
       "P": 4,
-      "J": 2,
+      "J": 3,
       "V": 1,
       "E": 1,
-      "D": 0,
+      "D": 1,
       "GM": 2,
-      "GS": 1,
-      "SG": 1,
-      "aprov": 66.7
+      "GS": 2,
+      "SG": 0,
+      "aprov": 44.4
     },
     {
       "posicao": 3,
@@ -170,29 +170,29 @@
       "sigla": "ESC",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESC/60x60.png",
       "P": 3,
-      "J": 2,
+      "J": 3,
       "V": 1,
       "E": 0,
-      "D": 1,
+      "D": 2,
       "GM": 1,
-      "GS": 1,
-      "SG": 0,
-      "aprov": 50.0
+      "GS": 2,
+      "SG": -1,
+      "aprov": 33.3
     },
     {
       "posicao": 4,
       "selecao": "HAITI",
       "sigla": "HAI",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HAI/60x60.png",
-      "P": 0,
-      "J": 2,
-      "V": 0,
+      "P": 3,
+      "J": 3,
+      "V": 1,
       "E": 0,
       "D": 2,
-      "GM": 0,
+      "GM": 1,
       "GS": 4,
-      "SG": -4,
-      "aprov": 0.0
+      "SG": -3,
+      "aprov": 33.3
     }
   ],
   "D": [
