@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-24T05:12:03.719680+00:00",
+  "atualizado_em": "2026-06-24T10:18:59.733882+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ARG": {
@@ -27,10 +27,10 @@
       "rating_100": 83.6
     },
     "COL": {
-      "elo": 1998.0,
+      "elo": 2006.0,
       "rank": 5,
       "codigo_elo": "CO",
-      "rating_100": 79.3
+      "rating_100": 80.5
     },
     "POR": {
       "elo": 1988.0,
@@ -206,17 +206,17 @@
       "codigo_elo": "UZ",
       "rating_100": 33.9
     },
-    "RDC": {
-      "elo": 1674.0,
-      "rank": 35,
-      "codigo_elo": "CD",
-      "rating_100": 33.5
-    },
     "PAN": {
       "elo": 1668.0,
-      "rank": 36,
+      "rank": 35,
       "codigo_elo": "PA",
       "rating_100": 32.7
+    },
+    "RDC": {
+      "elo": 1666.0,
+      "rank": 36,
+      "codigo_elo": "CD",
+      "rating_100": 32.4
     },
     "JOR": {
       "elo": 1632.0,
