@@ -1,5 +1,5 @@
 {
-  "rodada_cartola_atual": 2,
+  "rodada_cartola_atual": 3,
   "partidas_processadas": [
     "4667751",
     "4667752",
@@ -48,7 +48,7 @@
     "4667822",
     "4667828"
   ],
-  "atualizado_em": "2026-06-23T22:17:20.212542+00:00",
+  "atualizado_em": "2026-06-24T00:40:49.671035+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -11658,7 +11658,7 @@
       }
     }
   },
-  "status_mercado": 2,
+  "status_mercado": 1,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-06-23T22:16:44.483759+00:00"
+  "cartola_atualizado_em": "2026-06-24T00:39:36.494198+00:00"
 }

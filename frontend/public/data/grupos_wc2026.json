@@ -399,7 +399,7 @@
       "match_id": "4667753",
       "finalizada": true,
       "placar": "1 - 1",
-      "valida_cartola": false
+      "valida_cartola": true
     },
     {
       "grupo": "B",
@@ -412,7 +412,7 @@
       "match_id": "4667759",
       "finalizada": true,
       "placar": "4 - 1",
-      "valida_cartola": false
+      "valida_cartola": true
     },
     {
       "grupo": "B",
@@ -425,7 +425,7 @@
       "match_id": "4667760",
       "finalizada": true,
       "placar": "6 - 0",
-      "valida_cartola": false
+      "valida_cartola": true
     },
     {
       "grupo": "A",
@@ -438,7 +438,7 @@
       "match_id": "4667754",
       "finalizada": true,
       "placar": "1 - 0",
-      "valida_cartola": false
+      "valida_cartola": true
     },
     {
       "grupo": "D",
@@ -629,7 +629,7 @@
       "visitante": "SENEGAL",
       "data": "2026-06-22",
       "hora": "21:00:00",
-      "utc": "2026-06-23T00:00:00.000Z",
+      "utc": "2026-06-23T00:00:00Z",
       "match_id": "4667806",
       "finalizada": true,
       "placar": "3 - 2",
@@ -642,7 +642,7 @@
       "visitante": "ALGERIA",
       "data": "2026-06-23",
       "hora": "00:00:00",
-      "utc": "2026-06-23T03:00:00.000Z",
+      "utc": "2026-06-23T03:00:00Z",
       "match_id": "4667814",
       "finalizada": true,
       "placar": "1 - 2",
@@ -655,7 +655,7 @@
       "visitante": "UZBEKISTAN",
       "data": "2026-06-23",
       "hora": "14:00:00",
-      "utc": "2026-06-23T17:00:00.000Z",
+      "utc": "2026-06-23T17:00:00Z",
       "match_id": "4667822",
       "finalizada": true,
       "placar": "5 - 0",
@@ -668,7 +668,7 @@
       "visitante": "GHANA",
       "data": "2026-06-23",
       "hora": "17:00:00",
-      "utc": "2026-06-23T20:00:00.000Z",
+      "utc": "2026-06-23T20:00:00Z",
       "match_id": "4667828",
       "finalizada": true,
       "placar": "0 - 0",
@@ -684,8 +684,8 @@
       "utc": "2026-06-23T23:00:00.000Z",
       "match_id": "4667827",
       "finalizada": false,
-      "placar": null,
-      "valida_cartola": false
+      "placar": "0 - 1",
+      "valida_cartola": true
     },
     {
       "grupo": "K",
@@ -694,11 +694,11 @@
       "visitante": "DR CONGO",
       "data": "2026-06-23",
       "hora": "23:00:00",
-      "utc": "2026-06-24T02:00:00Z",
+      "utc": "2026-06-24T02:00:00.000Z",
       "match_id": "4667821",
       "finalizada": false,
       "placar": null,
-      "valida_cartola": false
+      "valida_cartola": true
     },
     {
       "grupo": "B",
@@ -707,7 +707,7 @@
       "visitante": "CANADA",
       "data": "2026-06-24",
       "hora": "16:00:00",
-      "utc": "2026-06-24T19:00:00Z",
+      "utc": "2026-06-24T19:00:00.000Z",
       "match_id": "4667761",
       "finalizada": false,
       "placar": null,
@@ -720,7 +720,7 @@
       "visitante": "QATAR",
       "data": "2026-06-24",
       "hora": "16:00:00",
-      "utc": "2026-06-24T19:00:00Z",
+      "utc": "2026-06-24T19:00:00.000Z",
       "match_id": "4667762",
       "finalizada": false,
       "placar": null,
@@ -733,7 +733,7 @@
       "visitante": "BRAZIL",
       "data": "2026-06-24",
       "hora": "19:00:00",
-      "utc": "2026-06-24T22:00:00Z",
+      "utc": "2026-06-24T22:00:00.000Z",
       "match_id": "4667768",
       "finalizada": false,
       "placar": null,
@@ -746,7 +746,7 @@
       "visitante": "HAITI",
       "data": "2026-06-24",
       "hora": "19:00:00",
-      "utc": "2026-06-24T22:00:00Z",
+      "utc": "2026-06-24T22:00:00.000Z",
       "match_id": "4667769",
       "finalizada": false,
       "placar": null,
