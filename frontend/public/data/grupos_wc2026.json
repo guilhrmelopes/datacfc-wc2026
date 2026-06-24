@@ -696,8 +696,8 @@
       "hora": "23:00:00",
       "utc": "2026-06-24T02:00:00.000Z",
       "match_id": "4667821",
-      "finalizada": false,
-      "placar": "0 - 0",
+      "finalizada": true,
+      "placar": "1 - 0",
       "valida_cartola": true
     },
     {

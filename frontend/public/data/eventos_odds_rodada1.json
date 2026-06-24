@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-23T00:55:55.470386+00:00",
+  "atualizado_em": "2026-06-24T05:14:17.654116+00:00",
   "rodada": 3,
   "eventos": [
     {
@@ -342,28 +342,28 @@
       "id": 66456924,
       "home": "SWITZERLAND",
       "away": "CANADA",
-      "date": "2026-06-24T19:00:00Z",
+      "date": "2026-06-24T19:00:00.000Z",
       "fixture_id": "4667761"
     },
     {
       "id": 66456926,
       "home": "BOSNIA AND HERZEGOVINA",
       "away": "QATAR",
-      "date": "2026-06-24T19:00:00Z",
+      "date": "2026-06-24T19:00:00.000Z",
       "fixture_id": "4667762"
     },
     {
       "id": 66456936,
       "home": "SCOTLAND",
       "away": "BRAZIL",
-      "date": "2026-06-24T22:00:00Z",
+      "date": "2026-06-24T22:00:00.000Z",
       "fixture_id": "4667768"
     },
     {
       "id": 66456938,
       "home": "MOROCCO",
       "away": "HAITI",
-      "date": "2026-06-24T22:00:00Z",
+      "date": "2026-06-24T22:00:00.000Z",
       "fixture_id": "4667769"
     },
     {
