@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-24T22:31:38.212651+00:00",
+  "atualizado_em": "2026-06-25T00:30:38.168993+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ARG": {
@@ -26,23 +26,23 @@
       "codigo_elo": "EN",
       "rating_100": 84.2
     },
+    "BRA": {
+      "elo": 2009.0,
+      "rank": 5,
+      "codigo_elo": "BR",
+      "rating_100": 81.6
+    },
     "COL": {
       "elo": 2006.0,
-      "rank": 5,
+      "rank": 6,
       "codigo_elo": "CO",
       "rating_100": 81.2
     },
     "POR": {
       "elo": 1988.0,
-      "rank": 6,
+      "rank": 7,
       "codigo_elo": "PT",
       "rating_100": 78.7
-    },
-    "BRA": {
-      "elo": 1986.0,
-      "rank": 7,
-      "codigo_elo": "BR",
-      "rating_100": 78.4
     },
     "HOL": {
       "elo": 1972.0,
@@ -86,17 +86,17 @@
       "codigo_elo": "MX",
       "rating_100": 66.2
     },
+    "MAR": {
+      "elo": 1877.0,
+      "rank": 15,
+      "codigo_elo": "MA",
+      "rating_100": 63.6
+    },
     "BEL": {
       "elo": 1869.0,
-      "rank": 15,
+      "rank": 16,
       "codigo_elo": "BE",
       "rating_100": 62.5
-    },
-    "MAR": {
-      "elo": 1866.0,
-      "rank": 16,
-      "codigo_elo": "MA",
-      "rating_100": 62.1
     },
     "EQU": {
       "elo": 1864.0,
@@ -158,23 +158,23 @@
       "codigo_elo": "KR",
       "rating_100": 49.1
     },
-    "ESC": {
-      "elo": 1768.0,
-      "rank": 27,
-      "codigo_elo": "SQ",
-      "rating_100": 48.7
-    },
     "IRA": {
       "elo": 1766.0,
-      "rank": 28,
+      "rank": 27,
       "codigo_elo": "IR",
       "rating_100": 48.4
     },
     "CAN": {
       "elo": 1748.0,
-      "rank": 29,
+      "rank": 28,
       "codigo_elo": "CA",
       "rating_100": 46.0
+    },
+    "ESC": {
+      "elo": 1745.0,
+      "rank": 29,
+      "codigo_elo": "SQ",
+      "rating_100": 45.6
     },
     "EGI": {
       "elo": 1740.0,
@@ -266,17 +266,17 @@
       "codigo_elo": "NZ",
       "rating_100": 18.8
     },
-    "HAI": {
-      "elo": 1528.0,
-      "rank": 45,
-      "codigo_elo": "HT",
-      "rating_100": 16.0
-    },
     "AFS": {
       "elo": 1527.0,
-      "rank": 46,
+      "rank": 45,
       "codigo_elo": "ZA",
       "rating_100": 15.8
+    },
+    "HAI": {
+      "elo": 1517.0,
+      "rank": 46,
+      "codigo_elo": "HT",
+      "rating_100": 14.5
     },
     "CUR": {
       "elo": 1453.0,

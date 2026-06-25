@@ -3,9 +3,9 @@
     "BOSNIA AND HERZEGOVINA",
     "SWEDEN",
     "CROATIA",
-    "SCOTLAND",
     "ALGERIA",
     "PARAGUAY",
+    "SCOTLAND",
     "CAPE VERDE",
     "BELGIUM"
   ],
@@ -144,9 +144,9 @@
       "V": 2,
       "E": 1,
       "D": 0,
-      "GM": 5,
+      "GM": 7,
       "GS": 1,
-      "SG": 4,
+      "SG": 6,
       "aprov": 77.8
     },
     {
@@ -154,15 +154,15 @@
       "selecao": "MOROCCO",
       "sigla": "MAR",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
-      "P": 4,
+      "P": 7,
       "J": 3,
-      "V": 1,
+      "V": 2,
       "E": 1,
-      "D": 1,
-      "GM": 2,
-      "GS": 2,
-      "SG": 0,
-      "aprov": 44.4
+      "D": 0,
+      "GM": 6,
+      "GS": 3,
+      "SG": 3,
+      "aprov": 77.8
     },
     {
       "posicao": 3,
@@ -175,8 +175,8 @@
       "E": 0,
       "D": 2,
       "GM": 1,
-      "GS": 2,
-      "SG": -1,
+      "GS": 4,
+      "SG": -3,
       "aprov": 33.3
     },
     {
@@ -184,15 +184,15 @@
       "selecao": "HAITI",
       "sigla": "HAI",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HAI/60x60.png",
-      "P": 3,
+      "P": 0,
       "J": 3,
-      "V": 1,
+      "V": 0,
       "E": 0,
-      "D": 2,
-      "GM": 1,
-      "GS": 4,
-      "SG": -3,
-      "aprov": 33.3
+      "D": 3,
+      "GM": 2,
+      "GS": 8,
+      "SG": -6,
+      "aprov": 0.0
     }
   ],
   "D": [
