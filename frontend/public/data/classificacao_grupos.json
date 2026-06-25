@@ -1,13 +1,13 @@
 {
   "melhores_terceiros": [
+    "ECUADOR",
     "BOSNIA AND HERZEGOVINA",
     "SWEDEN",
     "CROATIA",
     "SOUTH KOREA",
     "ALGERIA",
     "PARAGUAY",
-    "SCOTLAND",
-    "CAPE VERDE"
+    "SCOTLAND"
   ],
   "A": [
     {
@@ -263,15 +263,15 @@
       "selecao": "GERMANY",
       "sigla": "ALE",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ALE/60x60.png",
-      "P": 7,
+      "P": 6,
       "J": 3,
       "V": 2,
-      "E": 1,
-      "D": 0,
+      "E": 0,
+      "D": 1,
       "GM": 10,
-      "GS": 3,
-      "SG": 7,
-      "aprov": 77.8
+      "GS": 4,
+      "SG": 6,
+      "aprov": 66.7
     },
     {
       "posicao": 2,
@@ -283,9 +283,9 @@
       "V": 2,
       "E": 0,
       "D": 1,
-      "GM": 3,
+      "GM": 4,
       "GS": 2,
-      "SG": 1,
+      "SG": 2,
       "aprov": 66.7
     },
     {
@@ -293,15 +293,15 @@
       "selecao": "ECUADOR",
       "sigla": "EQU",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
-      "P": 2,
+      "P": 4,
       "J": 3,
-      "V": 0,
-      "E": 2,
+      "V": 1,
+      "E": 1,
       "D": 1,
-      "GM": 1,
+      "GM": 2,
       "GS": 2,
-      "SG": -1,
-      "aprov": 22.2
+      "SG": 0,
+      "aprov": 44.4
     },
     {
       "posicao": 4,
@@ -314,8 +314,8 @@
       "E": 1,
       "D": 2,
       "GM": 1,
-      "GS": 8,
-      "SG": -7,
+      "GS": 9,
+      "SG": -8,
       "aprov": 11.1
     }
   ],

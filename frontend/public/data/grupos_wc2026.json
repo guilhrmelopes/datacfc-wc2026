@@ -787,8 +787,8 @@
       "hora": "17:00:00",
       "utc": "2026-06-25T20:00:00.000Z",
       "match_id": "4667781",
-      "finalizada": false,
-      "placar": "1 - 1",
+      "finalizada": true,
+      "placar": "2 - 1",
       "valida_cartola": true
     },
     {
@@ -800,8 +800,8 @@
       "hora": "17:00:00",
       "utc": "2026-06-25T20:00:00.000Z",
       "match_id": "4667782",
-      "finalizada": false,
-      "placar": "0 - 1",
+      "finalizada": true,
+      "placar": "0 - 2",
       "valida_cartola": true
     },
     {
