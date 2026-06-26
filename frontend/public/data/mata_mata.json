@@ -569,12 +569,12 @@
           },
           "visitante": {
             "rotulo": "TBD",
-            "nome_fotmob": "1F/Morocco",
+            "nome_fotmob": "Netherlands/Morocco",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2053132
+            "team_id": 2055187
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -623,13 +623,13 @@
           "stage": "1/8",
           "match_id": "4653845",
           "mandante": {
-            "rotulo": "US3",
-            "nome_fotmob": "USA/3BEFIJ",
+            "rotulo": "TBD",
+            "nome_fotmob": "USA/Bosnia and Herzegovina",
             "selecao": null,
-            "sigla": "US3",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2040089
+            "team_id": 2055190
           },
           "visitante": {
             "rotulo": "1GA",
@@ -728,13 +728,13 @@
             "team_id": 2046745
           },
           "visitante": {
-            "rotulo": "2DG",
-            "nome_fotmob": "2D/2G",
+            "rotulo": "TBD",
+            "nome_fotmob": "Australia/2G",
             "selecao": null,
-            "sigla": "2DG",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1685733
+            "team_id": 2055136
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-26T02:50:34.640144+00:00"
+  "atualizado_em": "2026-06-26T06:51:29.003629+00:00"
 }
