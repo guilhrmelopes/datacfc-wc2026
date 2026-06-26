@@ -60,7 +60,7 @@
     "4667787",
     "4667788"
   ],
-  "atualizado_em": "2026-06-26T01:31:59.248814+00:00",
+  "atualizado_em": "2026-06-26T01:44:21.075823+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -14613,7 +14613,7 @@
   },
   "status_mercado": 2,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-06-26T01:31:03.904671+00:00",
+  "cartola_atualizado_em": "2026-06-26T01:43:24.739433+00:00",
   "playoffs_ativos": false,
   "transicao_playoffs": true
 }
