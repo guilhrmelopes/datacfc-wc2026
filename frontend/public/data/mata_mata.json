@@ -529,9 +529,9 @@
           "mandante": {
             "rotulo": "G3A",
             "nome_fotmob": "Germany/3ABCDF",
-            "selecao": "GERMANY",
-            "sigla": "ALE",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ALE/60x60.png",
+            "selecao": null,
+            "sigla": "G3A",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2042059
           },
@@ -561,18 +561,18 @@
           "mandante": {
             "rotulo": "TBD",
             "nome_fotmob": "South Africa/Canada",
-            "selecao": "SOUTH AFRICA",
-            "sigla": "AFS",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AFS/60x60.png",
+            "selecao": null,
+            "sigla": "TBD",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2053134
           },
           "visitante": {
             "rotulo": "TBD",
             "nome_fotmob": "1F/Morocco",
-            "selecao": "MOROCCO",
-            "sigla": "MAR",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
+            "selecao": null,
+            "sigla": "TBD",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2053132
           },
@@ -625,9 +625,9 @@
           "mandante": {
             "rotulo": "US3",
             "nome_fotmob": "USA/3BEFIJ",
-            "selecao": "UNITED STATES",
-            "sigla": "EUA",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EUA/60x60.png",
+            "selecao": null,
+            "sigla": "US3",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2040089
           },
@@ -657,18 +657,18 @@
           "mandante": {
             "rotulo": "TBD",
             "nome_fotmob": "Brazil/2F",
-            "selecao": "BRAZIL",
-            "sigla": "BRA",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BRA/60x60.png",
+            "selecao": null,
+            "sigla": "TBD",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2053131
           },
           "visitante": {
             "rotulo": "TBD",
             "nome_fotmob": "Ivory Coast/2I",
-            "selecao": "IVORY COAST",
-            "sigla": "CDM",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CDM/60x60.png",
+            "selecao": null,
+            "sigla": "TBD",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2055059
           },
@@ -689,9 +689,9 @@
           "mandante": {
             "rotulo": "M3C",
             "nome_fotmob": "Mexico/3CEFHI",
-            "selecao": "MEXICO",
-            "sigla": "MEX",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MEX/60x60.png",
+            "selecao": null,
+            "sigla": "M3C",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2037340
           },
@@ -721,9 +721,9 @@
           "mandante": {
             "rotulo": "AR2",
             "nome_fotmob": "Argentina/2H",
-            "selecao": "ARGENTINA",
-            "sigla": "ARG",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
+            "selecao": null,
+            "sigla": "AR2",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2046745
           },
@@ -753,9 +753,9 @@
           "mandante": {
             "rotulo": "TBD",
             "nome_fotmob": "Switzerland/3EFGIJ",
-            "selecao": "SWITZERLAND",
-            "sigla": "SUI",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
+            "selecao": null,
+            "sigla": "TBD",
+            "url_escudo": null,
             "tbd": true,
             "team_id": 2053120
           },
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-26T00:00:09.396446+00:00"
+  "atualizado_em": "2026-06-26T00:05:15.491676+00:00"
 }

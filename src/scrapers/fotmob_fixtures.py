@@ -170,6 +170,9 @@ def _normalizar_participante_mata_mata(
     lado: str,
     meta_por_selecao: dict[str, dict],
     meta_por_team_id: dict[int, dict],
+    *,
+    stage: str,
+    partida: dict | None = None,
 ) -> dict:
     prefixo = "home" if lado == "home" else "away"
     nome = matchup.get(f"{prefixo}Team", "")
@@ -177,31 +180,58 @@ def _normalizar_participante_mata_mata(
     team_id = matchup.get(f"{prefixo}TeamId")
     tbd_flag = bool(matchup.get(f"tbdTeam{1 if lado == 'home' else 2}"))
 
-    selecao, _ = _resolver_selecao_fotmob(nome)
+    status = (partida or {}).get("status") or {}
+    finalizada = bool(status.get("finished"))
+    em_andamento = bool(status.get("started")) and not finalizada
+    fase_inicial = stage == "1/16"
+    confronto_definido = fase_inicial or finalizada or em_andamento
+
+    if not confronto_definido:
+        rotulo = sigla_api or nome
+        return {
+            "rotulo": rotulo,
+            "nome_fotmob": nome,
+            "selecao": None,
+            "sigla": rotulo,
+            "url_escudo": None,
+            "tbd": True,
+            "team_id": team_id,
+        }
+
+    bloco_partida = (partida or {}).get(prefixo) or {}
+    nome_efetivo = bloco_partida.get("name") or nome
+    team_id_efetivo = bloco_partida.get("id") or team_id
+    sigla_partida = bloco_partida.get("shortName")
+
+    selecao, _ = _resolver_selecao_fotmob(nome_efetivo)
     if not selecao:
-        selecao = fotmob_para_selecao(nome)
+        selecao = fotmob_para_selecao(nome_efetivo)
 
     meta = None
     if selecao:
         meta = meta_por_selecao.get(selecao)
-    elif team_id is not None:
-        meta = meta_por_team_id.get(int(team_id))
+    elif team_id_efetivo is not None:
+        meta = meta_por_team_id.get(int(team_id_efetivo))
 
-    placeholder = _is_placeholder_fotmob(nome, tbd_flag)
+    placeholder = _is_placeholder_fotmob(nome_efetivo, tbd_flag and fase_inicial)
     escudo = None
     if meta and meta.get("url_escudo"):
         escudo = meta["url_escudo"]
-    elif not placeholder and team_id is not None:
-        escudo = _url_escudo_fotmob(int(team_id))
+    elif not placeholder and team_id_efetivo is not None:
+        escudo = _url_escudo_fotmob(int(team_id_efetivo))
+
+    sigla_exibicao = (meta or {}).get("sigla") if not placeholder else None
+    if not sigla_exibicao:
+        sigla_exibicao = sigla_partida or sigla_api or nome_efetivo
 
     return {
-        "rotulo": sigla_api or nome,
-        "nome_fotmob": nome,
-        "selecao": selecao,
-        "sigla": (meta or {}).get("sigla") or sigla_api,
+        "rotulo": sigla_api or nome_efetivo,
+        "nome_fotmob": nome_efetivo,
+        "selecao": selecao if not placeholder else None,
+        "sigla": sigla_exibicao,
         "url_escudo": escudo,
         "tbd": placeholder,
-        "team_id": team_id,
+        "team_id": team_id_efetivo,
     }
 
 
@@ -247,10 +277,20 @@ def _normalizar_confronto_mata_mata(
         "stage": matchup.get("stage"),
         "match_id": str(partida.get("matchId") or ""),
         "mandante": _normalizar_participante_mata_mata(
-            matchup, "home", meta_por_selecao, meta_por_team_id
+            matchup,
+            "home",
+            meta_por_selecao,
+            meta_por_team_id,
+            stage=matchup.get("stage") or "",
+            partida=partida,
         ),
         "visitante": _normalizar_participante_mata_mata(
-            matchup, "away", meta_por_selecao, meta_por_team_id
+            matchup,
+            "away",
+            meta_por_selecao,
+            meta_por_team_id,
+            stage=matchup.get("stage") or "",
+            partida=partida,
         ),
         "placar_mandante": placar_mandante,
         "placar_visitante": placar_visitante,
