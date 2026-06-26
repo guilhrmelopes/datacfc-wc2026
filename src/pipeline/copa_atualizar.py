@@ -19,8 +19,10 @@ from scrapers.cartola_copa import buscar_dados_cartola_copa
 from scrapers.fotmob_fixtures import (
     PartidaCalendario,
     extrair_classificacao_grupos,
+    extrair_mata_mata_fotmob,
     extrair_melhores_terceiros_fotmob,
     listar_partidas_grupos,
+    validar_mata_mata,
 )
 from scrapers.fotmob_mapa import SIGLA_PARA_FOTMOB_STATS
 
@@ -179,6 +181,14 @@ def atualizar_classificacao(caminho: Path, caminho_selecoes: Path) -> None:
     _salvar_json(caminho, payload)
 
 
+def atualizar_mata_mata(caminho: Path, caminho_selecoes: Path) -> None:
+    selecoes = _carregar_json(caminho_selecoes)
+    payload = extrair_mata_mata_fotmob(selecoes)
+    validar_mata_mata(payload)
+    payload["atualizado_em"] = datetime.now(timezone.utc).isoformat()
+    _salvar_json(caminho, payload)
+
+
 def _rodada_efetiva(partidas: list[PartidaCalendario], estado: dict) -> int:
     rodada = int(estado.get("rodada_cartola_atual") or 1)
     while rodada < 3:
@@ -288,6 +298,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     caminho_grupos = pasta_dados / "grupos_wc2026.json"
     caminho_selecoes = pasta_dados / "selecoes.json"
     caminho_classificacao = pasta_dados / "classificacao_grupos.json"
+    caminho_mata_mata = pasta_dados / "mata_mata.json"
     caminho_pontuacao = pasta_dados / "pontuacao_cedida.json"
     caminho_mercado = pasta_dados / "jogadores_mercado.json"
 
@@ -297,6 +308,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
 
     sincronizar_calendario(partidas, caminho_grupos, caminho_selecoes)
     atualizar_classificacao(caminho_classificacao, caminho_selecoes)
+    atualizar_mata_mata(caminho_mata_mata, caminho_selecoes)
 
     selecoes_pre = _carregar_json(caminho_selecoes)
     from scrapers.elo_ratings import atualizar_selecoes_elo

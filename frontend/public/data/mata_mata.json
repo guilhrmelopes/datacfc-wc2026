@@ -1,0 +1,1051 @@
+{
+  "modo": "As it stands",
+  "fonte": "playoff.rounds",
+  "fases": [
+    {
+      "stage": "1/16",
+      "confrontos": [
+        {
+          "draw_order": 1,
+          "stage": "1/16",
+          "match_id": "4653703",
+          "mandante": {
+            "rotulo": "GER",
+            "nome_fotmob": "Germany",
+            "selecao": "GERMANY",
+            "sigla": "ALE",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ALE/60x60.png",
+            "tbd": false,
+            "team_id": 8570
+          },
+          "visitante": {
+            "rotulo": "PAR",
+            "nome_fotmob": "Paraguay",
+            "selecao": "PARAGUAY",
+            "sigla": "PAR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/PAR/60x60.png",
+            "tbd": false,
+            "team_id": 6724
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-06-29",
+          "hora": "15:30:00",
+          "utc_time": "2026-06-29T18:30:00.000Z"
+        },
+        {
+          "draw_order": 2,
+          "stage": "1/16",
+          "match_id": "4653704",
+          "mandante": {
+            "rotulo": "FRA",
+            "nome_fotmob": "France",
+            "selecao": "FRANCE",
+            "sigla": "FRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/FRA/60x60.png",
+            "tbd": false,
+            "team_id": 6723
+          },
+          "visitante": {
+            "rotulo": "SWE",
+            "nome_fotmob": "Sweden",
+            "selecao": "SWEDEN",
+            "sigla": "SUE",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUE/60x60.png",
+            "tbd": false,
+            "team_id": 8520
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-06-30",
+          "hora": "16:00:00",
+          "utc_time": "2026-06-30T19:00:00.000Z"
+        },
+        {
+          "draw_order": 3,
+          "stage": "1/16",
+          "match_id": "4653705",
+          "mandante": {
+            "rotulo": "RSA",
+            "nome_fotmob": "South Africa",
+            "selecao": "SOUTH AFRICA",
+            "sigla": "AFS",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AFS/60x60.png",
+            "tbd": false,
+            "team_id": 6316
+          },
+          "visitante": {
+            "rotulo": "CAN",
+            "nome_fotmob": "Canada",
+            "selecao": "CANADA",
+            "sigla": "CAN",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
+            "tbd": false,
+            "team_id": 5810
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-06-28",
+          "hora": "14:00:00",
+          "utc_time": "2026-06-28T17:00:00.000Z"
+        },
+        {
+          "draw_order": 4,
+          "stage": "1/16",
+          "match_id": "4653706",
+          "mandante": {
+            "rotulo": "NED",
+            "nome_fotmob": "Netherlands",
+            "selecao": "NETHERLANDS",
+            "sigla": "HOL",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HOL/60x60.png",
+            "tbd": false,
+            "team_id": 6708
+          },
+          "visitante": {
+            "rotulo": "MAR",
+            "nome_fotmob": "Morocco",
+            "selecao": "MOROCCO",
+            "sigla": "MAR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
+            "tbd": false,
+            "team_id": 6262
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-06-29",
+          "hora": "20:00:00",
+          "utc_time": "2026-06-29T23:00:00.000Z"
+        },
+        {
+          "draw_order": 5,
+          "stage": "1/16",
+          "match_id": "4653707",
+          "mandante": {
+            "rotulo": "POR",
+            "nome_fotmob": "Portugal",
+            "selecao": "PORTUGAL",
+            "sigla": "POR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/POR/60x60.png",
+            "tbd": false,
+            "team_id": 8361
+          },
+          "visitante": {
+            "rotulo": "GHA",
+            "nome_fotmob": "Ghana",
+            "selecao": "GHANA",
+            "sigla": "GAN",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/GAN/60x60.png",
+            "tbd": false,
+            "team_id": 6714
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-02",
+          "hora": "18:00:00",
+          "utc_time": "2026-07-02T21:00:00.000Z"
+        },
+        {
+          "draw_order": 6,
+          "stage": "1/16",
+          "match_id": "4653708",
+          "mandante": {
+            "rotulo": "ESP",
+            "nome_fotmob": "Spain",
+            "selecao": "SPAIN",
+            "sigla": "ESP",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
+            "tbd": false,
+            "team_id": 6720
+          },
+          "visitante": {
+            "rotulo": "AUT",
+            "nome_fotmob": "Austria",
+            "selecao": "AUSTRIA",
+            "sigla": "AUT",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUT/60x60.png",
+            "tbd": false,
+            "team_id": 8255
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-02",
+          "hora": "14:00:00",
+          "utc_time": "2026-07-02T17:00:00.000Z"
+        },
+        {
+          "draw_order": 7,
+          "stage": "1/16",
+          "match_id": "4653709",
+          "mandante": {
+            "rotulo": "USA",
+            "nome_fotmob": "USA",
+            "selecao": "UNITED STATES",
+            "sigla": "EUA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EUA/60x60.png",
+            "tbd": false,
+            "team_id": 6713
+          },
+          "visitante": {
+            "rotulo": "BIH",
+            "nome_fotmob": "Bosnia and Herzegovina",
+            "selecao": "BOSNIA AND HERZEGOVINA",
+            "sigla": "BOS",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BOS/60x60.png",
+            "tbd": false,
+            "team_id": 10106
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-01",
+          "hora": "19:00:00",
+          "utc_time": "2026-07-01T22:00:00.000Z"
+        },
+        {
+          "draw_order": 8,
+          "stage": "1/16",
+          "match_id": "4653710",
+          "mandante": {
+            "rotulo": "EGY",
+            "nome_fotmob": "Egypt",
+            "selecao": "EGYPT",
+            "sigla": "EGI",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
+            "tbd": false,
+            "team_id": 10255
+          },
+          "visitante": {
+            "rotulo": "KOR",
+            "nome_fotmob": "South Korea",
+            "selecao": "SOUTH KOREA",
+            "sigla": "COR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COR/60x60.png",
+            "tbd": false,
+            "team_id": 7804
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-01",
+          "hora": "15:00:00",
+          "utc_time": "2026-07-01T18:00:00.000Z"
+        },
+        {
+          "draw_order": 9,
+          "stage": "1/16",
+          "match_id": "4653711",
+          "mandante": {
+            "rotulo": "BRA",
+            "nome_fotmob": "Brazil",
+            "selecao": "BRAZIL",
+            "sigla": "BRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BRA/60x60.png",
+            "tbd": false,
+            "team_id": 8256
+          },
+          "visitante": {
+            "rotulo": "JPN",
+            "nome_fotmob": "Japan",
+            "selecao": "JAPAN",
+            "sigla": "JAP",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JAP/60x60.png",
+            "tbd": false,
+            "team_id": 6715
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-06-29",
+          "hora": "12:00:00",
+          "utc_time": "2026-06-29T15:00:00.000Z"
+        },
+        {
+          "draw_order": 10,
+          "stage": "1/16",
+          "match_id": "4653712",
+          "mandante": {
+            "rotulo": "CIV",
+            "nome_fotmob": "Ivory Coast",
+            "selecao": "IVORY COAST",
+            "sigla": "CDM",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CDM/60x60.png",
+            "tbd": false,
+            "team_id": 6709
+          },
+          "visitante": {
+            "rotulo": "NOR",
+            "nome_fotmob": "Norway",
+            "selecao": "NORWAY",
+            "sigla": "NOR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NOR/60x60.png",
+            "tbd": false,
+            "team_id": 8492
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-06-30",
+          "hora": "12:00:00",
+          "utc_time": "2026-06-30T15:00:00.000Z"
+        },
+        {
+          "draw_order": 11,
+          "stage": "1/16",
+          "match_id": "4653713",
+          "mandante": {
+            "rotulo": "MEX",
+            "nome_fotmob": "Mexico",
+            "selecao": "MEXICO",
+            "sigla": "MEX",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MEX/60x60.png",
+            "tbd": false,
+            "team_id": 6710
+          },
+          "visitante": {
+            "rotulo": "SCO",
+            "nome_fotmob": "Scotland",
+            "selecao": "SCOTLAND",
+            "sigla": "ESC",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESC/60x60.png",
+            "tbd": false,
+            "team_id": 8498
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-06-30",
+          "hora": "20:00:00",
+          "utc_time": "2026-06-30T23:00:00.000Z"
+        },
+        {
+          "draw_order": 12,
+          "stage": "1/16",
+          "match_id": "4653714",
+          "mandante": {
+            "rotulo": "ENG",
+            "nome_fotmob": "England",
+            "selecao": "ENGLAND",
+            "sigla": "ING",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ING/60x60.png",
+            "tbd": false,
+            "team_id": 8491
+          },
+          "visitante": {
+            "rotulo": "ECU",
+            "nome_fotmob": "Ecuador",
+            "selecao": "ECUADOR",
+            "sigla": "EQU",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
+            "tbd": false,
+            "team_id": 6707
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-01",
+          "hora": "11:00:00",
+          "utc_time": "2026-07-01T14:00:00.000Z"
+        },
+        {
+          "draw_order": 13,
+          "stage": "1/16",
+          "match_id": "4653715",
+          "mandante": {
+            "rotulo": "ARG",
+            "nome_fotmob": "Argentina",
+            "selecao": "ARGENTINA",
+            "sigla": "ARG",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
+            "tbd": false,
+            "team_id": 6706
+          },
+          "visitante": {
+            "rotulo": "URU",
+            "nome_fotmob": "Uruguay",
+            "selecao": "URUGUAY",
+            "sigla": "URU",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/URU/60x60.png",
+            "tbd": false,
+            "team_id": 5796
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-03",
+          "hora": "17:00:00",
+          "utc_time": "2026-07-03T20:00:00.000Z"
+        },
+        {
+          "draw_order": 14,
+          "stage": "1/16",
+          "match_id": "4653716",
+          "mandante": {
+            "rotulo": "AUS",
+            "nome_fotmob": "Australia",
+            "selecao": "AUSTRALIA",
+            "sigla": "AUS",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUS/60x60.png",
+            "tbd": false,
+            "team_id": 6716
+          },
+          "visitante": {
+            "rotulo": "IRN",
+            "nome_fotmob": "Iran",
+            "selecao": "IRAN",
+            "sigla": "IRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
+            "tbd": false,
+            "team_id": 6711
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-03",
+          "hora": "13:00:00",
+          "utc_time": "2026-07-03T16:00:00.000Z"
+        },
+        {
+          "draw_order": 15,
+          "stage": "1/16",
+          "match_id": "4653717",
+          "mandante": {
+            "rotulo": "SUI",
+            "nome_fotmob": "Switzerland",
+            "selecao": "SWITZERLAND",
+            "sigla": "SUI",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
+            "tbd": false,
+            "team_id": 6717
+          },
+          "visitante": {
+            "rotulo": "ALG",
+            "nome_fotmob": "Algeria",
+            "selecao": "ALGERIA",
+            "sigla": "AGL",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
+            "tbd": false,
+            "team_id": 6317
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-02",
+          "hora": "22:00:00",
+          "utc_time": "2026-07-03T01:00:00.000Z"
+        },
+        {
+          "draw_order": 16,
+          "stage": "1/16",
+          "match_id": "4653718",
+          "mandante": {
+            "rotulo": "COL",
+            "nome_fotmob": "Colombia",
+            "selecao": "COLOMBIA",
+            "sigla": "COL",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COL/60x60.png",
+            "tbd": false,
+            "team_id": 8258
+          },
+          "visitante": {
+            "rotulo": "CRO",
+            "nome_fotmob": "Croatia",
+            "selecao": "CROATIA",
+            "sigla": "CRO",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CRO/60x60.png",
+            "tbd": false,
+            "team_id": 10155
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-03",
+          "hora": "20:30:00",
+          "utc_time": "2026-07-03T23:30:00.000Z"
+        }
+      ]
+    },
+    {
+      "stage": "1/8",
+      "confrontos": [
+        {
+          "draw_order": 1,
+          "stage": "1/8",
+          "match_id": "4653842",
+          "mandante": {
+            "rotulo": "G3A",
+            "nome_fotmob": "Germany/3ABCDF",
+            "selecao": "GERMANY",
+            "sigla": "ALE",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ALE/60x60.png",
+            "tbd": true,
+            "team_id": 2042059
+          },
+          "visitante": {
+            "rotulo": "1IC",
+            "nome_fotmob": "1I/3CDFGH",
+            "selecao": null,
+            "sigla": "1IC",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1685723
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-04",
+          "hora": "16:00:00",
+          "utc_time": "2026-07-04T19:00:00.000Z"
+        },
+        {
+          "draw_order": 2,
+          "stage": "1/8",
+          "match_id": "4653843",
+          "mandante": {
+            "rotulo": "TBD",
+            "nome_fotmob": "South Africa/Canada",
+            "selecao": "SOUTH AFRICA",
+            "sigla": "AFS",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AFS/60x60.png",
+            "tbd": true,
+            "team_id": 2053134
+          },
+          "visitante": {
+            "rotulo": "TBD",
+            "nome_fotmob": "1F/Morocco",
+            "selecao": "MOROCCO",
+            "sigla": "MAR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
+            "tbd": true,
+            "team_id": 2053132
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-04",
+          "hora": "12:00:00",
+          "utc_time": "2026-07-04T15:00:00.000Z"
+        },
+        {
+          "draw_order": 3,
+          "stage": "1/8",
+          "match_id": "4653844",
+          "mandante": {
+            "rotulo": "2KL",
+            "nome_fotmob": "2K/2L",
+            "selecao": null,
+            "sigla": "2KL",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1685729
+          },
+          "visitante": {
+            "rotulo": "1HJ",
+            "nome_fotmob": "1H/2J",
+            "selecao": null,
+            "sigla": "1HJ",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1685730
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-06",
+          "hora": "14:00:00",
+          "utc_time": "2026-07-06T17:00:00.000Z"
+        },
+        {
+          "draw_order": 4,
+          "stage": "1/8",
+          "match_id": "4653845",
+          "mandante": {
+            "rotulo": "US3",
+            "nome_fotmob": "USA/3BEFIJ",
+            "selecao": "UNITED STATES",
+            "sigla": "EUA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EUA/60x60.png",
+            "tbd": true,
+            "team_id": 2040089
+          },
+          "visitante": {
+            "rotulo": "1GA",
+            "nome_fotmob": "1G/3AEHIJ",
+            "selecao": null,
+            "sigla": "1GA",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1685727
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-06",
+          "hora": "19:00:00",
+          "utc_time": "2026-07-06T22:00:00.000Z"
+        },
+        {
+          "draw_order": 5,
+          "stage": "1/8",
+          "match_id": "4653846",
+          "mandante": {
+            "rotulo": "TBD",
+            "nome_fotmob": "Brazil/2F",
+            "selecao": "BRAZIL",
+            "sigla": "BRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BRA/60x60.png",
+            "tbd": true,
+            "team_id": 2053131
+          },
+          "visitante": {
+            "rotulo": "TBD",
+            "nome_fotmob": "Ivory Coast/2I",
+            "selecao": "IVORY COAST",
+            "sigla": "CDM",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CDM/60x60.png",
+            "tbd": true,
+            "team_id": 2055059
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-05",
+          "hora": "15:00:00",
+          "utc_time": "2026-07-05T18:00:00.000Z"
+        },
+        {
+          "draw_order": 6,
+          "stage": "1/8",
+          "match_id": "4653847",
+          "mandante": {
+            "rotulo": "M3C",
+            "nome_fotmob": "Mexico/3CEFHI",
+            "selecao": "MEXICO",
+            "sigla": "MEX",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MEX/60x60.png",
+            "tbd": true,
+            "team_id": 2037340
+          },
+          "visitante": {
+            "rotulo": "1LE",
+            "nome_fotmob": "1L/3EHIJK",
+            "selecao": null,
+            "sigla": "1LE",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1685728
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-05",
+          "hora": "19:00:00",
+          "utc_time": "2026-07-05T22:00:00.000Z"
+        },
+        {
+          "draw_order": 7,
+          "stage": "1/8",
+          "match_id": "4653848",
+          "mandante": {
+            "rotulo": "AR2",
+            "nome_fotmob": "Argentina/2H",
+            "selecao": "ARGENTINA",
+            "sigla": "ARG",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
+            "tbd": true,
+            "team_id": 2046745
+          },
+          "visitante": {
+            "rotulo": "2DG",
+            "nome_fotmob": "2D/2G",
+            "selecao": null,
+            "sigla": "2DG",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1685733
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-07",
+          "hora": "11:00:00",
+          "utc_time": "2026-07-07T14:00:00.000Z"
+        },
+        {
+          "draw_order": 8,
+          "stage": "1/8",
+          "match_id": "4653849",
+          "mandante": {
+            "rotulo": "TBD",
+            "nome_fotmob": "Switzerland/3EFGIJ",
+            "selecao": "SWITZERLAND",
+            "sigla": "SUI",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
+            "tbd": true,
+            "team_id": 2053120
+          },
+          "visitante": {
+            "rotulo": "1KD",
+            "nome_fotmob": "1K/3DEIJL",
+            "selecao": null,
+            "sigla": "1KD",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1685734
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-07",
+          "hora": "15:00:00",
+          "utc_time": "2026-07-07T18:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "stage": "1/4",
+      "confrontos": [
+        {
+          "draw_order": 1,
+          "stage": "1/4",
+          "match_id": "4653851",
+          "mandante": {
+            "rotulo": "EF1",
+            "nome_fotmob": "Winner EF 1",
+            "selecao": null,
+            "sigla": "EF1",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440908
+          },
+          "visitante": {
+            "rotulo": "EF2",
+            "nome_fotmob": "Winner EF 2",
+            "selecao": null,
+            "sigla": "EF2",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440909
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-09",
+          "hora": "15:00:00",
+          "utc_time": "2026-07-09T18:00:00.000Z"
+        },
+        {
+          "draw_order": 2,
+          "stage": "1/4",
+          "match_id": "4653853",
+          "mandante": {
+            "rotulo": "EF5",
+            "nome_fotmob": "Winner EF 5",
+            "selecao": null,
+            "sigla": "EF5",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440912
+          },
+          "visitante": {
+            "rotulo": "EF6",
+            "nome_fotmob": "Winner EF 6",
+            "selecao": null,
+            "sigla": "EF6",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440915
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-10",
+          "hora": "14:00:00",
+          "utc_time": "2026-07-10T17:00:00.000Z"
+        },
+        {
+          "draw_order": 3,
+          "stage": "1/4",
+          "match_id": "4653852",
+          "mandante": {
+            "rotulo": "EF3",
+            "nome_fotmob": "Winner EF 3",
+            "selecao": null,
+            "sigla": "EF3",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440910
+          },
+          "visitante": {
+            "rotulo": "EF4",
+            "nome_fotmob": "Winner EF 4",
+            "selecao": null,
+            "sigla": "EF4",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440911
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-11",
+          "hora": "16:00:00",
+          "utc_time": "2026-07-11T19:00:00.000Z"
+        },
+        {
+          "draw_order": 4,
+          "stage": "1/4",
+          "match_id": "4653854",
+          "mandante": {
+            "rotulo": "EF7",
+            "nome_fotmob": "Winner EF 7",
+            "selecao": null,
+            "sigla": "EF7",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440914
+          },
+          "visitante": {
+            "rotulo": "EF8",
+            "nome_fotmob": "Winner EF 8",
+            "selecao": null,
+            "sigla": "EF8",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 1440913
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-11",
+          "hora": "20:00:00",
+          "utc_time": "2026-07-11T23:00:00.000Z"
+        }
+      ]
+    },
+    {
+      "stage": "1/2",
+      "confrontos": [
+        {
+          "draw_order": 1,
+          "stage": "1/2",
+          "match_id": "4653855",
+          "mandante": {
+            "rotulo": "WQ1",
+            "nome_fotmob": "Winner QF 1",
+            "selecao": null,
+            "sigla": "WQ1",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 2036
+          },
+          "visitante": {
+            "rotulo": "WQ2",
+            "nome_fotmob": "Winner QF 2",
+            "selecao": null,
+            "sigla": "WQ2",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 2037
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-14",
+          "hora": "14:00:00",
+          "utc_time": "2026-07-14T17:00:00.000Z"
+        },
+        {
+          "draw_order": 2,
+          "stage": "1/2",
+          "match_id": "4653856",
+          "mandante": {
+            "rotulo": "WQ3",
+            "nome_fotmob": "Winner QF 3",
+            "selecao": null,
+            "sigla": "WQ3",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 2038
+          },
+          "visitante": {
+            "rotulo": "WQ4",
+            "nome_fotmob": "Winner QF 4",
+            "selecao": null,
+            "sigla": "WQ4",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 2039
+          },
+          "placar_mandante": null,
+          "placar_visitante": null,
+          "mandante_venceu": false,
+          "visitante_venceu": false,
+          "finalizada": false,
+          "em_andamento": false,
+          "data": "2026-07-15",
+          "hora": "14:00:00",
+          "utc_time": "2026-07-15T17:00:00.000Z"
+        }
+      ]
+    }
+  ],
+  "final": {
+    "draw_order": -1,
+    "stage": "final",
+    "match_id": "4653858",
+    "mandante": {
+      "rotulo": "WS1",
+      "nome_fotmob": "Winner SF 1",
+      "selecao": null,
+      "sigla": "WS1",
+      "url_escudo": null,
+      "tbd": true,
+      "team_id": 1983
+    },
+    "visitante": {
+      "rotulo": "WS2",
+      "nome_fotmob": "Winner SF 2",
+      "selecao": null,
+      "sigla": "WS2",
+      "url_escudo": null,
+      "tbd": true,
+      "team_id": 1984
+    },
+    "placar_mandante": null,
+    "placar_visitante": null,
+    "mandante_venceu": false,
+    "visitante_venceu": false,
+    "finalizada": false,
+    "em_andamento": false,
+    "data": "2026-07-19",
+    "hora": "14:00:00",
+    "utc_time": "2026-07-19T17:00:00.000Z"
+  },
+  "disputa_bronze": {
+    "draw_order": -1,
+    "stage": "bronze",
+    "match_id": "4653857",
+    "mandante": {
+      "rotulo": "LS1",
+      "nome_fotmob": "Loser SF 1",
+      "selecao": null,
+      "sigla": "LS1",
+      "url_escudo": null,
+      "tbd": true,
+      "team_id": 1981
+    },
+    "visitante": {
+      "rotulo": "LS2",
+      "nome_fotmob": "Loser SF 2",
+      "selecao": null,
+      "sigla": "LS2",
+      "url_escudo": null,
+      "tbd": true,
+      "team_id": 1982
+    },
+    "placar_mandante": null,
+    "placar_visitante": null,
+    "mandante_venceu": false,
+    "visitante_venceu": false,
+    "finalizada": false,
+    "em_andamento": false,
+    "data": "2026-07-18",
+    "hora": "16:00:00",
+    "utc_time": "2026-07-18T19:00:00.000Z"
+  },
+  "atualizado_em": "2026-06-26T00:00:09.396446+00:00"
+}

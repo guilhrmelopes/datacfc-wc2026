@@ -1,5 +1,6 @@
 import type {
   ClassificacaoGrupos,
+  DadosMataMata,
   Jogador,
   JogadorMercado,
   OddsJogadoresData,
@@ -11,6 +12,7 @@ import {
   parseClassificacaoGrupos,
   type ClassificacaoGruposParseada,
 } from "@/lib/classificacaoGrupos";
+import { parseDadosMataMata } from "@/lib/mataMata";
 import type { MlContextoRodadaData } from "@/lib/mlContextoRodada";
 import type { CobradoresCopaData } from "@/lib/cobradoresCopa";
 
@@ -109,6 +111,12 @@ export async function carregarDadosFase(): Promise<{
     "/data/classificacao_grupos.json",
   );
   return { classificacao: parseClassificacaoGrupos(raw) };
+}
+
+/** Dados da aba Mata-mata (chaveamento FotMob — modo "As it stands"). */
+export async function carregarDadosMataMata(): Promise<DadosMataMata> {
+  const raw = await carregarJson<unknown>("/data/mata_mata.json");
+  return parseDadosMataMata(raw);
 }
 
 /** Carrega todos os dados de uma vez (compatibilidade). */

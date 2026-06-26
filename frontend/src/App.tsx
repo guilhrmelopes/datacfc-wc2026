@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { Cabecalho } from "@/components/layout/Cabecalho";
 import { FaseGrupos } from "@/components/fase-grupos/FaseGrupos";
+import { MataMata } from "@/components/mata-mata/MataMata";
 import { MercadoJogadores } from "@/components/mercado/MercadoJogadores";
 import { RadarSelecoes } from "@/components/radar/RadarSelecoes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,11 +11,12 @@ import {
   carregarDadosRadar,
   carregarDadosMercado,
   carregarDadosFase,
+  carregarDadosMataMata,
   type DadosMercado,
 } from "@/lib/data";
-import type { JogadorMercado, PontuacaoCedida, Selecao } from "@/types/dados";
+import type { DadosMataMata, JogadorMercado, PontuacaoCedida, Selecao } from "@/types/dados";
 
-type AbaAtiva = "radar" | "fase" | "mercado";
+type AbaAtiva = "radar" | "fase" | "mata" | "mercado";
 
 const SPINNER = (
   <div className="flex min-h-[200px] items-center justify-center">
@@ -59,6 +61,7 @@ export default function App() {
 
   const radar = useAbaDados(aba, "radar", carregarDadosRadar);
   const fase = useAbaDados(aba, "fase", carregarDadosFase);
+  const mata = useAbaDados<DadosMataMata>(aba, "mata", carregarDadosMataMata);
   const mercado = useAbaDados<DadosMercado>(aba, "mercado", carregarDadosMercado);
 
   return (
@@ -67,6 +70,7 @@ export default function App() {
       <Tabs value={aba} onValueChange={(v) => setAba(v as AbaAtiva)}>
         <TabsList className="mb-2 flex flex-wrap">
           <TabsTrigger value="fase">Fase de Grupos</TabsTrigger>
+          <TabsTrigger value="mata">Mata-mata</TabsTrigger>
           <TabsTrigger value="radar">HUB Seleções</TabsTrigger>
           <TabsTrigger value="mercado">HUB Jogadores</TabsTrigger>
         </TabsList>
@@ -77,6 +81,12 @@ export default function App() {
           {fase.dados && (
             <FaseGrupos classificacao={fase.dados.classificacao} />
           )}
+        </TabsContent>
+
+        <TabsContent value="mata">
+          {mata.carregando && SPINNER}
+          {mata.erro && ERRO(mata.erro)}
+          {mata.dados && <MataMata dados={mata.dados} />}
         </TabsContent>
 
         <TabsContent value="radar">

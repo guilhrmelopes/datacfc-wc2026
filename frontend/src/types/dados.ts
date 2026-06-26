@@ -176,3 +176,43 @@ export interface OddsJogadoresData {
   total_jogadores: number;
   odds: Record<string, OddsJogadorEntry>;
 }
+
+export interface ParticipanteMataMata {
+  rotulo: string;
+  nome_fotmob: string;
+  selecao: string | null;
+  sigla: string | null;
+  url_escudo: string | null;
+  tbd: boolean;
+  team_id: number | null;
+}
+
+export interface ConfrontoMataMata {
+  draw_order: number | null;
+  stage: string;
+  match_id: string;
+  mandante: ParticipanteMataMata;
+  visitante: ParticipanteMataMata;
+  placar_mandante: number | null;
+  placar_visitante: number | null;
+  mandante_venceu: boolean;
+  visitante_venceu: boolean;
+  finalizada: boolean;
+  em_andamento: boolean;
+  data: string;
+  hora: string;
+  utc_time: string;
+}
+
+export interface FaseMataMata {
+  stage: string;
+  confrontos: ConfrontoMataMata[];
+}
+
+export interface DadosMataMata {
+  modo: string;
+  atualizado_em: string | null;
+  fases: FaseMataMata[];
+  final: ConfrontoMataMata | null;
+  disputa_bronze: ConfrontoMataMata | null;
+}

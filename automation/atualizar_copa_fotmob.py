@@ -19,6 +19,7 @@ ARQUIVOS_COMMIT = [
     "frontend/public/data/copa_estado.json",
     "frontend/public/data/grupos_wc2026.json",
     "frontend/public/data/classificacao_grupos.json",
+    "frontend/public/data/mata_mata.json",
     "frontend/public/data/pontuacao_cedida.json",
     "frontend/public/data/selecoes.json",
     "frontend/public/data/jogadores_mercado.json",

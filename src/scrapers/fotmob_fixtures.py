@@ -128,6 +128,212 @@ def extrair_classificacao_grupos() -> dict[str, list[dict]]:
     return tabelas
 
 
+def _segmentos_nome_fotmob(nome: str) -> list[str]:
+    if not nome:
+        return []
+    if "/" in nome:
+        return [parte.strip() for parte in nome.split("/") if parte.strip()]
+    return [nome.strip()]
+
+
+def _resolver_selecao_fotmob(nome: str) -> tuple[str | None, str | None]:
+    """Primeiro segmento mapeável (ex.: 'Germany/3ABCDF' → GERMANY, 'Germany')."""
+    for segmento in _segmentos_nome_fotmob(nome):
+        selecao = fotmob_para_selecao(segmento)
+        if selecao:
+            return selecao, segmento
+    return None, None
+
+
+def _is_placeholder_fotmob(nome: str, tbd_flag: bool = False) -> bool:
+    if tbd_flag:
+        return True
+    if not nome:
+        return True
+    if nome.startswith(("Winner", "Loser")):
+        return True
+    if _resolver_selecao_fotmob(nome)[0]:
+        return False
+    if len(nome) >= 2 and nome[0].isdigit() and "/" not in nome:
+        return True
+    return fotmob_para_selecao(nome) is None and nome not in FOTMOB_PARA_SELECAO
+
+
+def _url_escudo_fotmob(team_id: int | None) -> str | None:
+    if not team_id:
+        return None
+    return f"https://images.fotmob.com/image_resources/logo/teamlogo/{int(team_id)}.png"
+
+
+def _normalizar_participante_mata_mata(
+    matchup: dict,
+    lado: str,
+    meta_por_selecao: dict[str, dict],
+    meta_por_team_id: dict[int, dict],
+) -> dict:
+    prefixo = "home" if lado == "home" else "away"
+    nome = matchup.get(f"{prefixo}Team", "")
+    sigla_api = matchup.get(f"{prefixo}TeamShortName", "")
+    team_id = matchup.get(f"{prefixo}TeamId")
+    tbd_flag = bool(matchup.get(f"tbdTeam{1 if lado == 'home' else 2}"))
+
+    selecao, _ = _resolver_selecao_fotmob(nome)
+    if not selecao:
+        selecao = fotmob_para_selecao(nome)
+
+    meta = None
+    if selecao:
+        meta = meta_por_selecao.get(selecao)
+    elif team_id is not None:
+        meta = meta_por_team_id.get(int(team_id))
+
+    placeholder = _is_placeholder_fotmob(nome, tbd_flag)
+    escudo = None
+    if meta and meta.get("url_escudo"):
+        escudo = meta["url_escudo"]
+    elif not placeholder and team_id is not None:
+        escudo = _url_escudo_fotmob(int(team_id))
+
+    return {
+        "rotulo": sigla_api or nome,
+        "nome_fotmob": nome,
+        "selecao": selecao,
+        "sigla": (meta or {}).get("sigla") or sigla_api,
+        "url_escudo": escudo,
+        "tbd": placeholder,
+        "team_id": team_id,
+    }
+
+
+def _normalizar_confronto_mata_mata(
+    matchup: dict,
+    meta_por_selecao: dict[str, dict],
+    meta_por_team_id: dict[int, dict],
+) -> dict:
+    partidas = matchup.get("matches") or []
+    partida = partidas[0] if partidas else {}
+    status = partida.get("status") or {}
+    utc_time = status.get("utcTime") or ""
+    data, hora = _utc_para_hora_brasil(utc_time) if utc_time else ("", "")
+
+    home_bloco = partida.get("home") or {}
+    away_bloco = partida.get("away") or {}
+    agg = matchup.get("aggregatedResult") or {}
+
+    finalizada = bool(status.get("finished"))
+    em_andamento = bool(status.get("started")) and not finalizada
+    mostrar_placar = finalizada or em_andamento
+
+    placar_mandante = None
+    placar_visitante = None
+    if mostrar_placar:
+        placar_mandante = home_bloco.get("score")
+        if placar_mandante is None:
+            placar_mandante = agg.get("homeScore")
+        placar_visitante = away_bloco.get("score")
+        if placar_visitante is None:
+            placar_visitante = agg.get("awayScore")
+
+    vencedor = matchup.get("aggregatedWinner")
+    mandante_venceu = finalizada and (
+        vencedor == "home" or home_bloco.get("winner") is True
+    )
+    visitante_venceu = finalizada and (
+        vencedor == "away" or away_bloco.get("winner") is True
+    )
+
+    return {
+        "draw_order": matchup.get("drawOrder"),
+        "stage": matchup.get("stage"),
+        "match_id": str(partida.get("matchId") or ""),
+        "mandante": _normalizar_participante_mata_mata(
+            matchup, "home", meta_por_selecao, meta_por_team_id
+        ),
+        "visitante": _normalizar_participante_mata_mata(
+            matchup, "away", meta_por_selecao, meta_por_team_id
+        ),
+        "placar_mandante": placar_mandante,
+        "placar_visitante": placar_visitante,
+        "mandante_venceu": mandante_venceu,
+        "visitante_venceu": visitante_venceu,
+        "finalizada": finalizada,
+        "em_andamento": em_andamento,
+        "data": data,
+        "hora": hora,
+        "utc_time": utc_time,
+    }
+
+
+def validar_mata_mata(payload: dict) -> None:
+    """Garante estrutura mínima do chaveamento antes de publicar no dashboard."""
+    fases = payload.get("fases") or []
+    if not fases:
+        raise ValueError("Mata-mata sem fases.")
+
+    por_stage = {f.get("stage"): f for f in fases if f.get("stage")}
+    r32 = por_stage.get("1/16", {}).get("confrontos") or []
+    if len(r32) != 16:
+        raise ValueError(f"Esperadas 16 partidas na 1/16; recebidas {len(r32)}.")
+
+    for stage, esperado in (("1/8", 8), ("1/4", 4), ("1/2", 2)):
+        confrontos = por_stage.get(stage, {}).get("confrontos") or []
+        if len(confrontos) != esperado:
+            raise ValueError(f"Esperadas {esperado} partidas em {stage}; recebidas {len(confrontos)}.")
+
+    if not payload.get("final"):
+        raise ValueError("Confronto da final ausente no mata-mata.")
+
+
+def extrair_mata_mata_fotmob(selecoes: list[dict] | None = None) -> dict:
+    """Chaveamento mata-mata resolvido (playoff.rounds) a partir da API FotMob."""
+    payload = _fetch_json(FOTMOB_LEAGUE_URL)
+    playoff = payload.get("playoff") or {}
+    rounds = playoff.get("rounds") or []
+    if not rounds:
+        named = (playoff.get("namedKnockouts") or [{}])[0]
+        rounds = named.get("rounds") or []
+
+    meta_por_selecao = {s["selecao"]: s for s in (selecoes or []) if s.get("selecao")}
+    meta_por_team_id: dict[int, dict] = {}
+    for selecao in selecoes or []:
+        team_id = selecao.get("selecao_id")
+        if team_id is not None:
+            meta_por_team_id[int(team_id)] = selecao
+
+    fases: list[dict] = []
+    confronto_final: dict | None = None
+
+    for bloco in rounds:
+        stage = bloco.get("stage") or ""
+        matchups = sorted(
+            bloco.get("matchups") or [],
+            key=lambda m: (m.get("drawOrder") if m.get("drawOrder", -1) >= 0 else 999, m.get("drawOrder") or 0),
+        )
+        confrontos = [
+            _normalizar_confronto_mata_mata(m, meta_por_selecao, meta_por_team_id)
+            for m in matchups
+        ]
+        if stage == "final" and confrontos:
+            confronto_final = confrontos[0]
+        else:
+            fases.append({"stage": stage, "confrontos": confrontos})
+
+    bronze_raw = playoff.get("bronzeFinal")
+    disputa_bronze = None
+    if isinstance(bronze_raw, dict) and bronze_raw.get("matches"):
+        disputa_bronze = _normalizar_confronto_mata_mata(
+            bronze_raw, meta_por_selecao, meta_por_team_id
+        )
+
+    return {
+        "modo": playoff.get("name") or "As it stands",
+        "fonte": "playoff.rounds",
+        "fases": fases,
+        "final": confronto_final,
+        "disputa_bronze": disputa_bronze,
+    }
+
+
 def extrair_melhores_terceiros_fotmob(limite: int = 8) -> list[str]:
     """Top N da tabela FotMob 'Best 3rd placed teams' (Melhores Equipas Em 3º. Lugar)."""
     payload = _fetch_json(FOTMOB_LEAGUE_URL)
