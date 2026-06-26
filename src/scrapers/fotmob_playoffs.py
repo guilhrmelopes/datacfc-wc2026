@@ -15,8 +15,65 @@ RODADA_POR_FASE: dict[str, int] = {
     "bronze": 8,
 }
 
-DATA_TRANSICAO_PLAYOFFS = date(2026, 6, 27)
+DATA_TRANSICAO_PLAYOFFS = date(2026, 6, 25)
 DATA_INICIO_PLAYOFFS = date(2026, 6, 28)
+
+
+def _iter_linhas_classificacao(classificacao: dict):
+    for chave, linhas in classificacao.items():
+        if chave == "melhores_terceiros" or not isinstance(linhas, list):
+            continue
+        for linha in linhas:
+            if isinstance(linha, dict) and linha.get("selecao"):
+                yield linha
+
+
+def selecoes_com_rodada3_finalizada(partidas_grupo: list) -> set[str]:
+    """Seleções cujo jogo da rodada 3 de grupos já encerrou."""
+    com_r3: set[str] = set()
+    for p in partidas_grupo:
+        if isinstance(p, PartidaCalendario):
+            rodada, finalizada = p.rodada, p.finalizada
+            mandante, visitante = p.mandante, p.visitante
+        else:
+            rodada = int(p.get("rodada") or 0)
+            finalizada = bool(p.get("finalizada"))
+            mandante, visitante = p.get("mandante"), p.get("visitante")
+        if rodada != 3 or not finalizada:
+            continue
+        if mandante:
+            com_r3.add(mandante)
+        if visitante:
+            com_r3.add(visitante)
+    return com_r3
+
+
+def selecoes_ativas_aquecimento(
+    classificacao: dict,
+    partidas_grupo: list,
+) -> set[str]:
+    """
+    Filtro do mercado Cartola no aquecimento (R3 em andamento / mercado fechado):
+    - oculta seleções que ainda não jogaram a rodada 3;
+    - oculta eliminados (4º após R3; não classificados quando todos os grupos encerraram).
+    """
+    rodada3_ok = selecoes_com_rodada3_finalizada(partidas_grupo)
+    todas_grupos = _todas_partidas_grupo_finalizadas(partidas_grupo)
+    classificadas = selecoes_classificadas_playoffs(classificacao)
+    ativas: set[str] = set()
+
+    for linha in _iter_linhas_classificacao(classificacao):
+        selecao = linha["selecao"]
+        if selecao not in rodada3_ok:
+            continue
+        pos = int(linha.get("posicao") or 0)
+        if todas_grupos:
+            if selecao in classificadas:
+                ativas.add(selecao)
+        elif pos <= 3:
+            ativas.add(selecao)
+
+    return ativas
 
 
 def _todas_partidas_grupo_finalizadas(partidas_grupo: list) -> bool:
@@ -52,13 +109,17 @@ def selecoes_classificadas_playoffs(classificacao: dict) -> set[str]:
 def transicao_playoffs_ativa(
     partidas_grupo: list,
     hoje: date | None = None,
+    *,
+    rodada_cartola: int | None = None,
 ) -> bool:
     """
-    Aquecimento (27/06+): ADV e odds do mata-mata para confrontos já definidos,
-    sem ocultar seleções eliminadas no mercado.
+    Aquecimento (25/06+ ou R3 Cartola): ADV/odds KO e mercado enxuto —
+    só seleções com R3 jogada e ainda vivas na disputa.
     """
     ref = hoje or date.today()
     if ref >= DATA_TRANSICAO_PLAYOFFS:
+        return True
+    if rodada_cartola is not None and rodada_cartola >= 3:
         return True
     return _todas_partidas_grupo_finalizadas(partidas_grupo)
 

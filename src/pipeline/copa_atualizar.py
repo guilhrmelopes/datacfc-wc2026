@@ -29,6 +29,7 @@ from scrapers.fotmob_playoffs import (
     confrontos_json_mata_mata,
     fase_playoffs_ativa,
     resolver_proximo_confronto,
+    selecoes_ativas_aquecimento,
     selecoes_classificadas_playoffs,
     transicao_playoffs_ativa,
 )
@@ -255,15 +256,21 @@ def atualizar_proximo_adversario(
     confrontos: list[dict],
     caminho_mercado: Path,
     caminho_classificacao: Path,
+    partidas_grupo: list,
     *,
     playoffs_ativos: bool,
     transicao_gradual: bool,
 ) -> None:
     """Próximo adversário no calendário unificado (grupos + mata-mata)."""
     mercado = _carregar_json(caminho_mercado)
+    classificacao = _carregar_json(caminho_classificacao)
     classificadas: set[str] | None = None
+    ativas_aquecimento: set[str] | None = None
+
     if playoffs_ativos:
-        classificadas = selecoes_classificadas_playoffs(_carregar_json(caminho_classificacao))
+        classificadas = selecoes_classificadas_playoffs(classificacao)
+    elif transicao_gradual:
+        ativas_aquecimento = selecoes_ativas_aquecimento(classificacao, partidas_grupo)
 
     meta_por_selecao = {
         j["selecao"]: j
@@ -278,6 +285,14 @@ def atualizar_proximo_adversario(
 
         if playoffs_ativos and classificadas is not None:
             if selecao_nome not in classificadas:
+                j["ativo_playoffs"] = False
+                j["proximo_adversario_sigla"] = None
+                j["proximo_adversario_escudo"] = None
+                j["proximo_adversario_data"] = None
+                continue
+            j["ativo_playoffs"] = True
+        elif transicao_gradual and ativas_aquecimento is not None:
+            if selecao_nome not in ativas_aquecimento:
                 j["ativo_playoffs"] = False
                 j["proximo_adversario_sigla"] = None
                 j["proximo_adversario_escudo"] = None
@@ -384,7 +399,11 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         mata_mata_payload,
     )
     playoffs_ativos = fase_playoffs_ativa(partidas)
-    transicao_gradual = transicao_playoffs_ativa(partidas) and not playoffs_ativos
+    rodada_pre = int(estado.get("rodada_cartola_atual") or 1)
+    transicao_gradual = transicao_playoffs_ativa(
+        partidas,
+        rodada_cartola=rodada_pre,
+    ) and not playoffs_ativos
 
     selecoes_pre = _carregar_json(caminho_selecoes)
     from scrapers.elo_ratings import atualizar_selecoes_elo
@@ -462,6 +481,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         confrontos_calendario,
         caminho_mercado,
         caminho_classificacao,
+        partidas,
         playoffs_ativos=playoffs_ativos,
         transicao_gradual=transicao_gradual,
     )
