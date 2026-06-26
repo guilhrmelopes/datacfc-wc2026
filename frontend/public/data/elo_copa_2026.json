@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-25T22:46:50.161660+00:00",
+  "atualizado_em": "2026-06-26T00:16:45.784717+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ARG": {
@@ -50,23 +50,23 @@
       "codigo_elo": "NL",
       "rating_100": 76.5
     },
-    "ALE": {
-      "elo": 1954.0,
-      "rank": 9,
-      "codigo_elo": "DE",
-      "rating_100": 74.1
-    },
     "NOR": {
       "elo": 1951.0,
-      "rank": 10,
+      "rank": 9,
       "codigo_elo": "NO",
       "rating_100": 73.7
     },
     "JAP": {
       "elo": 1925.0,
-      "rank": 11,
+      "rank": 10,
       "codigo_elo": "JP",
       "rating_100": 70.1
+    },
+    "ALE": {
+      "elo": 1916.0,
+      "rank": 11,
+      "codigo_elo": "DE",
+      "rating_100": 68.9
     },
     "SUI": {
       "elo": 1914.0,
@@ -80,29 +80,29 @@
       "codigo_elo": "MX",
       "rating_100": 68.3
     },
+    "EQU": {
+      "elo": 1902.0,
+      "rank": 14,
+      "codigo_elo": "EC",
+      "rating_100": 67.0
+    },
     "CRO": {
       "elo": 1896.0,
-      "rank": 14,
+      "rank": 15,
       "codigo_elo": "HR",
       "rating_100": 66.2
     },
     "MAR": {
       "elo": 1877.0,
-      "rank": 15,
+      "rank": 16,
       "codigo_elo": "MA",
       "rating_100": 63.6
     },
     "BEL": {
       "elo": 1869.0,
-      "rank": 16,
+      "rank": 17,
       "codigo_elo": "BE",
       "rating_100": 62.5
-    },
-    "EQU": {
-      "elo": 1864.0,
-      "rank": 17,
-      "codigo_elo": "EC",
-      "rating_100": 61.8
     },
     "URU": {
       "elo": 1851.0,
@@ -170,17 +170,17 @@
       "codigo_elo": "SQ",
       "rating_100": 45.6
     },
+    "CDM": {
+      "elo": 1743.0,
+      "rank": 29,
+      "codigo_elo": "CI",
+      "rating_100": 45.3
+    },
     "EGI": {
       "elo": 1740.0,
-      "rank": 29,
+      "rank": 30,
       "codigo_elo": "EG",
       "rating_100": 44.9
-    },
-    "CDM": {
-      "elo": 1728.0,
-      "rank": 30,
-      "codigo_elo": "CI",
-      "rating_100": 43.2
     },
     "SUE": {
       "elo": 1727.0,
@@ -279,10 +279,10 @@
       "rating_100": 14.5
     },
     "CUR": {
-      "elo": 1453.0,
+      "elo": 1438.0,
       "rank": 47,
       "codigo_elo": "CW",
-      "rating_100": 5.7
+      "rating_100": 3.7
     },
     "CAT": {
       "elo": 1411.0,

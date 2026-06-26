@@ -69,7 +69,7 @@
     ],
     "elo_rating": 1780.0,
     "elo_rank": 25,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162273+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785276+00:00"
   },
   {
     "selecao": "ARGENTINA",
@@ -141,7 +141,7 @@
     ],
     "elo_rating": 2144.0,
     "elo_rank": 1,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162282+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785285+00:00"
   },
   {
     "selecao": "AUSTRALIA",
@@ -213,7 +213,7 @@
     ],
     "elo_rating": 1799.0,
     "elo_rank": 24,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162286+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785290+00:00"
   },
   {
     "selecao": "AUSTRIA",
@@ -285,7 +285,7 @@
     ],
     "elo_rating": 1841.0,
     "elo_rank": 19,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162289+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785293+00:00"
   },
   {
     "selecao": "BELGIUM",
@@ -356,8 +356,8 @@
       }
     ],
     "elo_rating": 1869.0,
-    "elo_rank": 16,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162292+00:00"
+    "elo_rank": 17,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785296+00:00"
   },
   {
     "selecao": "BOSNIA AND HERZEGOVINA",
@@ -429,7 +429,7 @@
     ],
     "elo_rating": 1622.0,
     "elo_rank": 39,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162295+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785299+00:00"
   },
   {
     "selecao": "BRAZIL",
@@ -501,7 +501,7 @@
     ],
     "elo_rating": 2009.0,
     "elo_rank": 5,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162298+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785301+00:00"
   },
   {
     "selecao": "CANADA",
@@ -573,7 +573,7 @@
     ],
     "elo_rating": 1748.0,
     "elo_rank": 27,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162300+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785304+00:00"
   },
   {
     "selecao": "CAPE VERDE",
@@ -645,7 +645,7 @@
     ],
     "elo_rating": 1625.0,
     "elo_rank": 38,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162303+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785307+00:00"
   },
   {
     "selecao": "COLOMBIA",
@@ -717,7 +717,7 @@
     ],
     "elo_rating": 2006.0,
     "elo_rank": 6,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162306+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785309+00:00"
   },
   {
     "selecao": "CROATIA",
@@ -788,8 +788,8 @@
       }
     ],
     "elo_rating": 1896.0,
-    "elo_rank": 14,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162308+00:00"
+    "elo_rank": 15,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785312+00:00"
   },
   {
     "selecao": "CURACAO",
@@ -798,7 +798,7 @@
     "clube_id": 3221,
     "grupo": "E",
     "competicao": "Copa 2026",
-    "rating_elo_100": 5.7,
+    "rating_elo_100": 3.7,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CUR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.3,
@@ -810,7 +810,7 @@
       "ontarget_scoring_att_team": 2.3,
       "big_chance_team": null,
       "touches_in_opp_box_team": 41.0,
-      "total_tackle_team": 17.7,
+      "total_tackle_team": 16.7,
       "poss_won_att_3rd_team": 2.7,
       "saves_team": 6.7,
       "fk_foul_lost_team": 10.7,
@@ -859,9 +859,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1453.0,
+    "elo_rating": 1438.0,
     "elo_rank": 47,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162311+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785315+00:00"
   },
   {
     "selecao": "CZECHIA",
@@ -933,7 +933,7 @@
     ],
     "elo_rating": 1680.0,
     "elo_rank": 33,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162313+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785317+00:00"
   },
   {
     "selecao": "DR CONGO",
@@ -1005,7 +1005,7 @@
     ],
     "elo_rating": 1666.0,
     "elo_rank": 36,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162316+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785320+00:00"
   },
   {
     "selecao": "ECUADOR",
@@ -1014,18 +1014,18 @@
     "clube_id": 2372,
     "grupo": "E",
     "competicao": "Copa 2026",
-    "rating_elo_100": 61.8,
+    "rating_elo_100": 67.0,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.7,
       "goals_conceded_team_match": 0.7,
       "possession_percentage_team": 55.0,
       "clean_sheet_team": 1.0,
-      "expected_goals_team": 5.4,
+      "expected_goals_team": 5.1,
       "expected_goals_conceded_team": 2.7,
       "ontarget_scoring_att_team": 6.3,
       "big_chance_team": 9.0,
-      "touches_in_opp_box_team": 76.0,
+      "touches_in_opp_box_team": 77.0,
       "total_tackle_team": 22.0,
       "poss_won_att_3rd_team": 4.7,
       "saves_team": 2.7,
@@ -1075,9 +1075,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1864.0,
-    "elo_rank": 17,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162319+00:00"
+    "elo_rating": 1902.0,
+    "elo_rank": 14,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785323+00:00"
   },
   {
     "selecao": "EGYPT",
@@ -1148,8 +1148,8 @@
       }
     ],
     "elo_rating": 1740.0,
-    "elo_rank": 29,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162322+00:00"
+    "elo_rank": 30,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785325+00:00"
   },
   {
     "selecao": "ENGLAND",
@@ -1221,7 +1221,7 @@
     ],
     "elo_rating": 2028.0,
     "elo_rank": 4,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162324+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785328+00:00"
   },
   {
     "selecao": "FRANCE",
@@ -1293,7 +1293,7 @@
     ],
     "elo_rating": 2090.0,
     "elo_rank": 3,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162327+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785330+00:00"
   },
   {
     "selecao": "GERMANY",
@@ -1302,7 +1302,7 @@
     "clube_id": 2384,
     "grupo": "E",
     "competicao": "Copa 2026",
-    "rating_elo_100": 74.1,
+    "rating_elo_100": 68.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ALE/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 3.3,
@@ -1310,7 +1310,7 @@
       "possession_percentage_team": 61.7,
       "clean_sheet_team": null,
       "expected_goals_team": 6.8,
-      "expected_goals_conceded_team": 3.1,
+      "expected_goals_conceded_team": 2.9,
       "ontarget_scoring_att_team": 7.3,
       "big_chance_team": 13.0,
       "touches_in_opp_box_team": 116.0,
@@ -1363,9 +1363,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1954.0,
-    "elo_rank": 9,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162329+00:00"
+    "elo_rating": 1916.0,
+    "elo_rank": 11,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785333+00:00"
   },
   {
     "selecao": "GHANA",
@@ -1437,7 +1437,7 @@
     ],
     "elo_rating": 1584.0,
     "elo_rank": 42,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162331+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785335+00:00"
   },
   {
     "selecao": "HAITI",
@@ -1509,7 +1509,7 @@
     ],
     "elo_rating": 1517.0,
     "elo_rank": 46,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162334+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785338+00:00"
   },
   {
     "selecao": "IRAN",
@@ -1581,7 +1581,7 @@
     ],
     "elo_rating": 1766.0,
     "elo_rank": 26,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162336+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785341+00:00"
   },
   {
     "selecao": "IRAQ",
@@ -1653,7 +1653,7 @@
     ],
     "elo_rating": 1586.0,
     "elo_rank": 41,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162338+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785344+00:00"
   },
   {
     "selecao": "IVORY COAST",
@@ -1662,19 +1662,19 @@
     "clube_id": 2350,
     "grupo": "E",
     "competicao": "Copa 2026",
-    "rating_elo_100": 43.2,
+    "rating_elo_100": 45.3,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CDM/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.3,
       "goals_conceded_team_match": 0.7,
-      "possession_percentage_team": 50.8,
+      "possession_percentage_team": 50.7,
       "clean_sheet_team": 2.0,
       "expected_goals_team": 4.0,
       "expected_goals_conceded_team": 3.4,
       "ontarget_scoring_att_team": 3.0,
       "big_chance_team": 7.0,
       "touches_in_opp_box_team": 84.0,
-      "total_tackle_team": 17.0,
+      "total_tackle_team": 16.7,
       "poss_won_att_3rd_team": 3.7,
       "saves_team": 2.7,
       "fk_foul_lost_team": 7.7,
@@ -1723,9 +1723,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1728.0,
-    "elo_rank": 30,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162341+00:00"
+    "elo_rating": 1743.0,
+    "elo_rank": 29,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785346+00:00"
   },
   {
     "selecao": "JAPAN",
@@ -1737,22 +1737,22 @@
     "rating_elo_100": 70.1,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JAP/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 2.0,
+      "goals_team_match": 2.3,
       "goals_conceded_team_match": 0.7,
-      "possession_percentage_team": 34.1,
+      "possession_percentage_team": 53.5,
       "clean_sheet_team": 1.0,
-      "expected_goals_team": 2.7,
-      "expected_goals_conceded_team": 0.8,
-      "ontarget_scoring_att_team": 2.7,
+      "expected_goals_team": 3.1,
+      "expected_goals_conceded_team": 1.0,
+      "ontarget_scoring_att_team": 3.3,
       "big_chance_team": 4.0,
-      "touches_in_opp_box_team": 36.0,
-      "total_tackle_team": 9.7,
-      "poss_won_att_3rd_team": 0.7,
-      "saves_team": 1.3,
-      "fk_foul_lost_team": 7.3,
+      "touches_in_opp_box_team": 46.0,
+      "total_tackle_team": 12.0,
+      "poss_won_att_3rd_team": 1.0,
+      "saves_team": 1.7,
+      "fk_foul_lost_team": 11.0,
       "total_yel_card_team": null,
       "total_red_card_team": null,
-      "J": 2.0
+      "J": 3.0
     },
     "confrontos_agendados": [
       {
@@ -1796,8 +1796,8 @@
       }
     ],
     "elo_rating": 1925.0,
-    "elo_rank": 11,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162343+00:00"
+    "elo_rank": 10,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785349+00:00"
   },
   {
     "selecao": "JORDAN",
@@ -1869,7 +1869,7 @@
     ],
     "elo_rating": 1632.0,
     "elo_rank": 37,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162346+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785352+00:00"
   },
   {
     "selecao": "MEXICO",
@@ -1941,7 +1941,7 @@
     ],
     "elo_rating": 1912.0,
     "elo_rank": 13,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162349+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785354+00:00"
   },
   {
     "selecao": "MOROCCO",
@@ -2012,8 +2012,8 @@
       }
     ],
     "elo_rating": 1877.0,
-    "elo_rank": 15,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162351+00:00"
+    "elo_rank": 16,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785357+00:00"
   },
   {
     "selecao": "NETHERLANDS",
@@ -2025,22 +2025,22 @@
     "rating_elo_100": 76.5,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HOL/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 2.3,
-      "goals_conceded_team_match": 1.0,
-      "possession_percentage_team": 36.9,
+      "goals_team_match": 3.0,
+      "goals_conceded_team_match": 1.3,
+      "possession_percentage_team": 60.7,
       "clean_sheet_team": null,
-      "expected_goals_team": 3.4,
-      "expected_goals_conceded_team": 1.6,
-      "ontarget_scoring_att_team": 4.3,
-      "big_chance_team": 3.0,
-      "touches_in_opp_box_team": 53.0,
-      "total_tackle_team": 8.7,
-      "poss_won_att_3rd_team": 3.3,
-      "saves_team": 2.7,
-      "fk_foul_lost_team": 5.3,
+      "expected_goals_team": 4.6,
+      "expected_goals_conceded_team": 1.9,
+      "ontarget_scoring_att_team": 5.3,
+      "big_chance_team": 5.0,
+      "touches_in_opp_box_team": 76.0,
+      "total_tackle_team": 10.3,
+      "poss_won_att_3rd_team": 4.7,
+      "saves_team": 3.0,
+      "fk_foul_lost_team": 7.3,
       "total_yel_card_team": 3.0,
       "total_red_card_team": null,
-      "J": 2.0
+      "J": 3.0
     },
     "confrontos_agendados": [
       {
@@ -2085,7 +2085,7 @@
     ],
     "elo_rating": 1972.0,
     "elo_rank": 8,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162353+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785359+00:00"
   },
   {
     "selecao": "NEW ZEALAND",
@@ -2157,7 +2157,7 @@
     ],
     "elo_rating": 1549.0,
     "elo_rank": 45,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162356+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785363+00:00"
   },
   {
     "selecao": "NORWAY",
@@ -2228,8 +2228,8 @@
       }
     ],
     "elo_rating": 1951.0,
-    "elo_rank": 10,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162359+00:00"
+    "elo_rank": 9,
+    "elo_atualizado_em": "2026-06-26T00:16:45.785369+00:00"
   },
   {
     "selecao": "PANAMA",
@@ -2301,7 +2301,7 @@
     ],
     "elo_rating": 1668.0,
     "elo_rank": 35,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162361+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785375+00:00"
   },
   {
     "selecao": "PARAGUAY",
@@ -2373,7 +2373,7 @@
     ],
     "elo_rating": 1816.0,
     "elo_rank": 22,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162363+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785379+00:00"
   },
   {
     "selecao": "PORTUGAL",
@@ -2445,7 +2445,7 @@
     ],
     "elo_rating": 1988.0,
     "elo_rank": 7,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162366+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785384+00:00"
   },
   {
     "selecao": "QATAR",
@@ -2517,7 +2517,7 @@
     ],
     "elo_rating": 1411.0,
     "elo_rank": 48,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162368+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785389+00:00"
   },
   {
     "selecao": "SAUDI ARABIA",
@@ -2589,7 +2589,7 @@
     ],
     "elo_rating": 1593.0,
     "elo_rank": 40,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162371+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785393+00:00"
   },
   {
     "selecao": "SCOTLAND",
@@ -2661,7 +2661,7 @@
     ],
     "elo_rating": 1745.0,
     "elo_rank": 28,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162373+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785398+00:00"
   },
   {
     "selecao": "SENEGAL",
@@ -2733,7 +2733,7 @@
     ],
     "elo_rating": 1817.0,
     "elo_rank": 21,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162375+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785403+00:00"
   },
   {
     "selecao": "SOUTH AFRICA",
@@ -2805,7 +2805,7 @@
     ],
     "elo_rating": 1575.0,
     "elo_rank": 43,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162377+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785407+00:00"
   },
   {
     "selecao": "SOUTH KOREA",
@@ -2877,7 +2877,7 @@
     ],
     "elo_rating": 1723.0,
     "elo_rank": 32,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162380+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785412+00:00"
   },
   {
     "selecao": "SPAIN",
@@ -2949,7 +2949,7 @@
     ],
     "elo_rating": 2134.0,
     "elo_rank": 2,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162382+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785417+00:00"
   },
   {
     "selecao": "SWEDEN",
@@ -2962,21 +2962,21 @@
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUE/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.0,
-      "goals_conceded_team_match": 2.0,
-      "possession_percentage_team": 32.6,
+      "goals_conceded_team_match": 2.3,
+      "possession_percentage_team": 46.6,
       "clean_sheet_team": null,
-      "expected_goals_team": 2.3,
-      "expected_goals_conceded_team": 2.9,
-      "ontarget_scoring_att_team": 5.0,
+      "expected_goals_team": 2.5,
+      "expected_goals_conceded_team": 3.2,
+      "ontarget_scoring_att_team": 5.3,
       "big_chance_team": 6.0,
-      "touches_in_opp_box_team": 48.0,
-      "total_tackle_team": 10.7,
-      "poss_won_att_3rd_team": 2.0,
-      "saves_team": 1.0,
-      "fk_foul_lost_team": 7.3,
-      "total_yel_card_team": 3.0,
+      "touches_in_opp_box_team": 55.0,
+      "total_tackle_team": 12.0,
+      "poss_won_att_3rd_team": 3.3,
+      "saves_team": 1.7,
+      "fk_foul_lost_team": 9.7,
+      "total_yel_card_team": 4.0,
       "total_red_card_team": null,
-      "J": 2.0
+      "J": 3.0
     },
     "confrontos_agendados": [
       {
@@ -3021,7 +3021,7 @@
     ],
     "elo_rating": 1727.0,
     "elo_rank": 31,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162384+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785420+00:00"
   },
   {
     "selecao": "SWITZERLAND",
@@ -3093,7 +3093,7 @@
     ],
     "elo_rating": 1914.0,
     "elo_rank": 12,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162386+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785423+00:00"
   },
   {
     "selecao": "TUNISIA",
@@ -3105,22 +3105,22 @@
     "rating_elo_100": 21.7,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TUN/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 0.3,
-      "goals_conceded_team_match": 3.0,
-      "possession_percentage_team": 29.7,
+      "goals_team_match": 0.7,
+      "goals_conceded_team_match": 3.7,
+      "possession_percentage_team": 39.3,
       "clean_sheet_team": null,
-      "expected_goals_team": 0.3,
-      "expected_goals_conceded_team": 3.5,
-      "ontarget_scoring_att_team": 0.7,
-      "big_chance_team": null,
-      "touches_in_opp_box_team": 18.0,
-      "total_tackle_team": 13.0,
+      "expected_goals_team": 0.6,
+      "expected_goals_conceded_team": 4.7,
+      "ontarget_scoring_att_team": 1.3,
+      "big_chance_team": 3.0,
+      "touches_in_opp_box_team": 27.0,
+      "total_tackle_team": 16.3,
       "poss_won_att_3rd_team": 0.7,
-      "saves_team": 0.7,
-      "fk_foul_lost_team": 5.3,
+      "saves_team": 1.3,
+      "fk_foul_lost_team": 7.0,
       "total_yel_card_team": 1.0,
       "total_red_card_team": null,
-      "J": 2.0
+      "J": 3.0
     },
     "confrontos_agendados": [
       {
@@ -3165,7 +3165,7 @@
     ],
     "elo_rating": 1570.0,
     "elo_rank": 44,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162389+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785426+00:00"
   },
   {
     "selecao": "TURKIYE",
@@ -3237,7 +3237,7 @@
     ],
     "elo_rating": 1813.0,
     "elo_rank": 23,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162391+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785428+00:00"
   },
   {
     "selecao": "UNITED STATES",
@@ -3309,7 +3309,7 @@
     ],
     "elo_rating": 1820.0,
     "elo_rank": 20,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162393+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785430+00:00"
   },
   {
     "selecao": "URUGUAY",
@@ -3381,7 +3381,7 @@
     ],
     "elo_rating": 1851.0,
     "elo_rank": 18,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162395+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785432+00:00"
   },
   {
     "selecao": "UZBEKISTAN",
@@ -3453,6 +3453,6 @@
     ],
     "elo_rating": 1677.0,
     "elo_rank": 34,
-    "elo_atualizado_em": "2026-06-25T22:46:50.162397+00:00"
+    "elo_atualizado_em": "2026-06-26T00:16:45.785435+00:00"
   }
 ]
