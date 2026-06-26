@@ -4,9 +4,9 @@
     "ECUADOR",
     "BOSNIA AND HERZEGOVINA",
     "PARAGUAY",
+    "SENEGAL",
     "CROATIA",
     "SOUTH KOREA",
-    "SENEGAL",
     "ALGERIA"
   ],
   "A": [
@@ -516,9 +516,9 @@
       "V": 3,
       "E": 0,
       "D": 0,
-      "GM": 7,
-      "GS": 1,
-      "SG": 6,
+      "GM": 10,
+      "GS": 2,
+      "SG": 8,
       "aprov": 100.0
     },
     {
@@ -531,9 +531,9 @@
       "V": 2,
       "E": 0,
       "D": 1,
-      "GM": 7,
-      "GS": 4,
-      "SG": 3,
+      "GM": 8,
+      "GS": 7,
+      "SG": 1,
       "aprov": 66.7
     },
     {
@@ -546,9 +546,9 @@
       "V": 1,
       "E": 0,
       "D": 2,
-      "GM": 4,
+      "GM": 8,
       "GS": 6,
-      "SG": -2,
+      "SG": 2,
       "aprov": 33.3
     },
     {
@@ -562,8 +562,8 @@
       "E": 0,
       "D": 3,
       "GM": 1,
-      "GS": 8,
-      "SG": -7,
+      "GS": 12,
+      "SG": -11,
       "aprov": 0.0
     }
   ],
