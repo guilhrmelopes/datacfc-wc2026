@@ -339,13 +339,13 @@
             "team_id": 6710
           },
           "visitante": {
-            "rotulo": "SCO",
-            "nome_fotmob": "Scotland",
-            "selecao": "SCOTLAND",
-            "sigla": "ESC",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESC/60x60.png",
+            "rotulo": "ECU",
+            "nome_fotmob": "Ecuador",
+            "selecao": "ECUADOR",
+            "sigla": "EQU",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
             "tbd": false,
-            "team_id": 8498
+            "team_id": 6707
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -371,13 +371,13 @@
             "team_id": 8491
           },
           "visitante": {
-            "rotulo": "ECU",
-            "nome_fotmob": "Ecuador",
-            "selecao": "ECUADOR",
-            "sigla": "EQU",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
+            "rotulo": "SEN",
+            "nome_fotmob": "Senegal",
+            "selecao": "SENEGAL",
+            "sigla": "SEN",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SEN/60x60.png",
             "tbd": false,
-            "team_id": 6707
+            "team_id": 6395
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-26T17:15:16.940598+00:00"
+  "atualizado_em": "2026-06-26T19:17:08.224353+00:00"
 }

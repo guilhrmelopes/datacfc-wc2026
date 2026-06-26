@@ -866,7 +866,7 @@
       "utc": "2026-06-26T19:00:00.000Z",
       "match_id": "4667808",
       "finalizada": false,
-      "placar": null,
+      "placar": "0 - 1",
       "valida_cartola": true
     },
     {
@@ -879,7 +879,7 @@
       "utc": "2026-06-26T19:00:00.000Z",
       "match_id": "4667809",
       "finalizada": false,
-      "placar": null,
+      "placar": "1 - 0",
       "valida_cartola": true
     },
     {
@@ -1101,7 +1101,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "MEXICO",
-      "visitante": "SCOTLAND",
+      "visitante": "ECUADOR",
       "data": "2026-06-30",
       "hora": "20:00:00",
       "utc": "2026-06-30T23:00:00.000Z",
@@ -1115,7 +1115,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "ENGLAND",
-      "visitante": "ECUADOR",
+      "visitante": "SENEGAL",
       "data": "2026-07-01",
       "hora": "11:00:00",
       "utc": "2026-07-01T14:00:00.000Z",
