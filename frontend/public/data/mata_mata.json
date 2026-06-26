@@ -536,13 +536,13 @@
             "team_id": 2042059
           },
           "visitante": {
-            "rotulo": "1IC",
-            "nome_fotmob": "1I/3CDFGH",
+            "rotulo": "TBD",
+            "nome_fotmob": "France/3CDFGH",
             "selecao": null,
-            "sigla": "1IC",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1685723
+            "team_id": 2056781
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -665,12 +665,12 @@
           },
           "visitante": {
             "rotulo": "TBD",
-            "nome_fotmob": "Ivory Coast/2I",
+            "nome_fotmob": "Ivory Coast/Norway",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2055059
+            "team_id": 2056783
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-26T21:05:02.399927+00:00"
+  "atualizado_em": "2026-06-26T22:43:35.690743+00:00"
 }
