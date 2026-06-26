@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-26T06:51:29.431489+00:00",
+  "atualizado_em": "2026-06-26T10:20:14.605059+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ARG": {
@@ -104,23 +104,23 @@
       "codigo_elo": "BE",
       "rating_100": 62.5
     },
+    "TUR": {
+      "elo": 1852.0,
+      "rank": 18,
+      "codigo_elo": "TR",
+      "rating_100": 60.2
+    },
     "URU": {
       "elo": 1851.0,
-      "rank": 18,
+      "rank": 19,
       "codigo_elo": "UY",
       "rating_100": 60.0
     },
     "AUT": {
       "elo": 1841.0,
-      "rank": 19,
+      "rank": 20,
       "codigo_elo": "AT",
       "rating_100": 58.7
-    },
-    "EUA": {
-      "elo": 1820.0,
-      "rank": 20,
-      "codigo_elo": "US",
-      "rating_100": 55.8
     },
     "SEN": {
       "elo": 1817.0,
@@ -129,22 +129,22 @@
       "rating_100": 55.4
     },
     "PAR": {
-      "elo": 1816.0,
+      "elo": 1815.0,
       "rank": 22,
       "codigo_elo": "PY",
-      "rating_100": 55.3
-    },
-    "TUR": {
-      "elo": 1813.0,
-      "rank": 23,
-      "codigo_elo": "TR",
-      "rating_100": 54.8
+      "rating_100": 55.1
     },
     "AUS": {
-      "elo": 1799.0,
-      "rank": 24,
+      "elo": 1800.0,
+      "rank": 23,
       "codigo_elo": "AU",
-      "rating_100": 52.9
+      "rating_100": 53.1
+    },
+    "EUA": {
+      "elo": 1781.0,
+      "rank": 24,
+      "codigo_elo": "US",
+      "rating_100": 50.5
     },
     "AGL": {
       "elo": 1780.0,
