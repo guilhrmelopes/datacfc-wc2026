@@ -190,8 +190,7 @@ export function construirIndiceMercadoHub(
     ced: number | null,
     temAdv: boolean,
   ): string {
-    if (colKey === "adv") return temAdv ? "bg-sky-500/20" : "";
-    if (colKey === "ced") return ced != null ? classeCorPerformance(ced) : "";
+    if (colKey === "ced") return ced != null ? classeCorPerformance(ced) : temAdv ? "bg-sky-500/20" : "";
 
     const pos = j.bucket_posicao;
     const amostraPos = amostras.get(pos);

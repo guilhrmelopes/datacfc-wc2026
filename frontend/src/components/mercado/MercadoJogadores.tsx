@@ -68,8 +68,6 @@ const HEADER_SCORE = "SCORE";
 
 type Ordem = "asc" | "desc";
 
-const COLUNAS_NAO_ORDENAVEIS = new Set(["adv"]);
-
 interface Props {
   jogadores: JogadorMercado[];
   selecoes: Selecao[];
@@ -261,21 +259,6 @@ const COL_CED: ColDef = {
   },
 };
 
-const COL_ADV: ColDef = {
-  key: "adv",
-  header: "ADV",
-  title: "Próximo adversário",
-  sortable: false,
-  render: (j) =>
-    j.proximo_adversario_sigla ? (
-      <div className="flex flex-col items-center gap-0.5">
-        <CelulaAdversario j={j} />
-      </div>
-    ) : (
-      <Dash />
-    ),
-};
-
 const COL_SCORE: ColDef = {
   key: "score",
   header: HEADER_SCORE,
@@ -451,31 +434,31 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG_PCT,
     COL_SG, COL_DE, COL_DE_PCT, COL_GE, COL_GS,
-    COL_CED, COL_ADV, COL_SCORE,
+    COL_CED, COL_SCORE,
   ],
   ZAG: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_INT, COL_C, COL_BR, COL_FD,
     COL_SG_PCT, COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_SCORE,
+    COL_CED, COL_SCORE,
   ],
   LAT: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_SG, COL_DS, COL_G, COL_A, COL_XGXA90, COL_GCC, COL_FD, COL_BR,
     COL_SG_PCT, COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_SCORE,
+    COL_CED, COL_SCORE,
   ],
   MEI: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_GCC, COL_XG, COL_XA, COL_XGXA90, COL_FD, COL_DS,
     COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_SCORE,
+    COL_CED, COL_SCORE,
   ],
   ATA: [
     COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
     COL_G, COL_A, COL_FD, COL_XG, COL_XA, COL_XGXA90,
     COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-    COL_CED, COL_ADV, COL_SCORE,
+    COL_CED, COL_SCORE,
   ],
 };
 
@@ -483,7 +466,7 @@ const COLUNAS: Record<BucketPos, ColDef[]> = {
 const COLUNAS_COMPARACAO: ColDef[] = [
   COL_RATING, COL_J, COL_MIN, COL_MG, COL_MB,
   COL_G_PCT, COL_A_PCT, COL_GA_PCT,
-  COL_CED, COL_ADV, COL_SCORE,
+  COL_CED, COL_SCORE,
 ];
 
 // ---------------------------------------------------------------------------
@@ -556,7 +539,6 @@ export function MercadoJogadores({
   }
 
   function alternarOrdenacao(colKey: string) {
-    if (COLUNAS_NAO_ORDENAVEIS.has(colKey)) return;
     if (ordenarPor === colKey) {
       setOrdem((o) => (o === "asc" ? "desc" : "asc"));
     } else {
@@ -833,7 +815,7 @@ export function MercadoJogadores({
             <tr>
               <th className="px-3 py-2">Jogador</th>
               {colunas.map((col) => {
-                const sortable = col.sortable !== false && !COLUNAS_NAO_ORDENAVEIS.has(col.key);
+                const sortable = col.sortable !== false;
                 return (
                   <th
                     key={col.key}
