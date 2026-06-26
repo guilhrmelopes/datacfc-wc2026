@@ -227,12 +227,38 @@ const COL_MB: ColDef = {
   },
 };
 
+function CelulaAdversario({ j }: { j: JogadorMercado }) {
+  if (!j.proximo_adversario_sigla) return null;
+  return (
+    <>
+      {j.proximo_adversario_escudo ? (
+        <img
+          src={j.proximo_adversario_escudo}
+          alt={j.proximo_adversario_sigla}
+          className="h-6 w-6 object-contain"
+          title={j.proximo_adversario_sigla}
+        />
+      ) : null}
+      <span className="text-[9px] font-bold text-[var(--color-muted)]">
+        {j.proximo_adversario_sigla}
+      </span>
+    </>
+  );
+}
+
 const COL_CED: ColDef = {
   key: "ced",
   header: "CED",
   title: "Pontuação cedida acumulada na Copa pelo próximo adversário",
-  render: (_j, ced) =>
-    ced != null ? <span className="tabular-nums">{fmt(ced, 2)}</span> : <Dash />,
+  render: (j, ced) => {
+    if (ced == null && !j.proximo_adversario_sigla) return <Dash />;
+    return (
+      <div className="flex flex-col items-center gap-0.5">
+        <CelulaAdversario j={j} />
+        {ced != null ? <span className="tabular-nums">{fmt(ced, 2)}</span> : <Dash />}
+      </div>
+    );
+  },
 };
 
 const COL_ADV: ColDef = {
@@ -241,17 +267,9 @@ const COL_ADV: ColDef = {
   title: "Próximo adversário",
   sortable: false,
   render: (j) =>
-    j.proximo_adversario_escudo ? (
+    j.proximo_adversario_sigla ? (
       <div className="flex flex-col items-center gap-0.5">
-        <img
-          src={j.proximo_adversario_escudo}
-          alt={j.proximo_adversario_sigla ?? ""}
-          className="h-6 w-6 object-contain"
-          title={j.proximo_adversario_sigla ?? ""}
-        />
-        <span className="text-[9px] font-bold text-[var(--color-muted)]">
-          {j.proximo_adversario_sigla}
-        </span>
+        <CelulaAdversario j={j} />
       </div>
     ) : (
       <Dash />
@@ -549,7 +567,7 @@ export function MercadoJogadores({
 
   const listaSelecoes = useMemo(
     () =>
-      [...new Set(jogadores.map((j) => j.selecao))]
+      [...new Set(jogadores.filter((j) => j.ativo_playoffs !== false).map((j) => j.selecao))]
         .filter(Boolean)
         .sort((a, b) =>
           traduzirSelecao(a).localeCompare(traduzirSelecao(b), "pt-BR", {
@@ -561,6 +579,7 @@ export function MercadoJogadores({
 
   const linhas = useMemo(() => {
     const filtradas = jogadores
+      .filter((j) => j.ativo_playoffs !== false)
       .filter((j) => modoComparacao || j.bucket_posicao === posicao)
       .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
       .filter((j) => passaFiltroStatus(j.status_id, statusFiltro))

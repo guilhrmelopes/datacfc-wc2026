@@ -23,6 +23,7 @@
 !/src/scrapers/elo_ratings.py
 !/src/scrapers/fotmob_copa.py
 !/src/scrapers/fotmob_fixtures.py
+!/src/scrapers/fotmob_playoffs.py
 !/src/scrapers/fotmob_mapa.py
 !/src/scrapers/cartola_copa.py
 !/src/scrapers/provaveis_copa.py

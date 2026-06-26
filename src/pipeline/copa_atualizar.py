@@ -25,6 +25,13 @@ from scrapers.fotmob_fixtures import (
     validar_mata_mata,
 )
 from scrapers.fotmob_mapa import SIGLA_PARA_FOTMOB_STATS
+from scrapers.fotmob_playoffs import (
+    confrontos_json_mata_mata,
+    fase_playoffs_ativa,
+    resolver_proximo_confronto,
+    selecoes_classificadas_playoffs,
+    transicao_playoffs_ativa,
+)
 
 COPA_ESTADO_INICIAL = {
     "rodada_cartola_atual": 1,
@@ -91,9 +98,10 @@ def sincronizar_calendario(
     partidas: list[PartidaCalendario],
     caminho_grupos: Path,
     caminho_selecoes: Path,
-) -> None:
+    mata_mata: dict | None = None,
+) -> list[dict]:
     grupos = _carregar_json(caminho_grupos)
-    confrontos_json = []
+    confrontos_json: list[dict] = []
     for p in partidas:
         confrontos_json.append(
             {
@@ -109,7 +117,9 @@ def sincronizar_calendario(
                 "placar": p.placar,
             }
         )
-    grupos["confrontos"] = confrontos_json
+    confrontos_ko = confrontos_json_mata_mata(mata_mata) if mata_mata else []
+    confrontos_todos = confrontos_json + confrontos_ko
+    grupos["confrontos"] = confrontos_todos
     _salvar_json(caminho_grupos, grupos)
 
     selecoes = _carregar_json(caminho_selecoes)
@@ -124,7 +134,7 @@ def sincronizar_calendario(
         for c in registro.get("confrontos_agendados") or []:
             estadios_antigos[(c.get("adversario", ""), c.get("data", ""))] = c.get("estadio", "")
 
-        confrontos_time = []
+        confrontos_time: list[dict] = []
         for p in partidas:
             if p.grupo != grupo:
                 continue
@@ -148,10 +158,37 @@ def sincronizar_calendario(
                     "match_id": p.match_id,
                 }
             )
+
+        for c in confrontos_ko:
+            if selecao_nome not in (c.get("mandante"), c.get("visitante")):
+                continue
+            adversario = (
+                c["visitante"] if c["mandante"] == selecao_nome else c["mandante"]
+            )
+            adv = mapa.get(adversario)
+            if not adv:
+                continue
+            confrontos_time.append(
+                {
+                    "adversario": adversario,
+                    "adversario_sigla": adv["sigla"],
+                    "adversario_clube_id": adv.get("clube_id"),
+                    "adversario_escudo": adv.get("url_escudo"),
+                    "grupo_adversario": adv.get("grupo") or grupo,
+                    "data": c.get("data", ""),
+                    "hora": c.get("hora", ""),
+                    "estadio": estadios_antigos.get((adversario, c.get("data", "")), ""),
+                    "rodada": c.get("rodada"),
+                    "match_id": c.get("match_id"),
+                    "fase": c.get("fase"),
+                }
+            )
+
         confrontos_time.sort(key=lambda c: (c["data"], c["hora"]))
         registro["confrontos_agendados"] = confrontos_time
 
     _salvar_json(caminho_selecoes, selecoes)
+    return confrontos_todos
 
 
 def atualizar_classificacao(caminho: Path, caminho_selecoes: Path) -> None:
@@ -189,7 +226,11 @@ def atualizar_mata_mata(caminho: Path, caminho_selecoes: Path) -> None:
     _salvar_json(caminho, payload)
 
 
-def _rodada_efetiva(partidas: list[PartidaCalendario], estado: dict) -> int:
+def _rodada_efetiva(
+    partidas: list[PartidaCalendario],
+    estado: dict,
+    confrontos: list[dict] | None = None,
+) -> int:
     rodada = int(estado.get("rodada_cartola_atual") or 1)
     while rodada < 3:
         da_rodada = [p for p in partidas if p.rodada == rodada]
@@ -199,48 +240,75 @@ def _rodada_efetiva(partidas: list[PartidaCalendario], estado: dict) -> int:
             rodada += 1
         else:
             break
-    return min(rodada, 3)
+    rodada = min(rodada, 3)
+    playoffs_ou_transicao = fase_playoffs_ativa(partidas) or transicao_playoffs_ativa(partidas)
+    if confrontos and playoffs_ou_transicao:
+        pendentes = [
+            c for c in confrontos if not c.get("finalizada") and int(c.get("rodada") or 0) >= 4
+        ]
+        if pendentes:
+            return min(int(c.get("rodada") or 4) for c in pendentes)
+    return rodada
 
 
 def atualizar_proximo_adversario(
-    partidas: list[PartidaCalendario],
+    confrontos: list[dict],
     caminho_mercado: Path,
+    caminho_classificacao: Path,
+    *,
+    playoffs_ativos: bool,
+    transicao_gradual: bool,
 ) -> None:
-    """Define o próximo adversário de cada seleção (primeira partida de grupo ainda não finalizada)."""
+    """Próximo adversário no calendário unificado (grupos + mata-mata)."""
     mercado = _carregar_json(caminho_mercado)
-    selecoes_meta = {
+    classificadas: set[str] | None = None
+    if playoffs_ativos:
+        classificadas = selecoes_classificadas_playoffs(_carregar_json(caminho_classificacao))
+
+    meta_por_selecao = {
         j["selecao"]: j
         for j in mercado
         if j.get("selecao")
     }
 
-    for selecao_nome, meta in selecoes_meta.items():
-        grupo = meta.get("grupo")
-        if not grupo:
+    for j in mercado:
+        selecao_nome = j.get("selecao")
+        if not selecao_nome:
             continue
-        candidatos = [
-            p
-            for p in partidas
-            if p.grupo == grupo
-            and not p.finalizada
-            and selecao_nome in (p.mandante, p.visitante)
-        ]
-        candidatos.sort(key=lambda p: (p.rodada, p.data, p.hora))
-        proximo = candidatos[0] if candidatos else None
 
-        for j in mercado:
-            if j.get("selecao") != selecao_nome:
-                continue
-            if proximo is None:
+        if playoffs_ativos and classificadas is not None:
+            if selecao_nome not in classificadas:
+                j["ativo_playoffs"] = False
                 j["proximo_adversario_sigla"] = None
                 j["proximo_adversario_escudo"] = None
                 j["proximo_adversario_data"] = None
                 continue
-            adv_nome = proximo.visitante if proximo.mandante == selecao_nome else proximo.mandante
-            adv_meta = next((x for x in mercado if x.get("selecao") == adv_nome), None)
-            j["proximo_adversario_sigla"] = adv_meta.get("sigla") if adv_meta else None
-            j["proximo_adversario_escudo"] = adv_meta.get("url_escudo") if adv_meta else None
-            j["proximo_adversario_data"] = proximo.data
+            j["ativo_playoffs"] = True
+        else:
+            j["ativo_playoffs"] = True
+
+        proximo = resolver_proximo_confronto(
+            selecao_nome,
+            confrontos,
+            playoffs_completos=playoffs_ativos,
+            transicao_gradual=transicao_gradual and not playoffs_ativos,
+            classificadas=classificadas,
+        )
+        if proximo is None:
+            j["proximo_adversario_sigla"] = None
+            j["proximo_adversario_escudo"] = None
+            j["proximo_adversario_data"] = None
+            continue
+
+        adv_nome = (
+            proximo["visitante"]
+            if proximo.get("mandante") == selecao_nome
+            else proximo["mandante"]
+        )
+        adv_meta = meta_por_selecao.get(adv_nome)
+        j["proximo_adversario_sigla"] = adv_meta.get("sigla") if adv_meta else None
+        j["proximo_adversario_escudo"] = adv_meta.get("url_escudo") if adv_meta else None
+        j["proximo_adversario_data"] = proximo.get("data")
 
     _salvar_json(caminho_mercado, mercado)
 
@@ -306,9 +374,17 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     partidas = listar_partidas_grupos()
     processadas = list(estado.get("partidas_processadas") or [])
 
-    sincronizar_calendario(partidas, caminho_grupos, caminho_selecoes)
     atualizar_classificacao(caminho_classificacao, caminho_selecoes)
     atualizar_mata_mata(caminho_mata_mata, caminho_selecoes)
+    mata_mata_payload = _carregar_json(caminho_mata_mata)
+    confrontos_calendario = sincronizar_calendario(
+        partidas,
+        caminho_grupos,
+        caminho_selecoes,
+        mata_mata_payload,
+    )
+    playoffs_ativos = fase_playoffs_ativa(partidas)
+    transicao_gradual = transicao_playoffs_ativa(partidas) and not playoffs_ativos
 
     selecoes_pre = _carregar_json(caminho_selecoes)
     from scrapers.elo_ratings import atualizar_selecoes_elo
@@ -328,6 +404,12 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         for p in partidas
         if p.finalizada and p.match_id not in processadas
     ]
+    for c in confrontos_calendario:
+        if not c.get("fase"):
+            continue
+        match_id = str(c.get("match_id") or "")
+        if c.get("finalizada") and match_id and match_id not in processadas:
+            novas.append(match_id)
 
     if novas:
         processadas.extend(novas)
@@ -365,19 +447,33 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         if not resumo_cartola.get("siglas_cedido") and not caminho_pontuacao.is_file():
             _salvar_json(caminho_pontuacao, {})
 
-    rodada = int(estado.get("rodada_cartola_atual") or _rodada_efetiva(partidas, estado))
+    rodada = int(
+        estado.get("rodada_cartola_atual")
+        or _rodada_efetiva(partidas, estado, confrontos_calendario)
+    )
     estado["rodada_cartola_atual"] = rodada
     estado["partidas_processadas"] = processadas
     estado["atualizado_em"] = datetime.now(timezone.utc).isoformat()
+    estado["playoffs_ativos"] = playoffs_ativos
+    estado["transicao_playoffs"] = transicao_gradual
     _salvar_json(caminho_estado, estado)
 
-    atualizar_proximo_adversario(partidas, caminho_mercado)
+    atualizar_proximo_adversario(
+        confrontos_calendario,
+        caminho_mercado,
+        caminho_classificacao,
+        playoffs_ativos=playoffs_ativos,
+        transicao_gradual=transicao_gradual,
+    )
 
     return {
         "rodada_cartola_atual": rodada,
         "partidas_processadas": len(processadas),
         "novas_partidas": novas,
         "total_calendario": len(partidas),
+        "confrontos_calendario": len(confrontos_calendario),
+        "playoffs_ativos": playoffs_ativos,
+        "transicao_playoffs": transicao_gradual,
         "cartola": resumo_cartola,
         "elo_selecoes_atualizadas": elo_atualizados,
     }

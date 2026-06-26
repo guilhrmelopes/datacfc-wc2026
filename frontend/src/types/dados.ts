@@ -87,6 +87,8 @@ export interface JogadorMercado {
   proximo_adversario_sigla: string | null;
   proximo_adversario_escudo: string | null;
   proximo_adversario_data: string | null;
+  /** False após fim dos grupos se a seleção não classificou para o mata-mata. */
+  ativo_playoffs?: boolean;
   /** Métricas acumuladas na fase de grupos (Cartola Copa). */
   copa_jogos_num?: number;
   copa_mins_played?: number;

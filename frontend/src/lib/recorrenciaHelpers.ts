@@ -29,6 +29,18 @@ export function labelFiltroRodada(filtroId: string): string {
   return OPCOES_FILTRO_RODADA.find((o) => o.id === filtroId)?.label ?? filtroId;
 }
 
+export const FILTRO_PARA_FASE_ELIM: Record<string, string> = {
+  r32: "1/16",
+  r16: "1/8",
+  qf: "1/4",
+  sf: "1/2",
+  f: "final",
+};
+
+export function ehFaseEliminatoria(filtroId: string): boolean {
+  return filtroId in FILTRO_PARA_FASE_ELIM;
+}
+
 export function confrontosDoFiltroRodada<T extends { rodada: number }>(
   confrontos: T[],
   filtroId: string,
@@ -36,6 +48,17 @@ export function confrontosDoFiltroRodada<T extends { rodada: number }>(
   const op = OPCOES_FILTRO_RODADA.find((o) => o.id === filtroId);
   if (!op?.rodadaGrupo) return [];
   return confrontos.filter((c) => c.rodada === op.rodadaGrupo);
+}
+
+export function confrontosDoFiltroEliminatoria<
+  T extends { fase?: string },
+>(confrontos: T[], filtroId: string): T[] {
+  const fase = FILTRO_PARA_FASE_ELIM[filtroId];
+  if (!fase) return [];
+  if (filtroId === "f") {
+    return confrontos.filter((c) => c.fase === "final" || c.fase === "bronze");
+  }
+  return confrontos.filter((c) => c.fase === fase);
 }
 
 export function chaveConfronto(mandante: string, visitante: string, data: string): string {

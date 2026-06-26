@@ -2,11 +2,19 @@ import { useEffect, useMemo, useState } from "react";
 import type { ClassificacaoGruposParseada } from "@/lib/classificacaoGrupos";
 import {
   chaveConfronto,
+  confrontosDoFiltroEliminatoria,
   confrontosDoFiltroRodada,
+  ehFaseEliminatoria,
   formatarDataExibicao,
   labelFiltroRodada,
   obterPerformance,
 } from "@/lib/recorrenciaHelpers";
+import {
+  confrontosRecorrenciaDeMataMata,
+  parseDadosMataMata,
+  rotuloFase,
+  type ConfrontoRecorrencia,
+} from "@/lib/mataMata";
 import { traduzirSelecao } from "@/lib/traducoes";
 import type { LinhaClassificacao, PontuacaoCedida, Selecao } from "@/types/dados";
 import { FiltrosRecorrencia } from "./FiltrosRecorrencia";
@@ -24,19 +32,12 @@ interface ConfrontoExibicao {
   placar?: string | null;
 }
 
-interface ConfrontoWC {
-  grupo: string;
-  rodada: number;
-  mandante: string;
-  visitante: string;
-  data: string;
-  hora?: string;
-  finalizada?: boolean;
-  placar?: string | null;
-}
+interface ConfrontoWC extends ConfrontoRecorrencia {}
 
 interface CopaEstado {
   rodada_cartola_atual: number;
+  playoffs_ativos?: boolean;
+  transicao_playoffs?: boolean;
 }
 
 interface Props {
@@ -58,6 +59,7 @@ function linhaClassificacao(
 
 export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props) {
   const [confrontosWC, setConfrontosWC] = useState<ConfrontoWC[]>([]);
+  const [confrontosKO, setConfrontosKO] = useState<ConfrontoWC[]>([]);
   const [rodadaFiltro, setRodadaFiltro] = useState("1");
   const [diaAtual, setDiaAtual] = useState("");
   const [grupoFiltro, setGrupoFiltro] = useState("TODOS");
@@ -69,15 +71,32 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
   useEffect(() => {
     Promise.all([
       fetch("/data/grupos_wc2026.json").then((r) => r.json()),
+      fetch("/data/mata_mata.json").then((r) => r.json()).catch(() => null),
       fetch("/data/copa_estado.json").then((r) => r.json()).catch(() => null),
     ])
-      .then(([grupos, estado]: [{ confrontos: ConfrontoWC[] }, CopaEstado | null]) => {
+      .then(([grupos, mataMataRaw, estado]: [
+        { confrontos: ConfrontoWC[] },
+        Record<string, unknown> | null,
+        CopaEstado | null,
+      ]) => {
         const confrontos = grupos.confrontos ?? [];
         setConfrontosWC(confrontos);
-        const rodada = Math.min(3, Math.max(1, estado?.rodada_cartola_atual ?? 1));
-        const filtroInicial = String(rodada);
+        const ko =
+          mataMataRaw != null
+            ? confrontosRecorrenciaDeMataMata(parseDadosMataMata(mataMataRaw))
+            : [];
+        setConfrontosKO(ko);
+
+        const rodada = estado?.rodada_cartola_atual ?? 1;
+        const playoffs = Boolean(estado?.playoffs_ativos) || rodada > 3;
+        const transicao = Boolean(estado?.transicao_playoffs);
+        const filtroInicial =
+          playoffs || (transicao && ko.length > 0) ? "r32" : String(Math.min(3, Math.max(1, rodada)));
         setRodadaFiltro(filtroInicial);
-        const daRodada = confrontosDoFiltroRodada(confrontos, filtroInicial);
+
+        const daRodada = playoffs
+          ? confrontosDoFiltroEliminatoria(ko, filtroInicial)
+          : confrontosDoFiltroRodada(confrontos, filtroInicial);
         const hoje = new Date().toISOString().slice(0, 10);
         const datas = [...new Set(daRodada.map((c) => c.data))].sort();
         const inicial = datas.find((d) => d >= hoje) ?? datas[0] ?? "";
@@ -86,10 +105,14 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
       .catch(console.error);
   }, []);
 
-  const confrontosRodada = useMemo(
-    () => confrontosDoFiltroRodada(confrontosWC, rodadaFiltro),
-    [confrontosWC, rodadaFiltro],
-  );
+  const eliminatoria = ehFaseEliminatoria(rodadaFiltro);
+
+  const confrontosRodada = useMemo(() => {
+    if (eliminatoria) {
+      return confrontosDoFiltroEliminatoria(confrontosKO, rodadaFiltro);
+    }
+    return confrontosDoFiltroRodada(confrontosWC, rodadaFiltro);
+  }, [confrontosWC, confrontosKO, rodadaFiltro, eliminatoria]);
 
   const datasDisponiveis = useMemo(
     () => [...new Set(confrontosRodada.map((c) => c.data))].sort(),
@@ -111,7 +134,9 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
     setRodadaFiltro(id);
     setConfrontoAtivo(null);
     setSelecaoAtiva(null);
-    const daRodada = confrontosDoFiltroRodada(confrontosWC, id);
+    const daRodada = ehFaseEliminatoria(id)
+      ? confrontosDoFiltroEliminatoria(confrontosKO, id)
+      : confrontosDoFiltroRodada(confrontosWC, id);
     const datas = [...new Set(daRodada.map((c) => c.data))].sort();
     if (!datas.length) {
       setDiaAtual("");
@@ -148,7 +173,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
   const jogosFiltrados = useMemo(() => {
     return confrontosRodada.filter((j) => {
       if (j.data !== diaAtual) return false;
-      if (grupoFiltro !== "TODOS" && j.grupo !== grupoFiltro) return false;
+      if (!eliminatoria && grupoFiltro !== "TODOS" && j.grupo !== grupoFiltro) return false;
       if (busca.trim()) {
         const q = busca.trim().toLowerCase();
         const m = mapaSelecao.get(j.mandante);
@@ -168,12 +193,20 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
       }
       return true;
     });
-  }, [confrontosRodada, diaAtual, grupoFiltro, busca, mapaSelecao]);
+  }, [confrontosRodada, diaAtual, grupoFiltro, busca, mapaSelecao, eliminatoria]);
 
   const selecoesFiltradas = useMemo(() => {
     let lista = selecoesUnicas;
-    if (grupoFiltro !== "TODOS") {
+    if (!eliminatoria && grupoFiltro !== "TODOS") {
       lista = lista.filter((s) => s.grupo === grupoFiltro);
+    }
+    if (eliminatoria && jogosFiltrados.length > 0) {
+      const nomes = new Set<string>();
+      for (const j of jogosFiltrados) {
+        nomes.add(j.mandante);
+        nomes.add(j.visitante);
+      }
+      lista = lista.filter((s) => nomes.has(s.selecao));
     }
     if (busca.trim()) {
       const q = busca.trim().toLowerCase();
@@ -189,7 +222,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
         sensitivity: "base",
       }),
     );
-  }, [selecoesUnicas, grupoFiltro, busca]);
+  }, [selecoesUnicas, grupoFiltro, busca, eliminatoria, jogosFiltrados]);
 
   const selecaoDetalhe = selecaoAtiva ? mapaSelecao.get(selecaoAtiva) : null;
 
@@ -198,13 +231,25 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
 
     const lista: ConfrontoExibicao[] = [];
     for (const confronto of selecaoDetalhe.confrontos_agendados) {
-      if (confronto.grupo_adversario !== selecaoDetalhe.grupo) continue;
+      const faseAdv = (confronto as { fase?: string }).fase;
+      if (faseAdv) {
+        if (
+          !eliminatoria ||
+          !confrontosDoFiltroEliminatoria(
+            [{ fase: faseAdv } as ConfrontoWC],
+            rodadaFiltro,
+          ).length
+        ) {
+          continue;
+        }
+      } else if (confronto.grupo_adversario !== selecaoDetalhe.grupo) {
+        continue;
+      }
       const adversario = mapaSelecao.get(confronto.adversario);
       if (!adversario) continue;
 
-      const wc = confrontosWC.find(
+      const wc = [...confrontosWC, ...confrontosKO].find(
         (j) =>
-          j.grupo === selecaoDetalhe.grupo &&
           ((j.mandante === selecaoDetalhe.selecao && j.visitante === adversario.selecao) ||
             (j.visitante === selecaoDetalhe.selecao && j.mandante === adversario.selecao)) &&
           j.data === confronto.data,
@@ -226,7 +271,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
       });
     }
     return lista.sort((a, b) => a.data.localeCompare(b.data) || a.hora.localeCompare(b.hora));
-  }, [selecaoDetalhe, mapaSelecao, confrontosWC]);
+  }, [selecaoDetalhe, mapaSelecao, confrontosWC, confrontosKO, eliminatoria, rodadaFiltro]);
 
   const proximoConfrontoSelecao = useMemo(() => {
     if (confrontosDoGrupo.length === 0) return null;
@@ -317,6 +362,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
         datasDisponiveis={datasDisponiveis}
         grupo={grupoFiltro}
         busca={busca}
+        ocultarGrupo={eliminatoria}
         onRodadaChange={handleRodadaChange}
         onDiaChange={setDiaAtual}
         onGrupoChange={setGrupoFiltro}
@@ -385,7 +431,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
                   }`}
                 >
                   <span className="text-[10px] font-semibold uppercase text-[var(--color-muted)]">
-                    Grupo {jogo.grupo}
+                    {jogo.fase ? rotuloFase(jogo.fase) : `Grupo ${jogo.grupo}`}
                     {jogo.finalizada ? " · Finalizado" : ""}
                     {jogo.hora ? ` · ${jogo.hora.slice(0, 5)}` : ""}
                   </span>
@@ -442,7 +488,7 @@ export function Recorrencia({ selecoes, pontuacaoCedida, classificacao }: Props)
       })()}
 
       {/* Mini classificação contextual */}
-      {grupoContexto && (
+      {grupoContexto && !eliminatoria && (
         <MiniClassificacaoGrupo
           grupo={grupoContexto}
           classificacao={classificacao}

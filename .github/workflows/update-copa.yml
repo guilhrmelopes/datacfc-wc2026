@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - "src/scrapers/**"
+      - "src/pipeline/copa_atualizar.py"
       - "automation/executar_odds.py"
       - "automation/validar_odds.py"
       - "automation/preparar_mercado_odds.py"

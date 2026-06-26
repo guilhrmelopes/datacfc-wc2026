@@ -656,12 +656,12 @@
           "match_id": "4653846",
           "mandante": {
             "rotulo": "TBD",
-            "nome_fotmob": "Brazil/2F",
+            "nome_fotmob": "Brazil/Japan",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2053131
+            "team_id": 2055063
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-26T00:16:45.447198+00:00"
+  "atualizado_em": "2026-06-26T01:20:16.765009+00:00"
 }

@@ -849,24 +849,24 @@ def _norm(texto: str) -> str:
     return "".join(c for c in forma if not unicodedata.combining(c)).lower().strip()
 
 
-def carregar_jogadores(caminho: Path) -> list[dict]:
-    """Jogadores de linha (ZAG/LAT/MEI/ATA) — usados no matching GA."""
-    if not caminho.exists():
-        logger.error("jogadores_mercado.json nao encontrado: %s", caminho)
-        return []
-    with caminho.open(encoding="utf-8") as f:
-        dados: list[dict] = json.load(f)
-    linha = [j for j in dados if j.get("posicao_id") in POSICOES_LINHA]
-    logger.info("Banco: %d total, %d de linha", len(dados), len(linha))
-    return linha
-
-
 def carregar_todos_jogadores(caminho: Path) -> list[dict]:
     """Elenco completo (inclui GOL) — usado para SG em defensores."""
     if not caminho.exists():
         return []
     with caminho.open(encoding="utf-8") as f:
-        return json.load(f)
+        dados: list[dict] = json.load(f)
+    return [j for j in dados if j.get("ativo_playoffs", True) is not False]
+
+
+def carregar_jogadores(caminho: Path) -> list[dict]:
+    """Jogadores de linha (ZAG/LAT/MEI/ATA) — usados no matching GA."""
+    if not caminho.exists():
+        logger.error("jogadores_mercado.json nao encontrado: %s", caminho)
+        return []
+    todos = carregar_todos_jogadores(caminho)
+    linha = [j for j in todos if j.get("posicao_id") in POSICOES_LINHA]
+    logger.info("Banco: %d total, %d de linha", len(todos), len(linha))
+    return linha
 
 
 def pool_defensores(jogadores: list[dict], selecao_upper: str) -> list[dict]:

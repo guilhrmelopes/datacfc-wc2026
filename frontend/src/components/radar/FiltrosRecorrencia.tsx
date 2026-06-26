@@ -17,6 +17,7 @@ interface Props {
   datasDisponiveis: string[];
   grupo: string;
   busca: string;
+  ocultarGrupo?: boolean;
   onRodadaChange: (id: string) => void;
   onDiaChange: (d: string) => void;
   onGrupoChange: (g: string) => void;
@@ -34,6 +35,7 @@ export function FiltrosRecorrencia({
   datasDisponiveis,
   grupo,
   busca,
+  ocultarGrupo = false,
   onRodadaChange,
   onDiaChange,
   onGrupoChange,
@@ -73,6 +75,7 @@ export function FiltrosRecorrencia({
         </Select>
       </div>
 
+      {!ocultarGrupo && (
       <div className="flex flex-col gap-1">
         <span className="text-xs text-[var(--color-muted)]">Grupo</span>
         <Select value={grupo} onValueChange={onGrupoChange}>
@@ -88,6 +91,7 @@ export function FiltrosRecorrencia({
           </SelectContent>
         </Select>
       </div>
+      )}
 
       <div className="flex flex-col gap-1">
         <span className="text-xs text-[var(--color-muted)]">Buscar seleção</span>

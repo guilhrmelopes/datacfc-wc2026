@@ -74,3 +74,62 @@ export function alturaChaveamento(numConfrontos: number, alturaCard = 76, gap = 
 export function faseOitavas(dados: DadosMataMata): FaseMataMata | undefined {
   return dados.fases.find((f) => f.stage === "1/16");
 }
+
+export interface ConfrontoRecorrencia {
+  grupo: string;
+  fase?: string;
+  rodada: number;
+  mandante: string;
+  visitante: string;
+  data: string;
+  hora?: string;
+  finalizada?: boolean;
+  placar?: string | null;
+}
+
+export function confrontosRecorrenciaDeMataMata(
+  dados: DadosMataMata,
+): ConfrontoRecorrencia[] {
+  const rodadaPorFase: Record<string, number> = {
+    "1/16": 4,
+    "1/8": 5,
+    "1/4": 6,
+    "1/2": 7,
+    final: 8,
+    bronze: 8,
+  };
+  const lista: ConfrontoRecorrencia[] = [];
+
+  const incluir = (confronto: ConfrontoMataMata, fase: string) => {
+    if (!confronto.mandante.selecao || !confronto.visitante.selecao) return;
+    const placar =
+      confronto.finalizada &&
+      confronto.placar_mandante != null &&
+      confronto.placar_visitante != null
+        ? `${confronto.placar_mandante}-${confronto.placar_visitante}`
+        : null;
+    lista.push({
+      grupo: "KO",
+      fase,
+      rodada: rodadaPorFase[fase] ?? 4,
+      mandante: confronto.mandante.selecao,
+      visitante: confronto.visitante.selecao,
+      data: confronto.data,
+      hora: confronto.hora,
+      finalizada: confronto.finalizada,
+      placar,
+    });
+  };
+
+  for (const fase of dados.fases) {
+    for (const confronto of fase.confrontos) {
+      incluir(confronto, fase.stage);
+    }
+  }
+  if (dados.final) incluir(dados.final, "final");
+  if (dados.disputa_bronze) incluir(dados.disputa_bronze, "bronze");
+
+  return lista.sort((a, b) =>
+    `${a.data}${a.hora}`.localeCompare(`${b.data}${b.hora}`),
+  );
+}

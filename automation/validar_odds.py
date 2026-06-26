@@ -106,6 +106,8 @@ def validar_odds_vigentes(
     sem_odd = 0
 
     for jog in mercado:
+        if jog.get("ativo_playoffs") is False:
+            continue
         prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
         if not prox:
             continue

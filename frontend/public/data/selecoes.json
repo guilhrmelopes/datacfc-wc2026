@@ -65,11 +65,25 @@
         "rodada": 3,
         "match_id": "4667817",
         "valida_cartola": true
+      },
+      {
+        "adversario": "SWITZERLAND",
+        "adversario_sigla": "SUI",
+        "adversario_clube_id": 2320,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
+        "grupo_adversario": "B",
+        "data": "2026-07-02",
+        "hora": "22:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653717",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1780.0,
     "elo_rank": 25,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785276+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291958+00:00"
   },
   {
     "selecao": "ARGENTINA",
@@ -137,11 +151,25 @@
         "rodada": 3,
         "match_id": "4667816",
         "valida_cartola": true
+      },
+      {
+        "adversario": "URUGUAY",
+        "adversario_sigla": "URU",
+        "adversario_clube_id": 2356,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/URU/60x60.png",
+        "grupo_adversario": "H",
+        "data": "2026-07-03",
+        "hora": "17:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653715",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 2144.0,
     "elo_rank": 1,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785285+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291967+00:00"
   },
   {
     "selecao": "AUSTRALIA",
@@ -153,19 +181,19 @@
     "rating_elo_100": 52.9,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUS/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 1.0,
-      "goals_conceded_team_match": 1.0,
-      "possession_percentage_team": 33.2,
+      "goals_team_match": 0.7,
+      "goals_conceded_team_match": 0.7,
+      "possession_percentage_team": 22.2,
       "clean_sheet_team": 1.0,
       "expected_goals_team": 1.5,
       "expected_goals_conceded_team": 2.4,
-      "ontarget_scoring_att_team": 3.0,
+      "ontarget_scoring_att_team": 2.0,
       "big_chance_team": 1.0,
       "touches_in_opp_box_team": 38.0,
-      "total_tackle_team": 14.0,
-      "poss_won_att_3rd_team": 4.5,
-      "saves_team": 4.5,
-      "fk_foul_lost_team": 14.0,
+      "total_tackle_team": 9.3,
+      "poss_won_att_3rd_team": 3.0,
+      "saves_team": 3.0,
+      "fk_foul_lost_team": 9.3,
       "total_yel_card_team": 4.0,
       "total_red_card_team": null,
       "J": 2.0
@@ -209,11 +237,25 @@
         "rodada": 3,
         "match_id": "4667776",
         "valida_cartola": true
+      },
+      {
+        "adversario": "IRAN",
+        "adversario_sigla": "IRA",
+        "adversario_clube_id": 2336,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
+        "grupo_adversario": "G",
+        "data": "2026-07-03",
+        "hora": "13:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653716",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1799.0,
     "elo_rank": 24,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785290+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291971+00:00"
   },
   {
     "selecao": "AUSTRIA",
@@ -281,11 +323,25 @@
         "rodada": 3,
         "match_id": "4667817",
         "valida_cartola": true
+      },
+      {
+        "adversario": "SPAIN",
+        "adversario_sigla": "ESP",
+        "adversario_clube_id": 2326,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
+        "grupo_adversario": "H",
+        "data": "2026-07-02",
+        "hora": "14:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653708",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1841.0,
     "elo_rank": 19,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785293+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291973+00:00"
   },
   {
     "selecao": "BELGIUM",
@@ -357,7 +413,7 @@
     ],
     "elo_rating": 1869.0,
     "elo_rank": 17,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785296+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291976+00:00"
   },
   {
     "selecao": "BOSNIA AND HERZEGOVINA",
@@ -425,11 +481,25 @@
         "rodada": 3,
         "match_id": "4667762",
         "valida_cartola": true
+      },
+      {
+        "adversario": "UNITED STATES",
+        "adversario_sigla": "EUA",
+        "adversario_clube_id": 2365,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EUA/60x60.png",
+        "grupo_adversario": "D",
+        "data": "2026-07-01",
+        "hora": "19:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653709",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1622.0,
     "elo_rank": 39,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785299+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291978+00:00"
   },
   {
     "selecao": "BRAZIL",
@@ -497,11 +567,25 @@
         "rodada": 3,
         "match_id": "4667768",
         "valida_cartola": true
+      },
+      {
+        "adversario": "JAPAN",
+        "adversario_sigla": "JAP",
+        "adversario_clube_id": 2369,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JAP/60x60.png",
+        "grupo_adversario": "F",
+        "data": "2026-06-29",
+        "hora": "12:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653711",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 2009.0,
     "elo_rank": 5,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785301+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291981+00:00"
   },
   {
     "selecao": "CANADA",
@@ -569,11 +653,25 @@
         "rodada": 3,
         "match_id": "4667761",
         "valida_cartola": true
+      },
+      {
+        "adversario": "SOUTH AFRICA",
+        "adversario_sigla": "AFS",
+        "adversario_clube_id": 2358,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AFS/60x60.png",
+        "grupo_adversario": "A",
+        "data": "2026-06-28",
+        "hora": "14:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653705",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1748.0,
     "elo_rank": 27,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785304+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291983+00:00"
   },
   {
     "selecao": "CAPE VERDE",
@@ -645,7 +743,7 @@
     ],
     "elo_rating": 1625.0,
     "elo_rank": 38,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785307+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291985+00:00"
   },
   {
     "selecao": "COLOMBIA",
@@ -713,11 +811,25 @@
         "rodada": 3,
         "match_id": "4667823",
         "valida_cartola": true
+      },
+      {
+        "adversario": "CROATIA",
+        "adversario_sigla": "CRO",
+        "adversario_clube_id": 2379,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CRO/60x60.png",
+        "grupo_adversario": "L",
+        "data": "2026-07-03",
+        "hora": "20:30:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653718",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 2006.0,
     "elo_rank": 6,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785309+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291988+00:00"
   },
   {
     "selecao": "CROATIA",
@@ -785,11 +897,25 @@
         "rodada": 3,
         "match_id": "4667830",
         "valida_cartola": true
+      },
+      {
+        "adversario": "COLOMBIA",
+        "adversario_sigla": "COL",
+        "adversario_clube_id": 2373,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COL/60x60.png",
+        "grupo_adversario": "K",
+        "data": "2026-07-03",
+        "hora": "20:30:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653718",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1896.0,
     "elo_rank": 15,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785312+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291990+00:00"
   },
   {
     "selecao": "CURACAO",
@@ -809,7 +935,7 @@
       "expected_goals_conceded_team": 8.4,
       "ontarget_scoring_att_team": 2.3,
       "big_chance_team": null,
-      "touches_in_opp_box_team": 41.0,
+      "touches_in_opp_box_team": 40.0,
       "total_tackle_team": 16.7,
       "poss_won_att_3rd_team": 2.7,
       "saves_team": 6.7,
@@ -861,7 +987,7 @@
     ],
     "elo_rating": 1438.0,
     "elo_rank": 47,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785315+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291992+00:00"
   },
   {
     "selecao": "CZECHIA",
@@ -933,7 +1059,7 @@
     ],
     "elo_rating": 1680.0,
     "elo_rank": 33,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785317+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291994+00:00"
   },
   {
     "selecao": "DR CONGO",
@@ -1005,7 +1131,7 @@
     ],
     "elo_rating": 1666.0,
     "elo_rank": 36,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785320+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291996+00:00"
   },
   {
     "selecao": "ECUADOR",
@@ -1073,11 +1199,25 @@
         "rodada": 3,
         "match_id": "4667781",
         "valida_cartola": true
+      },
+      {
+        "adversario": "ENGLAND",
+        "adversario_sigla": "ING",
+        "adversario_clube_id": 2370,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ING/60x60.png",
+        "grupo_adversario": "L",
+        "data": "2026-07-01",
+        "hora": "11:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653714",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1902.0,
     "elo_rank": 14,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785323+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.291998+00:00"
   },
   {
     "selecao": "EGYPT",
@@ -1145,11 +1285,25 @@
         "rodada": 3,
         "match_id": "4667795",
         "valida_cartola": true
+      },
+      {
+        "adversario": "SOUTH KOREA",
+        "adversario_sigla": "COR",
+        "adversario_clube_id": 2374,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COR/60x60.png",
+        "grupo_adversario": "A",
+        "data": "2026-07-01",
+        "hora": "15:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653710",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1740.0,
-    "elo_rank": 30,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785325+00:00"
+    "elo_rank": 31,
+    "elo_atualizado_em": "2026-06-26T01:20:17.292000+00:00"
   },
   {
     "selecao": "ENGLAND",
@@ -1217,11 +1371,25 @@
         "rodada": 3,
         "match_id": "4667829",
         "valida_cartola": true
+      },
+      {
+        "adversario": "ECUADOR",
+        "adversario_sigla": "EQU",
+        "adversario_clube_id": 2372,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EQU/60x60.png",
+        "grupo_adversario": "E",
+        "data": "2026-07-01",
+        "hora": "11:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653714",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 2028.0,
     "elo_rank": 4,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785328+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292003+00:00"
   },
   {
     "selecao": "FRANCE",
@@ -1289,11 +1457,25 @@
         "rodada": 3,
         "match_id": "4667808",
         "valida_cartola": true
+      },
+      {
+        "adversario": "SWEDEN",
+        "adversario_sigla": "SUE",
+        "adversario_clube_id": 2368,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUE/60x60.png",
+        "grupo_adversario": "F",
+        "data": "2026-06-30",
+        "hora": "16:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653704",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 2090.0,
     "elo_rank": 3,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785330+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292005+00:00"
   },
   {
     "selecao": "GERMANY",
@@ -1361,11 +1543,25 @@
         "rodada": 3,
         "match_id": "4667781",
         "valida_cartola": true
+      },
+      {
+        "adversario": "PARAGUAY",
+        "adversario_sigla": "PAR",
+        "adversario_clube_id": 2354,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/PAR/60x60.png",
+        "grupo_adversario": "D",
+        "data": "2026-06-29",
+        "hora": "15:30:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653703",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1916.0,
-    "elo_rank": 11,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785333+00:00"
+    "elo_rank": 10,
+    "elo_atualizado_em": "2026-06-26T01:20:17.292007+00:00"
   },
   {
     "selecao": "GHANA",
@@ -1433,11 +1629,25 @@
         "rodada": 3,
         "match_id": "4667830",
         "valida_cartola": true
+      },
+      {
+        "adversario": "PORTUGAL",
+        "adversario_sigla": "POR",
+        "adversario_clube_id": 2390,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/POR/60x60.png",
+        "grupo_adversario": "K",
+        "data": "2026-07-02",
+        "hora": "18:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653707",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1584.0,
     "elo_rank": 42,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785335+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292009+00:00"
   },
   {
     "selecao": "HAITI",
@@ -1509,7 +1719,7 @@
     ],
     "elo_rating": 1517.0,
     "elo_rank": 46,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785338+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292012+00:00"
   },
   {
     "selecao": "IRAN",
@@ -1577,11 +1787,25 @@
         "rodada": 3,
         "match_id": "4667795",
         "valida_cartola": true
+      },
+      {
+        "adversario": "AUSTRALIA",
+        "adversario_sigla": "AUS",
+        "adversario_clube_id": 2333,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUS/60x60.png",
+        "grupo_adversario": "D",
+        "data": "2026-07-03",
+        "hora": "13:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653716",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1766.0,
     "elo_rank": 26,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785341+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292014+00:00"
   },
   {
     "selecao": "IRAQ",
@@ -1653,7 +1877,7 @@
     ],
     "elo_rating": 1586.0,
     "elo_rank": 41,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785344+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292016+00:00"
   },
   {
     "selecao": "IVORY COAST",
@@ -1673,7 +1897,7 @@
       "expected_goals_conceded_team": 3.4,
       "ontarget_scoring_att_team": 3.0,
       "big_chance_team": 7.0,
-      "touches_in_opp_box_team": 84.0,
+      "touches_in_opp_box_team": 83.0,
       "total_tackle_team": 16.7,
       "poss_won_att_3rd_team": 3.7,
       "saves_team": 2.7,
@@ -1721,11 +1945,25 @@
         "rodada": 3,
         "match_id": "4667782",
         "valida_cartola": true
+      },
+      {
+        "adversario": "NORWAY",
+        "adversario_sigla": "NOR",
+        "adversario_clube_id": 2323,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NOR/60x60.png",
+        "grupo_adversario": "I",
+        "data": "2026-06-30",
+        "hora": "12:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653712",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1743.0,
     "elo_rank": 29,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785346+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292018+00:00"
   },
   {
     "selecao": "JAPAN",
@@ -1734,23 +1972,23 @@
     "clube_id": 2369,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 70.1,
+    "rating_elo_100": 68.1,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JAP/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.3,
-      "goals_conceded_team_match": 0.7,
-      "possession_percentage_team": 53.5,
+      "goals_conceded_team_match": 1.0,
+      "possession_percentage_team": 51.5,
       "clean_sheet_team": 1.0,
-      "expected_goals_team": 3.1,
-      "expected_goals_conceded_team": 1.0,
-      "ontarget_scoring_att_team": 3.3,
-      "big_chance_team": 4.0,
-      "touches_in_opp_box_team": 46.0,
-      "total_tackle_team": 12.0,
-      "poss_won_att_3rd_team": 1.0,
-      "saves_team": 1.7,
-      "fk_foul_lost_team": 11.0,
-      "total_yel_card_team": null,
+      "expected_goals_team": 4.0,
+      "expected_goals_conceded_team": 1.4,
+      "ontarget_scoring_att_team": 3.7,
+      "big_chance_team": 6.0,
+      "touches_in_opp_box_team": 48.0,
+      "total_tackle_team": 14.0,
+      "poss_won_att_3rd_team": 1.3,
+      "saves_team": 2.7,
+      "fk_foul_lost_team": 14.0,
+      "total_yel_card_team": 1.0,
       "total_red_card_team": null,
       "J": 3.0
     },
@@ -1793,11 +2031,25 @@
         "rodada": 3,
         "match_id": "4667788",
         "valida_cartola": true
+      },
+      {
+        "adversario": "BRAZIL",
+        "adversario_sigla": "BRA",
+        "adversario_clube_id": 2318,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BRA/60x60.png",
+        "grupo_adversario": "C",
+        "data": "2026-06-29",
+        "hora": "12:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653711",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
-    "elo_rating": 1925.0,
-    "elo_rank": 10,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785349+00:00"
+    "elo_rating": 1910.0,
+    "elo_rank": 13,
+    "elo_atualizado_em": "2026-06-26T01:20:17.292020+00:00"
   },
   {
     "selecao": "JORDAN",
@@ -1869,7 +2121,7 @@
     ],
     "elo_rating": 1632.0,
     "elo_rank": 37,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785352+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292023+00:00"
   },
   {
     "selecao": "MEXICO",
@@ -1937,11 +2189,25 @@
         "rodada": 3,
         "match_id": "4667755",
         "valida_cartola": true
+      },
+      {
+        "adversario": "SCOTLAND",
+        "adversario_sigla": "ESC",
+        "adversario_clube_id": 2327,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESC/60x60.png",
+        "grupo_adversario": "C",
+        "data": "2026-06-30",
+        "hora": "20:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653713",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1912.0,
-    "elo_rank": 13,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785354+00:00"
+    "elo_rank": 12,
+    "elo_atualizado_em": "2026-06-26T01:20:17.292024+00:00"
   },
   {
     "selecao": "MOROCCO",
@@ -2009,11 +2275,25 @@
         "rodada": 3,
         "match_id": "4667769",
         "valida_cartola": true
+      },
+      {
+        "adversario": "NETHERLANDS",
+        "adversario_sigla": "HOL",
+        "adversario_clube_id": 2381,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HOL/60x60.png",
+        "grupo_adversario": "F",
+        "data": "2026-06-29",
+        "hora": "20:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653706",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1877.0,
     "elo_rank": 16,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785357+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292027+00:00"
   },
   {
     "selecao": "NETHERLANDS",
@@ -2022,22 +2302,22 @@
     "clube_id": 2381,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 76.5,
+    "rating_elo_100": 77.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/HOL/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 3.0,
+      "goals_team_match": 3.3,
       "goals_conceded_team_match": 1.3,
-      "possession_percentage_team": 60.7,
+      "possession_percentage_team": 60.8,
       "clean_sheet_team": null,
-      "expected_goals_team": 4.6,
-      "expected_goals_conceded_team": 1.9,
-      "ontarget_scoring_att_team": 5.3,
+      "expected_goals_team": 5.1,
+      "expected_goals_conceded_team": 2.0,
+      "ontarget_scoring_att_team": 6.7,
       "big_chance_team": 5.0,
-      "touches_in_opp_box_team": 76.0,
-      "total_tackle_team": 10.3,
-      "poss_won_att_3rd_team": 4.7,
-      "saves_team": 3.0,
-      "fk_foul_lost_team": 7.3,
+      "touches_in_opp_box_team": 96.0,
+      "total_tackle_team": 11.3,
+      "poss_won_att_3rd_team": 5.3,
+      "saves_team": 3.7,
+      "fk_foul_lost_team": 8.7,
       "total_yel_card_team": 3.0,
       "total_red_card_team": null,
       "J": 3.0
@@ -2081,11 +2361,25 @@
         "rodada": 3,
         "match_id": "4667787",
         "valida_cartola": true
+      },
+      {
+        "adversario": "MOROCCO",
+        "adversario_sigla": "MAR",
+        "adversario_clube_id": 2332,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
+        "grupo_adversario": "C",
+        "data": "2026-06-29",
+        "hora": "20:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653706",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
-    "elo_rating": 1972.0,
+    "elo_rating": 1980.0,
     "elo_rank": 8,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785359+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292029+00:00"
   },
   {
     "selecao": "NEW ZEALAND",
@@ -2157,7 +2451,7 @@
     ],
     "elo_rating": 1549.0,
     "elo_rank": 45,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785363+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292031+00:00"
   },
   {
     "selecao": "NORWAY",
@@ -2225,11 +2519,25 @@
         "rodada": 3,
         "match_id": "4667808",
         "valida_cartola": true
+      },
+      {
+        "adversario": "IVORY COAST",
+        "adversario_sigla": "CDM",
+        "adversario_clube_id": 2350,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CDM/60x60.png",
+        "grupo_adversario": "E",
+        "data": "2026-06-30",
+        "hora": "12:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653712",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1951.0,
     "elo_rank": 9,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785369+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292033+00:00"
   },
   {
     "selecao": "PANAMA",
@@ -2301,7 +2609,7 @@
     ],
     "elo_rating": 1668.0,
     "elo_rank": 35,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785375+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292035+00:00"
   },
   {
     "selecao": "PARAGUAY",
@@ -2313,19 +2621,19 @@
     "rating_elo_100": 55.3,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/PAR/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 1.0,
-      "goals_conceded_team_match": 2.0,
-      "possession_percentage_team": 28.1,
+      "goals_team_match": 0.7,
+      "goals_conceded_team_match": 1.3,
+      "possession_percentage_team": 18.7,
       "clean_sheet_team": 1.0,
       "expected_goals_team": 0.9,
       "expected_goals_conceded_team": 3.6,
-      "ontarget_scoring_att_team": 1.5,
+      "ontarget_scoring_att_team": 1.0,
       "big_chance_team": 1.0,
       "touches_in_opp_box_team": 23.0,
-      "total_tackle_team": 23.0,
-      "poss_won_att_3rd_team": 1.0,
-      "saves_team": 4.0,
-      "fk_foul_lost_team": 16.0,
+      "total_tackle_team": 15.3,
+      "poss_won_att_3rd_team": 0.7,
+      "saves_team": 2.7,
+      "fk_foul_lost_team": 10.7,
       "total_yel_card_team": 6.0,
       "total_red_card_team": 1.0,
       "J": 2.0
@@ -2369,11 +2677,25 @@
         "rodada": 3,
         "match_id": "4667776",
         "valida_cartola": true
+      },
+      {
+        "adversario": "GERMANY",
+        "adversario_sigla": "ALE",
+        "adversario_clube_id": 2384,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ALE/60x60.png",
+        "grupo_adversario": "E",
+        "data": "2026-06-29",
+        "hora": "15:30:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653703",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1816.0,
     "elo_rank": 22,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785379+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292037+00:00"
   },
   {
     "selecao": "PORTUGAL",
@@ -2441,11 +2763,25 @@
         "rodada": 3,
         "match_id": "4667823",
         "valida_cartola": true
+      },
+      {
+        "adversario": "GHANA",
+        "adversario_sigla": "GAN",
+        "adversario_clube_id": 2375,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/GAN/60x60.png",
+        "grupo_adversario": "L",
+        "data": "2026-07-02",
+        "hora": "18:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653707",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1988.0,
     "elo_rank": 7,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785384+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292039+00:00"
   },
   {
     "selecao": "QATAR",
@@ -2517,7 +2853,7 @@
     ],
     "elo_rating": 1411.0,
     "elo_rank": 48,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785389+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292041+00:00"
   },
   {
     "selecao": "SAUDI ARABIA",
@@ -2589,7 +2925,7 @@
     ],
     "elo_rating": 1593.0,
     "elo_rank": 40,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785393+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292043+00:00"
   },
   {
     "selecao": "SCOTLAND",
@@ -2657,11 +2993,25 @@
         "rodada": 3,
         "match_id": "4667768",
         "valida_cartola": true
+      },
+      {
+        "adversario": "MEXICO",
+        "adversario_sigla": "MEX",
+        "adversario_clube_id": 2360,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MEX/60x60.png",
+        "grupo_adversario": "A",
+        "data": "2026-06-30",
+        "hora": "20:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653713",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1745.0,
     "elo_rank": 28,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785398+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292045+00:00"
   },
   {
     "selecao": "SENEGAL",
@@ -2733,7 +3083,7 @@
     ],
     "elo_rating": 1817.0,
     "elo_rank": 21,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785403+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292047+00:00"
   },
   {
     "selecao": "SOUTH AFRICA",
@@ -2801,11 +3151,25 @@
         "rodada": 3,
         "match_id": "4667756",
         "valida_cartola": true
+      },
+      {
+        "adversario": "CANADA",
+        "adversario_sigla": "CAN",
+        "adversario_clube_id": 2361,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
+        "grupo_adversario": "B",
+        "data": "2026-06-28",
+        "hora": "14:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653705",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1575.0,
     "elo_rank": 43,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785407+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292050+00:00"
   },
   {
     "selecao": "SOUTH KOREA",
@@ -2873,11 +3237,25 @@
         "rodada": 3,
         "match_id": "4667756",
         "valida_cartola": true
+      },
+      {
+        "adversario": "EGYPT",
+        "adversario_sigla": "EGI",
+        "adversario_clube_id": 2324,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
+        "grupo_adversario": "G",
+        "data": "2026-07-01",
+        "hora": "15:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653710",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1723.0,
     "elo_rank": 32,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785412+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292052+00:00"
   },
   {
     "selecao": "SPAIN",
@@ -2945,11 +3323,25 @@
         "rodada": 3,
         "match_id": "4667802",
         "valida_cartola": true
+      },
+      {
+        "adversario": "AUSTRIA",
+        "adversario_sigla": "AUT",
+        "adversario_clube_id": 2391,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUT/60x60.png",
+        "grupo_adversario": "J",
+        "data": "2026-07-02",
+        "hora": "14:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653708",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 2134.0,
     "elo_rank": 2,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785417+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292054+00:00"
   },
   {
     "selecao": "SWEDEN",
@@ -2958,23 +3350,23 @@
     "clube_id": 2368,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 43.1,
+    "rating_elo_100": 45.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUE/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 2.0,
+      "goals_team_match": 2.3,
       "goals_conceded_team_match": 2.3,
-      "possession_percentage_team": 46.6,
+      "possession_percentage_team": 48.5,
       "clean_sheet_team": null,
-      "expected_goals_team": 2.5,
-      "expected_goals_conceded_team": 3.2,
-      "ontarget_scoring_att_team": 5.3,
-      "big_chance_team": 6.0,
-      "touches_in_opp_box_team": 55.0,
-      "total_tackle_team": 12.0,
-      "poss_won_att_3rd_team": 3.3,
+      "expected_goals_team": 3.0,
+      "expected_goals_conceded_team": 4.2,
+      "ontarget_scoring_att_team": 6.7,
+      "big_chance_team": 7.0,
+      "touches_in_opp_box_team": 63.0,
+      "total_tackle_team": 12.7,
+      "poss_won_att_3rd_team": 3.7,
       "saves_team": 1.7,
-      "fk_foul_lost_team": 9.7,
-      "total_yel_card_team": 4.0,
+      "fk_foul_lost_team": 11.0,
+      "total_yel_card_team": 5.0,
       "total_red_card_team": null,
       "J": 3.0
     },
@@ -3017,11 +3409,25 @@
         "rodada": 3,
         "match_id": "4667788",
         "valida_cartola": true
+      },
+      {
+        "adversario": "FRANCE",
+        "adversario_sigla": "FRA",
+        "adversario_clube_id": 2385,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/FRA/60x60.png",
+        "grupo_adversario": "I",
+        "data": "2026-06-30",
+        "hora": "16:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653704",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
-    "elo_rating": 1727.0,
-    "elo_rank": 31,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785420+00:00"
+    "elo_rating": 1742.0,
+    "elo_rank": 30,
+    "elo_atualizado_em": "2026-06-26T01:20:17.292056+00:00"
   },
   {
     "selecao": "SWITZERLAND",
@@ -3089,11 +3495,25 @@
         "rodada": 3,
         "match_id": "4667761",
         "valida_cartola": true
+      },
+      {
+        "adversario": "ALGERIA",
+        "adversario_sigla": "AGL",
+        "adversario_clube_id": 2338,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
+        "grupo_adversario": "J",
+        "data": "2026-07-02",
+        "hora": "22:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653717",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1914.0,
-    "elo_rank": 12,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785423+00:00"
+    "elo_rank": 11,
+    "elo_atualizado_em": "2026-06-26T01:20:17.292058+00:00"
   },
   {
     "selecao": "TUNISIA",
@@ -3102,22 +3522,22 @@
     "clube_id": 2337,
     "grupo": "F",
     "competicao": "Copa 2026",
-    "rating_elo_100": 21.7,
+    "rating_elo_100": 20.6,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TUN/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 0.7,
-      "goals_conceded_team_match": 3.7,
-      "possession_percentage_team": 39.3,
+      "goals_conceded_team_match": 4.0,
+      "possession_percentage_team": 39.2,
       "clean_sheet_team": null,
-      "expected_goals_team": 0.6,
-      "expected_goals_conceded_team": 4.7,
-      "ontarget_scoring_att_team": 1.3,
+      "expected_goals_team": 0.8,
+      "expected_goals_conceded_team": 5.1,
+      "ontarget_scoring_att_team": 2.0,
       "big_chance_team": 3.0,
-      "touches_in_opp_box_team": 27.0,
-      "total_tackle_team": 16.3,
-      "poss_won_att_3rd_team": 0.7,
-      "saves_team": 1.3,
-      "fk_foul_lost_team": 7.0,
+      "touches_in_opp_box_team": 29.0,
+      "total_tackle_team": 18.3,
+      "poss_won_att_3rd_team": 1.0,
+      "saves_team": 2.0,
+      "fk_foul_lost_team": 9.0,
       "total_yel_card_team": 1.0,
       "total_red_card_team": null,
       "J": 3.0
@@ -3163,9 +3583,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1570.0,
+    "elo_rating": 1562.0,
     "elo_rank": 44,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785426+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292060+00:00"
   },
   {
     "selecao": "TURKIYE",
@@ -3178,18 +3598,18 @@
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/TUR/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": null,
-      "goals_conceded_team_match": 1.5,
-      "possession_percentage_team": 75.0,
+      "goals_conceded_team_match": 1.0,
+      "possession_percentage_team": 50.0,
       "clean_sheet_team": null,
       "expected_goals_team": 3.5,
       "expected_goals_conceded_team": 1.5,
-      "ontarget_scoring_att_team": 6.5,
+      "ontarget_scoring_att_team": 4.3,
       "big_chance_team": 7.0,
       "touches_in_opp_box_team": 101.0,
-      "total_tackle_team": 14.5,
-      "poss_won_att_3rd_team": 5.5,
-      "saves_team": 1.5,
-      "fk_foul_lost_team": 9.0,
+      "total_tackle_team": 9.7,
+      "poss_won_att_3rd_team": 3.7,
+      "saves_team": 1.0,
+      "fk_foul_lost_team": 6.0,
       "total_yel_card_team": 2.0,
       "total_red_card_team": null,
       "J": 2.0
@@ -3237,7 +3657,7 @@
     ],
     "elo_rating": 1813.0,
     "elo_rank": 23,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785428+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292062+00:00"
   },
   {
     "selecao": "UNITED STATES",
@@ -3249,19 +3669,19 @@
     "rating_elo_100": 55.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EUA/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 3.0,
-      "goals_conceded_team_match": 0.5,
-      "possession_percentage_team": 63.6,
+      "goals_team_match": 2.0,
+      "goals_conceded_team_match": 0.3,
+      "possession_percentage_team": 42.4,
       "clean_sheet_team": 1.0,
       "expected_goals_team": 2.5,
       "expected_goals_conceded_team": 0.9,
-      "ontarget_scoring_att_team": 4.0,
+      "ontarget_scoring_att_team": 2.7,
       "big_chance_team": 6.0,
       "touches_in_opp_box_team": 73.0,
-      "total_tackle_team": 14.5,
-      "poss_won_att_3rd_team": 4.5,
-      "saves_team": 1.0,
-      "fk_foul_lost_team": 12.5,
+      "total_tackle_team": 9.7,
+      "poss_won_att_3rd_team": 3.0,
+      "saves_team": 0.7,
+      "fk_foul_lost_team": 8.3,
       "total_yel_card_team": 4.0,
       "total_red_card_team": null,
       "J": 2.0
@@ -3305,11 +3725,25 @@
         "rodada": 3,
         "match_id": "4667775",
         "valida_cartola": true
+      },
+      {
+        "adversario": "BOSNIA AND HERZEGOVINA",
+        "adversario_sigla": "BOS",
+        "adversario_clube_id": 2865,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BOS/60x60.png",
+        "grupo_adversario": "B",
+        "data": "2026-07-01",
+        "hora": "19:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653709",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1820.0,
     "elo_rank": 20,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785430+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292064+00:00"
   },
   {
     "selecao": "URUGUAY",
@@ -3377,11 +3811,25 @@
         "rodada": 3,
         "match_id": "4667802",
         "valida_cartola": true
+      },
+      {
+        "adversario": "ARGENTINA",
+        "adversario_sigla": "ARG",
+        "adversario_clube_id": 2357,
+        "adversario_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
+        "grupo_adversario": "J",
+        "data": "2026-07-03",
+        "hora": "17:00:00",
+        "estadio": "",
+        "rodada": 4,
+        "match_id": "4653715",
+        "fase": "1/16",
+        "valida_cartola": true
       }
     ],
     "elo_rating": 1851.0,
     "elo_rank": 18,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785432+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292066+00:00"
   },
   {
     "selecao": "UZBEKISTAN",
@@ -3453,6 +3901,6 @@
     ],
     "elo_rating": 1677.0,
     "elo_rank": 34,
-    "elo_atualizado_em": "2026-06-26T00:16:45.785435+00:00"
+    "elo_atualizado_em": "2026-06-26T01:20:17.292068+00:00"
   }
 ]
