@@ -891,8 +891,8 @@
       "hora": "21:00:00",
       "utc": "2026-06-27T00:00:00.000Z",
       "match_id": "4667802",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "0 - 1",
       "valida_cartola": true
     },
     {
@@ -904,8 +904,8 @@
       "hora": "21:00:00",
       "utc": "2026-06-27T00:00:00.000Z",
       "match_id": "4667803",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "0 - 0",
       "valida_cartola": true
     },
     {
@@ -918,7 +918,7 @@
       "utc": "2026-06-27T03:00:00.000Z",
       "match_id": "4667794",
       "finalizada": false,
-      "placar": null,
+      "placar": "0 - 3",
       "valida_cartola": true
     },
     {
@@ -931,7 +931,7 @@
       "utc": "2026-06-27T03:00:00.000Z",
       "match_id": "4667795",
       "finalizada": false,
-      "placar": null,
+      "placar": "1 - 1",
       "valida_cartola": true
     },
     {
@@ -1128,7 +1128,7 @@
       "grupo": "KO",
       "fase": "1/16",
       "rodada": 4,
-      "mandante": "EGYPT",
+      "mandante": "BELGIUM",
       "visitante": "SOUTH KOREA",
       "data": "2026-07-01",
       "hora": "15:00:00",
@@ -1185,7 +1185,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "SWITZERLAND",
-      "visitante": "ALGERIA",
+      "visitante": "IRAN",
       "data": "2026-07-02",
       "hora": "22:00:00",
       "utc": "2026-07-03T01:00:00.000Z",
@@ -1199,7 +1199,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "AUSTRALIA",
-      "visitante": "IRAN",
+      "visitante": "EGYPT",
       "data": "2026-07-03",
       "hora": "13:00:00",
       "utc": "2026-07-03T16:00:00.000Z",
@@ -1213,7 +1213,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "ARGENTINA",
-      "visitante": "URUGUAY",
+      "visitante": "CAPE VERDE",
       "data": "2026-07-03",
       "hora": "17:00:00",
       "utc": "2026-07-03T20:00:00.000Z",

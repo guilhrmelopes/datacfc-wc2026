@@ -234,13 +234,13 @@
           "stage": "1/16",
           "match_id": "4653710",
           "mandante": {
-            "rotulo": "EGY",
-            "nome_fotmob": "Egypt",
-            "selecao": "EGYPT",
-            "sigla": "EGI",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
+            "rotulo": "BEL",
+            "nome_fotmob": "Belgium",
+            "selecao": "BELGIUM",
+            "sigla": "BEL",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BEL/60x60.png",
             "tbd": false,
-            "team_id": 10255
+            "team_id": 8263
           },
           "visitante": {
             "rotulo": "KOR",
@@ -403,13 +403,13 @@
             "team_id": 6706
           },
           "visitante": {
-            "rotulo": "URU",
-            "nome_fotmob": "Uruguay",
-            "selecao": "URUGUAY",
-            "sigla": "URU",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/URU/60x60.png",
+            "rotulo": "CPV",
+            "nome_fotmob": "Cape Verde",
+            "selecao": "CAPE VERDE",
+            "sigla": "CAB",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAB/60x60.png",
             "tbd": false,
-            "team_id": 5796
+            "team_id": 5888
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -435,13 +435,13 @@
             "team_id": 6716
           },
           "visitante": {
-            "rotulo": "IRN",
-            "nome_fotmob": "Iran",
-            "selecao": "IRAN",
-            "sigla": "IRA",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
+            "rotulo": "EGY",
+            "nome_fotmob": "Egypt",
+            "selecao": "EGYPT",
+            "sigla": "EGI",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
             "tbd": false,
-            "team_id": 6711
+            "team_id": 10255
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -467,13 +467,13 @@
             "team_id": 6717
           },
           "visitante": {
-            "rotulo": "ALG",
-            "nome_fotmob": "Algeria",
-            "selecao": "ALGERIA",
-            "sigla": "AGL",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
+            "rotulo": "IRN",
+            "nome_fotmob": "Iran",
+            "selecao": "IRAN",
+            "sigla": "IRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
             "tbd": false,
-            "team_id": 6317
+            "team_id": 6711
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -527,22 +527,22 @@
           "stage": "1/8",
           "match_id": "4653842",
           "mandante": {
-            "rotulo": "G3A",
-            "nome_fotmob": "Germany/3ABCDF",
-            "selecao": null,
-            "sigla": "G3A",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2042059
-          },
-          "visitante": {
             "rotulo": "TBD",
-            "nome_fotmob": "France/3CDFGH",
+            "nome_fotmob": "Germany/Paraguay",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2056781
+            "team_id": 2056846
+          },
+          "visitante": {
+            "rotulo": "TBD",
+            "nome_fotmob": "France/Sweden",
+            "selecao": null,
+            "sigla": "TBD",
+            "url_escudo": null,
+            "tbd": true,
+            "team_id": 2056841
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -600,13 +600,13 @@
             "team_id": 1685729
           },
           "visitante": {
-            "rotulo": "1HJ",
-            "nome_fotmob": "1H/2J",
+            "rotulo": "TBD",
+            "nome_fotmob": "Spain/2J",
             "selecao": null,
-            "sigla": "1HJ",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1685730
+            "team_id": 2056837
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -719,13 +719,13 @@
           "stage": "1/8",
           "match_id": "4653848",
           "mandante": {
-            "rotulo": "AR2",
-            "nome_fotmob": "Argentina/2H",
+            "rotulo": "TBD",
+            "nome_fotmob": "Argentina/Cape Verde",
             "selecao": null,
-            "sigla": "AR2",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2046745
+            "team_id": 2056838
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-27T00:01:19.436693+00:00"
+  "atualizado_em": "2026-06-27T04:32:46.936272+00:00"
 }

@@ -1,24 +1,24 @@
 {
-  "atualizado_em": "2026-06-27T00:01:19.731568+00:00",
+  "atualizado_em": "2026-06-27T04:32:47.100808+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
+    "ESP": {
+      "elo": 2144.0,
+      "rank": 1,
+      "codigo_elo": "ES",
+      "rating_100": 100.0
+    },
     "ARG": {
       "elo": 2144.0,
       "rank": 1,
       "codigo_elo": "AR",
       "rating_100": 100.0
     },
-    "ESP": {
-      "elo": 2134.0,
-      "rank": 2,
-      "codigo_elo": "ES",
-      "rating_100": 98.6
-    },
     "FRA": {
-      "elo": 2090.0,
+      "elo": 2123.0,
       "rank": 3,
       "codigo_elo": "FR",
-      "rating_100": 92.6
+      "rating_100": 97.1
     },
     "ING": {
       "elo": 2028.0,
@@ -51,10 +51,10 @@
       "rating_100": 77.6
     },
     "NOR": {
-      "elo": 1951.0,
+      "elo": 1918.0,
       "rank": 9,
       "codigo_elo": "NO",
-      "rating_100": 73.7
+      "rating_100": 69.2
     },
     "ALE": {
       "elo": 1916.0,
@@ -110,23 +110,23 @@
       "codigo_elo": "TR",
       "rating_100": 60.2
     },
-    "URU": {
-      "elo": 1851.0,
+    "SEN": {
+      "elo": 1842.0,
       "rank": 19,
+      "codigo_elo": "SN",
+      "rating_100": 58.8
+    },
+    "URU": {
+      "elo": 1841.0,
+      "rank": 20,
       "codigo_elo": "UY",
-      "rating_100": 60.0
+      "rating_100": 58.7
     },
     "AUT": {
       "elo": 1841.0,
       "rank": 20,
       "codigo_elo": "AT",
       "rating_100": 58.7
-    },
-    "SEN": {
-      "elo": 1817.0,
-      "rank": 21,
-      "codigo_elo": "SN",
-      "rating_100": 55.4
     },
     "PAR": {
       "elo": 1815.0,
@@ -224,47 +224,47 @@
       "codigo_elo": "JO",
       "rating_100": 30.2
     },
-    "CAB": {
-      "elo": 1625.0,
-      "rank": 38,
-      "codigo_elo": "CV",
-      "rating_100": 29.2
-    },
     "BOS": {
       "elo": 1622.0,
-      "rank": 39,
+      "rank": 38,
       "codigo_elo": "BA",
       "rating_100": 28.8
     },
+    "CAB": {
+      "elo": 1622.0,
+      "rank": 38,
+      "codigo_elo": "CV",
+      "rating_100": 28.8
+    },
     "ARS": {
-      "elo": 1593.0,
+      "elo": 1596.0,
       "rank": 40,
       "codigo_elo": "SA",
-      "rating_100": 24.8
-    },
-    "IRQ": {
-      "elo": 1586.0,
-      "rank": 41,
-      "codigo_elo": "IQ",
-      "rating_100": 23.9
+      "rating_100": 25.2
     },
     "GAN": {
       "elo": 1584.0,
-      "rank": 42,
+      "rank": 41,
       "codigo_elo": "GH",
       "rating_100": 23.6
     },
     "AFS": {
       "elo": 1575.0,
-      "rank": 43,
+      "rank": 42,
       "codigo_elo": "ZA",
       "rating_100": 22.4
     },
     "TUN": {
       "elo": 1562.0,
-      "rank": 44,
+      "rank": 43,
       "codigo_elo": "TN",
       "rating_100": 20.6
+    },
+    "IRQ": {
+      "elo": 1561.0,
+      "rank": 44,
+      "codigo_elo": "IQ",
+      "rating_100": 20.5
     },
     "NZE": {
       "elo": 1549.0,
