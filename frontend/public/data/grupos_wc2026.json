@@ -944,7 +944,7 @@
       "utc": "2026-06-27T21:00:00.000Z",
       "match_id": "4667829",
       "finalizada": false,
-      "placar": null,
+      "placar": "0 - 0",
       "valida_cartola": true
     },
     {
@@ -957,7 +957,7 @@
       "utc": "2026-06-27T21:00:00.000Z",
       "match_id": "4667830",
       "finalizada": false,
-      "placar": null,
+      "placar": "1 - 0",
       "valida_cartola": true
     },
     {
@@ -1114,7 +1114,7 @@
       "grupo": "KO",
       "fase": "1/16",
       "rodada": 4,
-      "mandante": "ENGLAND",
+      "mandante": "CROATIA",
       "visitante": "SENEGAL",
       "data": "2026-07-01",
       "hora": "11:00:00",
@@ -1171,7 +1171,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "PORTUGAL",
-      "visitante": "GHANA",
+      "visitante": "ENGLAND",
       "data": "2026-07-02",
       "hora": "18:00:00",
       "utc": "2026-07-02T21:00:00.000Z",
@@ -1227,7 +1227,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "COLOMBIA",
-      "visitante": "CROATIA",
+      "visitante": "GHANA",
       "data": "2026-07-03",
       "hora": "20:30:00",
       "utc": "2026-07-03T23:30:00.000Z",
