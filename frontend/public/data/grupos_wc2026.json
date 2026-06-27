@@ -917,8 +917,8 @@
       "hora": "00:00:00",
       "utc": "2026-06-27T03:00:00.000Z",
       "match_id": "4667794",
-      "finalizada": false,
-      "placar": "0 - 3",
+      "finalizada": true,
+      "placar": "1 - 5",
       "valida_cartola": true
     },
     {
@@ -930,7 +930,7 @@
       "hora": "00:00:00",
       "utc": "2026-06-27T03:00:00.000Z",
       "match_id": "4667795",
-      "finalizada": false,
+      "finalizada": true,
       "placar": "1 - 1",
       "valida_cartola": true
     },

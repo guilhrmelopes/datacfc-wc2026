@@ -632,13 +632,13 @@
             "team_id": 2055190
           },
           "visitante": {
-            "rotulo": "1GA",
-            "nome_fotmob": "1G/3AEHIJ",
+            "rotulo": "B3A",
+            "nome_fotmob": "Belgium/3AEHIJ",
             "selecao": null,
-            "sigla": "1GA",
+            "sigla": "B3A",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1685727
+            "team_id": 2056961
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -729,12 +729,12 @@
           },
           "visitante": {
             "rotulo": "TBD",
-            "nome_fotmob": "Australia/2G",
+            "nome_fotmob": "Australia/Egypt",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2055136
+            "team_id": 2056962
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-27T04:32:46.936272+00:00"
+  "atualizado_em": "2026-06-27T07:45:51.853821+00:00"
 }
