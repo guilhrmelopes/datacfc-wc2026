@@ -64,7 +64,7 @@
     "4667808",
     "4667809"
   ],
-  "atualizado_em": "2026-06-26T22:44:45.545320+00:00",
+  "atualizado_em": "2026-06-27T00:01:56.811707+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -14530,10 +14530,8 @@
         "clube_id": 2865
       },
       "149804": {
-        "pontuacao": 1.5,
-        "scout": {
-          "DS": 1
-        },
+        "pontuacao": 0.0,
+        "scout": {},
         "posicao_id": 3,
         "clube_id": 2323
       },
@@ -15798,8 +15796,8 @@
     }
   },
   "status_mercado": 2,
-  "bola_rolando": false,
-  "cartola_atualizado_em": "2026-06-26T22:43:41.074409+00:00",
+  "bola_rolando": true,
+  "cartola_atualizado_em": "2026-06-27T00:01:23.582840+00:00",
   "playoffs_ativos": false,
   "transicao_playoffs": true
 }
