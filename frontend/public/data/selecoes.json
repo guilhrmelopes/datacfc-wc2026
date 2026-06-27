@@ -69,7 +69,7 @@
     ],
     "elo_rating": 1780.0,
     "elo_rank": 25,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117065+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676294+00:00"
   },
   {
     "selecao": "ARGENTINA",
@@ -155,7 +155,7 @@
     ],
     "elo_rating": 2144.0,
     "elo_rank": 1,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117079+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676305+00:00"
   },
   {
     "selecao": "AUSTRALIA",
@@ -241,7 +241,7 @@
     ],
     "elo_rating": 1800.0,
     "elo_rank": 23,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117083+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676309+00:00"
   },
   {
     "selecao": "AUSTRIA",
@@ -327,7 +327,7 @@
     ],
     "elo_rating": 1841.0,
     "elo_rank": 20,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117086+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676313+00:00"
   },
   {
     "selecao": "BELGIUM",
@@ -336,7 +336,7 @@
     "clube_id": 2392,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 62.5,
+    "rating_elo_100": 64.5,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BEL/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 2.0,
@@ -411,9 +411,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1869.0,
-    "elo_rank": 17,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117088+00:00"
+    "elo_rating": 1884.0,
+    "elo_rank": 16,
+    "elo_atualizado_em": "2026-06-27T10:01:10.676316+00:00"
   },
   {
     "selecao": "BOSNIA AND HERZEGOVINA",
@@ -499,7 +499,7 @@
     ],
     "elo_rating": 1622.0,
     "elo_rank": 38,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117091+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676319+00:00"
   },
   {
     "selecao": "BRAZIL",
@@ -585,7 +585,7 @@
     ],
     "elo_rating": 2009.0,
     "elo_rank": 5,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117094+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676322+00:00"
   },
   {
     "selecao": "CANADA",
@@ -671,7 +671,7 @@
     ],
     "elo_rating": 1748.0,
     "elo_rank": 27,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117096+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676324+00:00"
   },
   {
     "selecao": "CAPE VERDE",
@@ -757,7 +757,7 @@
     ],
     "elo_rating": 1622.0,
     "elo_rank": 38,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117098+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676346+00:00"
   },
   {
     "selecao": "COLOMBIA",
@@ -843,7 +843,7 @@
     ],
     "elo_rating": 2006.0,
     "elo_rank": 6,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117101+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676349+00:00"
   },
   {
     "selecao": "CROATIA",
@@ -929,7 +929,7 @@
     ],
     "elo_rating": 1896.0,
     "elo_rank": 15,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117104+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676352+00:00"
   },
   {
     "selecao": "CURACAO",
@@ -1001,7 +1001,7 @@
     ],
     "elo_rating": 1438.0,
     "elo_rank": 47,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117106+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676355+00:00"
   },
   {
     "selecao": "CZECHIA",
@@ -1073,7 +1073,7 @@
     ],
     "elo_rating": 1680.0,
     "elo_rank": 33,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117109+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676358+00:00"
   },
   {
     "selecao": "DR CONGO",
@@ -1145,7 +1145,7 @@
     ],
     "elo_rating": 1666.0,
     "elo_rank": 36,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117111+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676360+00:00"
   },
   {
     "selecao": "ECUADOR",
@@ -1231,7 +1231,7 @@
     ],
     "elo_rating": 1902.0,
     "elo_rank": 14,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117114+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676363+00:00"
   },
   {
     "selecao": "EGYPT",
@@ -1240,7 +1240,7 @@
     "clube_id": 2324,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 44.9,
+    "rating_elo_100": 45.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.7,
@@ -1315,9 +1315,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1740.0,
-    "elo_rank": 31,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117116+00:00"
+    "elo_rating": 1742.0,
+    "elo_rank": 30,
+    "elo_atualizado_em": "2026-06-27T10:01:10.676366+00:00"
   },
   {
     "selecao": "ENGLAND",
@@ -1403,7 +1403,7 @@
     ],
     "elo_rating": 2028.0,
     "elo_rank": 4,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117119+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676369+00:00"
   },
   {
     "selecao": "FRANCE",
@@ -1489,7 +1489,7 @@
     ],
     "elo_rating": 2123.0,
     "elo_rank": 3,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117121+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676372+00:00"
   },
   {
     "selecao": "GERMANY",
@@ -1575,7 +1575,7 @@
     ],
     "elo_rating": 1916.0,
     "elo_rank": 10,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117123+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676375+00:00"
   },
   {
     "selecao": "GHANA",
@@ -1661,7 +1661,7 @@
     ],
     "elo_rating": 1584.0,
     "elo_rank": 41,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117126+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676377+00:00"
   },
   {
     "selecao": "HAITI",
@@ -1733,7 +1733,7 @@
     ],
     "elo_rating": 1517.0,
     "elo_rank": 46,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117128+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676400+00:00"
   },
   {
     "selecao": "IRAN",
@@ -1742,7 +1742,7 @@
     "clube_id": 2336,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 48.4,
+    "rating_elo_100": 48.2,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.0,
@@ -1817,9 +1817,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1766.0,
+    "elo_rating": 1764.0,
     "elo_rank": 26,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117130+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676402+00:00"
   },
   {
     "selecao": "IRAQ",
@@ -1891,7 +1891,7 @@
     ],
     "elo_rating": 1561.0,
     "elo_rank": 44,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117132+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676405+00:00"
   },
   {
     "selecao": "IVORY COAST",
@@ -1977,7 +1977,7 @@
     ],
     "elo_rating": 1743.0,
     "elo_rank": 29,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117134+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676407+00:00"
   },
   {
     "selecao": "JAPAN",
@@ -2063,7 +2063,7 @@
     ],
     "elo_rating": 1910.0,
     "elo_rank": 13,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117137+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676410+00:00"
   },
   {
     "selecao": "JORDAN",
@@ -2135,7 +2135,7 @@
     ],
     "elo_rating": 1632.0,
     "elo_rank": 37,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117139+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676412+00:00"
   },
   {
     "selecao": "MEXICO",
@@ -2221,7 +2221,7 @@
     ],
     "elo_rating": 1912.0,
     "elo_rank": 12,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117142+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676415+00:00"
   },
   {
     "selecao": "MOROCCO",
@@ -2306,8 +2306,8 @@
       }
     ],
     "elo_rating": 1877.0,
-    "elo_rank": 16,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117144+00:00"
+    "elo_rank": 17,
+    "elo_atualizado_em": "2026-06-27T10:01:10.676418+00:00"
   },
   {
     "selecao": "NETHERLANDS",
@@ -2393,7 +2393,7 @@
     ],
     "elo_rating": 1980.0,
     "elo_rank": 8,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117146+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676420+00:00"
   },
   {
     "selecao": "NEW ZEALAND",
@@ -2402,7 +2402,7 @@
     "clube_id": 2340,
     "grupo": "G",
     "competicao": "Copa 2026",
-    "rating_elo_100": 18.8,
+    "rating_elo_100": 16.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NZE/60x60.png",
     "metricas_coletivas": {
       "goals_team_match": 1.3,
@@ -2410,7 +2410,7 @@
       "possession_percentage_team": 47.1,
       "clean_sheet_team": null,
       "expected_goals_team": 2.7,
-      "expected_goals_conceded_team": 7.1,
+      "expected_goals_conceded_team": 7.0,
       "ontarget_scoring_att_team": 5.0,
       "big_chance_team": 5.0,
       "touches_in_opp_box_team": 44.0,
@@ -2463,9 +2463,9 @@
         "valida_cartola": true
       }
     ],
-    "elo_rating": 1549.0,
+    "elo_rating": 1534.0,
     "elo_rank": 45,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117149+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676423+00:00"
   },
   {
     "selecao": "NORWAY",
@@ -2551,7 +2551,7 @@
     ],
     "elo_rating": 1918.0,
     "elo_rank": 9,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117151+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676425+00:00"
   },
   {
     "selecao": "PANAMA",
@@ -2623,7 +2623,7 @@
     ],
     "elo_rating": 1668.0,
     "elo_rank": 35,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117153+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676427+00:00"
   },
   {
     "selecao": "PARAGUAY",
@@ -2709,7 +2709,7 @@
     ],
     "elo_rating": 1815.0,
     "elo_rank": 22,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117155+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676430+00:00"
   },
   {
     "selecao": "PORTUGAL",
@@ -2795,7 +2795,7 @@
     ],
     "elo_rating": 1988.0,
     "elo_rank": 7,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117157+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676433+00:00"
   },
   {
     "selecao": "QATAR",
@@ -2867,7 +2867,7 @@
     ],
     "elo_rating": 1411.0,
     "elo_rank": 48,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117160+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676435+00:00"
   },
   {
     "selecao": "SAUDI ARABIA",
@@ -2939,7 +2939,7 @@
     ],
     "elo_rating": 1596.0,
     "elo_rank": 40,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117163+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676437+00:00"
   },
   {
     "selecao": "SCOTLAND",
@@ -3011,7 +3011,7 @@
     ],
     "elo_rating": 1745.0,
     "elo_rank": 28,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117165+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676440+00:00"
   },
   {
     "selecao": "SENEGAL",
@@ -3097,7 +3097,7 @@
     ],
     "elo_rating": 1842.0,
     "elo_rank": 19,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117167+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676442+00:00"
   },
   {
     "selecao": "SOUTH AFRICA",
@@ -3183,7 +3183,7 @@
     ],
     "elo_rating": 1575.0,
     "elo_rank": 42,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117169+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676445+00:00"
   },
   {
     "selecao": "SOUTH KOREA",
@@ -3269,7 +3269,7 @@
     ],
     "elo_rating": 1723.0,
     "elo_rank": 32,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117172+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676447+00:00"
   },
   {
     "selecao": "SPAIN",
@@ -3355,7 +3355,7 @@
     ],
     "elo_rating": 2144.0,
     "elo_rank": 1,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117174+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676449+00:00"
   },
   {
     "selecao": "SWEDEN",
@@ -3441,7 +3441,7 @@
     ],
     "elo_rating": 1742.0,
     "elo_rank": 30,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117176+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676452+00:00"
   },
   {
     "selecao": "SWITZERLAND",
@@ -3527,7 +3527,7 @@
     ],
     "elo_rating": 1914.0,
     "elo_rank": 11,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117178+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676454+00:00"
   },
   {
     "selecao": "TUNISIA",
@@ -3599,7 +3599,7 @@
     ],
     "elo_rating": 1562.0,
     "elo_rank": 43,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117181+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676456+00:00"
   },
   {
     "selecao": "TURKIYE",
@@ -3671,7 +3671,7 @@
     ],
     "elo_rating": 1852.0,
     "elo_rank": 18,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117183+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676459+00:00"
   },
   {
     "selecao": "UNITED STATES",
@@ -3757,7 +3757,7 @@
     ],
     "elo_rating": 1781.0,
     "elo_rank": 24,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117185+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676461+00:00"
   },
   {
     "selecao": "URUGUAY",
@@ -3829,7 +3829,7 @@
     ],
     "elo_rating": 1841.0,
     "elo_rank": 20,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117187+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676463+00:00"
   },
   {
     "selecao": "UZBEKISTAN",
@@ -3901,6 +3901,6 @@
     ],
     "elo_rating": 1677.0,
     "elo_rank": 34,
-    "elo_atualizado_em": "2026-06-27T07:45:52.117190+00:00"
+    "elo_atualizado_em": "2026-06-27T10:01:10.676465+00:00"
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-27T04:32:47.100808+00:00",
+  "atualizado_em": "2026-06-27T10:01:10.675698+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -92,17 +92,17 @@
       "codigo_elo": "HR",
       "rating_100": 66.2
     },
+    "BEL": {
+      "elo": 1884.0,
+      "rank": 16,
+      "codigo_elo": "BE",
+      "rating_100": 64.5
+    },
     "MAR": {
       "elo": 1877.0,
-      "rank": 16,
+      "rank": 17,
       "codigo_elo": "MA",
       "rating_100": 63.6
-    },
-    "BEL": {
-      "elo": 1869.0,
-      "rank": 17,
-      "codigo_elo": "BE",
-      "rating_100": 62.5
     },
     "TUR": {
       "elo": 1852.0,
@@ -153,10 +153,10 @@
       "rating_100": 50.3
     },
     "IRA": {
-      "elo": 1766.0,
+      "elo": 1764.0,
       "rank": 26,
       "codigo_elo": "IR",
-      "rating_100": 48.4
+      "rating_100": 48.2
     },
     "CAN": {
       "elo": 1748.0,
@@ -183,10 +183,10 @@
       "rating_100": 45.2
     },
     "EGI": {
-      "elo": 1740.0,
-      "rank": 31,
+      "elo": 1742.0,
+      "rank": 30,
       "codigo_elo": "EG",
-      "rating_100": 44.9
+      "rating_100": 45.2
     },
     "COR": {
       "elo": 1723.0,
@@ -267,10 +267,10 @@
       "rating_100": 20.5
     },
     "NZE": {
-      "elo": 1549.0,
+      "elo": 1534.0,
       "rank": 45,
       "codigo_elo": "NZ",
-      "rating_100": 18.8
+      "rating_100": 16.8
     },
     "HAI": {
       "elo": 1517.0,
