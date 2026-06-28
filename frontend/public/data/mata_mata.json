@@ -601,12 +601,12 @@
           },
           "visitante": {
             "rotulo": "TBD",
-            "nome_fotmob": "Spain/2J",
+            "nome_fotmob": "Spain/Austria",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2056837
+            "team_id": 2058687
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -752,12 +752,12 @@
           "match_id": "4653849",
           "mandante": {
             "rotulo": "TBD",
-            "nome_fotmob": "Switzerland/3EFGIJ",
+            "nome_fotmob": "Switzerland/Algeria",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2053120
+            "team_id": 2058688
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-28T02:55:50.601000+00:00"
+  "atualizado_em": "2026-06-28T06:13:33.547243+00:00"
 }
