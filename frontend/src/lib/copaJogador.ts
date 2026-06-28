@@ -81,10 +81,22 @@ function hojeCalendario(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
 }
 
+function datasAlinhadas(a: string, b: string, toleranciaDias = 2): boolean {
+  if (a === b) return true;
+  const pa = a.split("-").map(Number);
+  const pb = b.split("-").map(Number);
+  if (pa.length !== 3 || pb.length !== 3 || pa.some(Number.isNaN) || pb.some(Number.isNaN)) {
+    return false;
+  }
+  const da = Date.UTC(pa[0], pa[1] - 1, pa[2]);
+  const db = Date.UTC(pb[0], pb[1] - 1, pb[2]);
+  return Math.abs(da - db) <= toleranciaDias * 86_400_000;
+}
+
 /**
  * Odds vigentes para exibição (calendário WC2026 como âncora):
  * - odds compiladas trazem data_confronto; oculta partidas já passadas;
- * - alinha adversário + data quando o mercado Cartola estiver sincronizado;
+ * - alinha adversário (data com tolerância de ±2 dias entre FotMob e OddsNotifier);
  * - se data_confronto >= hoje, exibe (confronto atual por seleção no armazenamento).
  */
 export function oddsVigentes(
@@ -99,8 +111,10 @@ export function oddsVigentes(
 
   if (dataOdds) {
     if (dataOdds < hojeCalendario()) return false;
-    if (proxData && prox && oddsAdv) {
-      return dataOdds === proxData && oddsAdv === prox;
+    if (prox && oddsAdv) {
+      if (oddsAdv !== prox) return false;
+      if (proxData) return datasAlinhadas(dataOdds, proxData);
+      return true;
     }
     return Boolean(oddsAdv);
   }

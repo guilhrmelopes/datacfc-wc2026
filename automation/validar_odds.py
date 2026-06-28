@@ -78,8 +78,20 @@ def _entrada_vigente(jog: dict, entrada: dict) -> bool:
         prox = (jog.get("proximo_adversario_sigla") or "").strip().upper()
         prox_data = (jog.get("proximo_adversario_data") or "").strip()
         odds_adv = (entrada.get("adversario_sigla") or "").strip().upper()
-        if prox_data and prox and odds_adv:
-            return data_odds == prox_data and odds_adv == prox
+        if prox and odds_adv:
+            if odds_adv != prox:
+                return False
+            if prox_data and data_odds != prox_data:
+                from scrapers.odds_armazenamento import parse_data_calendario
+
+                d_odds = parse_data_calendario(data_odds)
+                d_prox = parse_data_calendario(prox_data)
+                if (
+                    d_odds is None
+                    or d_prox is None
+                    or abs((d_odds - d_prox).days) > 2
+                ):
+                    return False
         pos = int(jog.get("posicao_id") or 0)
         if pos in POS_LINHA:
             return bool(entrada.get("ga_pct") or entrada.get("g_pct") or entrada.get("a_pct"))

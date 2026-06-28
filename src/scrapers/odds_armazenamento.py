@@ -496,6 +496,13 @@ def confronto_atual_por_sigla(
         sig_v = (ev.get("sigla_visitante") or "").upper()
         return sig_v if sig == sig_m else sig_m
 
+    def _distancia_data(ev: dict, data_alvo: str) -> int:
+        d_ev = parse_data_calendario(ev.get("data"))
+        d_alvo = parse_data_calendario(data_alvo)
+        if d_ev is None or d_alvo is None:
+            return 9999
+        return abs((d_ev - d_alvo).days)
+
     atual: dict[str, dict] = {}
     for sig, evs in por_sigla.items():
         evs.sort(key=lambda e: (e.get("data", ""), int(e.get("event_id") or 0)))
@@ -503,12 +510,12 @@ def confronto_atual_por_sigla(
         prox = proximo_por_sigla.get(sig)
         if prox:
             adv_alvo, data_alvo = prox
-            for ev in evs:
-                if ev.get("data") != data_alvo:
-                    continue
-                if _adv_do_evento(ev, sig) == adv_alvo:
-                    escolhido = ev
-                    break
+            candidatos = [ev for ev in evs if _adv_do_evento(ev, sig) == adv_alvo]
+            if candidatos:
+                candidatos.sort(
+                    key=lambda e: (_distancia_data(e, data_alvo), e.get("data", "")),
+                )
+                escolhido = candidatos[0]
         if escolhido is None and evs and not prox:
             escolhido = evs[0]
         if escolhido is not None:
@@ -779,6 +786,7 @@ def compilar_dashboard(
         if not prox_adv:
             continue
         prox_data = (jog.get("proximo_adversario_data") or "").strip()
+        candidatos: list[tuple[int, dict]] = []
         for ev in eventos_ordenados:
             d = parse_data_calendario(ev.get("data"))
             if d is None or d < ref:
@@ -790,15 +798,26 @@ def compilar_dashboard(
             adv_ev = sig_v if sigla == sig_m else sig_m
             if adv_ev != prox_adv:
                 continue
-            if prox_data and ev.get("data") != prox_data:
-                continue
+            dist = 9999
+            if prox_data:
+                d_alvo = parse_data_calendario(prox_data)
+                if d_alvo is not None:
+                    dist = abs((d - d_alvo).days)
             entrada_bruta = (ev.get("odds") or {}).get(aid)
             if not isinstance(entrada_bruta, dict):
                 continue
             if not _entrada_odds_util(entrada_bruta, pos):
                 continue
-            resultado[aid] = _montar_entrada_dashboard(sanitizar_entrada_odds(entrada_bruta), ev, sigla)
-            break
+            candidatos.append((dist, ev))
+
+        if candidatos:
+            candidatos.sort(key=lambda item: (item[0], item[1].get("data", "")))
+            ev = candidatos[0][1]
+            entrada_bruta = (ev.get("odds") or {}).get(aid)
+            if isinstance(entrada_bruta, dict):
+                resultado[aid] = _montar_entrada_dashboard(
+                    sanitizar_entrada_odds(entrada_bruta), ev, sigla,
+                )
 
     imputar_odds_faltantes(resultado, jogadores, eventos_list, atuais)
 
