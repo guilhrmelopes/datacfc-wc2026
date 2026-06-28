@@ -21,6 +21,17 @@ _RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(_RAIZ / "src"))
 CAMINHO = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
 CAMINHO_MERCADO = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.json"
+CAMINHO_ESTADO = _RAIZ / "frontend" / "public" / "data" / "copa_estado.json"
+
+
+def _transicao_playoffs() -> bool:
+    if not CAMINHO_ESTADO.is_file():
+        return False
+    try:
+        estado = json.loads(CAMINHO_ESTADO.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return False
+    return bool(estado.get("transicao_playoffs")) and not estado.get("playoffs_ativos")
 
 
 def validar(caminho: Path | None = None) -> tuple[int, int, int, int, int]:
@@ -131,9 +142,12 @@ def main() -> None:
     total, g, a, ga, sg = validar()
     alvo, vigentes, sem_odd = validar_odds_vigentes()
     pct_vig = (vigentes / alvo * 100) if alvo else 100.0
+    transicao = _transicao_playoffs()
 
     print(f"total={total} g={g} a={a} ga={ga} sg={sg}")
     print(f"vigentes={vigentes}/{alvo} ({pct_vig:.0f}%) sem_odd={sem_odd}")
+    if transicao:
+        print("modo=transicao_playoffs (cobertura parcial permitida)")
 
     if (
         total < MIN_TOTAL
@@ -146,16 +160,27 @@ def main() -> None:
         sys.exit(1)
 
     if alvo > 0 and vigentes / alvo < MIN_VIGENTES_PCT:
-        print(
-            f"Odds vigentes abaixo de {MIN_VIGENTES_PCT:.0%} "
-            f"para jogadores com ADV ({vigentes}/{alvo}). "
-            "Abortando commit."
-        )
-        sys.exit(1)
+        if transicao and vigentes > 0:
+            print(
+                f"AVISO transicao: vigentes {vigentes}/{alvo} "
+                f"({pct_vig:.0f}%) — commit permitido."
+            )
+        else:
+            print(
+                f"Odds vigentes abaixo de {MIN_VIGENTES_PCT:.0%} "
+                f"para jogadores com ADV ({vigentes}/{alvo}). "
+                "Abortando commit."
+            )
+            sys.exit(1)
 
     if sem_odd > 0:
-        print(f"{sem_odd} jogador(es) com ADV sem odds no arquivo — abortando commit.")
-        sys.exit(1)
+        if transicao and vigentes > 0:
+            print(
+                f"AVISO transicao: {sem_odd} jogador(es) ainda sem odds vigentes."
+            )
+        else:
+            print(f"{sem_odd} jogador(es) com ADV sem odds no arquivo — abortando commit.")
+            sys.exit(1)
 
 
 if __name__ == "__main__":
