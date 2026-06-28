@@ -92,11 +92,11 @@
             "team_id": 5810
           },
           "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_visitante": 1,
           "mandante_venceu": false,
-          "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "visitante_venceu": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-06-28",
           "hora": "14:00:00",
           "utc_time": "2026-06-28T17:00:00.000Z"
@@ -559,13 +559,13 @@
           "stage": "1/8",
           "match_id": "4653843",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "South Africa/Canada",
+            "rotulo": "CAN",
+            "nome_fotmob": "Canada",
             "selecao": null,
-            "sigla": "TBD",
+            "sigla": "CAN",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2053134
+            "team_id": 5810
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-28T20:56:42.473793+00:00"
+  "atualizado_em": "2026-06-28T22:00:55.651600+00:00"
 }
