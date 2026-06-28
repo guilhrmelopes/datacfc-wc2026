@@ -243,13 +243,13 @@
             "team_id": 8263
           },
           "visitante": {
-            "rotulo": "KOR",
-            "nome_fotmob": "South Korea",
-            "selecao": "SOUTH KOREA",
-            "sigla": "COR",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COR/60x60.png",
+            "rotulo": "SEN",
+            "nome_fotmob": "Senegal",
+            "selecao": "SENEGAL",
+            "sigla": "SEN",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SEN/60x60.png",
             "tbd": false,
-            "team_id": 7804
+            "team_id": 6395
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -371,13 +371,13 @@
             "team_id": 8491
           },
           "visitante": {
-            "rotulo": "SEN",
-            "nome_fotmob": "Senegal",
-            "selecao": "SENEGAL",
-            "sigla": "SEN",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SEN/60x60.png",
+            "rotulo": "COD",
+            "nome_fotmob": "DR Congo",
+            "selecao": "DR CONGO",
+            "sigla": "RDC",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/RDC/60x60.png",
             "tbd": false,
-            "team_id": 6395
+            "team_id": 6321
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -687,13 +687,13 @@
           "stage": "1/8",
           "match_id": "4653847",
           "mandante": {
-            "rotulo": "M3C",
-            "nome_fotmob": "Mexico/3CEFHI",
+            "rotulo": "TBD",
+            "nome_fotmob": "Mexico/Ecuador",
             "selecao": null,
-            "sigla": "M3C",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2037340
+            "team_id": 2058680
           },
           "visitante": {
             "rotulo": "TBD",
@@ -760,13 +760,13 @@
             "team_id": 2053120
           },
           "visitante": {
-            "rotulo": "1KD",
-            "nome_fotmob": "1K/3DEIJL",
+            "rotulo": "TBD",
+            "nome_fotmob": "1K/Ghana",
             "selecao": null,
-            "sigla": "1KD",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1685734
+            "team_id": 2058681
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-27T23:08:46.392146+00:00"
+  "atualizado_em": "2026-06-28T01:33:01.699372+00:00"
 }

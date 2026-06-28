@@ -1,13 +1,13 @@
 {
   "melhores_terceiros": [
+    "DR CONGO",
     "SWEDEN",
     "ECUADOR",
     "GHANA",
     "BOSNIA AND HERZEGOVINA",
     "PARAGUAY",
     "SENEGAL",
-    "IRAN",
-    "SOUTH KOREA"
+    "IRAN"
   ],
   "A": [
     {
@@ -635,45 +635,45 @@
       "selecao": "COLOMBIA",
       "sigla": "COL",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/COL/60x60.png",
-      "P": 6,
-      "J": 2,
+      "P": 7,
+      "J": 3,
       "V": 2,
-      "E": 0,
+      "E": 1,
       "D": 0,
       "GM": 4,
       "GS": 1,
       "SG": 3,
-      "aprov": 100.0
+      "aprov": 77.8
     },
     {
       "posicao": 2,
       "selecao": "PORTUGAL",
       "sigla": "POR",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/POR/60x60.png",
-      "P": 4,
-      "J": 2,
+      "P": 5,
+      "J": 3,
       "V": 1,
-      "E": 1,
+      "E": 2,
       "D": 0,
       "GM": 6,
       "GS": 1,
       "SG": 5,
-      "aprov": 66.7
+      "aprov": 55.6
     },
     {
       "posicao": 3,
       "selecao": "DR CONGO",
       "sigla": "RDC",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/RDC/60x60.png",
-      "P": 1,
-      "J": 2,
-      "V": 0,
+      "P": 4,
+      "J": 3,
+      "V": 1,
       "E": 1,
       "D": 1,
-      "GM": 1,
-      "GS": 2,
-      "SG": -1,
-      "aprov": 16.7
+      "GM": 4,
+      "GS": 3,
+      "SG": 1,
+      "aprov": 44.4
     },
     {
       "posicao": 4,
@@ -681,13 +681,13 @@
       "sigla": "UZB",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/UZB/60x60.png",
       "P": 0,
-      "J": 2,
+      "J": 3,
       "V": 0,
       "E": 0,
-      "D": 2,
-      "GM": 1,
-      "GS": 8,
-      "SG": -7,
+      "D": 3,
+      "GM": 2,
+      "GS": 11,
+      "SG": -9,
       "aprov": 0.0
     }
   ],
