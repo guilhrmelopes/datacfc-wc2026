@@ -36,8 +36,8 @@ type BucketPos = "GOL" | "LAT" | "ZAG" | "MEI" | "ATA";
 const POSICOES: BucketPos[] = ["GOL", "LAT", "ZAG", "MEI", "ATA"];
 
 const EXTRATORES_SCOUT: Record<string, (j: JogadorMercado) => number | null> = {
-  g: (j) => scoutPorJogoCopa(j, j.copa_goals),
-  a: (j) => scoutPorJogoCopa(j, j.copa_goal_assist),
+  g: (j) => (temCopa(j) ? (j.copa_goals ?? 0) : null),
+  a: (j) => (temCopa(j) ? (j.copa_goal_assist ?? 0) : null),
   sg: (j) => scoutPorJogoCopa(j, j.copa_clean_sheet),
   de: (j) => scoutPorJogoCopa(j, j.copa_de),
   de_pct: (j) => dePctPor90Copa(j),

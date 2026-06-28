@@ -356,11 +356,11 @@ const COL_MIN = copaCol(
   (j) => minutosPorJogoCopa(j),
   1,
 );
-const COL_G = copaCol("g", "G", "Gols por jogo", (j) =>
-  scoutPorJogoCopa(j, j.copa_goals),
+const COL_G = copaCol("g", "G", "Gols na competição", (j) =>
+  temCopa(j) ? (j.copa_goals ?? 0) : null,
 );
-const COL_A = copaCol("a", "A", "Assistências por jogo", (j) =>
-  scoutPorJogoCopa(j, j.copa_goal_assist),
+const COL_A = copaCol("a", "A", "Assistências na competição", (j) =>
+  temCopa(j) ? (j.copa_goal_assist ?? 0) : null,
 );
 const COL_SG = copaCol("sg", "SG", "SG por jogo", (j) =>
   scoutPorJogoCopa(j, j.copa_clean_sheet),
