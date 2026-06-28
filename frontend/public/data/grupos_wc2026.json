@@ -982,8 +982,8 @@
       "hora": "20:30:00",
       "utc": "2026-06-27T23:30:00Z",
       "match_id": "4667824",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "3 - 1",
       "valida_cartola": true
     },
     {
@@ -996,7 +996,7 @@
       "utc": "2026-06-28T02:00:00.000Z",
       "match_id": "4667816",
       "finalizada": false,
-      "placar": null,
+      "placar": "0 - 2",
       "valida_cartola": true
     },
     {
@@ -1009,7 +1009,7 @@
       "utc": "2026-06-28T02:00:00.000Z",
       "match_id": "4667817",
       "finalizada": false,
-      "placar": null,
+      "placar": "1 - 1",
       "valida_cartola": true
     },
     {
@@ -1185,7 +1185,7 @@
       "fase": "1/16",
       "rodada": 4,
       "mandante": "SWITZERLAND",
-      "visitante": "IRAN",
+      "visitante": "ALGERIA",
       "data": "2026-07-02",
       "hora": "22:00:00",
       "utc": "2026-07-03T01:00:00.000Z",

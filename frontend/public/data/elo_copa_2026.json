@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-06-28T01:33:01.845475+00:00",
+  "atualizado_em": "2026-06-28T02:55:51.023072+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -33,16 +33,16 @@
       "rating_100": 81.6
     },
     "COL": {
-      "elo": 2006.0,
+      "elo": 2004.0,
       "rank": 6,
       "codigo_elo": "CO",
-      "rating_100": 81.2
+      "rating_100": 80.9
     },
     "POR": {
-      "elo": 1988.0,
+      "elo": 1990.0,
       "rank": 7,
       "codigo_elo": "PT",
-      "rating_100": 78.7
+      "rating_100": 79.0
     },
     "HOL": {
       "elo": 1980.0,
@@ -194,35 +194,35 @@
       "codigo_elo": "KR",
       "rating_100": 42.6
     },
+    "RDC": {
+      "elo": 1712.0,
+      "rank": 33,
+      "codigo_elo": "CD",
+      "rating_100": 41.1
+    },
     "TCH": {
       "elo": 1680.0,
-      "rank": 33,
+      "rank": 34,
       "codigo_elo": "CZ",
       "rating_100": 36.7
     },
-    "UZB": {
-      "elo": 1677.0,
-      "rank": 34,
-      "codigo_elo": "UZ",
-      "rating_100": 36.3
-    },
-    "RDC": {
-      "elo": 1666.0,
-      "rank": 35,
-      "codigo_elo": "CD",
-      "rating_100": 34.8
-    },
     "PAN": {
       "elo": 1658.0,
-      "rank": 36,
+      "rank": 35,
       "codigo_elo": "PA",
       "rating_100": 33.7
     },
     "JOR": {
       "elo": 1632.0,
-      "rank": 37,
+      "rank": 36,
       "codigo_elo": "JO",
       "rating_100": 30.2
+    },
+    "UZB": {
+      "elo": 1631.0,
+      "rank": 37,
+      "codigo_elo": "UZ",
+      "rating_100": 30.0
     },
     "BOS": {
       "elo": 1622.0,

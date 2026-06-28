@@ -467,13 +467,13 @@
             "team_id": 6717
           },
           "visitante": {
-            "rotulo": "IRN",
-            "nome_fotmob": "Iran",
-            "selecao": "IRAN",
-            "sigla": "IRA",
-            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/IRA/60x60.png",
+            "rotulo": "ALG",
+            "nome_fotmob": "Algeria",
+            "selecao": "ALGERIA",
+            "sigla": "AGL",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
             "tbd": false,
-            "team_id": 6711
+            "team_id": 6317
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -592,12 +592,12 @@
           "match_id": "4653844",
           "mandante": {
             "rotulo": "TBD",
-            "nome_fotmob": "2K/Croatia",
+            "nome_fotmob": "Portugal/Croatia",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2058677
+            "team_id": 2058684
           },
           "visitante": {
             "rotulo": "TBD",
@@ -632,13 +632,13 @@
             "team_id": 2055190
           },
           "visitante": {
-            "rotulo": "B3A",
-            "nome_fotmob": "Belgium/3AEHIJ",
+            "rotulo": "TBD",
+            "nome_fotmob": "Belgium/Senegal",
             "selecao": null,
-            "sigla": "B3A",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2056961
+            "team_id": 2058686
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -697,12 +697,12 @@
           },
           "visitante": {
             "rotulo": "TBD",
-            "nome_fotmob": "England/3EHIJK",
+            "nome_fotmob": "England/DR Congo",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2058675
+            "team_id": 2058685
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -761,12 +761,12 @@
           },
           "visitante": {
             "rotulo": "TBD",
-            "nome_fotmob": "1K/Ghana",
+            "nome_fotmob": "Colombia/Ghana",
             "selecao": null,
             "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2058681
+            "team_id": 2058683
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-28T01:33:01.699372+00:00"
+  "atualizado_em": "2026-06-28T02:55:50.601000+00:00"
 }

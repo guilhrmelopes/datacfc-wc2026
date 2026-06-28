@@ -5,9 +5,9 @@
     "ECUADOR",
     "GHANA",
     "BOSNIA AND HERZEGOVINA",
+    "ALGERIA",
     "PARAGUAY",
-    "SENEGAL",
-    "IRAN"
+    "SENEGAL"
   ],
   "A": [
     {
@@ -573,14 +573,14 @@
       "selecao": "ARGENTINA",
       "sigla": "ARG",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
-      "P": 6,
-      "J": 2,
-      "V": 2,
+      "P": 9,
+      "J": 3,
+      "V": 3,
       "E": 0,
       "D": 0,
-      "GM": 5,
+      "GM": 7,
       "GS": 0,
-      "SG": 5,
+      "SG": 7,
       "aprov": 100.0
     },
     {
@@ -588,30 +588,30 @@
       "selecao": "AUSTRIA",
       "sigla": "AUT",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AUT/60x60.png",
-      "P": 3,
-      "J": 2,
+      "P": 4,
+      "J": 3,
       "V": 1,
-      "E": 0,
+      "E": 1,
       "D": 1,
-      "GM": 3,
-      "GS": 3,
+      "GM": 4,
+      "GS": 4,
       "SG": 0,
-      "aprov": 50.0
+      "aprov": 44.4
     },
     {
       "posicao": 3,
       "selecao": "ALGERIA",
       "sigla": "AGL",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/AGL/60x60.png",
-      "P": 3,
-      "J": 2,
+      "P": 4,
+      "J": 3,
       "V": 1,
-      "E": 0,
+      "E": 1,
       "D": 1,
-      "GM": 2,
-      "GS": 4,
+      "GM": 3,
+      "GS": 5,
       "SG": -2,
-      "aprov": 50.0
+      "aprov": 44.4
     },
     {
       "posicao": 4,
@@ -619,13 +619,13 @@
       "sigla": "JOR",
       "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/JOR/60x60.png",
       "P": 0,
-      "J": 2,
+      "J": 3,
       "V": 0,
       "E": 0,
-      "D": 2,
+      "D": 3,
       "GM": 2,
-      "GS": 5,
-      "SG": -3,
+      "GS": 7,
+      "SG": -5,
       "aprov": 0.0
     }
   ],
