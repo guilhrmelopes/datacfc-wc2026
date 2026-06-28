@@ -26,14 +26,28 @@ from scrapers.resolucao_eventos_odds import (  # noqa: E402
 from scrapers.scraper_odds_jogadores import _fixtures_de_confrontos  # noqa: E402
 
 
-def _transicao_playoffs() -> bool:
+def _modo_playoffs_flexivel() -> bool:
     if not CAMINHO_ESTADO.is_file():
         return False
     try:
         estado = json.loads(CAMINHO_ESTADO.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return False
-    return bool(estado.get("transicao_playoffs")) and not estado.get("playoffs_ativos")
+    return bool(estado.get("playoffs_ativos") or estado.get("transicao_playoffs"))
+
+
+def _transicao_playoffs() -> bool:
+    return _modo_playoffs_flexivel() and not _playoffs_completos()
+
+
+def _playoffs_completos() -> bool:
+    if not CAMINHO_ESTADO.is_file():
+        return False
+    try:
+        estado = json.loads(CAMINHO_ESTADO.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return False
+    return bool(estado.get("playoffs_ativos"))
 
 
 def _confrontos_alvo(hoje, janela: list[dict]) -> tuple[list[dict], str]:
@@ -66,13 +80,13 @@ def main() -> int:
             print(f"  {fx.get('home')} vs {fx.get('away')} [{ch}]")
         if len(faltando) > 15:
             print(f"  ... +{len(faltando) - 15}")
-        if mapeados and _transicao_playoffs():
+        if mapeados and _modo_playoffs_flexivel():
             pct = len(mapeados) / len(alvo) if alvo else 0
             print(
-                f"AVISO transicao: {len(mapeados)}/{len(alvo)} mapeados ({pct:.0%}) — "
+                f"AVISO playoffs: {len(mapeados)}/{len(alvo)} mapeados ({pct:.0%}) — "
                 "scrape parcial permitido."
             )
-            if pct >= 0.25:
+            if pct >= 0.9:
                 return 0
         if rotulo == "demanda":
             print(

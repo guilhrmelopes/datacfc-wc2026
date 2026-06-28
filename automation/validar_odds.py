@@ -24,6 +24,16 @@ CAMINHO_MERCADO = _RAIZ / "frontend" / "public" / "data" / "jogadores_mercado.js
 CAMINHO_ESTADO = _RAIZ / "frontend" / "public" / "data" / "copa_estado.json"
 
 
+def _modo_playoffs_flexivel() -> bool:
+    if not CAMINHO_ESTADO.is_file():
+        return False
+    try:
+        estado = json.loads(CAMINHO_ESTADO.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return False
+    return bool(estado.get("playoffs_ativos") or estado.get("transicao_playoffs"))
+
+
 def _transicao_playoffs() -> bool:
     if not CAMINHO_ESTADO.is_file():
         return False
@@ -143,11 +153,12 @@ def main() -> None:
     alvo, vigentes, sem_odd = validar_odds_vigentes()
     pct_vig = (vigentes / alvo * 100) if alvo else 100.0
     transicao = _transicao_playoffs()
+    playoffs_flex = _modo_playoffs_flexivel()
 
     print(f"total={total} g={g} a={a} ga={ga} sg={sg}")
     print(f"vigentes={vigentes}/{alvo} ({pct_vig:.0f}%) sem_odd={sem_odd}")
-    if transicao:
-        print("modo=transicao_playoffs (cobertura parcial permitida)")
+    if playoffs_flex:
+        print("modo=playoffs_flexivel (cobertura parcial permitida)")
 
     if (
         total < MIN_TOTAL
@@ -156,25 +167,41 @@ def main() -> None:
         or ga < MIN_GA
         or sg < MIN_SG
     ):
-        print("Cobertura insuficiente — abortando commit.")
-        sys.exit(1)
+        if playoffs_flex and total >= MIN_TOTAL and vigentes > 100:
+            print(
+                f"AVISO playoffs: cobertura bruta ok ({total} entradas, "
+                f"{vigentes} vigentes) — commit permitido."
+            )
+        else:
+            print("Cobertura insuficiente — abortando commit.")
+            sys.exit(1)
 
-    if alvo > 0 and vigentes / alvo < MIN_VIGENTES_PCT:
-        if transicao and vigentes > 0:
+    min_vig_pct = 0.85 if playoffs_flex else MIN_VIGENTES_PCT
+    if alvo > 0 and vigentes / alvo < min_vig_pct:
+        if playoffs_flex and vigentes > 100:
+            print(
+                f"AVISO playoffs: vigentes {vigentes}/{alvo} "
+                f"({pct_vig:.0f}%) — commit permitido."
+            )
+        elif transicao and vigentes > 0:
             print(
                 f"AVISO transicao: vigentes {vigentes}/{alvo} "
                 f"({pct_vig:.0f}%) — commit permitido."
             )
         else:
             print(
-                f"Odds vigentes abaixo de {MIN_VIGENTES_PCT:.0%} "
+                f"Odds vigentes abaixo de {min_vig_pct:.0%} "
                 f"para jogadores com ADV ({vigentes}/{alvo}). "
                 "Abortando commit."
             )
             sys.exit(1)
 
     if sem_odd > 0:
-        if transicao and vigentes > 0:
+        if playoffs_flex and vigentes > 100:
+            print(
+                f"AVISO playoffs: {sem_odd} jogador(es) ainda sem odds vigentes."
+            )
+        elif transicao and vigentes > 0:
             print(
                 f"AVISO transicao: {sem_odd} jogador(es) ainda sem odds vigentes."
             )

@@ -486,6 +486,14 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         transicao_gradual=transicao_gradual,
     )
 
+    if playoffs_ativos or transicao_gradual:
+        from scrapers.resolucao_eventos_odds import reconciliar_adversarios_mercado_odds
+
+        mercado_pos = _carregar_json(caminho_mercado)
+        meta_sel = {s["selecao"]: s for s in _carregar_json(caminho_selecoes) if s.get("selecao")}
+        reconciliar_adversarios_mercado_odds(mercado_pos, meta_sel)
+        _salvar_json(caminho_mercado, mercado_pos)
+
     return {
         "rodada_cartola_atual": rodada,
         "partidas_processadas": len(processadas),

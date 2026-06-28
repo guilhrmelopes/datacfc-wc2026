@@ -16,11 +16,12 @@ import re
 import time
 import urllib.error
 import urllib.request
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 from scrapers.mapeamento_selecoes_odds import chave_confronto, normalizar_selecao
+from scrapers.odds_armazenamento import parse_data_calendario, referencia_hoje
 
 logger = logging.getLogger(__name__)
 
@@ -141,14 +142,20 @@ def carregar_cache_arquivo() -> tuple[dict[tuple[str, str], int], dict[str, int]
     return por_confronto, por_fixture, eventos
 
 
+def listar_eventos_api_normalizados() -> list[dict]:
+    saida: list[dict] = []
+    for bruto in _fetch_eventos_api():
+        ev = normalizar_evento_api(bruto)
+        if ev:
+            saida.append(ev)
+    return saida
+
+
 def construir_indice_eventos(*, usar_api: bool = True) -> tuple[dict[tuple[str, str], int], dict[str, int]]:
     por_confronto, por_fixture, _ = carregar_cache_arquivo()
 
     if usar_api:
-        for bruto in _fetch_eventos_api():
-            ev = normalizar_evento_api(bruto)
-            if not ev:
-                continue
+        for ev in listar_eventos_api_normalizados():
             por_confronto[chave_confronto(ev["home"], ev["away"])] = int(ev["id"])
             fid = ev.get("fixture_id")
             if fid is not None:
@@ -157,10 +164,55 @@ def construir_indice_eventos(*, usar_api: bool = True) -> tuple[dict[tuple[str, 
     return por_confronto, por_fixture
 
 
+def _data_fixture(fx: dict) -> date | None:
+    bruto = fx.get("date") or fx.get("data") or ""
+    if isinstance(bruto, str) and "T" in bruto:
+        bruto = bruto[:10]
+    return parse_data_calendario(str(bruto)[:10] if bruto else "")
+
+
+def _match_fixture_fuzzy(fx: dict, eventos: list[dict]) -> dict | None:
+    """
+    Fallback: um time do calendário FotMob + data próxima (±2d) no OddsNotifier.
+    Cobre bracket desatualizado (ex.: Suíça×Irã → Suíça×Argélia na API).
+    """
+    home = normalizar_selecao(fx.get("home", ""))
+    away = normalizar_selecao(fx.get("away", ""))
+    data_fx = _data_fixture(fx)
+    if not home or not data_fx:
+        return None
+
+    candidatos: list[tuple[int, int, dict]] = []
+    for ev in eventos:
+        eh = normalizar_selecao(ev.get("home", ""))
+        ea = normalizar_selecao(ev.get("away", ""))
+        data_ev = parse_data_calendario((ev.get("date") or "")[:10])
+        if not data_ev:
+            continue
+        dias = abs((data_ev - data_fx).days)
+        if dias > 2:
+            continue
+        if home in (eh, ea):
+            candidatos.append((dias, int(ev["id"]), ev))
+        elif away in (eh, ea):
+            candidatos.append((dias + 1, int(ev["id"]), ev))
+
+    if not candidatos:
+        return None
+    candidatos.sort(key=lambda item: (item[0], item[1]))
+    melhor_dias = candidatos[0][0]
+    no_melhor = [ev for d, _, ev in candidatos if d == melhor_dias]
+    if len(no_melhor) == 1:
+        return no_melhor[0]
+    return None
+
+
 def mapear_fixtures(
     fixtures: list[dict],
     por_confronto: dict[tuple[str, str], int],
     por_fixture: dict[str, int],
+    *,
+    eventos_api: list[dict] | None = None,
 ) -> tuple[list[dict], list[dict]]:
     """
     Associa oddsEventId a cada fixture do calendário.
@@ -168,6 +220,7 @@ def mapear_fixtures(
     """
     mapeados: list[dict] = []
     faltando: list[dict] = []
+    api_eventos = eventos_api if eventos_api is not None else listar_eventos_api_normalizados()
 
     for fx in fixtures:
         if fx.get("id"):
@@ -183,10 +236,91 @@ def mapear_fixtures(
         eid = por_confronto.get(chave)
         if eid:
             mapeados.append({**fx, "id": eid})
+            continue
+
+        fuzzy = _match_fixture_fuzzy(fx, api_eventos)
+        if fuzzy:
+            mapeados.append({
+                **fx,
+                "id": int(fuzzy["id"]),
+                "home": fx.get("home") or fuzzy.get("home", ""),
+                "away": fx.get("away") or fuzzy.get("away", ""),
+                "date": fuzzy.get("date") or fx.get("date"),
+            })
         else:
             faltando.append(fx)
 
     return mapeados, faltando
+
+
+def reconciliar_adversarios_mercado_odds(
+    mercado: list[dict],
+    meta_por_selecao: dict[str, dict],
+    *,
+    apenas_playoffs: bool = True,
+) -> int:
+    """
+    Alinha ADV/data do mercado ao OddsNotifier quando o bracket FotMob diverge.
+  Fonte de verdade para odds de apostas.
+    """
+    eventos = listar_eventos_api_normalizados()
+    if not eventos:
+        return 0
+
+    ref = referencia_hoje()
+    alterados = 0
+    vistos: set[str] = set()
+
+    for j in mercado:
+        if apenas_playoffs and j.get("ativo_playoffs") is False:
+            continue
+        selecao = (j.get("selecao") or "").upper()
+        if not selecao or selecao in vistos:
+            continue
+
+        prox_data = parse_data_calendario((j.get("proximo_adversario_data") or "").strip())
+        prox_sigla = (j.get("proximo_adversario_sigla") or "").strip().upper()
+
+        candidatos: list[tuple[int, date, str, dict]] = []
+        for ev in eventos:
+            eh = normalizar_selecao(ev.get("home", ""))
+            ea = normalizar_selecao(ev.get("away", ""))
+            if selecao not in (eh, ea):
+                continue
+            ev_date = parse_data_calendario((ev.get("date") or "")[:10])
+            if not ev_date or ev_date < ref:
+                continue
+            adv_nome = ea if selecao == eh else eh
+            adv_meta = meta_por_selecao.get(adv_nome)
+            if not adv_meta:
+                continue
+            adv_sigla = (adv_meta.get("sigla") or "").upper()
+            dias = abs((ev_date - prox_data).days) if prox_data else 0
+            candidatos.append((dias, ev_date, adv_sigla, adv_meta))
+
+        if not candidatos:
+            continue
+        candidatos.sort(key=lambda item: (item[0], item[1]))
+        _, nova_data, nova_sigla, adv_meta = candidatos[0]
+
+        if prox_sigla == nova_sigla and j.get("proximo_adversario_data") == nova_data.isoformat():
+            vistos.add(selecao)
+            continue
+
+        for jog in mercado:
+            if (jog.get("selecao") or "").upper() != selecao:
+                continue
+            if jog.get("ativo_playoffs") is False and apenas_playoffs:
+                continue
+            jog["proximo_adversario_sigla"] = nova_sigla
+            jog["proximo_adversario_escudo"] = adv_meta.get("url_escudo")
+            jog["proximo_adversario_data"] = nova_data.isoformat()
+            alterados += 1
+        vistos.add(selecao)
+
+    if alterados:
+        logger.info("ADV reconciliados com OddsNotifier: %d jogadores.", alterados)
+    return alterados
 
 
 def salvar_cache_eventos(eventos: list[dict], rodada: int) -> None:
