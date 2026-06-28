@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from scrapers.fotmob_mapa import fotmob_para_selecao
+from scrapers.fotmob_mapa import FOTMOB_PARA_SELECAO, fotmob_para_selecao
 
 FOTMOB_LEAGUE_URL = "https://www.fotmob.com/api/data/leagues?id=77"
 FUSO_CARTOLA = ZoneInfo("America/Sao_Paulo")
@@ -152,6 +152,8 @@ def _is_placeholder_fotmob(nome: str, tbd_flag: bool = False) -> bool:
         return True
     if nome.startswith(("Winner", "Loser")):
         return True
+    if "/" in nome:
+        return True
     if _resolver_selecao_fotmob(nome)[0]:
         return False
     if len(nome) >= 2 and nome[0].isdigit() and "/" not in nome:
@@ -170,6 +172,7 @@ def _normalizar_participante_mata_mata(
     lado: str,
     meta_por_selecao: dict[str, dict],
     meta_por_team_id: dict[int, dict],
+    meta_por_sigla: dict[str, dict],
     *,
     stage: str,
     partida: dict | None = None,
@@ -186,22 +189,24 @@ def _normalizar_participante_mata_mata(
     fase_inicial = stage == "1/16"
     confronto_definido = fase_inicial or finalizada or em_andamento
 
-    if not confronto_definido:
-        rotulo = sigla_api or nome
-        return {
-            "rotulo": rotulo,
-            "nome_fotmob": nome,
-            "selecao": None,
-            "sigla": rotulo,
-            "url_escudo": None,
-            "tbd": True,
-            "team_id": team_id,
-        }
-
     bloco_partida = (partida or {}).get(prefixo) or {}
     nome_efetivo = bloco_partida.get("name") or nome
     team_id_efetivo = bloco_partida.get("id") or team_id
     sigla_partida = bloco_partida.get("shortName")
+
+    placeholder = _is_placeholder_fotmob(nome_efetivo, tbd_flag and fase_inicial)
+
+    if not confronto_definido and placeholder:
+        rotulo = sigla_api or nome_efetivo or "TBD"
+        return {
+            "rotulo": rotulo,
+            "nome_fotmob": nome_efetivo or nome,
+            "selecao": None,
+            "sigla": rotulo,
+            "url_escudo": None,
+            "tbd": True,
+            "team_id": team_id_efetivo,
+        }
 
     selecao, _ = _resolver_selecao_fotmob(nome_efetivo)
     if not selecao:
@@ -213,16 +218,20 @@ def _normalizar_participante_mata_mata(
     elif team_id_efetivo is not None:
         meta = meta_por_team_id.get(int(team_id_efetivo))
 
-    placeholder = _is_placeholder_fotmob(nome_efetivo, tbd_flag and fase_inicial)
+    sigla_exibicao = (meta or {}).get("sigla") if not placeholder else None
+    if not sigla_exibicao:
+        sigla_exibicao = sigla_partida or sigla_api or nome_efetivo
+
+    if not meta and sigla_exibicao and sigla_exibicao not in ("TBD",):
+        meta = meta_por_sigla.get(sigla_exibicao)
+        if meta and not selecao:
+            selecao = meta.get("selecao")
+
     escudo = None
     if meta and meta.get("url_escudo"):
         escudo = meta["url_escudo"]
     elif not placeholder and team_id_efetivo is not None:
         escudo = _url_escudo_fotmob(int(team_id_efetivo))
-
-    sigla_exibicao = (meta or {}).get("sigla") if not placeholder else None
-    if not sigla_exibicao:
-        sigla_exibicao = sigla_partida or sigla_api or nome_efetivo
 
     return {
         "rotulo": sigla_api or nome_efetivo,
@@ -239,6 +248,7 @@ def _normalizar_confronto_mata_mata(
     matchup: dict,
     meta_por_selecao: dict[str, dict],
     meta_por_team_id: dict[int, dict],
+    meta_por_sigla: dict[str, dict],
 ) -> dict:
     partidas = matchup.get("matches") or []
     partida = partidas[0] if partidas else {}
@@ -281,6 +291,7 @@ def _normalizar_confronto_mata_mata(
             "home",
             meta_por_selecao,
             meta_por_team_id,
+            meta_por_sigla,
             stage=matchup.get("stage") or "",
             partida=partida,
         ),
@@ -289,6 +300,7 @@ def _normalizar_confronto_mata_mata(
             "away",
             meta_por_selecao,
             meta_por_team_id,
+            meta_por_sigla,
             stage=matchup.get("stage") or "",
             partida=partida,
         ),
@@ -334,6 +346,7 @@ def extrair_mata_mata_fotmob(selecoes: list[dict] | None = None) -> dict:
         rounds = named.get("rounds") or []
 
     meta_por_selecao = {s["selecao"]: s for s in (selecoes or []) if s.get("selecao")}
+    meta_por_sigla = {s["sigla"]: s for s in (selecoes or []) if s.get("sigla")}
     meta_por_team_id: dict[int, dict] = {}
     for selecao in selecoes or []:
         team_id = selecao.get("selecao_id")
@@ -350,7 +363,7 @@ def extrair_mata_mata_fotmob(selecoes: list[dict] | None = None) -> dict:
             key=lambda m: (m.get("drawOrder") if m.get("drawOrder", -1) >= 0 else 999, m.get("drawOrder") or 0),
         )
         confrontos = [
-            _normalizar_confronto_mata_mata(m, meta_por_selecao, meta_por_team_id)
+            _normalizar_confronto_mata_mata(m, meta_por_selecao, meta_por_team_id, meta_por_sigla)
             for m in matchups
         ]
         if stage == "final" and confrontos:
@@ -362,7 +375,7 @@ def extrair_mata_mata_fotmob(selecoes: list[dict] | None = None) -> dict:
     disputa_bronze = None
     if isinstance(bronze_raw, dict) and bronze_raw.get("matches"):
         disputa_bronze = _normalizar_confronto_mata_mata(
-            bronze_raw, meta_por_selecao, meta_por_team_id
+            bronze_raw, meta_por_selecao, meta_por_team_id, meta_por_sigla
         )
 
     return {

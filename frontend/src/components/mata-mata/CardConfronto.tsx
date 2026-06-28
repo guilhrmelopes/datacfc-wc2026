@@ -25,6 +25,8 @@ function LinhaTime({
     participante.selecao != null
       ? traduzirSelecao(participante.selecao)
       : participante.rotulo;
+  const temEscudo = Boolean(participante.url_escudo);
+  const indefinido = participante.tbd && !temEscudo;
 
   return (
     <div
@@ -32,9 +34,9 @@ function LinhaTime({
         venceu ? "border-l-2 border-emerald-400 bg-emerald-500/10" : ""
       }`}
     >
-      {participante.url_escudo && !participante.tbd ? (
+      {temEscudo ? (
         <img
-          src={participante.url_escudo}
+          src={participante.url_escudo!}
           alt={participante.sigla ?? participante.rotulo}
           className="h-5 w-5 shrink-0 object-contain"
         />
@@ -43,7 +45,7 @@ function LinhaTime({
       )}
       <span
         className={`min-w-0 flex-1 truncate text-[11px] font-medium ${
-          participante.tbd ? "italic text-[var(--color-muted)]" : ""
+          indefinido ? "italic text-[var(--color-muted)]" : ""
         }`}
         title={nome}
       >

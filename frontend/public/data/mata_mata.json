@@ -561,10 +561,10 @@
           "mandante": {
             "rotulo": "CAN",
             "nome_fotmob": "Canada",
-            "selecao": null,
+            "selecao": "CANADA",
             "sigla": "CAN",
-            "url_escudo": null,
-            "tbd": true,
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/CAN/60x60.png",
+            "tbd": false,
             "team_id": 5810
           },
           "visitante": {
@@ -1046,6 +1046,5 @@
     "data": "2026-07-18",
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
-  },
-  "atualizado_em": "2026-06-28T23:36:58.659251+00:00"
+  }
 }
