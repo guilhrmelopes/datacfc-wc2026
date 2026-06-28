@@ -1,282 +1,282 @@
 {
-  "atualizado_em": "2026-06-28T09:40:44.988323+00:00",
+  "atualizado_em": "2026-06-28T13:26:15.328745+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
-    "ESP": {
-      "elo": 2144.0,
-      "rank": 1,
-      "codigo_elo": "ES",
-      "rating_100": 100.0
-    },
     "ARG": {
-      "elo": 2144.0,
+      "elo": 2148.0,
       "rank": 1,
       "codigo_elo": "AR",
       "rating_100": 100.0
+    },
+    "ESP": {
+      "elo": 2144.0,
+      "rank": 2,
+      "codigo_elo": "ES",
+      "rating_100": 99.5
     },
     "FRA": {
       "elo": 2123.0,
       "rank": 3,
       "codigo_elo": "FR",
-      "rating_100": 97.1
+      "rating_100": 96.6
     },
     "ING": {
       "elo": 2038.0,
       "rank": 4,
       "codigo_elo": "EN",
-      "rating_100": 85.5
+      "rating_100": 85.1
     },
     "BRA": {
       "elo": 2009.0,
       "rank": 5,
       "codigo_elo": "BR",
-      "rating_100": 81.6
+      "rating_100": 81.1
     },
     "COL": {
       "elo": 2004.0,
       "rank": 6,
       "codigo_elo": "CO",
-      "rating_100": 80.9
+      "rating_100": 80.5
     },
     "POR": {
       "elo": 1990.0,
       "rank": 7,
       "codigo_elo": "PT",
-      "rating_100": 79.0
+      "rating_100": 78.6
     },
     "HOL": {
       "elo": 1980.0,
       "rank": 8,
       "codigo_elo": "NL",
-      "rating_100": 77.6
+      "rating_100": 77.2
     },
     "NOR": {
       "elo": 1918.0,
       "rank": 9,
       "codigo_elo": "NO",
-      "rating_100": 69.2
+      "rating_100": 68.8
     },
     "ALE": {
       "elo": 1916.0,
       "rank": 10,
       "codigo_elo": "DE",
-      "rating_100": 68.9
+      "rating_100": 68.5
     },
     "SUI": {
       "elo": 1914.0,
       "rank": 11,
       "codigo_elo": "CH",
-      "rating_100": 68.6
+      "rating_100": 68.2
     },
     "MEX": {
       "elo": 1912.0,
       "rank": 12,
       "codigo_elo": "MX",
-      "rating_100": 68.3
+      "rating_100": 68.0
     },
     "JAP": {
       "elo": 1910.0,
       "rank": 13,
       "codigo_elo": "JP",
-      "rating_100": 68.1
+      "rating_100": 67.7
     },
     "CRO": {
       "elo": 1905.0,
       "rank": 14,
       "codigo_elo": "HR",
-      "rating_100": 67.4
+      "rating_100": 67.0
     },
     "EQU": {
       "elo": 1902.0,
       "rank": 15,
       "codigo_elo": "EC",
-      "rating_100": 67.0
+      "rating_100": 66.6
     },
     "BEL": {
       "elo": 1884.0,
       "rank": 16,
       "codigo_elo": "BE",
-      "rating_100": 64.5
+      "rating_100": 64.2
     },
     "MAR": {
       "elo": 1877.0,
       "rank": 17,
       "codigo_elo": "MA",
-      "rating_100": 63.6
+      "rating_100": 63.2
     },
     "TUR": {
       "elo": 1852.0,
       "rank": 18,
       "codigo_elo": "TR",
-      "rating_100": 60.2
+      "rating_100": 59.8
     },
     "SEN": {
       "elo": 1842.0,
       "rank": 19,
       "codigo_elo": "SN",
-      "rating_100": 58.8
+      "rating_100": 58.5
     },
     "URU": {
       "elo": 1841.0,
       "rank": 20,
       "codigo_elo": "UY",
-      "rating_100": 58.7
+      "rating_100": 58.3
     },
     "AUT": {
-      "elo": 1841.0,
-      "rank": 20,
+      "elo": 1836.0,
+      "rank": 21,
       "codigo_elo": "AT",
-      "rating_100": 58.7
+      "rating_100": 57.7
     },
     "PAR": {
       "elo": 1815.0,
       "rank": 22,
       "codigo_elo": "PY",
-      "rating_100": 55.1
+      "rating_100": 54.8
     },
     "AUS": {
       "elo": 1800.0,
       "rank": 23,
       "codigo_elo": "AU",
-      "rating_100": 53.1
+      "rating_100": 52.8
+    },
+    "AGL": {
+      "elo": 1785.0,
+      "rank": 24,
+      "codigo_elo": "DZ",
+      "rating_100": 50.7
     },
     "EUA": {
       "elo": 1781.0,
-      "rank": 24,
-      "codigo_elo": "US",
-      "rating_100": 50.5
-    },
-    "AGL": {
-      "elo": 1780.0,
       "rank": 25,
-      "codigo_elo": "DZ",
-      "rating_100": 50.3
+      "codigo_elo": "US",
+      "rating_100": 50.2
     },
     "IRA": {
       "elo": 1764.0,
       "rank": 26,
       "codigo_elo": "IR",
-      "rating_100": 48.2
+      "rating_100": 47.9
     },
     "CAN": {
       "elo": 1748.0,
       "rank": 27,
       "codigo_elo": "CA",
-      "rating_100": 46.0
+      "rating_100": 45.7
     },
     "ESC": {
       "elo": 1745.0,
       "rank": 28,
       "codigo_elo": "SQ",
-      "rating_100": 45.6
+      "rating_100": 45.3
     },
     "CDM": {
       "elo": 1743.0,
       "rank": 29,
       "codigo_elo": "CI",
-      "rating_100": 45.3
+      "rating_100": 45.0
     },
     "SUE": {
       "elo": 1742.0,
       "rank": 30,
       "codigo_elo": "SE",
-      "rating_100": 45.2
+      "rating_100": 44.9
     },
     "EGI": {
       "elo": 1742.0,
       "rank": 30,
       "codigo_elo": "EG",
-      "rating_100": 45.2
+      "rating_100": 44.9
     },
     "COR": {
       "elo": 1723.0,
       "rank": 32,
       "codigo_elo": "KR",
-      "rating_100": 42.6
+      "rating_100": 42.3
     },
     "RDC": {
       "elo": 1712.0,
       "rank": 33,
       "codigo_elo": "CD",
-      "rating_100": 41.1
+      "rating_100": 40.8
     },
     "TCH": {
       "elo": 1680.0,
       "rank": 34,
       "codigo_elo": "CZ",
-      "rating_100": 36.7
+      "rating_100": 36.5
     },
     "PAN": {
       "elo": 1658.0,
       "rank": 35,
       "codigo_elo": "PA",
-      "rating_100": 33.7
-    },
-    "JOR": {
-      "elo": 1632.0,
-      "rank": 36,
-      "codigo_elo": "JO",
-      "rating_100": 30.2
+      "rating_100": 33.5
     },
     "UZB": {
       "elo": 1631.0,
-      "rank": 37,
+      "rank": 36,
       "codigo_elo": "UZ",
-      "rating_100": 30.0
+      "rating_100": 29.9
+    },
+    "JOR": {
+      "elo": 1628.0,
+      "rank": 37,
+      "codigo_elo": "JO",
+      "rating_100": 29.4
     },
     "BOS": {
       "elo": 1622.0,
       "rank": 38,
       "codigo_elo": "BA",
-      "rating_100": 28.8
+      "rating_100": 28.6
     },
     "CAB": {
       "elo": 1622.0,
       "rank": 38,
       "codigo_elo": "CV",
-      "rating_100": 28.8
+      "rating_100": 28.6
     },
     "ARS": {
       "elo": 1596.0,
       "rank": 40,
       "codigo_elo": "SA",
-      "rating_100": 25.2
+      "rating_100": 25.1
     },
     "GAN": {
       "elo": 1575.0,
       "rank": 41,
       "codigo_elo": "GH",
-      "rating_100": 22.4
+      "rating_100": 22.3
     },
     "AFS": {
       "elo": 1575.0,
       "rank": 41,
       "codigo_elo": "ZA",
-      "rating_100": 22.4
+      "rating_100": 22.3
     },
     "TUN": {
       "elo": 1562.0,
       "rank": 43,
       "codigo_elo": "TN",
-      "rating_100": 20.6
+      "rating_100": 20.5
     },
     "IRQ": {
       "elo": 1561.0,
       "rank": 44,
       "codigo_elo": "IQ",
-      "rating_100": 20.5
+      "rating_100": 20.4
     },
     "NZE": {
       "elo": 1534.0,
       "rank": 45,
       "codigo_elo": "NZ",
-      "rating_100": 16.8
+      "rating_100": 16.7
     },
     "HAI": {
       "elo": 1517.0,
       "rank": 46,
       "codigo_elo": "HT",
-      "rating_100": 14.5
+      "rating_100": 14.4
     },
     "CUR": {
       "elo": 1438.0,
