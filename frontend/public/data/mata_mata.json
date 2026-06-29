@@ -283,12 +283,12 @@
             "tbd": false,
             "team_id": 6715
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
-          "mandante_venceu": false,
+          "placar_mandante": 2,
+          "placar_visitante": 1,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-06-29",
           "hora": "12:00:00",
           "utc_time": "2026-06-29T15:00:00.000Z"
@@ -655,13 +655,13 @@
           "stage": "1/8",
           "match_id": "4653846",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Brazil/Japan",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2055063
+            "rotulo": "BRA",
+            "nome_fotmob": "Brazil",
+            "selecao": "BRAZIL",
+            "sigla": "BRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BRA/60x60.png",
+            "tbd": false,
+            "team_id": 8256
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-29T18:28:43.217409+00:00"
+  "atualizado_em": "2026-06-29T20:26:06.469333+00:00"
 }
