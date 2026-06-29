@@ -283,12 +283,12 @@
             "tbd": false,
             "team_id": 6715
           },
-          "placar_mandante": null,
-          "placar_visitante": null,
+          "placar_mandante": 0,
+          "placar_visitante": 0,
           "mandante_venceu": false,
           "visitante_venceu": false,
           "finalizada": false,
-          "em_andamento": false,
+          "em_andamento": true,
           "data": "2026-06-29",
           "hora": "12:00:00",
           "utc_time": "2026-06-29T15:00:00.000Z"
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-29T16:23:45.347200+00:00"
+  "atualizado_em": "2026-06-29T18:28:43.217409+00:00"
 }
