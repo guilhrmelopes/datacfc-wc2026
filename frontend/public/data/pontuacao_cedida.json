@@ -578,13 +578,13 @@
         "cor": "bg-yellow-500"
       },
       "conquistado": {
-        "valor": 2.35,
+        "valor": 2.02,
         "cor": "bg-red-500"
       }
     },
     "LAT": {
       "cedido": {
-        "valor": 2.71,
+        "valor": 2.68,
         "cor": "bg-orange-500"
       },
       "conquistado": {
@@ -594,7 +594,7 @@
     },
     "ZAG": {
       "cedido": {
-        "valor": 1.98,
+        "valor": 1.96,
         "cor": "bg-red-500"
       },
       "conquistado": {
@@ -604,17 +604,17 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 2.78,
+        "valor": 2.79,
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 4.07,
+        "valor": 4.12,
         "cor": "bg-yellow-500"
       }
     },
     "ATA": {
       "cedido": {
-        "valor": 2.73,
+        "valor": 2.75,
         "cor": "bg-orange-500"
       },
       "conquistado": {
@@ -938,7 +938,7 @@
   "HOL": {
     "GOL": {
       "cedido": {
-        "valor": 1.6,
+        "valor": 1.27,
         "cor": "bg-red-500"
       },
       "conquistado": {
@@ -952,7 +952,7 @@
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 4.15,
+        "valor": 4.12,
         "cor": "bg-yellow-500"
       }
     },
@@ -962,17 +962,17 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 4.28,
+        "valor": 4.27,
         "cor": "bg-yellow-500"
       }
     },
     "MEI": {
       "cedido": {
-        "valor": 2.89,
+        "valor": 2.93,
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 2.77,
+        "valor": 2.78,
         "cor": "bg-orange-500"
       }
     },
@@ -982,7 +982,7 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 5.0,
+        "valor": 5.01,
         "cor": "bg-yellow-500"
       }
     }
