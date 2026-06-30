@@ -1064,8 +1064,8 @@
       "hora": "20:00:00",
       "utc": "2026-06-29T23:00:00.000Z",
       "match_id": "4653706",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "1-1",
       "valida_cartola": true
     },
     {
@@ -1235,6 +1235,20 @@
       "finalizada": false,
       "placar": null,
       "valida_cartola": false
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/8",
+      "rodada": 5,
+      "mandante": "CANADA",
+      "visitante": "MOROCCO",
+      "data": "2026-07-04",
+      "hora": "12:00:00",
+      "utc": "2026-07-04T15:00:00.000Z",
+      "match_id": "4653843",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
     }
   ]
 }

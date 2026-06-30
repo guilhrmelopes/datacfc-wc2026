@@ -123,11 +123,11 @@
             "tbd": false,
             "team_id": 6262
           },
-          "placar_mandante": null,
-          "placar_visitante": null,
+          "placar_mandante": 1,
+          "placar_visitante": 1,
           "mandante_venceu": false,
           "visitante_venceu": false,
-          "finalizada": false,
+          "finalizada": true,
           "em_andamento": false,
           "data": "2026-06-29",
           "hora": "20:00:00",
@@ -568,13 +568,13 @@
             "team_id": 5810
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Netherlands/Morocco",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2055187
+            "rotulo": "MAR",
+            "nome_fotmob": "Morocco",
+            "selecao": "MOROCCO",
+            "sigla": "MAR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
+            "tbd": false,
+            "team_id": 6262
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -797,13 +797,13 @@
             "team_id": 1440908
           },
           "visitante": {
-            "rotulo": "EF2",
-            "nome_fotmob": "Winner EF 2",
+            "rotulo": "TBD",
+            "nome_fotmob": "Canada/Morocco",
             "selecao": null,
-            "sigla": "EF2",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1440909
+            "team_id": 2060953
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-30T00:42:08.189522+00:00"
+  "atualizado_em": "2026-06-30T04:03:31.715086+00:00"
 }
