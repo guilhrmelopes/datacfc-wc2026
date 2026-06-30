@@ -59,12 +59,12 @@
             "tbd": false,
             "team_id": 8520
           },
-          "placar_mandante": 0,
+          "placar_mandante": 3,
           "placar_visitante": 0,
-          "mandante_venceu": false,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-06-30",
           "hora": "16:00:00",
           "utc_time": "2026-06-30T19:00:00.000Z"
@@ -536,13 +536,13 @@
             "team_id": 6724
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "France/Sweden",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2056841
+            "rotulo": "FRA",
+            "nome_fotmob": "France",
+            "selecao": "FRANCE",
+            "sigla": "FRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/FRA/60x60.png",
+            "tbd": false,
+            "team_id": 6723
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -788,13 +788,13 @@
           "stage": "1/4",
           "match_id": "4653851",
           "mandante": {
-            "rotulo": "EF1",
-            "nome_fotmob": "Winner EF 1",
+            "rotulo": "TBD",
+            "nome_fotmob": "Paraguay/France",
             "selecao": null,
-            "sigla": "EF1",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1440908
+            "team_id": 2061599
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-30T21:56:21.549100+00:00"
+  "atualizado_em": "2026-06-30T23:08:47.133104+00:00"
 }
