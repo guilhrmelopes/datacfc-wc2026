@@ -315,12 +315,12 @@
             "tbd": false,
             "team_id": 8492
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_mandante": 1,
+          "placar_visitante": 2,
           "mandante_venceu": false,
-          "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "visitante_venceu": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-06-30",
           "hora": "12:00:00",
           "utc_time": "2026-06-30T15:00:00.000Z"
@@ -664,13 +664,13 @@
             "team_id": 8256
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Ivory Coast/Norway",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2056783
+            "rotulo": "NOR",
+            "nome_fotmob": "Norway",
+            "selecao": "NORWAY",
+            "sigla": "NOR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/NOR/60x60.png",
+            "tbd": false,
+            "team_id": 8492
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -852,13 +852,13 @@
           "stage": "1/4",
           "match_id": "4653852",
           "mandante": {
-            "rotulo": "EF3",
-            "nome_fotmob": "Winner EF 3",
+            "rotulo": "TBD",
+            "nome_fotmob": "Brazil/Norway",
             "selecao": null,
-            "sigla": "EF3",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1440910
+            "team_id": 2061849
           },
           "visitante": {
             "rotulo": "EF4",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-30T18:18:18.703493+00:00"
+  "atualizado_em": "2026-06-30T20:27:44.030677+00:00"
 }
