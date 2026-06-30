@@ -74,9 +74,10 @@
     "4667816",
     "4667817",
     "4653705",
-    "4653711"
+    "4653711",
+    "4653703"
   ],
-  "atualizado_em": "2026-06-29T23:10:01.007955+00:00",
+  "atualizado_em": "2026-06-30T00:43:15.125179+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -18151,10 +18152,11 @@
     },
     "4": {
       "100802": {
-        "pontuacao": 1.0,
+        "pontuacao": 2.2,
         "scout": {
           "DS": 1,
           "FC": 3,
+          "FD": 1,
           "FS": 1,
           "I": 1
         },
@@ -18265,12 +18267,12 @@
         "clube_id": 2354
       },
       "108528": {
-        "pontuacao": 12.1,
+        "pontuacao": 11.8,
         "scout": {
           "A": 1,
           "CA": 1,
           "DS": 5,
-          "FC": 3,
+          "FC": 4,
           "FS": 3
         },
         "posicao_id": 4,
@@ -18286,8 +18288,9 @@
         "clube_id": 2354
       },
       "108923": {
-        "pontuacao": 0.8,
+        "pontuacao": 2.3,
         "scout": {
+          "DS": 1,
           "FF": 1
         },
         "posicao_id": 5,
@@ -18444,9 +18447,9 @@
         "clube_id": 2369
       },
       "138949": {
-        "pontuacao": 1.4,
+        "pontuacao": 2.9,
         "scout": {
-          "DS": 1,
+          "DS": 2,
           "FC": 2,
           "FS": 1
         },
@@ -18454,9 +18457,9 @@
         "clube_id": 2384
       },
       "142978": {
-        "pontuacao": 7.0,
+        "pontuacao": 8.3,
         "scout": {
-          "DE": 5,
+          "DE": 6,
           "FS": 3,
           "GS": 1
         },
@@ -18585,9 +18588,8 @@
         "clube_id": 2354
       },
       "88320": {
-        "pontuacao": 5.8,
+        "pontuacao": 6.8,
         "scout": {
-          "CA": 1,
           "DS": 3,
           "FF": 1,
           "FS": 3
@@ -18669,13 +18671,13 @@
         "clube_id": 2369
       },
       "97348": {
-        "pontuacao": 11.2,
+        "pontuacao": 11.7,
         "scout": {
           "CA": 1,
           "DS": 1,
           "FC": 2,
           "FD": 2,
-          "FS": 2,
+          "FS": 3,
           "G": 1,
           "I": 1
         },
@@ -18709,8 +18711,8 @@
     }
   },
   "status_mercado": 2,
-  "bola_rolando": true,
-  "cartola_atualizado_em": "2026-06-29T23:09:14.725646+00:00",
+  "bola_rolando": false,
+  "cartola_atualizado_em": "2026-06-30T00:42:13.085369+00:00",
   "playoffs_ativos": true,
   "transicao_playoffs": false
 }

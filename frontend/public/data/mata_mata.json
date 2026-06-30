@@ -27,12 +27,12 @@
             "tbd": false,
             "team_id": 6724
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_mandante": 1,
+          "placar_visitante": 1,
           "mandante_venceu": false,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-06-29",
           "hora": "15:30:00",
           "utc_time": "2026-06-29T18:30:00.000Z"
@@ -527,13 +527,13 @@
           "stage": "1/8",
           "match_id": "4653842",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Germany/Paraguay",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2056846
+            "rotulo": "PAR",
+            "nome_fotmob": "Paraguay",
+            "selecao": "PARAGUAY",
+            "sigla": "PAR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/PAR/60x60.png",
+            "tbd": false,
+            "team_id": 6724
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-06-29T23:09:10.724056+00:00"
+  "atualizado_em": "2026-06-30T00:42:08.189522+00:00"
 }

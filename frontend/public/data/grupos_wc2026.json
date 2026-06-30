@@ -1050,8 +1050,8 @@
       "hora": "15:30:00",
       "utc": "2026-06-29T18:30:00.000Z",
       "match_id": "4653703",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "1-1",
       "valida_cartola": true
     },
     {
