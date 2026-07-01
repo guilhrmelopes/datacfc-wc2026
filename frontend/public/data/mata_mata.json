@@ -347,11 +347,11 @@
             "tbd": false,
             "team_id": 6707
           },
-          "placar_mandante": null,
-          "placar_visitante": null,
-          "mandante_venceu": false,
+          "placar_mandante": 2,
+          "placar_visitante": 0,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
+          "finalizada": true,
           "em_andamento": false,
           "data": "2026-06-30",
           "hora": "21:00:00",
@@ -687,13 +687,13 @@
           "stage": "1/8",
           "match_id": "4653847",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Mexico/Ecuador",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2058680
+            "rotulo": "MEX",
+            "nome_fotmob": "Mexico",
+            "selecao": "MEXICO",
+            "sigla": "MEX",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MEX/60x60.png",
+            "tbd": false,
+            "team_id": 6710
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-01T01:38:42.413977+00:00"
+  "atualizado_em": "2026-07-01T06:21:44.912619+00:00"
 }
