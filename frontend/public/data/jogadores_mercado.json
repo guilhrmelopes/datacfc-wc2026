@@ -1595,11 +1595,11 @@
     "copa_goals": 0,
     "copa_goal_assist": 1,
     "copa_clean_sheet": 0,
-    "copa_pontos_total": 27.9,
-    "copa_media_geral": 9.3,
-    "copa_media_base": 7.63,
+    "copa_pontos_total": 29.4,
+    "copa_media_geral": 9.8,
+    "copa_media_base": 8.13,
     "copa_fd": 0,
-    "copa_ds": 15,
+    "copa_ds": 16,
     "copa_de": 0,
     "copa_gs": 0,
     "copa_gcc": 0,
@@ -2839,7 +2839,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 69384,
@@ -5436,7 +5436,7 @@
     "pontos_num": 0,
     "media_num": 4.75,
     "variacao_num": 1.38,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 69063,
@@ -7294,7 +7294,7 @@
     "pontos_num": 0,
     "media_num": 4.77,
     "variacao_num": 1.39,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 106388,
@@ -7441,7 +7441,7 @@
     "pontos_num": 0,
     "media_num": 7.5,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114485,
@@ -7882,7 +7882,7 @@
     "pontos_num": 0,
     "media_num": 8.87,
     "variacao_num": -0.99,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 105361,
@@ -8470,7 +8470,7 @@
     "pontos_num": 0,
     "media_num": 2.33,
     "variacao_num": -0.74,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114599,
@@ -8568,7 +8568,7 @@
     "pontos_num": 0,
     "media_num": 4.17,
     "variacao_num": -1.36,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 103419,
@@ -8617,7 +8617,7 @@
     "pontos_num": 0,
     "media_num": 3.65,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 112895,
@@ -10724,7 +10724,7 @@
     "pontos_num": 0,
     "media_num": 5.6,
     "variacao_num": -1.27,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 71543,
@@ -12386,7 +12386,7 @@
     "pontos_num": 0,
     "media_num": 4.47,
     "variacao_num": -0.93,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 133029,
@@ -12533,7 +12533,7 @@
     "pontos_num": 0,
     "media_num": 8.43,
     "variacao_num": -2.81,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 122401,
@@ -12680,7 +12680,7 @@
     "pontos_num": 0,
     "media_num": 6.7,
     "variacao_num": 0.67,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114821,
@@ -13072,7 +13072,7 @@
     "pontos_num": 0,
     "media_num": 7.4,
     "variacao_num": 2.04,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 140177,
@@ -13660,7 +13660,7 @@
     "pontos_num": 0,
     "media_num": 2.75,
     "variacao_num": -0.7,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 103759,
@@ -13999,7 +13999,7 @@
     "pontos_num": 0,
     "media_num": 2.7,
     "variacao_num": 0.19,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 100627,
@@ -14730,7 +14730,7 @@
     "pontos_num": 0,
     "media_num": 4.73,
     "variacao_num": -0.02,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 105741,
@@ -14779,7 +14779,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 70972,
@@ -15073,7 +15073,7 @@
     "pontos_num": 0,
     "media_num": 2.73,
     "variacao_num": -0.57,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 108601,
@@ -15612,7 +15612,7 @@
     "pontos_num": 0,
     "media_num": 4,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 118821,
@@ -16641,7 +16641,7 @@
     "pontos_num": 0,
     "media_num": 1.3,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 82295,
@@ -17530,7 +17530,7 @@
     "apelido": "Enner Valencia",
     "posicao_id": 5,
     "bucket_posicao": "ATA",
-    "status_id": 2,
+    "status_id": 6,
     "clube_id": 2372,
     "selecao": "ECUADOR",
     "sigla": "EQU",
@@ -17915,7 +17915,7 @@
     "pontos_num": 0,
     "media_num": 5.53,
     "variacao_num": 0.81,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 133036,
@@ -18209,7 +18209,7 @@
     "pontos_num": 0,
     "media_num": 3.93,
     "variacao_num": 0.87,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 92446,
@@ -19773,7 +19773,7 @@
     "pontos_num": 0,
     "media_num": 0.35,
     "variacao_num": -0.35,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 85241,
@@ -20018,7 +20018,7 @@
     "pontos_num": 0,
     "media_num": 1.35,
     "variacao_num": 0.44,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 96333,
@@ -20067,7 +20067,7 @@
     "pontos_num": 0,
     "media_num": 4.25,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 118306,
@@ -20361,7 +20361,7 @@
     "pontos_num": 0,
     "media_num": 1.75,
     "variacao_num": -1.09,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114077,
@@ -20410,7 +20410,7 @@
     "pontos_num": 0,
     "media_num": 8.05,
     "variacao_num": 2.08,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 120582,
@@ -20655,7 +20655,7 @@
     "pontos_num": 0,
     "media_num": 6.5,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 95887,
@@ -20945,7 +20945,7 @@
     "copa_br": 0,
     "copa_ge": 0,
     "copa_de_pct": null,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114417,
@@ -21970,7 +21970,7 @@
     "pontos_num": 0,
     "media_num": 7.07,
     "variacao_num": 1.17,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 93922,
@@ -22019,7 +22019,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 105436,
@@ -22460,7 +22460,7 @@
     "pontos_num": 0,
     "media_num": 6.07,
     "variacao_num": 1.64,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 121461,
@@ -22901,7 +22901,7 @@
     "pontos_num": 0,
     "media_num": 5.6,
     "variacao_num": -0.94,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 94103,
@@ -23195,7 +23195,7 @@
     "pontos_num": 0,
     "media_num": 4,
     "variacao_num": 0.92,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 94849,
@@ -23293,7 +23293,7 @@
     "pontos_num": 0,
     "media_num": 7.8,
     "variacao_num": 1.45,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 109033,
@@ -23881,7 +23881,7 @@
     "pontos_num": 0,
     "media_num": 5,
     "variacao_num": 1.02,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 96724,
@@ -24073,7 +24073,7 @@
     "pontos_num": 0,
     "media_num": 2.25,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 78135,
@@ -25543,7 +25543,7 @@
     "pontos_num": 0,
     "media_num": -0.35,
     "variacao_num": 0.75,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 123997,
@@ -26964,7 +26964,7 @@
     "pontos_num": 0,
     "media_num": 5.45,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 146584,
@@ -27160,7 +27160,7 @@
     "pontos_num": 0,
     "media_num": 5.2,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150919,
@@ -28483,7 +28483,7 @@
     "pontos_num": 0,
     "media_num": 7.05,
     "variacao_num": 2.73,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 149795,
@@ -28679,7 +28679,7 @@
     "pontos_num": 0,
     "media_num": 0.85,
     "variacao_num": -0.73,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 96809,
@@ -29655,7 +29655,7 @@
     "pontos_num": 0,
     "media_num": 0.75,
     "variacao_num": -0.47,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 129978,
@@ -29949,7 +29949,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 129988,
@@ -31027,7 +31027,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 128719,
@@ -31321,7 +31321,7 @@
     "pontos_num": 0,
     "media_num": -0.3,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150988,
@@ -31370,7 +31370,7 @@
     "pontos_num": 0,
     "media_num": 3.1,
     "variacao_num": 0.77,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 109096,
@@ -31713,7 +31713,7 @@
     "pontos_num": 0,
     "media_num": 3.1,
     "variacao_num": 0.17,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 117477,
@@ -31909,7 +31909,7 @@
     "pontos_num": 0,
     "media_num": 8.7,
     "variacao_num": 1.97,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114078,
@@ -31958,7 +31958,7 @@
     "pontos_num": 0,
     "media_num": 1,
     "variacao_num": 0.04,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 106163,
@@ -35094,7 +35094,7 @@
     "pontos_num": 0,
     "media_num": 1.2,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 113959,
@@ -35143,7 +35143,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 99331,
@@ -35192,7 +35192,7 @@
     "pontos_num": 0,
     "media_num": 5.63,
     "variacao_num": 3.06,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 126320,
@@ -35241,7 +35241,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 113483,
@@ -35584,7 +35584,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 93954,
@@ -38377,7 +38377,7 @@
     "pontos_num": 0,
     "media_num": 6.7,
     "variacao_num": 1.43,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 149614,
@@ -38426,7 +38426,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 110810,
@@ -38916,7 +38916,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": -0.37,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 129859,
@@ -39357,7 +39357,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": -0.73,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114217,
@@ -39504,7 +39504,7 @@
     "pontos_num": 0,
     "media_num": 5.57,
     "variacao_num": 0.65,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 149838,
@@ -39700,7 +39700,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": -0.61,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 99014,
@@ -39896,7 +39896,7 @@
     "pontos_num": 0,
     "media_num": 0.2,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150987,
@@ -39945,7 +39945,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 111025,
@@ -40288,7 +40288,7 @@
     "pontos_num": 0,
     "media_num": -3.3,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 130113,
@@ -41317,7 +41317,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 90922,
@@ -47634,7 +47634,7 @@
     "pontos_num": 0,
     "media_num": 6.93,
     "variacao_num": 0.1,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 110968,
@@ -47683,7 +47683,7 @@
     "pontos_num": 0,
     "media_num": 3.45,
     "variacao_num": -0.81,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 117393,
@@ -47732,7 +47732,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 145894,
@@ -47781,7 +47781,7 @@
     "pontos_num": 0,
     "media_num": 1.3,
     "variacao_num": -0.31,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 127280,
@@ -48320,7 +48320,7 @@
     "pontos_num": 0,
     "media_num": 1.97,
     "variacao_num": -0.21,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 103086,
@@ -48369,7 +48369,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 91956,
@@ -48467,7 +48467,7 @@
     "pontos_num": 0,
     "media_num": 1.45,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 113103,
@@ -48614,7 +48614,7 @@
     "pontos_num": 0,
     "media_num": 3.25,
     "variacao_num": 0.98,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 130336,
@@ -48663,7 +48663,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 130458,
@@ -48712,7 +48712,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150985,
@@ -48761,7 +48761,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 80717,
@@ -48859,7 +48859,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 130462,
@@ -48908,7 +48908,7 @@
     "pontos_num": 0,
     "media_num": 11.6,
     "variacao_num": 3.33,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 69513,
@@ -49055,14 +49055,14 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 106254,
     "apelido": "Jorge Sánchez",
     "posicao_id": 2,
     "bucket_posicao": "LAT",
-    "status_id": 7,
+    "status_id": 6,
     "clube_id": 2360,
     "selecao": "MEXICO",
     "sigla": "MEX",
@@ -49160,7 +49160,7 @@
     "apelido": "Montes",
     "posicao_id": 3,
     "bucket_posicao": "ZAG",
-    "status_id": 2,
+    "status_id": 6,
     "clube_id": 2360,
     "selecao": "MEXICO",
     "sigla": "MEX",
@@ -49258,7 +49258,7 @@
     "apelido": "Gilberto Mora",
     "posicao_id": 4,
     "bucket_posicao": "MEI",
-    "status_id": 2,
+    "status_id": 6,
     "clube_id": 2360,
     "selecao": "MEXICO",
     "sigla": "MEX",
@@ -49356,7 +49356,7 @@
     "apelido": "Fidalgo",
     "posicao_id": 4,
     "bucket_posicao": "MEI",
-    "status_id": 2,
+    "status_id": 7,
     "clube_id": 2360,
     "selecao": "MEXICO",
     "sigla": "MEX",
@@ -49699,7 +49699,7 @@
     "apelido": "Romo",
     "posicao_id": 4,
     "bucket_posicao": "MEI",
-    "status_id": 7,
+    "status_id": 6,
     "clube_id": 2360,
     "selecao": "MEXICO",
     "sigla": "MEX",
@@ -49790,7 +49790,7 @@
     "pontos_num": 0,
     "media_num": 9.5,
     "variacao_num": -0.86,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 127832,
@@ -49895,7 +49895,7 @@
     "apelido": "Israel Reyes",
     "posicao_id": 2,
     "bucket_posicao": "LAT",
-    "status_id": 6,
+    "status_id": 7,
     "clube_id": 2360,
     "selecao": "MEXICO",
     "sigla": "MEX",
@@ -51505,7 +51505,7 @@
     "pontos_num": 0,
     "media_num": 8.13,
     "variacao_num": -0.85,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 108342,
@@ -52044,7 +52044,7 @@
     "pontos_num": 0,
     "media_num": -1.05,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 127138,
@@ -52074,11 +52074,11 @@
     "copa_goals": 0,
     "copa_goal_assist": 0,
     "copa_clean_sheet": 0,
-    "copa_pontos_total": 12.9,
-    "copa_media_geral": 3.22,
-    "copa_media_base": 3.22,
+    "copa_pontos_total": 14.4,
+    "copa_media_geral": 3.6,
+    "copa_media_base": 3.6,
     "copa_fd": 1,
-    "copa_ds": 6,
+    "copa_ds": 7,
     "copa_de": 0,
     "copa_gs": 0,
     "copa_gcc": 0,
@@ -52093,7 +52093,7 @@
     "pontos_num": 0,
     "media_num": 4.13,
     "variacao_num": 0.61,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 110309,
@@ -52142,7 +52142,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": -0.73,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 114820,
@@ -52191,7 +52191,7 @@
     "pontos_num": 0,
     "media_num": 1.43,
     "variacao_num": 0.07,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 142068,
@@ -52240,7 +52240,7 @@
     "pontos_num": 0,
     "media_num": 0.4,
     "variacao_num": -0.76,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150891,
@@ -52289,7 +52289,7 @@
     "pontos_num": 0,
     "media_num": 2.87,
     "variacao_num": 0.46,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 122689,
@@ -52368,9 +52368,9 @@
     "copa_goals": 1,
     "copa_goal_assist": 3,
     "copa_clean_sheet": 0,
-    "copa_pontos_total": 37.6,
-    "copa_media_geral": 9.4,
-    "copa_media_base": 3.65,
+    "copa_pontos_total": 37.4,
+    "copa_media_geral": 9.35,
+    "copa_media_base": 3.6,
     "copa_fd": 4,
     "copa_ds": 3,
     "copa_de": 0,
@@ -52387,7 +52387,7 @@
     "pontos_num": 0,
     "media_num": 10.87,
     "variacao_num": -1.06,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150890,
@@ -52436,7 +52436,7 @@
     "pontos_num": 0,
     "media_num": 1.6,
     "variacao_num": 0.01,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 123732,
@@ -52485,7 +52485,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 111071,
@@ -52583,7 +52583,7 @@
     "pontos_num": 0,
     "media_num": 7.7,
     "variacao_num": 1.92,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 106422,
@@ -52632,7 +52632,7 @@
     "pontos_num": 0,
     "media_num": -0.03,
     "variacao_num": -0.8,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 120776,
@@ -52681,7 +52681,7 @@
     "pontos_num": 0,
     "media_num": 1.37,
     "variacao_num": -0.97,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 127851,
@@ -52730,7 +52730,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 95995,
@@ -52779,7 +52779,7 @@
     "pontos_num": 0,
     "media_num": 2,
     "variacao_num": 0.34,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 149616,
@@ -52809,11 +52809,11 @@
     "copa_goals": 0,
     "copa_goal_assist": 0,
     "copa_clean_sheet": 0,
-    "copa_pontos_total": 0.4,
-    "copa_media_geral": 0.1,
-    "copa_media_base": 0.1,
+    "copa_pontos_total": 1.9,
+    "copa_media_geral": 0.47,
+    "copa_media_base": 0.47,
     "copa_fd": 0,
-    "copa_ds": 0,
+    "copa_ds": 1,
     "copa_de": 0,
     "copa_gs": 0,
     "copa_gcc": 0,
@@ -52828,7 +52828,7 @@
     "pontos_num": 0,
     "media_num": -0.3,
     "variacao_num": -0.41,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 147834,
@@ -52877,7 +52877,7 @@
     "pontos_num": 0,
     "media_num": 1.2,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 92648,
@@ -52907,11 +52907,11 @@
     "copa_goals": 1,
     "copa_goal_assist": 0,
     "copa_clean_sheet": 0,
-    "copa_pontos_total": 12.0,
-    "copa_media_geral": 6.0,
-    "copa_media_base": 2.0,
+    "copa_pontos_total": 13.5,
+    "copa_media_geral": 6.75,
+    "copa_media_base": 2.75,
     "copa_fd": 1,
-    "copa_ds": 1,
+    "copa_ds": 2,
     "copa_de": 0,
     "copa_gs": 0,
     "copa_gcc": 0,
@@ -52926,7 +52926,7 @@
     "pontos_num": 0,
     "media_num": 8,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 149612,
@@ -52975,7 +52975,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 69945,
@@ -53024,7 +53024,7 @@
     "pontos_num": 0,
     "media_num": 1.5,
     "variacao_num": -0.39,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150906,
@@ -53073,7 +53073,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 146419,
@@ -53122,7 +53122,7 @@
     "pontos_num": 0,
     "media_num": 0,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 150905,
@@ -53171,7 +53171,7 @@
     "pontos_num": 0,
     "media_num": 0.5,
     "variacao_num": 0,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 92809,
@@ -53563,7 +53563,7 @@
     "pontos_num": 0,
     "media_num": 2.2,
     "variacao_num": -0.62,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   },
   {
     "atleta_id": 127133,
@@ -59145,6 +59145,6 @@
     "copa_br": 0,
     "copa_ge": 0,
     "copa_de_pct": null,
-    "ativo_playoffs": true
+    "ativo_playoffs": false
   }
 ]

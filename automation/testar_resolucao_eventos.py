@@ -33,7 +33,11 @@ def _modo_playoffs_flexivel() -> bool:
         estado = json.loads(CAMINHO_ESTADO.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return False
-    return bool(estado.get("playoffs_ativos") or estado.get("transicao_playoffs"))
+    return bool(
+        estado.get("playoffs_ativos")
+        or estado.get("transicao_playoffs")
+        or estado.get("transicao_r16")
+    )
 
 
 def _transicao_playoffs() -> bool:

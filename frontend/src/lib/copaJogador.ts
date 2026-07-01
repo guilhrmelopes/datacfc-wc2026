@@ -103,6 +103,7 @@ export function oddsVigentes(
   j: JogadorMercado,
   odds: OddsJogadorEntry | null | undefined,
 ): boolean {
+  if (j.ativo_playoffs === false) return false;
   if (!odds) return false;
   const dataOdds = odds.data_confronto?.trim();
   const prox = j.proximo_adversario_sigla?.trim().toUpperCase();
@@ -119,7 +120,7 @@ export function oddsVigentes(
     return Boolean(oddsAdv);
   }
 
-  if (!prox) return true;
+  if (!prox) return !temCopa(j);
   if (!oddsAdv) return !temCopa(j);
   return oddsAdv === prox;
 }

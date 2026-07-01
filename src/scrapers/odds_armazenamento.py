@@ -261,6 +261,8 @@ def confrontos_demanda_odds(
     siglas_ativas: set[str] = set()
 
     for j in jogadores:
+        if j.get("ativo_playoffs") is False:
+            continue
         prox = (j.get("proximo_adversario_sigla") or "").strip().upper()
         sig = (j.get("sigla") or "").strip().upper()
         pos = int(j.get("posicao_id") or 0)
@@ -419,10 +421,19 @@ def normalizar_odds_pos_estreia(
     """
     removidos = 0
     for jog in jogadores:
+        aid = str(jog.get("atleta_id"))
+        if jog.get("ativo_playoffs") is False:
+            if aid in resultado:
+                del resultado[aid]
+                removidos += 1
+            continue
         if int(jog.get("copa_jogos_num") or 0) <= 0:
             continue
         prox = (jog.get("proximo_adversario_sigla") or "").upper()
         if not prox:
+            if aid in resultado:
+                del resultado[aid]
+                removidos += 1
             continue
         aid = str(jog.get("atleta_id"))
         entrada = resultado.get(aid)
@@ -743,6 +754,8 @@ def compilar_dashboard(
             jogadores = []
         else:
             jogadores = _carregar_json(CAMINHO_MERCADO)
+
+    jogadores = [j for j in jogadores if j.get("ativo_playoffs") is not False]
 
     eventos_list = [
         ev for ev in armazenamento.get("eventos", {}).values()

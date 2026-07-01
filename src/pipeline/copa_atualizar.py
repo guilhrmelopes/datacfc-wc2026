@@ -31,7 +31,9 @@ from scrapers.fotmob_playoffs import (
     resolver_proximo_confronto,
     selecoes_ativas_aquecimento,
     selecoes_classificadas_playoffs,
+    selecoes_vivas_ko,
     transicao_playoffs_ativa,
+    transicao_r16_ativa,
 )
 
 COPA_ESTADO_INICIAL = {
@@ -260,15 +262,20 @@ def atualizar_proximo_adversario(
     *,
     playoffs_ativos: bool,
     transicao_gradual: bool,
+    mata_mata: dict | None = None,
 ) -> None:
     """Próximo adversário no calendário unificado (grupos + mata-mata)."""
     mercado = _carregar_json(caminho_mercado)
     classificacao = _carregar_json(caminho_classificacao)
     classificadas: set[str] | None = None
     ativas_aquecimento: set[str] | None = None
+    mata_mata = mata_mata or {}
 
     if playoffs_ativos:
-        classificadas = selecoes_classificadas_playoffs(classificacao)
+        classificadas = selecoes_vivas_ko(
+            mata_mata,
+            selecoes_classificadas_playoffs(classificacao),
+        )
     elif transicao_gradual:
         ativas_aquecimento = selecoes_ativas_aquecimento(classificacao, partidas_grupo)
 
@@ -475,6 +482,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     estado["atualizado_em"] = datetime.now(timezone.utc).isoformat()
     estado["playoffs_ativos"] = playoffs_ativos
     estado["transicao_playoffs"] = transicao_gradual
+    estado["transicao_r16"] = playoffs_ativos and transicao_r16_ativa(mata_mata_payload)
     _salvar_json(caminho_estado, estado)
 
     atualizar_proximo_adversario(
@@ -484,6 +492,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         partidas,
         playoffs_ativos=playoffs_ativos,
         transicao_gradual=transicao_gradual,
+        mata_mata=mata_mata_payload,
     )
 
     if playoffs_ativos or transicao_gradual:
@@ -502,6 +511,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         "confrontos_calendario": len(confrontos_calendario),
         "playoffs_ativos": playoffs_ativos,
         "transicao_playoffs": transicao_gradual,
+        "transicao_r16": estado.get("transicao_r16", False),
         "cartola": resumo_cartola,
         "elo_selecoes_atualizadas": elo_atualizados,
     }

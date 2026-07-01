@@ -106,6 +106,63 @@ def selecoes_classificadas_playoffs(classificacao: dict) -> set[str]:
     return classificadas
 
 
+def _iter_confrontos_mata_mata(mata_mata: dict):
+    for fase in mata_mata.get("fases") or []:
+        stage = fase.get("stage") or ""
+        for confronto in fase.get("confrontos") or []:
+            yield stage, confronto
+    for stage, key in (("final", "final"), ("bronze", "disputa_bronze")):
+        bloco = mata_mata.get(key)
+        if isinstance(bloco, dict):
+            yield stage, bloco
+
+
+def _confrontos_fase(mata_mata: dict, stage: str) -> list[dict]:
+    for f in mata_mata.get("fases") or []:
+        if f.get("stage") == stage:
+            return list(f.get("confrontos") or [])
+    return []
+
+
+def selecoes_eliminadas_ko(mata_mata: dict) -> set[str]:
+    """Seleções derrotadas em qualquer fase KO já finalizada."""
+    eliminadas: set[str] = set()
+    for _stage, confronto in _iter_confrontos_mata_mata(mata_mata):
+        if not confronto.get("finalizada"):
+            continue
+        mandante = confronto.get("mandante") or {}
+        visitante = confronto.get("visitante") or {}
+        nome_m = mandante.get("selecao")
+        nome_v = visitante.get("selecao")
+        if confronto.get("mandante_venceu") and nome_v:
+            eliminadas.add(nome_v)
+        elif confronto.get("visitante_venceu") and nome_m:
+            eliminadas.add(nome_m)
+        else:
+            pm = confronto.get("placar_mandante")
+            pv = confronto.get("placar_visitante")
+            if pm is not None and pv is not None and pm != pv:
+                if pm > pv and nome_v:
+                    eliminadas.add(nome_v)
+                elif pv > pm and nome_m:
+                    eliminadas.add(nome_m)
+    return eliminadas
+
+
+def selecoes_vivas_ko(mata_mata: dict, classificadas: set[str]) -> set[str]:
+    """Classificados que ainda não perderam no mata-mata."""
+    return classificadas - selecoes_eliminadas_ko(mata_mata)
+
+
+def transicao_r16_ativa(mata_mata: dict) -> bool:
+    """16 avos em andamento: algum jogo finalizado, fase ainda aberta."""
+    r16 = _confrontos_fase(mata_mata, "1/16")
+    if not r16:
+        return False
+    finalizados = sum(1 for c in r16 if c.get("finalizada"))
+    return 0 < finalizados < len(r16)
+
+
 def transicao_playoffs_ativa(
     partidas_grupo: list,
     hoje: date | None = None,
