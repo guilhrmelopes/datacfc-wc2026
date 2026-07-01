@@ -1190,7 +1190,7 @@
         "cor": "bg-green-500"
       },
       "conquistado": {
-        "valor": 4.69,
+        "valor": 4.62,
         "cor": "bg-yellow-500"
       }
     }
@@ -1706,7 +1706,7 @@
     },
     "ATA": {
       "cedido": {
-        "valor": 2.48,
+        "valor": 2.4,
         "cor": "bg-red-500"
       },
       "conquistado": {
