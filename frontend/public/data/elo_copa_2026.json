@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-07-01T16:03:51.316330+00:00",
+  "atualizado_em": "2026-07-01T18:23:30.249763+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ARG": {
@@ -21,10 +21,10 @@
       "rating_100": 98.1
     },
     "ING": {
-      "elo": 2038.0,
+      "elo": 2046.0,
       "rank": 4,
       "codigo_elo": "EN",
-      "rating_100": 85.1
+      "rating_100": 86.2
     },
     "BRA": {
       "elo": 2031.0,
@@ -195,10 +195,10 @@
       "rating_100": 42.3
     },
     "RDC": {
-      "elo": 1712.0,
+      "elo": 1704.0,
       "rank": 33,
       "codigo_elo": "CD",
-      "rating_100": 40.8
+      "rating_100": 39.8
     },
     "TCH": {
       "elo": 1680.0,

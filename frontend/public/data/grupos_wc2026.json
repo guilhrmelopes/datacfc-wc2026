@@ -1120,8 +1120,8 @@
       "hora": "11:00:00",
       "utc": "2026-07-01T14:00:00.000Z",
       "match_id": "4653714",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "2-1",
       "valida_cartola": true
     },
     {
@@ -1274,6 +1274,20 @@
       "hora": "15:00:00",
       "utc": "2026-07-05T18:00:00.000Z",
       "match_id": "4653846",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/8",
+      "rodada": 5,
+      "mandante": "MEXICO",
+      "visitante": "ENGLAND",
+      "data": "2026-07-05",
+      "hora": "19:00:00",
+      "utc": "2026-07-05T22:00:00.000Z",
+      "match_id": "4653847",
       "finalizada": false,
       "placar": null,
       "valida_cartola": true
