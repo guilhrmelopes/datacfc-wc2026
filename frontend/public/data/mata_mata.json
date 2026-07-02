@@ -219,12 +219,12 @@
             "tbd": false,
             "team_id": 10106
           },
-          "placar_mandante": 0,
+          "placar_mandante": 2,
           "placar_visitante": 0,
-          "mandante_venceu": false,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-01",
           "hora": "19:00:00",
           "utc_time": "2026-07-01T22:00:00.000Z"
@@ -623,13 +623,13 @@
           "stage": "1/8",
           "match_id": "4653845",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "USA/Bosnia and Herzegovina",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2055190
+            "rotulo": "USA",
+            "nome_fotmob": "USA",
+            "selecao": "UNITED STATES",
+            "sigla": "EUA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EUA/60x60.png",
+            "tbd": false,
+            "team_id": 6713
           },
           "visitante": {
             "rotulo": "BEL",
@@ -829,13 +829,13 @@
             "team_id": 1440912
           },
           "visitante": {
-            "rotulo": "EF6",
-            "nome_fotmob": "Winner EF 6",
+            "rotulo": "TBD",
+            "nome_fotmob": "USA/Belgium",
             "selecao": null,
-            "sigla": "EF6",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1440915
+            "team_id": 2064024
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-02T01:31:02.377064+00:00"
+  "atualizado_em": "2026-07-02T05:55:11.845498+00:00"
 }

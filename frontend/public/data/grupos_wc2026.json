@@ -1148,8 +1148,8 @@
       "hora": "19:00:00",
       "utc": "2026-07-01T22:00:00.000Z",
       "match_id": "4653709",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "2-0",
       "valida_cartola": true
     },
     {
@@ -1288,6 +1288,20 @@
       "hora": "19:00:00",
       "utc": "2026-07-05T22:00:00.000Z",
       "match_id": "4653847",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/8",
+      "rodada": 5,
+      "mandante": "UNITED STATES",
+      "visitante": "BELGIUM",
+      "data": "2026-07-06",
+      "hora": "19:00:00",
+      "utc": "2026-07-06T22:00:00.000Z",
+      "match_id": "4653845",
       "finalizada": false,
       "placar": null,
       "valida_cartola": true
