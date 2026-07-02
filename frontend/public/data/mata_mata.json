@@ -187,12 +187,12 @@
             "tbd": false,
             "team_id": 8255
           },
-          "placar_mandante": null,
-          "placar_visitante": null,
+          "placar_mandante": 0,
+          "placar_visitante": 0,
           "mandante_venceu": false,
           "visitante_venceu": false,
           "finalizada": false,
-          "em_andamento": false,
+          "em_andamento": true,
           "data": "2026-07-02",
           "hora": "14:00:00",
           "utc_time": "2026-07-02T17:00:00.000Z"
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-02T17:41:24.180761+00:00"
+  "atualizado_em": "2026-07-02T19:17:14.743887+00:00"
 }
