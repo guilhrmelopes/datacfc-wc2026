@@ -475,11 +475,11 @@
             "tbd": false,
             "team_id": 6317
           },
-          "placar_mandante": null,
-          "placar_visitante": null,
-          "mandante_venceu": false,
+          "placar_mandante": 2,
+          "placar_visitante": 0,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
+          "finalizada": true,
           "em_andamento": false,
           "data": "2026-07-02",
           "hora": "22:00:00",
@@ -751,13 +751,13 @@
           "stage": "1/8",
           "match_id": "4653849",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Switzerland/Algeria",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2058688
+            "rotulo": "SUI",
+            "nome_fotmob": "Switzerland",
+            "selecao": "SWITZERLAND",
+            "sigla": "SUI",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
+            "tbd": false,
+            "team_id": 6717
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-03T02:28:29.107512+00:00"
+  "atualizado_em": "2026-07-03T06:09:32.421432+00:00"
 }
