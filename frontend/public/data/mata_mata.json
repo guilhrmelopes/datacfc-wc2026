@@ -155,12 +155,12 @@
             "tbd": false,
             "team_id": 10155
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
-          "mandante_venceu": false,
+          "placar_mandante": 2,
+          "placar_visitante": 1,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-02",
           "hora": "18:00:00",
           "utc_time": "2026-07-02T21:00:00.000Z"
@@ -591,13 +591,13 @@
           "stage": "1/8",
           "match_id": "4653844",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Portugal/Croatia",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2058684
+            "rotulo": "POR",
+            "nome_fotmob": "Portugal",
+            "selecao": "PORTUGAL",
+            "sigla": "POR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/POR/60x60.png",
+            "tbd": false,
+            "team_id": 8361
           },
           "visitante": {
             "rotulo": "ESP",
@@ -820,13 +820,13 @@
           "stage": "1/4",
           "match_id": "4653853",
           "mandante": {
-            "rotulo": "EF5",
-            "nome_fotmob": "Winner EF 5",
+            "rotulo": "TBD",
+            "nome_fotmob": "Portugal/Spain",
             "selecao": null,
-            "sigla": "EF5",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 1440912
+            "team_id": 2066499
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-02T23:35:43.294680+00:00"
+  "atualizado_em": "2026-07-03T02:28:29.107512+00:00"
 }

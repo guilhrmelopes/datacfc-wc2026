@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-07-02T23:35:43.489871+00:00",
+  "atualizado_em": "2026-07-03T02:28:29.405284+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -32,17 +32,17 @@
       "codigo_elo": "BR",
       "rating_100": 82.9
     },
+    "POR": {
+      "elo": 2013.0,
+      "rank": 6,
+      "codigo_elo": "PT",
+      "rating_100": 80.5
+    },
     "COL": {
       "elo": 2004.0,
-      "rank": 6,
+      "rank": 7,
       "codigo_elo": "CO",
       "rating_100": 79.3
-    },
-    "POR": {
-      "elo": 1990.0,
-      "rank": 7,
-      "codigo_elo": "PT",
-      "rating_100": 77.4
     },
     "HOL": {
       "elo": 1971.0,
@@ -80,23 +80,23 @@
       "codigo_elo": "DE",
       "rating_100": 66.4
     },
-    "CRO": {
-      "elo": 1905.0,
-      "rank": 14,
-      "codigo_elo": "HR",
-      "rating_100": 66.0
-    },
     "JAP": {
       "elo": 1888.0,
-      "rank": 15,
+      "rank": 14,
       "codigo_elo": "JP",
       "rating_100": 63.8
     },
     "MAR": {
       "elo": 1886.0,
-      "rank": 16,
+      "rank": 15,
       "codigo_elo": "MA",
       "rating_100": 63.5
+    },
+    "CRO": {
+      "elo": 1882.0,
+      "rank": 16,
+      "codigo_elo": "HR",
+      "rating_100": 63.0
     },
     "EQU": {
       "elo": 1871.0,
