@@ -411,12 +411,12 @@
             "tbd": false,
             "team_id": 5888
           },
-          "placar_mandante": null,
-          "placar_visitante": null,
+          "placar_mandante": 0,
+          "placar_visitante": 0,
           "mandante_venceu": false,
           "visitante_venceu": false,
           "finalizada": false,
-          "em_andamento": false,
+          "em_andamento": true,
           "data": "2026-07-03",
           "hora": "17:00:00",
           "utc_time": "2026-07-03T20:00:00.000Z"
@@ -443,12 +443,12 @@
             "tbd": false,
             "team_id": 10255
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_mandante": 1,
+          "placar_visitante": 1,
           "mandante_venceu": false,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-03",
           "hora": "13:00:00",
           "utc_time": "2026-07-03T16:00:00.000Z"
@@ -728,13 +728,13 @@
             "team_id": 2056838
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Australia/Egypt",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2056962
+            "rotulo": "EGY",
+            "nome_fotmob": "Egypt",
+            "selecao": "EGYPT",
+            "sigla": "EGI",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/EGI/60x60.png",
+            "tbd": false,
+            "team_id": 10255
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-03T20:37:40.807160+00:00"
+  "atualizado_em": "2026-07-03T22:01:48.198072+00:00"
 }
