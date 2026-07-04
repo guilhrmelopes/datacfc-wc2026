@@ -87,9 +87,10 @@
     "4653707",
     "4653717",
     "4653716",
-    "4653715"
+    "4653715",
+    "4653718"
   ],
-  "atualizado_em": "2026-07-04T02:27:18.786352+00:00",
+  "atualizado_em": "2026-07-04T05:59:38.530455+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -22148,8 +22149,8 @@
   },
   "status_mercado": 1,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-07-04T02:26:34.323376+00:00",
+  "cartola_atualizado_em": "2026-07-04T05:59:04.114270+00:00",
   "playoffs_ativos": true,
   "transicao_playoffs": false,
-  "transicao_r16": true
+  "transicao_r16": false
 }
