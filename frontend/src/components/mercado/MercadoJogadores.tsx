@@ -24,6 +24,7 @@ import {
   mediaBaseCopa,
   mediaGeralCopa,
   minutosPorJogoCopa,
+  jogadorAtivoNoHub,
   oddsVigentes,
   scoutPorJogoCopa,
   temCopa,
@@ -43,6 +44,7 @@ import {
   construirIndiceMercadoHub,
 } from "@/lib/indiceMercadoHub";
 import type {
+  DadosMataMata,
   JogadorMercado,
   OddsJogadoresData,
   OddsJogadorEntry,
@@ -78,6 +80,7 @@ interface Props {
   cobradoresCopa?: CobradoresCopaData | null;
   rodadaCartolaAtual?: number;
   pontuacaoCedida: PontuacaoCedida;
+  mataMata: DadosMataMata;
 }
 
 // ---------------------------------------------------------------------------
@@ -481,6 +484,7 @@ export function MercadoJogadores({
   mlContextoRodada,
   cobradoresCopa,
   pontuacaoCedida,
+  mataMata,
 }: Props) {
   const oddsMap = oddsJogadores?.odds ?? null;
   const mlCtxRodada = useMemo(
@@ -549,19 +553,23 @@ export function MercadoJogadores({
 
   const listaSelecoes = useMemo(
     () =>
-      [...new Set(jogadores.filter((j) => j.ativo_playoffs !== false).map((j) => j.selecao))]
+      [...new Set(
+        jogadores
+          .filter((j) => jogadorAtivoNoHub(j, mataMata))
+          .map((j) => j.selecao),
+      )]
         .filter(Boolean)
         .sort((a, b) =>
           traduzirSelecao(a).localeCompare(traduzirSelecao(b), "pt-BR", {
             sensitivity: "base",
           }),
         ),
-    [jogadores],
+    [jogadores, mataMata],
   );
 
   const linhas = useMemo(() => {
     const filtradas = jogadores
-      .filter((j) => j.ativo_playoffs !== false)
+      .filter((j) => jogadorAtivoNoHub(j, mataMata))
       .filter((j) => modoComparacao || j.bucket_posicao === posicao)
       .filter((j) => selecaoFiltro === "TODAS" || j.selecao === selecaoFiltro)
       .filter((j) => passaFiltroStatus(j.status_id, statusFiltro))
@@ -579,10 +587,11 @@ export function MercadoJogadores({
       if (cmp !== 0) return cmp;
       return a.apelido.localeCompare(b.apelido, "pt-BR", { sensitivity: "base" });
     });
-    const limitadas = dados.slice(0, modoComparacao ? 50 : 500);
+    const limitadas = dados.slice(0, modoComparacao ? 50 : 416);
     return limitadas;
   }, [
     jogadores,
+    mataMata,
     posicao,
     selecaoFiltro,
     statusFiltro,

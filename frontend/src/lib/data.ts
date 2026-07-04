@@ -49,6 +49,7 @@ export interface DadosMercado {
   rodadaCartolaAtual: number;
   confrontosCopa: ConfrontoCopa[];
   partidasProcessadas: string[];
+  mataMata: DadosMataMata;
 }
 
 /** Dados da aba Radar (selecoes + pontuacao_cedida + classificação). */
@@ -71,7 +72,7 @@ export async function carregarDadosRadar(): Promise<
 
 /** Dados da aba Mercado (jogadores_mercado + selecoes + pontuacao_cedida + odds). */
 export async function carregarDadosMercado(): Promise<DadosMercado> {
-  const [jogadores, selecoes, pontuacaoCedida, oddsResult, mlContexto, cobradores, grupos, copaEstado] =
+  const [jogadores, selecoes, pontuacaoCedida, oddsResult, mlContexto, cobradores, grupos, copaEstado, mataMataRaw] =
     await Promise.all([
     carregarJson<JogadorMercado[]>("/data/jogadores_mercado.json"),
     carregarJson<Selecao[]>("/data/selecoes.json"),
@@ -89,6 +90,7 @@ export async function carregarDadosMercado(): Promise<DadosMercado> {
     carregarJson<{ partidas_processadas?: string[]; rodada_cartola_atual?: number }>(
       "/data/copa_estado.json",
     ),
+    carregarJson<unknown>("/data/mata_mata.json"),
   ]);
   return {
     jogadores,
@@ -100,6 +102,7 @@ export async function carregarDadosMercado(): Promise<DadosMercado> {
     rodadaCartolaAtual: Number(copaEstado.rodada_cartola_atual) || 2,
     confrontosCopa: grupos.confrontos ?? [],
     partidasProcessadas: copaEstado.partidas_processadas ?? [],
+    mataMata: parseDadosMataMata(mataMataRaw),
   };
 }
 

@@ -755,8 +755,6 @@ def compilar_dashboard(
         else:
             jogadores = _carregar_json(CAMINHO_MERCADO)
 
-    jogadores = [j for j in jogadores if j.get("ativo_playoffs") is not False]
-
     eventos_list = [
         ev for ev in armazenamento.get("eventos", {}).values()
         if isinstance(ev, dict)
@@ -893,10 +891,13 @@ def montar_registro_evento(
 
 def compilar_e_salvar(
     hoje: date | None = None,
-    min_jogadores: int = 500,
+    min_jogadores: int | None = None,
 ) -> dict[str, dict]:
     """Recompila odds_jogadores.json a partir do armazenamento (sem scrape)."""
     from pipeline.timestamp_dashboard import marcar_dashboard_atualizado
+
+    if min_jogadores is None:
+        min_jogadores = int(os.environ.get("ODDS_MIN_JOGADORES_SALVAR", "80"))
 
     ref = hoje or referencia_hoje()
     armaz = carregar_armazenamento()

@@ -32,6 +32,7 @@ from scrapers.fotmob_playoffs import (
     selecoes_ativas_aquecimento,
     selecoes_classificadas_playoffs,
     selecoes_vivas_ko,
+    selecoes_ativas_hub_playoffs,
     transicao_playoffs_ativa,
     transicao_r16_ativa,
 )
@@ -272,7 +273,7 @@ def atualizar_proximo_adversario(
     mata_mata = mata_mata or {}
 
     if playoffs_ativos:
-        classificadas = selecoes_vivas_ko(
+        classificadas = selecoes_ativas_hub_playoffs(
             mata_mata,
             selecoes_classificadas_playoffs(classificacao),
         )

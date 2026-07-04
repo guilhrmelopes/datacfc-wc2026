@@ -20,6 +20,11 @@ from playwright.sync_api import Browser, BrowserContext, Page, Playwright, Respo
 # ─────────────────────────────── Constantes de domínio ───────────────────────
 
 DOMINIO_ODDSNOTIFIER = "hub.oddsnotifier.io"
+DOMINIOS_HUB_ODDS = frozenset({
+    "hub.oddsnotifier.io",
+    "www.oddshub.io",
+    "oddshub.io",
+})
 CAMINHO_API_ODDS = "/api/odds/"
 
 # Também capturamos estes sub-endpoints (usados quando se clica em abas específicas)
@@ -70,7 +75,7 @@ def _url_eh_api_odds(url: str) -> bool:
       • /api/events/{eventId}/assist
     """
     parsed = urlparse(url)
-    if DOMINIO_ODDSNOTIFIER not in parsed.netloc:
+    if parsed.netloc not in DOMINIOS_HUB_ODDS:
         return False
     path = parsed.path
     if re.search(r"/api/odds/\d+$", path):
@@ -114,7 +119,7 @@ def construir_url_partida(evento: dict) -> str:
     league_slug = evento.get("league", {}).get("slug", "international-world-cup")
     event_id = evento["id"]
     return (
-        f"https://hub.oddsnotifier.io"
+        f"https://www.oddshub.io"
         f"/{sport_slug}/{league_slug}/{event_id}"
     )
 

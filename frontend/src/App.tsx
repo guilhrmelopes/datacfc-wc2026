@@ -115,6 +115,7 @@ export default function App() {
               cobradoresCopa={mercado.dados.cobradoresCopa}
               rodadaCartolaAtual={mercado.dados.rodadaCartolaAtual}
               pontuacaoCedida={mercado.dados.pontuacaoCedida as PontuacaoCedida}
+              mataMata={mercado.dados.mataMata}
             />
           )}
         </TabsContent>

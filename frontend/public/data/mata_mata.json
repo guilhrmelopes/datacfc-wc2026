@@ -30,7 +30,7 @@
           "placar_mandante": 1,
           "placar_visitante": 1,
           "mandante_venceu": false,
-          "visitante_venceu": false,
+          "visitante_venceu": true,
           "finalizada": true,
           "em_andamento": false,
           "data": "2026-06-29",
@@ -126,7 +126,7 @@
           "placar_mandante": 1,
           "placar_visitante": 1,
           "mandante_venceu": false,
-          "visitante_venceu": false,
+          "visitante_venceu": true,
           "finalizada": true,
           "em_andamento": false,
           "data": "2026-06-29",
@@ -446,7 +446,7 @@
           "placar_mandante": 1,
           "placar_visitante": 1,
           "mandante_venceu": false,
-          "visitante_venceu": false,
+          "visitante_venceu": true,
           "finalizada": true,
           "em_andamento": false,
           "data": "2026-07-03",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-04T12:03:22.694882+00:00"
+  "atualizado_em": "2026-07-04T12:31:17.586652+00:00"
 }

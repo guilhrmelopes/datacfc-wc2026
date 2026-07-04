@@ -7,7 +7,8 @@ import os
 import sys
 from pathlib import Path
 
-MIN_TOTAL = 500
+MIN_TOTAL = int(os.environ.get("ODDS_MIN_TOTAL", "500"))
+MIN_TOTAL_PLAYOFFS = int(os.environ.get("ODDS_MIN_TOTAL_PLAYOFFS", "80"))
 MIN_G = 200
 MIN_A = 200
 MIN_GA = 400
@@ -170,20 +171,21 @@ def main() -> None:
     pct_vig = (vigentes / alvo * 100) if alvo else 100.0
     transicao = _transicao_playoffs()
     playoffs_flex = _modo_playoffs_flexivel()
+    min_total = MIN_TOTAL_PLAYOFFS if playoffs_flex else MIN_TOTAL
 
     print(f"total={total} g={g} a={a} ga={ga} sg={sg}")
     print(f"vigentes={vigentes}/{alvo} ({pct_vig:.0f}%) sem_odd={sem_odd}")
     if playoffs_flex:
-        print("modo=playoffs_flexivel (cobertura parcial permitida)")
+        print(f"modo=playoffs_flexivel (min_total={min_total})")
 
     if (
-        total < MIN_TOTAL
-        or g < MIN_G
-        or a < MIN_A
-        or ga < MIN_GA
-        or sg < MIN_SG
+        total < min_total
+        or (not playoffs_flex and g < MIN_G)
+        or (not playoffs_flex and a < MIN_A)
+        or (not playoffs_flex and ga < MIN_GA)
+        or (not playoffs_flex and sg < MIN_SG)
     ):
-        if playoffs_flex and total >= MIN_TOTAL and vigentes > 100:
+        if playoffs_flex and total >= min_total and vigentes > 100:
             print(
                 f"AVISO playoffs: cobertura bruta ok ({total} entradas, "
                 f"{vigentes} vigentes) — commit permitido."

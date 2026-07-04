@@ -1,6 +1,6 @@
 {
-  "atualizado_em": "2026-06-28T18:11:59.892309+00:00",
-  "rodada": 4,
+  "atualizado_em": "2026-07-04T12:34:08.465060+00:00",
+  "rodada": 5,
   "eventos": [
     {
       "id": 66456904,
@@ -617,6 +617,62 @@
       "away": "GHANA",
       "date": "2026-07-03T23:30:00.000Z",
       "fixture_id": "4653718"
+    },
+    {
+      "id": 53452511,
+      "home": "CANADA",
+      "away": "MOROCCO",
+      "date": "2026-07-04T15:00:00.000Z",
+      "fixture_id": "4653843"
+    },
+    {
+      "id": 53452509,
+      "home": "PARAGUAY",
+      "away": "FRANCE",
+      "date": "2026-07-04T19:00:00.000Z",
+      "fixture_id": "4653842"
+    },
+    {
+      "id": 53452517,
+      "home": "BRAZIL",
+      "away": "NORWAY",
+      "date": "2026-07-05T18:00:00.000Z",
+      "fixture_id": "4653846"
+    },
+    {
+      "id": 53452519,
+      "home": "MEXICO",
+      "away": "ENGLAND",
+      "date": "2026-07-05T22:00:00.000Z",
+      "fixture_id": "4653847"
+    },
+    {
+      "id": 53452513,
+      "home": "PORTUGAL",
+      "away": "SPAIN",
+      "date": "2026-07-06T17:00:00.000Z",
+      "fixture_id": "4653844"
+    },
+    {
+      "id": 53452515,
+      "home": "UNITED STATES",
+      "away": "BELGIUM",
+      "date": "2026-07-06T22:00:00.000Z",
+      "fixture_id": "4653845"
+    },
+    {
+      "id": 53452521,
+      "home": "ARGENTINA",
+      "away": "EGYPT",
+      "date": "2026-07-07T14:00:00.000Z",
+      "fixture_id": "4653848"
+    },
+    {
+      "id": 53452523,
+      "home": "SWITZERLAND",
+      "away": "COLOMBIA",
+      "date": "2026-07-07T18:00:00.000Z",
+      "fixture_id": "4653849"
     }
   ]
 }

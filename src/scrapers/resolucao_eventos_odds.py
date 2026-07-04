@@ -29,6 +29,8 @@ _RAIZ = Path(__file__).resolve().parents[2]
 CAMINHO_EVENTOS = _RAIZ / "frontend" / "public" / "data" / "eventos_odds_rodada1.json"
 
 URLS_API_EVENTOS = (
+    "https://www.oddshub.io/api/events/football/international-fifa-world-cup",
+    "https://www.oddshub.io/api/events/football/international-world-cup",
     "https://hub.oddsnotifier.io/api/events/football/international-fifa-world-cup",
     "https://hub.oddsnotifier.io/api/events/football/international-world-cup",
 )
@@ -272,7 +274,7 @@ def reconciliar_adversarios_mercado_odds(
     vistos: set[str] = set()
 
     for j in mercado:
-        if apenas_playoffs and j.get("ativo_playoffs") is False:
+        if j.get("ativo_playoffs") is False:
             continue
         selecao = (j.get("selecao") or "").upper()
         if not selecao or selecao in vistos:
@@ -310,7 +312,7 @@ def reconciliar_adversarios_mercado_odds(
         for jog in mercado:
             if (jog.get("selecao") or "").upper() != selecao:
                 continue
-            if jog.get("ativo_playoffs") is False and apenas_playoffs:
+            if jog.get("ativo_playoffs") is False:
                 continue
             jog["proximo_adversario_sigla"] = nova_sigla
             jog["proximo_adversario_escudo"] = adv_meta.get("url_escudo")

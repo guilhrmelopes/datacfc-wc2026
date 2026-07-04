@@ -27,6 +27,7 @@ from scrapers.odds_armazenamento import (  # noqa: E402
 from scrapers.scraper_odds_jogadores import (  # noqa: E402
     Relatorio,
     STEALTH_INIT_SCRIPT,
+    _eh_resposta_hub,
     _headless,
     _url_evento,
     carregar_jogadores,
@@ -145,7 +146,7 @@ def main() -> int:
         captura_api.vincular_pagina(pagina)
 
         def _capturar_rsc(resp) -> None:
-            if "oddsnotifier" not in resp.url:
+            if not _eh_resposta_hub(resp.url):
                 return
             try:
                 texto = resp.text()

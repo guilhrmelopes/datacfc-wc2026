@@ -23,6 +23,7 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 from playwright.sync_api import sync_playwright, Page
 
@@ -94,7 +95,7 @@ CAMINHO_EVENTOS: Path = _RAIZ / "frontend" / "public" / "data" / "eventos_odds_r
 CAMINHO_ESTADO:  Path = _RAIZ / "frontend" / "public" / "data" / "copa_estado.json"
 CAMINHO_SAIDA:   Path = _RAIZ / "frontend" / "public" / "data" / "odds_jogadores.json"
 
-MIN_JOGADORES_SALVAR = 500
+MIN_JOGADORES_SALVAR = 80
 
 POSICOES_LINHA: frozenset[int] = frozenset({2, 3, 4, 5})
 POSICOES_SG: frozenset[int] = frozenset({1, 2, 3})  # GOL, LAT, ZAG
@@ -194,16 +195,25 @@ _USER_AGENT = (
 # [0] EVENTOS — fixtures WC2026 + mapeamento oddsEventId
 # ══════════════════════════════════════════════════════════════════════════════
 
-URL_WC2026 = "https://hub.oddsnotifier.io/world-cup-2026"
-URL_HUB_FIFA = "https://hub.oddsnotifier.io/football/international-fifa-world-cup"
+URL_WC2026 = "https://www.oddshub.io/world-cup-2026"
+URL_HUB_FIFA = "https://www.oddshub.io/football/international-fifa-world-cup"
 URLS_API_EVENTOS = (
+    "https://www.oddshub.io/api/events/football/international-fifa-world-cup",
+    "https://www.oddshub.io/api/events/football/international-world-cup",
     "https://hub.oddsnotifier.io/api/events/football/international-fifa-world-cup",
     "https://hub.oddsnotifier.io/api/events/football/international-world-cup",
 )
 
 
-def _url_evento(event_id: int) -> str:
-    return f"{URL_HUB_FIFA}/{event_id}"
+def _eh_resposta_hub(url: str) -> bool:
+    return "oddshub" in url or "oddsnotifier" in url
+
+
+def _url_evento(event_id: int, market: str | None = None) -> str:
+    base = f"{URL_HUB_FIFA}/{event_id}"
+    if market:
+        return f"{base}?market={quote(market)}"
+    return base
 
 
 def _extrair_json_array(rsc: str, chave: str) -> list | None:
@@ -1514,6 +1524,46 @@ def _navegar_clicar_anytime_goalscorer(pagina: Page) -> bool:
     return True
 
 
+def _raspar_mercado_url_direta(
+    pagina: Page,
+    event_id: int,
+    market: str,
+    sufixo: str,
+    rsc_acumulado: list[str],
+    desc: str,
+) -> dict[str, tuple[float, str]]:
+    """Abre oddshub com ?market=... — mais estável que cliques na UI."""
+    url = _url_evento(event_id, market)
+    slice_start = len(rsc_acumulado)
+    try:
+        pagina.goto(url, timeout=TIMEOUT_PAGINA, wait_until="load")
+    except Exception as exc:
+        logger.warning("URL direta %s indisponivel em %s: %s", market, desc, exc)
+        return {}
+
+    pagina.wait_for_timeout(_wait_ms(random.randint(4500, 7500)))
+    for _ in range(6 if IS_CI else 4):
+        pagina.wait_for_timeout(_wait_ms(2000))
+        novos = rsc_acumulado[slice_start:]
+        if sum(len(c) for c in novos) > 35_000:
+            break
+
+    rsc = _coletar_rsc_evento(pagina, rsc_acumulado, slice_start)
+    rsc_dom = _rsc_de_pagina(pagina)
+    extraido = extrair_odds_rsc(f"{rsc}\n{rsc_dom}", sufixo_alvo=sufixo)
+    mercado = extraido.get(sufixo) or {}
+    logger.info("  URL direta %s: %d jogadores", market, len(mercado))
+    return mercado
+
+
+def _mesclar_mapa_odds(
+    destino: dict[str, tuple[float, str]],
+    origem: dict[str, tuple[float, str]],
+) -> None:
+    for nome, par in origem.items():
+        destino[nome] = _melhor_odd(destino.get(nome), par[0], par[1])
+
+
 def _raspar_anytime_goalscorer(
     pagina: Page,
     rsc_acumulado: list[str],
@@ -1914,6 +1964,11 @@ def processar_evento(
 
     pagina.wait_for_timeout(_wait_ms(random.randint(5000, 9000)))
 
+    if captura_api is not None:
+        from utils.interceptacao_rede_oddsnotifier import aguardar_odds_capturadas
+
+        aguardar_odds_capturadas(pagina, captura_api, eid, timeout_segundos=20)
+
     if _pagina_parece_bloqueada(pagina):
         logger.warning("Pagina bloqueada/antibot em %s — aguardando retry...", desc)
         pagina.wait_for_timeout(_wait_ms(8000))
@@ -1956,7 +2011,7 @@ def processar_evento(
     g_antes_ag = len(odds_bruto_acum["g"])
     odds_ag = _raspar_anytime_goalscorer(pagina, rsc_acumulado, tamanho_antes, desc)
     if odds_ag:
-        _mesclar_odds_rsc(odds_bruto_acum, {"g": odds_ag, "a": {}, "ga": {}})
+        _mesclar_mapa_odds(odds_bruto_acum["g"], odds_ag)
         rsc_ag = _coletar_rsc_evento(pagina, rsc_acumulado, tamanho_antes)
         if rsc_ag.strip():
             rsc = f"{rsc}\n{rsc_ag}" if rsc.strip() else rsc_ag
@@ -1965,6 +2020,14 @@ def processar_evento(
             g_antes_ag,
             len(odds_bruto_acum["g"]),
         )
+
+    ag_url = _raspar_mercado_url_direta(
+        pagina, eid, MERCADO_ANYTIME_GOALSCORER, "g", rsc_acumulado, desc,
+    )
+    if ag_url:
+        antes = len(odds_bruto_acum["g"])
+        _mesclar_mapa_odds(odds_bruto_acum["g"], ag_url)
+        logger.info("  Anytime Goalscorer (URL): g %d → %d", antes, len(odds_bruto_acum["g"]))
 
     if captura_api is not None:
         payload_api = captura_api.obter_odds_evento(eid)
@@ -1999,12 +2062,40 @@ def processar_evento(
     odds_a = consolidar_nomes_odds(odds_bruto_acum["a"])
     odds_ga = consolidar_nomes_odds(odds_bruto_acum["ga"])
     sg_home, sg_away = extrair_sg_times(rsc)
+    if not sg_home or not sg_away:
+        for market, alvo in (
+            (MKT_TEAM_TOTAL_AWAY, "home"),
+            (MKT_TEAM_TOTAL_HOME, "away"),
+        ):
+            slice_sg = len(rsc_acumulado)
+            try:
+                pagina.goto(_url_evento(eid, market), timeout=TIMEOUT_PAGINA, wait_until="load")
+            except Exception:
+                continue
+            pagina.wait_for_timeout(_wait_ms(random.randint(4000, 6500)))
+            rsc_mkt = _coletar_rsc_evento(pagina, rsc_acumulado, slice_sg)
+            rsc_mkt = f"{rsc_mkt}\n{_rsc_de_pagina(pagina)}"
+            h, a = extrair_sg_times(rsc_mkt)
+            sg_home = sg_home or h
+            sg_away = sg_away or a
+            if sg_home and sg_away:
+                break
     if captura_api is not None and not sg_home and not sg_away:
         payload_api = captura_api.obter_odds_evento(eid)
         if payload_api:
             sg_home, sg_away = extrair_sg_de_payload(payload_api, extrair_sg_times)
 
     ml_dados = extrair_ml_times(rsc, home, away)
+    if not ml_dados:
+        slice_ml = len(rsc_acumulado)
+        try:
+            pagina.goto(_url_evento(eid, "ML"), timeout=TIMEOUT_PAGINA, wait_until="load")
+            pagina.wait_for_timeout(_wait_ms(random.randint(3500, 6000)))
+            rsc_ml = _coletar_rsc_evento(pagina, rsc_acumulado, slice_ml)
+            rsc_ml = f"{rsc_ml}\n{_rsc_de_pagina(pagina)}"
+            ml_dados = extrair_ml_times(rsc_ml, home, away)
+        except Exception:
+            pass
     if captura_api is not None and not ml_dados:
         payload_api = captura_api.obter_odds_evento(eid)
         if payload_api:
@@ -2204,7 +2295,7 @@ def executar() -> None:
         captura_api.vincular_pagina(pagina)
 
         def _capturar_rsc(resp) -> None:
-            if "oddsnotifier" not in resp.url:
+            if _eh_resposta_hub(resp.url):
                 return
             ct = (resp.headers.get("content-type") or "").lower()
             try:

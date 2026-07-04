@@ -35,7 +35,7 @@ export function sinalOddsPosicional(
 /** Descrição legível para tooltips. */
 export function labelOddsPosicional(bucket: string): string {
   if (bucket === "GOL") return "SG%";
-  if (bucket === "MEI" || bucket === "ATA") return "G% + A%";
+  if (bucket === "MEI" || bucket === "ATA") return "G% (A% quando disponível)";
   if (bucket === "LAT" || bucket === "ZAG") return "G%, A% e SG%";
   return "odds";
 }

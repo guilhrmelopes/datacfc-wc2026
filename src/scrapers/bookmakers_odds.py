@@ -12,6 +12,12 @@ BOOKMAKERS_PERMITIDOS: tuple[str, ...] = (
     "betano",
     "kalshi",
     "bet365",
+    "unibet",
+    "kambi",
+    "betuk",
+    "betclic",
+    "leovegas",
+    "stake",
 )
 
 BOOKMAKERS_ORDEM: tuple[str, ...] = (
@@ -20,7 +26,13 @@ BOOKMAKERS_ORDEM: tuple[str, ...] = (
     "betfair",
     "1xbet",
     "bet365",
+    "unibet",
+    "kambi",
+    "betuk",
+    "betclic",
+    "leovegas",
     "betano",
+    "stake",
     "kalshi",
 )
 

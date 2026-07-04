@@ -244,6 +244,56 @@ def _normalizar_participante_mata_mata(
     }
 
 
+def _resolver_vencedor_confronto(
+    matchup: dict,
+    partida: dict,
+    home_bloco: dict,
+    away_bloco: dict,
+    finalizada: bool,
+) -> tuple[bool, bool]:
+    """Vitória no tempo normal, prorrogação ou pênaltis (FotMob: aggregatedWinner = team id)."""
+    if not finalizada:
+        return False, False
+
+    if home_bloco.get("winner") is True:
+        return True, False
+    if away_bloco.get("winner") is True:
+        return False, True
+
+    home_id = home_bloco.get("id") or matchup.get("homeTeamId")
+    away_id = away_bloco.get("id") or matchup.get("awayTeamId")
+    vencedor = matchup.get("aggregatedWinner")
+    if vencedor is None:
+        vencedor = matchup.get("winner")
+
+    if vencedor == "home":
+        return True, False
+    if vencedor == "away":
+        return False, True
+
+    if vencedor is not None and home_id is not None and away_id is not None:
+        try:
+            vid = int(vencedor)
+            if vid == int(home_id):
+                return True, False
+            if vid == int(away_id):
+                return False, True
+        except (TypeError, ValueError):
+            pass
+
+    agg = matchup.get("aggregatedResult") or {}
+    pm = home_bloco.get("score")
+    if pm is None:
+        pm = agg.get("homeScore")
+    pv = away_bloco.get("score")
+    if pv is None:
+        pv = agg.get("awayScore")
+    if pm is not None and pv is not None and pm != pv:
+        return pm > pv, pv > pm
+
+    return False, False
+
+
 def _normalizar_confronto_mata_mata(
     matchup: dict,
     meta_por_selecao: dict[str, dict],
@@ -274,12 +324,8 @@ def _normalizar_confronto_mata_mata(
         if placar_visitante is None:
             placar_visitante = agg.get("awayScore")
 
-    vencedor = matchup.get("aggregatedWinner")
-    mandante_venceu = finalizada and (
-        vencedor == "home" or home_bloco.get("winner") is True
-    )
-    visitante_venceu = finalizada and (
-        vencedor == "away" or away_bloco.get("winner") is True
+    mandante_venceu, visitante_venceu = _resolver_vencedor_confronto(
+        matchup, partida, home_bloco, away_bloco, finalizada
     )
 
     return {

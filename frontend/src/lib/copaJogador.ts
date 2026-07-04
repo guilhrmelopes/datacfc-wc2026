@@ -1,9 +1,43 @@
 import type {
+  DadosMataMata,
   JogadorMercado,
   OddsJogadorEntry,
   PerformancePorSigla,
   PontuacaoCedida,
 } from "@/types/dados";
+
+/** Seleções já no chaveamento das oitavas (stage 1/8). */
+export function selecoesOitavas(dados: DadosMataMata): Set<string> {
+  const fase = dados.fases.find((f) => f.stage === "1/8");
+  if (!fase) return new Set();
+  const teams = new Set<string>();
+  for (const confronto of fase.confrontos) {
+    if (confronto.mandante.selecao && !confronto.mandante.tbd) {
+      teams.add(confronto.mandante.selecao);
+    }
+    if (confronto.visitante.selecao && !confronto.visitante.tbd) {
+      teams.add(confronto.visitante.selecao);
+    }
+  }
+  return teams;
+}
+
+/**
+ * Jogador elegível no HUB durante o mata-mata.
+ * Nas oitavas, só atletas de seleções já classificadas para o 1/8.
+ */
+export function jogadorAtivoNoHub(
+  j: JogadorMercado,
+  mataMata?: DadosMataMata | null,
+): boolean {
+  if (j.ativo_playoffs === false) return false;
+  if (!mataMata) return true;
+  const oitavas = selecoesOitavas(mataMata);
+  if (oitavas.size > 0) {
+    return Boolean(j.selecao && oitavas.has(j.selecao));
+  }
+  return true;
+}
 
 /** Jogador com pelo menos 1 partida na Copa 2026 (fase de grupos). */
 export function temCopa(j: JogadorMercado): boolean {

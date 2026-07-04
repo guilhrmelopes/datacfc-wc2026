@@ -127,31 +127,80 @@ def _confrontos_fase(mata_mata: dict, stage: str) -> list[dict]:
 def selecoes_eliminadas_ko(mata_mata: dict) -> set[str]:
     """Seleções derrotadas em qualquer fase KO já finalizada."""
     eliminadas: set[str] = set()
+    vivas_pendentes: set[str] = set()
+
+    # Mapeia prospectivamente todas as seleções que possuem partidas não finalizadas
     for _stage, confronto in _iter_confrontos_mata_mata(mata_mata):
         if not confronto.get("finalizada"):
+            for time_bloco in (confronto.get("mandante"), confronto.get("visitante")):
+                if time_bloco and not time_bloco.get("tbd") and time_bloco.get("selecao"):
+                    vivas_pendentes.add(time_bloco["selecao"])
+
+    # Determina as eliminações por placar ou por ausência na chave subsequente
+    for stage, confronto in _iter_confrontos_mata_mata(mata_mata):
+        if not confronto.get("finalizada"):
             continue
+
         mandante = confronto.get("mandante") or {}
         visitante = confronto.get("visitante") or {}
         nome_m = mandante.get("selecao")
         nome_v = visitante.get("selecao")
-        if confronto.get("mandante_venceu") and nome_v:
+
+        if not nome_m or not nome_v:
+            continue
+
+        venceu_m = confronto.get("mandante_venceu")
+        venceu_v = confronto.get("visitante_venceu")
+        pm = confronto.get("placar_mandante")
+        pv = confronto.get("placar_visitante")
+
+        # Validação primária (vitória direta)
+        if venceu_m and not venceu_v:
             eliminadas.add(nome_v)
-        elif confronto.get("visitante_venceu") and nome_m:
+        elif venceu_v and not venceu_m:
             eliminadas.add(nome_m)
+        elif pm is not None and pv is not None and pm != pv:
+            if pm > pv:
+                eliminadas.add(nome_v)
+            else:
+                eliminadas.add(nome_m)
         else:
-            pm = confronto.get("placar_mandante")
-            pv = confronto.get("placar_visitante")
-            if pm is not None and pv is not None and pm != pv:
-                if pm > pv and nome_v:
-                    eliminadas.add(nome_v)
-                elif pv > pm and nome_m:
+            # Validação secundária estrutural (empates em pênaltis sem flag na API)
+            # Se a seleção não possuir partida pendente no torneio em andamento, está eliminada.
+            if vivas_pendentes:
+                if nome_m not in vivas_pendentes:
                     eliminadas.add(nome_m)
+                if nome_v not in vivas_pendentes:
+                    eliminadas.add(nome_v)
+
     return eliminadas
 
 
 def selecoes_vivas_ko(mata_mata: dict, classificadas: set[str]) -> set[str]:
     """Classificados que ainda não perderam no mata-mata."""
     return classificadas - selecoes_eliminadas_ko(mata_mata)
+
+
+def selecoes_classificadas_oitavas(mata_mata: dict) -> set[str]:
+    """Seleções já posicionadas no chaveamento das oitavas (1/8)."""
+    classificadas: set[str] = set()
+    for confronto in _confrontos_fase(mata_mata, "1/8"):
+        for bloco in (confronto.get("mandante"), confronto.get("visitante")):
+            if bloco and not bloco.get("tbd") and bloco.get("selecao"):
+                classificadas.add(bloco["selecao"])
+    return classificadas
+
+
+def selecoes_ativas_hub_playoffs(mata_mata: dict, classificadas: set[str]) -> set[str]:
+    """
+    Seleções com jogadores no HUB durante o mata-mata.
+    Nas oitavas, restringe às equipes já no chaveamento 1/8 (exclui 1/16 em andamento).
+    """
+    vivas = selecoes_vivas_ko(mata_mata, classificadas)
+    oitavas = selecoes_classificadas_oitavas(mata_mata)
+    if oitavas:
+        return vivas & oitavas
+    return vivas
 
 
 def transicao_r16_ativa(mata_mata: dict) -> bool:
