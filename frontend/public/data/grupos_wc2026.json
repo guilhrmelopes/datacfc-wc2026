@@ -1024,7 +1024,7 @@
       "match_id": "4653705",
       "finalizada": true,
       "placar": "0-1",
-      "valida_cartola": false
+      "valida_cartola": true
     },
     {
       "grupo": "KO",
@@ -1218,8 +1218,8 @@
       "hora": "17:00:00",
       "utc": "2026-07-03T20:00:00.000Z",
       "match_id": "4653715",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "3-2",
       "valida_cartola": true
     },
     {
@@ -1234,7 +1234,7 @@
       "match_id": "4653718",
       "finalizada": false,
       "placar": null,
-      "valida_cartola": false
+      "valida_cartola": true
     },
     {
       "grupo": "KO",
@@ -1316,6 +1316,20 @@
       "hora": "19:00:00",
       "utc": "2026-07-06T22:00:00.000Z",
       "match_id": "4653845",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/8",
+      "rodada": 5,
+      "mandante": "ARGENTINA",
+      "visitante": "EGYPT",
+      "data": "2026-07-07",
+      "hora": "11:00:00",
+      "utc": "2026-07-07T14:00:00.000Z",
+      "match_id": "4653848",
       "finalizada": false,
       "placar": null,
       "valida_cartola": true
