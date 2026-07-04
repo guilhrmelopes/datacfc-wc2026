@@ -1260,8 +1260,8 @@
       "hora": "16:00:00",
       "utc": "2026-07-04T19:00:00.000Z",
       "match_id": "4653842",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "0-1",
       "valida_cartola": true
     },
     {
@@ -1344,6 +1344,20 @@
       "hora": "15:00:00",
       "utc": "2026-07-07T18:00:00.000Z",
       "match_id": "4653849",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/4",
+      "rodada": 6,
+      "mandante": "FRANCE",
+      "visitante": "MOROCCO",
+      "data": "2026-07-09",
+      "hora": "15:00:00",
+      "utc": "2026-07-09T18:00:00.000Z",
+      "match_id": "4653851",
       "finalizada": false,
       "placar": null,
       "valida_cartola": true

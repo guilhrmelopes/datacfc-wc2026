@@ -545,11 +545,11 @@
             "team_id": 6723
           },
           "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_visitante": 1,
           "mandante_venceu": false,
-          "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "visitante_venceu": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-04",
           "hora": "16:00:00",
           "utc_time": "2026-07-04T19:00:00.000Z"
@@ -788,13 +788,13 @@
           "stage": "1/4",
           "match_id": "4653851",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Paraguay/France",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2061599
+            "rotulo": "FRA",
+            "nome_fotmob": "France",
+            "selecao": "FRANCE",
+            "sigla": "FRA",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/FRA/60x60.png",
+            "tbd": false,
+            "team_id": 6723
           },
           "visitante": {
             "rotulo": "MAR",
@@ -921,13 +921,13 @@
           "stage": "1/2",
           "match_id": "4653855",
           "mandante": {
-            "rotulo": "WQ1",
-            "nome_fotmob": "Winner QF 1",
+            "rotulo": "TBD",
+            "nome_fotmob": "France/Morocco",
             "selecao": null,
-            "sigla": "WQ1",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2036
+            "team_id": 2068681
           },
           "visitante": {
             "rotulo": "WQ2",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-04T22:53:36.669079+00:00"
+  "atualizado_em": "2026-07-04T23:57:46.226878+00:00"
 }
