@@ -577,11 +577,11 @@
             "team_id": 6262
           },
           "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_visitante": 3,
           "mandante_venceu": false,
-          "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "visitante_venceu": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-04",
           "hora": "12:00:00",
           "utc_time": "2026-07-04T15:00:00.000Z"
@@ -797,13 +797,13 @@
             "team_id": 2061599
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Canada/Morocco",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2060953
+            "rotulo": "MAR",
+            "nome_fotmob": "Morocco",
+            "selecao": "MOROCCO",
+            "sigla": "MAR",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/MAR/60x60.png",
+            "tbd": false,
+            "team_id": 6262
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-04T18:05:53.320959+00:00"
+  "atualizado_em": "2026-07-04T19:43:53.906759+00:00"
 }
