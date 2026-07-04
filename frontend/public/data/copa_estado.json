@@ -91,7 +91,7 @@
     "4653718",
     "4653843"
   ],
-  "atualizado_em": "2026-07-04T19:45:10.878476+00:00",
+  "atualizado_em": "2026-07-04T20:51:05.570736+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -19618,12 +19618,12 @@
         "clube_id": 2332
       },
       "100745": {
-        "pontuacao": 12.2,
+        "pontuacao": 11.4,
         "scout": {
           "A": 2,
           "DS": 1,
-          "FC": 1,
-          "FS": 2
+          "FC": 2,
+          "FS": 1
         },
         "posicao_id": 4,
         "clube_id": 2332
@@ -19747,9 +19747,9 @@
         "clube_id": 2361
       },
       "126677": {
-        "pontuacao": 1.5,
+        "pontuacao": 3.0,
         "scout": {
-          "DS": 1
+          "DS": 2
         },
         "posicao_id": 4,
         "clube_id": 2332
@@ -19791,10 +19791,10 @@
         "clube_id": 2332
       },
       "131501": {
-        "pontuacao": 15.1,
+        "pontuacao": 15.4,
         "scout": {
           "DS": 2,
-          "FC": 3,
+          "FC": 2,
           "FD": 1,
           "FS": 2,
           "FT": 1,
@@ -19924,7 +19924,7 @@
   },
   "status_mercado": 2,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-07-04T19:43:58.907001+00:00",
+  "cartola_atualizado_em": "2026-07-04T20:50:23.579309+00:00",
   "playoffs_ativos": true,
   "transicao_playoffs": false,
   "transicao_r16": false
