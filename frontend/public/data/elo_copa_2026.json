@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-07-04T08:43:01.134516+00:00",
+  "atualizado_em": "2026-07-04T10:51:41.493859+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -39,10 +39,10 @@
       "rating_100": 80.5
     },
     "COL": {
-      "elo": 2004.0,
+      "elo": 2009.0,
       "rank": 7,
       "codigo_elo": "CO",
-      "rating_100": 79.3
+      "rating_100": 79.9
     },
     "HOL": {
       "elo": 1971.0,
@@ -243,10 +243,10 @@
       "rating_100": 24.7
     },
     "GAN": {
-      "elo": 1575.0,
+      "elo": 1570.0,
       "rank": 41,
       "codigo_elo": "GH",
-      "rating_100": 21.9
+      "rating_100": 21.3
     },
     "TUN": {
       "elo": 1562.0,
