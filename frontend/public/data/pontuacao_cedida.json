@@ -2,51 +2,51 @@
   "MEX": {
     "GOL": {
       "cedido": {
-        "valor": 0.92,
+        "valor": 1.12,
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 6.79,
-        "cor": "bg-green-500"
+        "valor": 5.15,
+        "cor": "bg-yellow-500"
       }
     },
     "LAT": {
       "cedido": {
-        "valor": 2.79,
-        "cor": "bg-orange-500"
+        "valor": 2.33,
+        "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 7.07,
+        "valor": 6.22,
         "cor": "bg-green-500"
       }
     },
     "ZAG": {
       "cedido": {
-        "valor": 2.39,
+        "valor": 1.88,
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 5.85,
-        "cor": "bg-green-500"
+        "valor": 4.7,
+        "cor": "bg-yellow-500"
       }
     },
     "MEI": {
       "cedido": {
-        "valor": 1.64,
-        "cor": "bg-red-500"
+        "valor": 2.59,
+        "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 3.56,
+        "valor": 3.11,
         "cor": "bg-orange-500"
       }
     },
     "ATA": {
       "cedido": {
-        "valor": 1.0,
+        "valor": 2.39,
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 5.25,
+        "valor": 5.31,
         "cor": "bg-yellow-500"
       }
     }
@@ -2186,51 +2186,51 @@
   "ING": {
     "GOL": {
       "cedido": {
-        "valor": 6.08,
-        "cor": "bg-green-500"
+        "valor": 4.58,
+        "cor": "bg-yellow-500"
       },
       "conquistado": {
-        "valor": 4.08,
-        "cor": "bg-yellow-500"
+        "valor": 3.64,
+        "cor": "bg-orange-500"
       }
     },
     "LAT": {
       "cedido": {
-        "valor": 3.47,
+        "valor": 3.34,
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 4.95,
+        "valor": 4.06,
         "cor": "bg-yellow-500"
       }
     },
     "ZAG": {
       "cedido": {
-        "valor": 3.9,
+        "valor": 3.14,
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 4.01,
-        "cor": "bg-yellow-500"
+        "valor": 3.17,
+        "cor": "bg-orange-500"
       }
     },
     "MEI": {
       "cedido": {
-        "valor": 2.19,
+        "valor": 2.01,
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 4.8,
+        "valor": 5.12,
         "cor": "bg-yellow-500"
       }
     },
     "ATA": {
       "cedido": {
-        "valor": 2.52,
+        "valor": 3.12,
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 6.04,
+        "valor": 6.42,
         "cor": "bg-green-500"
       }
     }
