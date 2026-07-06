@@ -522,7 +522,7 @@
   "BRA": {
     "GOL": {
       "cedido": {
-        "valor": 4.34,
+        "valor": 4.6,
         "cor": "bg-yellow-500"
       },
       "conquistado": {
@@ -532,7 +532,7 @@
     },
     "LAT": {
       "cedido": {
-        "valor": 2.29,
+        "valor": 2.14,
         "cor": "bg-red-500"
       },
       "conquistado": {
@@ -552,7 +552,7 @@
     },
     "MEI": {
       "cedido": {
-        "valor": 2.74,
+        "valor": 2.82,
         "cor": "bg-orange-500"
       },
       "conquistado": {
@@ -1826,8 +1826,8 @@
         "cor": "bg-red-500"
       },
       "conquistado": {
-        "valor": 3.84,
-        "cor": "bg-orange-500"
+        "valor": 4.1,
+        "cor": "bg-yellow-500"
       }
     },
     "LAT": {
@@ -1836,7 +1836,7 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 2.06,
+        "valor": 1.91,
         "cor": "bg-red-500"
       }
     },
@@ -1856,7 +1856,7 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 4.21,
+        "valor": 4.28,
         "cor": "bg-yellow-500"
       }
     },
