@@ -1344,8 +1344,8 @@
       "hora": "15:00:00",
       "utc": "2026-07-07T18:00:00.000Z",
       "match_id": "4653849",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "0-0",
       "valida_cartola": true
     },
     {
@@ -1386,6 +1386,20 @@
       "hora": "16:00:00",
       "utc": "2026-07-11T19:00:00.000Z",
       "match_id": "4653852",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/4",
+      "rodada": 6,
+      "mandante": "ARGENTINA",
+      "visitante": "SWITZERLAND",
+      "data": "2026-07-11",
+      "hora": "20:00:00",
+      "utc": "2026-07-11T23:00:00.000Z",
+      "match_id": "4653854",
       "finalizada": false,
       "placar": null,
       "valida_cartola": true

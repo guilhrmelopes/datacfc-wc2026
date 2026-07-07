@@ -770,10 +770,10 @@
           },
           "placar_mandante": 0,
           "placar_visitante": 0,
-          "mandante_venceu": false,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-07",
           "hora": "15:00:00",
           "utc_time": "2026-07-07T18:00:00.000Z"
@@ -893,13 +893,13 @@
             "team_id": 6706
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Switzerland/Colombia",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2068041
+            "rotulo": "SUI",
+            "nome_fotmob": "Switzerland",
+            "selecao": "SWITZERLAND",
+            "sigla": "SUI",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/SUI/60x60.png",
+            "tbd": false,
+            "team_id": 6717
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -962,13 +962,13 @@
             "team_id": 2069301
           },
           "visitante": {
-            "rotulo": "WQ4",
-            "nome_fotmob": "Winner QF 4",
+            "rotulo": "TBD",
+            "nome_fotmob": "Argentina/Switzerland",
             "selecao": null,
-            "sigla": "WQ4",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2039
+            "team_id": 2071144
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-07T22:36:11.311773+00:00"
+  "atualizado_em": "2026-07-07T23:54:31.374375+00:00"
 }
