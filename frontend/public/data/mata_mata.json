@@ -640,12 +640,12 @@
             "tbd": false,
             "team_id": 8263
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_mandante": 1,
+          "placar_visitante": 4,
           "mandante_venceu": false,
-          "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "visitante_venceu": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-06",
           "hora": "19:00:00",
           "utc_time": "2026-07-06T22:00:00.000Z"
@@ -829,13 +829,13 @@
             "team_id": 6720
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "USA/Belgium",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2064024
+            "rotulo": "BEL",
+            "nome_fotmob": "Belgium",
+            "selecao": "BELGIUM",
+            "sigla": "BEL",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BEL/60x60.png",
+            "tbd": false,
+            "team_id": 8263
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -930,13 +930,13 @@
             "team_id": 2068681
           },
           "visitante": {
-            "rotulo": "WQ2",
-            "nome_fotmob": "Winner QF 2",
+            "rotulo": "TBD",
+            "nome_fotmob": "Spain/Belgium",
             "selecao": null,
-            "sigla": "WQ2",
+            "sigla": "TBD",
             "url_escudo": null,
             "tbd": true,
-            "team_id": 2037
+            "team_id": 2070470
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-07T01:15:31.105982+00:00"
+  "atualizado_em": "2026-07-07T05:32:27.063118+00:00"
 }

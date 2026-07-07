@@ -1316,8 +1316,8 @@
       "hora": "19:00:00",
       "utc": "2026-07-06T22:00:00.000Z",
       "match_id": "4653845",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "1-4",
       "valida_cartola": true
     },
     {
@@ -1358,6 +1358,20 @@
       "hora": "15:00:00",
       "utc": "2026-07-09T18:00:00.000Z",
       "match_id": "4653851",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/4",
+      "rodada": 6,
+      "mandante": "SPAIN",
+      "visitante": "BELGIUM",
+      "data": "2026-07-10",
+      "hora": "14:00:00",
+      "utc": "2026-07-10T17:00:00.000Z",
+      "match_id": "4653853",
       "finalizada": false,
       "placar": null,
       "valida_cartola": true
