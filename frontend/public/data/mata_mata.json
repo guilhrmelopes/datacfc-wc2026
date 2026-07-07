@@ -736,12 +736,12 @@
             "tbd": false,
             "team_id": 10255
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
-          "mandante_venceu": false,
+          "placar_mandante": 3,
+          "placar_visitante": 2,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-07",
           "hora": "11:00:00",
           "utc_time": "2026-07-07T14:00:00.000Z"
@@ -884,13 +884,13 @@
           "stage": "1/4",
           "match_id": "4653854",
           "mandante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Argentina/Egypt",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2068058
+            "rotulo": "ARG",
+            "nome_fotmob": "Argentina",
+            "selecao": "ARGENTINA",
+            "sigla": "ARG",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ARG/60x60.png",
+            "tbd": false,
+            "team_id": 6706
           },
           "visitante": {
             "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-07T17:32:10.535230+00:00"
+  "atualizado_em": "2026-07-07T19:48:07.713878+00:00"
 }
