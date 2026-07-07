@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-07-07T12:24:37.366211+00:00",
+  "atualizado_em": "2026-07-07T15:24:17.696624+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -93,10 +93,10 @@
       "rating_100": 62.3
     },
     "CRO": {
-      "elo": 1881.0,
+      "elo": 1882.0,
       "rank": 16,
       "codigo_elo": "HR",
-      "rating_100": 61.4
+      "rating_100": 61.5
     },
     "EQU": {
       "elo": 1871.0,
