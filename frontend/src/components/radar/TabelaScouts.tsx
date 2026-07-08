@@ -4,11 +4,17 @@ import {
   classificarFaixaMetricaSelecao,
   classeCelulaMetricaSelecao,
   classeCelulaNeutra,
+  METRICAS_TOTAIS_SCOUTS,
   MIN_JOGOS_RECALIBRACAO,
   valorNormalizadoMetricaSelecao,
 } from "@/lib/formatacaoMetricas";
 import { formatarValorMetrica, valorNumericoOuNull } from "@/lib/exibirValor";
-import { estreouCopa, ratingSelecaoExibicao } from "@/lib/ratingSelecao";
+import {
+  estreouCopa,
+  ratingSelecaoExibicao,
+  tooltipRatingSelecao,
+  type ModoRatingSelecao,
+} from "@/lib/ratingSelecao";
 import { TOOLTIPS_METRICAS, traduzirSelecao } from "@/lib/traducoes";
 import type { Selecao } from "@/types/dados";
 
@@ -37,6 +43,7 @@ interface Props {
   selecoes: Selecao[];
   competicao: string;
   grupo: string;
+  modoRating?: ModoRatingSelecao;
 }
 
 function filtrarSelecoes(selecoes: Selecao[], competicao: string, grupo: string) {
@@ -48,13 +55,31 @@ function filtrarSelecoes(selecoes: Selecao[], competicao: string, grupo: string)
   });
 }
 
-export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
-  const [ordenarPor, setOrdenarPor] = useState<string>("rating_elo_100");
+function valorExibicaoColuna(
+  chave: ChaveMetricaScouts,
+  bruto: number | null,
+  jogos: number,
+): number | null {
+  if (bruto === null) return null;
+  if (chave === "SG") return bruto; // mostra clean sheets totais; cor usa taxa
+  if (METRICAS_TOTAIS_SCOUTS.has(chave) && jogos > 0) {
+    return valorNormalizadoMetricaSelecao(chave, bruto, jogos);
+  }
+  return bruto;
+}
+
+export function TabelaScouts({
+  selecoes,
+  competicao,
+  grupo,
+  modoRating = "copa",
+}: Props) {
+  const [ordenarPor, setOrdenarPor] = useState<string>("rating");
   const [ordem, setOrdem] = useState<Ordem>("desc");
 
   const linhasFiltradas = useMemo(
     () => filtrarSelecoes(selecoes, competicao, grupo),
-    [selecoes, competicao, grupo]
+    [selecoes, competicao, grupo],
   );
 
   const contextoMetricas = useMemo(() => {
@@ -104,29 +129,39 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
         const cmp = (a.competicao ?? "").localeCompare(b.competicao ?? "");
         return ordem === "asc" ? cmp : -cmp;
       }
-      if (ordenarPor === "rating_elo_100") {
+      if (ordenarPor === "rating") {
         return compararNumero(
-          ratingSelecaoExibicao(a, linhasFiltradas),
-          ratingSelecaoExibicao(b, linhasFiltradas),
+          ratingSelecaoExibicao(a, linhasFiltradas, modoRating),
+          ratingSelecaoExibicao(b, linhasFiltradas, modoRating),
         );
       }
       if (ordenarPor === "J") {
         return compararNumero(
           valorNumericoOuNull(a.metricas_coletivas.J),
-          valorNumericoOuNull(b.metricas_coletivas.J)
+          valorNumericoOuNull(b.metricas_coletivas.J),
         );
       }
       const col = COLUNAS.find((c) => c.chave === ordenarPor);
       if (col) {
+        const ja = valorNumericoOuNull(a.metricas_coletivas.J) ?? 1;
+        const jb = valorNumericoOuNull(b.metricas_coletivas.J) ?? 1;
         return compararNumero(
-          valorNumericoOuNull(a.metricas_coletivas[col.campo]),
-          valorNumericoOuNull(b.metricas_coletivas[col.campo])
+          valorExibicaoColuna(
+            col.chave,
+            valorNumericoOuNull(a.metricas_coletivas[col.campo]),
+            ja,
+          ),
+          valorExibicaoColuna(
+            col.chave,
+            valorNumericoOuNull(b.metricas_coletivas[col.campo]),
+            jb,
+          ),
         );
       }
       return 0;
     });
     return dados;
-  }, [linhasFiltradas, ordenarPor, ordem]);
+  }, [linhasFiltradas, ordenarPor, ordem, modoRating]);
 
   function alternarOrdenacao(coluna: string) {
     if (ordenarPor === coluna) {
@@ -139,141 +174,140 @@ export function TabelaScouts({ selecoes, competicao, grupo }: Props) {
 
   return (
     <>
-    <div className="overflow-x-auto rounded-lg border border-[var(--color-border)]">
-      <table className="w-full min-w-[1100px] border-collapse text-center text-sm">
-        <thead>
-          <tr className="bg-[var(--color-card)] text-xs uppercase tracking-wide text-[var(--color-muted)]">
-            {[
-              { id: "selecao", rotulo: "Seleção" },
-              { id: "competicao", rotulo: "Competição" },
-              { id: "J", rotulo: "Jogos" },
-              { id: "rating_elo_100", rotulo: "Rating" },
-              ...COLUNAS.map((c) => ({ id: c.chave, rotulo: c.chave })),
-            ].map((col) => (
-              <th
-                key={col.id}
-                className="cursor-pointer px-2 py-3 hover:text-white"
-                title={
-                  col.id === "rating_elo_100"
-                    ? TOOLTIPS_METRICAS.Rating
-                    : col.id in TOOLTIPS_METRICAS
-                      ? TOOLTIPS_METRICAS[col.id as ChaveMetricaScouts]
-                      : undefined
-                }
-                onClick={() => alternarOrdenacao(col.id)}
+      <div className="overflow-x-auto rounded-lg border border-[var(--color-border)]">
+        <table className="w-full min-w-[1100px] border-collapse text-center text-sm">
+          <thead>
+            <tr className="bg-[var(--color-card)] text-xs uppercase tracking-wide text-[var(--color-muted)]">
+              {[
+                { id: "selecao", rotulo: "Seleção" },
+                { id: "competicao", rotulo: "Competição" },
+                { id: "J", rotulo: "Jogos" },
+                { id: "rating", rotulo: "Rating" },
+                ...COLUNAS.map((c) => ({ id: c.chave, rotulo: c.chave })),
+              ].map((col) => (
+                <th
+                  key={col.id}
+                  className="cursor-pointer px-2 py-3 hover:text-white"
+                  title={
+                    col.id === "rating"
+                      ? TOOLTIPS_METRICAS.Rating
+                      : col.id in TOOLTIPS_METRICAS
+                        ? TOOLTIPS_METRICAS[col.id as ChaveMetricaScouts]
+                        : undefined
+                  }
+                  onClick={() => alternarOrdenacao(col.id)}
+                >
+                  {col.rotulo}
+                  {ordenarPor === col.id ? (ordem === "asc" ? " ↑" : " ↓") : ""}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {linhas.map((s) => (
+              <tr
+                key={`${s.selecao}-${s.grupo}`}
+                className="border-t border-[var(--color-border)] hover:bg-[var(--color-card)]/50"
               >
-                {col.rotulo}
-                {ordenarPor === col.id ? (ordem === "asc" ? " ↑" : " ↓") : ""}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {linhas.map((s) => (
-            <tr
-              key={`${s.selecao}-${s.grupo}`}
-              className="border-t border-[var(--color-border)] hover:bg-[var(--color-card)]/50"
-            >
-              <td className="px-2 py-2 text-left">
-                <div className="flex items-center gap-2">
-                  {s.url_escudo && (
-                    <img
-                      src={s.url_escudo}
-                      alt={s.sigla}
-                      className="h-8 w-8 object-contain"
-                    />
-                  )}
-                  <div>
-                    <div className="font-medium">{traduzirSelecao(s.selecao)}</div>
-                    <div className="text-xs text-[var(--color-muted)]">
-                      GRUPO {s.grupo}
+                <td className="px-2 py-2 text-left">
+                  <div className="flex items-center gap-2">
+                    {s.url_escudo && (
+                      <img
+                        src={s.url_escudo}
+                        alt={s.sigla}
+                        className="h-8 w-8 object-contain"
+                      />
+                    )}
+                    <div>
+                      <div className="font-medium">{traduzirSelecao(s.selecao)}</div>
+                      <div className="text-xs text-[var(--color-muted)]">
+                        GRUPO {s.grupo}
+                        {(s.jogos_mata_mata ?? 0) > 0 ? ` · KO ${s.jogos_mata_mata}` : ""}
+                      </div>
                     </div>
                   </div>
-                </div>
-              </td>
-              <td className="px-2 py-2">
-                {estreouCopa(s) ? s.competicao : "N/A"}
-              </td>
-              <td className="px-2 py-2">
-                {formatarValorMetrica(
-                  estreouCopa(s) ? s.metricas_coletivas.J : null,
-                  0,
-                  true,
-                )}
-              </td>
-              <td className="px-2 py-2">
-                {(() => {
-                  const rating = ratingSelecaoExibicao(s, selecoes);
-                  if (rating === null) {
-                    return <span className="text-[var(--color-muted)]">N/A</span>;
-                  }
-                  return (
-                    <div className="mx-auto flex max-w-[100px] items-center gap-2">
-                      <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-700">
-                        <div
-                          className="h-full rounded-full bg-sky-500"
-                          style={{ width: `${Math.min(100, rating)}%` }}
-                        />
+                </td>
+                <td className="px-2 py-2">
+                  {estreouCopa(s) ? s.competicao : "N/A"}
+                </td>
+                <td className="px-2 py-2">
+                  {formatarValorMetrica(
+                    estreouCopa(s) ? s.metricas_coletivas.J : null,
+                    0,
+                    true,
+                  )}
+                </td>
+                <td
+                  className="px-2 py-2"
+                  title={tooltipRatingSelecao(s, linhasFiltradas, modoRating)}
+                >
+                  {(() => {
+                    const rating = ratingSelecaoExibicao(
+                      s,
+                      linhasFiltradas,
+                      modoRating,
+                    );
+                    if (rating === null) {
+                      return <span className="text-[var(--color-muted)]">N/A</span>;
+                    }
+                    return (
+                      <div className="mx-auto flex max-w-[100px] items-center gap-2">
+                        <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-700">
+                          <div
+                            className="h-full rounded-full bg-sky-500"
+                            style={{ width: `${Math.min(100, rating)}%` }}
+                          />
+                        </div>
+                        <span className="w-8 text-xs">{rating}</span>
                       </div>
-                      <span className="w-8 text-xs">{rating}</span>
-                    </div>
+                    );
+                  })()}
+                </td>
+                {COLUNAS.map((col) => {
+                  const valorBruto = estreouCopa(s)
+                    ? s.metricas_coletivas[col.campo]
+                    : null;
+                  const jogos = valorNumericoOuNull(s.metricas_coletivas.J) ?? 1;
+                  const numericoBruto = estreouCopa(s)
+                    ? valorNumericoOuNull(valorBruto ?? 0)
+                    : null;
+                  const valorExibir = estreouCopa(s)
+                    ? valorExibicaoColuna(col.chave, numericoBruto, jogos)
+                    : null;
+                  const classeCelula =
+                    numericoBruto === null
+                      ? classeCelulaNeutra()
+                      : classeCelulaMetricaSelecao(
+                          classificarFaixaMetricaSelecao(col.chave, numericoBruto, {
+                            jogos,
+                            amostraColuna: contextoMetricas.valoresPorMetrica.get(
+                              col.chave,
+                            ),
+                            maxJogosAmostra: contextoMetricas.maxJogosAmostra,
+                            recalibAtiva: contextoMetricas.recalibAtiva,
+                          }),
+                        );
+                  const texto = formatarValorMetrica(
+                    valorExibir,
+                    col.campo === "clean_sheet_team" ? 0 : 2,
+                    col.campo === "clean_sheet_team",
                   );
-                })()}
-              </td>
-              {COLUNAS.map((col) => {
-                const valorBruto = estreouCopa(s)
-                  ? s.metricas_coletivas[col.campo]
-                  : null;
-                const valorExibir =
-                  estreouCopa(s) && (valorBruto === null || valorBruto === undefined)
-                    ? 0
-                    : valorBruto;
-                const numerico = estreouCopa(s) ? valorNumericoOuNull(valorExibir ?? 0) : null;
-                const jogos = valorNumericoOuNull(s.metricas_coletivas.J) ?? undefined;
-                const classeCelula =
-                  numerico === null
-                    ? classeCelulaNeutra()
-                    : classeCelulaMetricaSelecao(
-                        classificarFaixaMetricaSelecao(col.chave, numerico, {
-                          jogos,
-                          amostraColuna: contextoMetricas.valoresPorMetrica.get(col.chave),
-                          maxJogosAmostra: contextoMetricas.maxJogosAmostra,
-                          recalibAtiva: contextoMetricas.recalibAtiva,
-                        }),
-                      );
-                const texto = formatarValorMetrica(
-                  valorExibir,
-                  2,
-                  col.campo === "clean_sheet_team",
-                );
-                return (
-                  <td key={col.chave} className={`px-2 py-2 ${classeCelula}`}>
-                    {texto}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  return (
+                    <td key={col.chave} className={`px-2 py-2 ${classeCelula}`}>
+                      {texto}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {linhas.length === 0 && (
-        <p className="py-8 text-center text-sm text-[var(--color-muted)]">
-          Nenhuma seleção encontrada para os filtros aplicados.
+        <p className="py-6 text-center text-sm text-[var(--color-muted)]">
+          Nenhuma seleção no filtro.
         </p>
       )}
-    </div>
-    <div className="mt-4 rounded-md border border-gray-200 bg-gray-50 p-4 text-center text-xs text-gray-500">
-      <p>Métricas coletivas e scouts refletem somente a Copa do Mundo 2026 (FotMob).</p>
-      <p className="mt-2">
-        Cores:{" "}
-        <span className="inline-block rounded px-1.5 py-0.5 bg-emerald-600/22">BOM</span>{" "}
-        <span className="inline-block rounded px-1.5 py-0.5 bg-amber-500/18">MEDIANO</span>{" "}
-        <span className="inline-block rounded px-1.5 py-0.5 bg-rose-600/20">RUIM</span>
-        {contextoMetricas.recalibAtiva
-          ? " — limiares recalibrados por quartis da Copa (seleções com J≥3)."
-          : null}
-      </p>
-    </div>
     </>
   );
 }

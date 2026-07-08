@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { COMPETICOES_FILTRO } from "@/lib/traducoes";
+import type { ModoRatingSelecao } from "@/lib/ratingSelecao";
 
 export const GRUPOS_FILTRO = [
   "TODOS",
@@ -23,47 +23,50 @@ export const GRUPOS_FILTRO = [
   "L",
 ] as const;
 
-const CLASSE_SELECT_COMPACTO = "h-8 min-w-[130px] text-sm";
+const CLASSE_SELECT_COMPACTO = "h-8 min-w-[160px] text-sm";
 
 interface Props {
-  competicao: string;
-  grupo: string;
-  onCompeticaoChange: (valor: string) => void;
-  onGrupoChange: (valor: string) => void;
+  escopo: "vivas" | "todas";
+  modoRating: ModoRatingSelecao;
+  onEscopoChange: (valor: "vivas" | "todas") => void;
+  onModoRatingChange: (valor: ModoRatingSelecao) => void;
+  mostrarEscopoVivas?: boolean;
 }
 
 export function FiltrosScouts({
-  competicao,
-  grupo,
-  onCompeticaoChange,
-  onGrupoChange,
+  escopo,
+  modoRating,
+  onEscopoChange,
+  onModoRatingChange,
+  mostrarEscopoVivas = false,
 }: Props) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <Select value={competicao} onValueChange={onCompeticaoChange}>
-        <SelectTrigger className={CLASSE_SELECT_COMPACTO}>
-          <SelectValue placeholder="Competição" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="TODAS">Todas</SelectItem>
-          {COMPETICOES_FILTRO.map((c) => (
-            <SelectItem key={c} value={c}>
-              {c}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      {mostrarEscopoVivas && (
+        <Select
+          value={escopo}
+          onValueChange={(v) => onEscopoChange(v as "vivas" | "todas")}
+        >
+          <SelectTrigger className={CLASSE_SELECT_COMPACTO}>
+            <SelectValue placeholder="Escopo" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="vivas">Em disputa</SelectItem>
+            <SelectItem value="todas">Todas</SelectItem>
+          </SelectContent>
+        </Select>
+      )}
 
-      <Select value={grupo} onValueChange={onGrupoChange}>
-        <SelectTrigger className={`${CLASSE_SELECT_COMPACTO} min-w-[90px]`}>
-          <SelectValue placeholder="Grupo" />
+      <Select
+        value={modoRating}
+        onValueChange={(v) => onModoRatingChange(v as ModoRatingSelecao)}
+      >
+        <SelectTrigger className={`${CLASSE_SELECT_COMPACTO} min-w-[200px]`}>
+          <SelectValue placeholder="Rating" />
         </SelectTrigger>
         <SelectContent>
-          {GRUPOS_FILTRO.map((g) => (
-            <SelectItem key={g} value={g}>
-              {g === "TODOS" ? "Todos" : `Grupo ${g}`}
-            </SelectItem>
-          ))}
+          <SelectItem value="copa">Rating Copa do Mundo</SelectItem>
+          <SelectItem value="ko">Rating Mata-mata</SelectItem>
         </SelectContent>
       </Select>
     </div>

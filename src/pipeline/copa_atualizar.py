@@ -98,6 +98,17 @@ def _jogos_por_sigla_classificacao(classificacao: dict) -> dict[str, int]:
     return jogos
 
 
+def _jogos_copa_por_sigla(classificacao: dict, mata_mata: dict | None = None) -> dict[str, int]:
+    """Jogos na Copa = fase de grupos + mata-mata finalizado."""
+    from scrapers.rating_selecoes_copa import jogos_ko_por_sigla
+
+    jogos = dict(_jogos_por_sigla_classificacao(classificacao))
+    for sigla, n_ko in jogos_ko_por_sigla(mata_mata or {}).items():
+        base = jogos.get(sigla, 0)
+        jogos[sigla] = base + n_ko
+    return jogos
+
+
 def sincronizar_calendario(
     partidas: list[PartidaCalendario],
     caminho_grupos: Path,
@@ -339,11 +350,12 @@ def atualizar_proximo_adversario(
 def limpar_metricas_selecoes_copa(
     caminho_selecoes: Path,
     caminho_classificacao: Path,
+    mata_mata: dict | None = None,
 ) -> set[str]:
     """Remove métricas de eliminatórias; mantém só seleções que já estrearam na Copa."""
     selecoes = _carregar_json(caminho_selecoes)
     classificacao = _carregar_json(caminho_classificacao)
-    jogos_por_sigla = _jogos_por_sigla_classificacao(classificacao)
+    jogos_por_sigla = _jogos_copa_por_sigla(classificacao, mata_mata)
     estrearam: set[str] = set()
     for selecao in selecoes:
         sigla = selecao.get("sigla")
@@ -362,26 +374,50 @@ def atualizar_metricas_selecoes(
     siglas: set[str],
     caminho_selecoes: Path,
     caminho_classificacao: Path,
+    mata_mata: dict | None = None,
 ) -> None:
+    """Atualiza scouts FotMob (grupos+KO) e J = max(calendário, MatchesPlayed)."""
     selecoes = _carregar_json(caminho_selecoes)
     classificacao = _carregar_json(caminho_classificacao)
-    jogos_por_sigla = _jogos_por_sigla_classificacao(classificacao)
+    jogos_por_sigla = _jogos_copa_por_sigla(classificacao, mata_mata)
 
     for selecao in selecoes:
         sigla = selecao.get("sigla")
         if not sigla or sigla not in siglas:
             continue
-        j = jogos_por_sigla.get(sigla, 0)
-        if j <= 0:
+        j_calendario = jogos_por_sigla.get(sigla, 0)
+        if j_calendario <= 0:
             continue
         nome_fotmob = SIGLA_PARA_FOTMOB_STATS.get(sigla)
         if not nome_fotmob:
             continue
         metricas = buscar_metricas_coletivas_time(nome_fotmob)
-        metricas["J"] = float(j)
+        j_fotmob = int(_f_safe(metricas.get("J")) or 0)
+        metricas["J"] = float(max(j_calendario, j_fotmob))
         selecao["metricas_coletivas"] = metricas
         selecao["competicao"] = "Copa 2026"
     _salvar_json(caminho_selecoes, selecoes)
+
+
+def _f_safe(v) -> float | None:
+    if v is None:
+        return None
+    try:
+        return float(v)
+    except (TypeError, ValueError):
+        return None
+
+
+def atualizar_ratings_selecoes(
+    caminho_selecoes: Path,
+    mata_mata: dict,
+) -> dict:
+    from scrapers.rating_selecoes_copa import aplicar_ratings_selecoes
+
+    selecoes = _carregar_json(caminho_selecoes)
+    resumo = aplicar_ratings_selecoes(selecoes, mata_mata)
+    _salvar_json(caminho_selecoes, selecoes)
+    return resumo
 
 
 def executar_atualizacao(pasta_dados: Path) -> dict:
@@ -441,7 +477,11 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
     if novas:
         processadas.extend(novas)
 
-    estrearam = limpar_metricas_selecoes_copa(caminho_selecoes, caminho_classificacao)
+    estrearam = limpar_metricas_selecoes_copa(
+        caminho_selecoes,
+        caminho_classificacao,
+        mata_mata_payload,
+    )
 
     dados_cartola = buscar_dados_cartola_copa()
     resumo_cartola = aplicar_dados_cartola(pasta_dados, dados_cartola, estado)
@@ -454,6 +494,7 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         caminho_selecoes,
     )
 
+    resumo_ratings: dict = {}
     if processadas:
         rebuild_extras_fotmob(processadas, caminho_mercado, selecoes, estado)
         reprocessar_cedido_cartola(
@@ -469,10 +510,13 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
             siglas_partidas | estrearam,
             caminho_selecoes,
             caminho_classificacao,
+            mata_mata_payload,
         )
     else:
         if not resumo_cartola.get("siglas_cedido") and not caminho_pontuacao.is_file():
             _salvar_json(caminho_pontuacao, {})
+
+    resumo_ratings = atualizar_ratings_selecoes(caminho_selecoes, mata_mata_payload)
 
     rodada = int(
         estado.get("rodada_cartola_atual")
@@ -515,4 +559,5 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
         "transicao_r16": estado.get("transicao_r16", False),
         "cartola": resumo_cartola,
         "elo_selecoes_atualizadas": elo_atualizados,
+        "ratings_selecoes": resumo_ratings,
     }

@@ -436,7 +436,10 @@ def agrupar_pontos_por_bucket(jogadores: list[JogadorPartida]) -> dict[str, dict
 
 
 def buscar_metricas_coletivas_time(fotmob_team_name: str) -> dict[str, float | None]:
-    """Métricas de temporada WC (1 jogo) a partir dos JSONs de stats FotMob."""
+    """Métricas de temporada WC a partir dos JSONs de stats FotMob (grupos + KO).
+
+    Inclui ``J`` = MatchesPlayed reportado pelo FotMob (maior valor visto nos feeds).
+    """
     campos = [
         "goals_team_match",
         "goals_conceded_team_match",
@@ -455,14 +458,24 @@ def buscar_metricas_coletivas_time(fotmob_team_name: str) -> dict[str, float | N
         "total_red_card_team",
     ]
     metricas: dict[str, float | None] = {c: None for c in campos}
+    matches_played = 0
 
     for campo in campos:
         url = f"{SEASON_STATS_BASE}/{campo}.json"
         payload = _fetch_json(url)
         for row in payload.get("TopLists", [{}])[0].get("StatList", []):
             nome = row.get("TeamName") or row.get("ParticipantName")
-            if nome == fotmob_team_name:
-                metricas[campo] = float(row.get("StatValue", 0))
-                break
+            if nome != fotmob_team_name:
+                continue
+            metricas[campo] = float(row.get("StatValue", 0))
+            try:
+                mp = int(row.get("MatchesPlayed") or 0)
+            except (TypeError, ValueError):
+                mp = 0
+            if mp > matches_played:
+                matches_played = mp
+            break
 
+    if matches_played > 0:
+        metricas["J"] = float(matches_played)
     return metricas

@@ -51,6 +51,7 @@ function mgParaRating(mg: number): number {
 }
 
 function nivelSelecao(s: Selecao, pool: Selecao[]): number {
+  if (s.rating_copa_100 != null) return s.rating_copa_100;
   if (s.rating_elo_100 != null) return s.rating_elo_100;
   return calcularRatingSelecaoCopa(s, pool) ?? NIVEL_NEUTRO;
 }

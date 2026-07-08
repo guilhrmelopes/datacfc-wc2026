@@ -47,6 +47,16 @@ export interface Selecao {
   elo_rating?: number | null;
   elo_rank?: number | null;
   elo_atualizado_em?: string | null;
+  /** Jogos de mata-mata já finalizados. */
+  jogos_mata_mata?: number | null;
+  /** Rating 0–100 por scouts da Copa (percentis das métricas/jogo). */
+  rating_scouts_100?: number | null;
+  /** Elo 0–100 só com resultados de eliminatórias. */
+  rating_ko_100?: number | null;
+  /** Elo bruto calculado só no mata-mata. */
+  elo_ko?: number | null;
+  /** Rating principal: fusão Elo mundial + scouts + Elo KO. */
+  rating_copa_100?: number | null;
   confrontos_agendados: ConfrontoAgendado[];
 }
 

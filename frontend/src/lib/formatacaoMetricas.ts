@@ -271,13 +271,26 @@ function classificarPorQuartisSelecao(
   return "ruim";
 }
 
-/** Normaliza valor bruto para comparação (ex.: SG → taxa por jogo). */
+/** Métricas FotMob que chegam como total acumulado (dividir por J p/ comparar /jogo). */
+export const METRICAS_TOTAIS_SCOUTS: ReadonlySet<ChaveMetricaScouts> = new Set([
+  "xG",
+  "xGA",
+  "SG",
+  "GCC",
+  "TAA",
+  "CA",
+  "CV",
+]);
+
+/** Normaliza valor bruto para comparação (totais → /jogo; SG → taxa). */
 export function valorNormalizadoMetricaSelecao(
   chave: ChaveMetricaScouts,
   valor: number,
   jogos = 1,
 ): number {
-  if (chave === "SG" && jogos > 0) return valor / jogos;
+  if (jogos > 0 && METRICAS_TOTAIS_SCOUTS.has(chave)) {
+    return valor / jogos;
+  }
   return valor;
 }
 

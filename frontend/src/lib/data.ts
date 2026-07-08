@@ -52,21 +52,24 @@ export interface DadosMercado {
   mataMata: DadosMataMata;
 }
 
-/** Dados da aba Radar (selecoes + pontuacao_cedida + classificação). */
+/** Dados da aba Radar (selecoes + pontuacao_cedida + classificação + mata-mata). */
 export async function carregarDadosRadar(): Promise<
   Pick<DadosAplicacao, "selecoes" | "pontuacaoCedida"> & {
     classificacao: ClassificacaoGruposParseada;
+    mataMata: DadosMataMata;
   }
 > {
-  const [selecoes, pontuacaoCedida, classificacaoRaw] = await Promise.all([
+  const [selecoes, pontuacaoCedida, classificacaoRaw, mataMataRaw] = await Promise.all([
     carregarJson<Selecao[]>("/data/selecoes.json"),
     carregarJson<PontuacaoCedida>("/data/pontuacao_cedida.json"),
     carregarJson<Record<string, unknown>>("/data/classificacao_grupos.json"),
+    carregarJson<unknown>("/data/mata_mata.json"),
   ]);
   return {
     selecoes,
     pontuacaoCedida,
     classificacao: parseClassificacaoGrupos(classificacaoRaw),
+    mataMata: parseDadosMataMata(mataMataRaw),
   };
 }
 

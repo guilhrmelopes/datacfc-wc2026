@@ -97,6 +97,7 @@ export default function App() {
               selecoes={radar.dados.selecoes as Selecao[]}
               pontuacaoCedida={radar.dados.pontuacaoCedida as PontuacaoCedida}
               classificacao={radar.dados.classificacao}
+              mataMata={radar.dados.mataMata}
             />
           )}
         </TabsContent>
