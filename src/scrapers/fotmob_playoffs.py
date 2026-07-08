@@ -194,9 +194,12 @@ def selecoes_classificadas_oitavas(mata_mata: dict) -> set[str]:
 def selecoes_ativas_hub_playoffs(mata_mata: dict, classificadas: set[str]) -> set[str]:
     """
     Seleções com jogadores no HUB durante o mata-mata.
-    Nas oitavas, restringe às equipes já no chaveamento 1/8 (exclui 1/16 em andamento).
+    - Quartas ou posterior (≤8 vivas): só equipes ainda na disputa.
+    - Oitavas: restringe ao chaveamento 1/8 (exclui 1/16 em andamento).
     """
     vivas = selecoes_vivas_ko(mata_mata, classificadas)
+    if len(vivas) <= 8:
+        return vivas
     oitavas = selecoes_classificadas_oitavas(mata_mata)
     if oitavas:
         return vivas & oitavas

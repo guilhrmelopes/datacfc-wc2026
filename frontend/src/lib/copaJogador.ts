@@ -22,9 +22,15 @@ export function selecoesOitavas(dados: DadosMataMata): Set<string> {
   return teams;
 }
 
+function faseKoEncerrada(dados: DadosMataMata, stage: string): boolean {
+  const fase = dados.fases.find((f) => f.stage === stage);
+  if (!fase?.confrontos.length) return false;
+  return fase.confrontos.every((c) => c.finalizada);
+}
+
 /**
  * Jogador elegível no HUB durante o mata-mata.
- * Nas oitavas, só atletas de seleções já classificadas para o 1/8.
+ * Após oitavas, confia em ativo_playoffs; na transição 1/16→1/8 filtra o chaveamento 1/8.
  */
 export function jogadorAtivoNoHub(
   j: JogadorMercado,
@@ -32,8 +38,9 @@ export function jogadorAtivoNoHub(
 ): boolean {
   if (j.ativo_playoffs === false) return false;
   if (!mataMata) return true;
+  if (faseKoEncerrada(mataMata, "1/8")) return true;
   const oitavas = selecoesOitavas(mataMata);
-  if (oitavas.size > 0) {
+  if (oitavas.size >= 16) {
     return Boolean(j.selecao && oitavas.has(j.selecao));
   }
   return true;
