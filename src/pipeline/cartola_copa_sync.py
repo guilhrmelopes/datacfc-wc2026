@@ -282,14 +282,10 @@ def _aplicar_scouts_copa(entry: dict, scout: dict[str, Any] | None) -> None:
         entry["copa_clean_sheet"] = int(entry.get("copa_clean_sheet") or 0) + int(dados["SG"])
 
 
-def _snapshot_pontuados(dados: DadosCartolaCopa) -> tuple[str, dict[str, dict]]:
-    rodada = str(
-        dados.pontuados.get("rodada")
-        or dados.status.get("rodada_atual")
-        or 1
-    )
+def _snapshot_from_pontuados_payload(pontuados: dict) -> tuple[str, dict[str, dict]]:
+    rodada = str(pontuados.get("rodada") or 1)
     snapshot: dict[str, dict] = {}
-    for aid, row in (dados.pontuados.get("atletas") or {}).items():
+    for aid, row in (pontuados.get("atletas") or {}).items():
         if row.get("posicao_id") == 6:
             continue
         if not row.get("entrou_em_campo"):
@@ -301,6 +297,35 @@ def _snapshot_pontuados(dados: DadosCartolaCopa) -> tuple[str, dict[str, dict]]:
             "clube_id": row.get("clube_id"),
         }
     return rodada, snapshot
+
+
+def _snapshot_pontuados(dados: DadosCartolaCopa) -> tuple[str, dict[str, dict]]:
+    return _snapshot_from_pontuados_payload(dados.pontuados)
+
+
+def preencher_pontuados_ausentes(estado: dict, rodada_atual: int) -> list[int]:
+    """
+    Recupera snapshots de rodadas encerradas ausentes no estado.
+    A API /copa/atletas/pontuados só expõe a rodada corrente; após abrir o mercado
+    da rodada N, os pontuados da N-1 ficam em /copa/atletas/pontuados/{rodada}.
+    """
+    from scrapers.cartola_copa import buscar_pontuados_rodada
+
+    por_rodada = estado.setdefault("pontuados_por_rodada", {})
+    preenchidas: list[int] = []
+    for numero in range(1, max(1, int(rodada_atual))):
+        chave = str(numero)
+        if por_rodada.get(chave):
+            continue
+        try:
+            payload = buscar_pontuados_rodada(numero)
+        except (OSError, ValueError, RuntimeError):
+            continue
+        rodada, snapshot = _snapshot_from_pontuados_payload(payload)
+        if snapshot:
+            por_rodada[rodada] = snapshot
+            preenchidas.append(int(rodada))
+    return preenchidas
 
 
 def _partidas_encerradas(dados: DadosCartolaCopa) -> list[dict]:
@@ -1171,12 +1196,15 @@ def aplicar_dados_cartola(
     if selecoes_corrigidas:
         _salvar_json(pasta_dados / "selecoes.json", selecoes)
 
+    rodada_atual = int(dados.status.get("rodada_atual") or estado.get("rodada_cartola_atual") or 1)
+    rodadas_backfill = preencher_pontuados_ausentes(estado, rodada_atual)
+
     rodada, snapshot = _snapshot_pontuados(dados)
     por_rodada = estado.setdefault("pontuados_por_rodada", {})
     if snapshot:
         por_rodada[rodada] = snapshot
 
-    estado["rodada_cartola_atual"] = int(dados.status.get("rodada_atual") or rodada)
+    estado["rodada_cartola_atual"] = rodada_atual
     estado["status_mercado"] = dados.status.get("status_mercado")
     estado["bola_rolando"] = dados.status.get("bola_rolando")
     estado["cartola_atualizado_em"] = dados.obtido_em
@@ -1209,6 +1237,7 @@ def aplicar_dados_cartola(
 
     return {
         "rodada_cartola": estado["rodada_cartola_atual"],
+        "pontuados_backfill": rodadas_backfill,
         "pontuados_rodada": len(snapshot),
         "mercado_api": len(dados.mercado.get("atletas") or []),
         "partidas_encerradas": len(_partidas_encerradas(dados)),

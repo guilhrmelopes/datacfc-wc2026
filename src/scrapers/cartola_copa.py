@@ -162,6 +162,17 @@ def persistir_cache(payloads: dict[str, Any], pasta: Path | None = None) -> Path
     return caminho
 
 
+def buscar_pontuados_rodada(
+    rodada: int,
+    *,
+    logger: logging.Logger | None = None,
+) -> dict[str, Any]:
+    """Pontuados de uma rodada encerrada (/copa/atletas/pontuados/{rodada})."""
+    log = logger or configurar_logger()
+    url = f"{URL_PONTUADOS}/{int(rodada)}"
+    return _fetch_json(url, log)
+
+
 def buscar_dados_cartola_copa(
     *,
     persistir: bool = True,
