@@ -1070,22 +1070,6 @@ def reprocessar_cedido_cartola(
     return set(acumuladores.keys())
 
 
-def _partida_conta_metricas_fotmob(
-    aid: int,
-    rodada_partida: int,
-    estado: dict,
-    cartola_jogos_inicial: dict[int, int],
-) -> bool:
-    """
-    Minutos/xG só entram se a partida conta como jogo oficial (Cartola pontuados)
-    ou se o atleta ainda não tem nenhum jogo Cartola (fallback FotMob integral).
-    """
-    pontuados = (estado.get("pontuados_por_rodada") or {}).get(str(rodada_partida)) or {}
-    if str(aid) in pontuados:
-        return True
-    return cartola_jogos_inicial.get(aid, 0) <= 0
-
-
 def rebuild_extras_fotmob(
     partidas_ids: list[str],
     caminho_mercado: Path,
@@ -1111,6 +1095,7 @@ def rebuild_extras_fotmob(
     for entry in mercado:
         for campo in _CAMPOS_FOTMOB_EXTRAS:
             entry[campo] = 0
+        entry["copa_mins_por_rodada"] = {}
 
     partidas_idx = indice_partidas_copa()
     fotmob_jogos: dict[int, int] = {}
@@ -1142,18 +1127,18 @@ def rebuild_extras_fotmob(
                 continue
 
             fotmob_jogos[aid] = fotmob_jogos.get(aid, 0) + 1
-            conta = _partida_conta_metricas_fotmob(
-                aid, meta.rodada, estado, cartola_jogos_inicial,
-            )
-            if conta:
-                entry["copa_mins_played"] = int(entry.get("copa_mins_played") or 0) + sc.minutos
-                entry["copa_gcc"] = int(entry.get("copa_gcc") or 0) + sc.GCC
-                entry["copa_int"] = int(entry.get("copa_int") or 0) + sc.INT
-                entry["copa_c"] = int(entry.get("copa_c") or 0) + sc.C
-                entry["copa_br"] = int(entry.get("copa_br") or 0) + sc.BR
-                entry["copa_ge"] = round(float(entry.get("copa_ge") or 0) + sc.GE, 2)
-                entry["copa_xg"] = round(float(entry.get("copa_xg") or 0) + jogador.xg, 2)
-                entry["copa_xa"] = round(float(entry.get("copa_xa") or 0) + jogador.xa, 2)
+            mins_partida = sc.minutos
+            entry["copa_mins_played"] = int(entry.get("copa_mins_played") or 0) + mins_partida
+            por_rodada = entry.setdefault("copa_mins_por_rodada", {})
+            chave_rodada = str(meta.rodada)
+            por_rodada[chave_rodada] = int(por_rodada.get(chave_rodada) or 0) + mins_partida
+            entry["copa_gcc"] = int(entry.get("copa_gcc") or 0) + sc.GCC
+            entry["copa_int"] = int(entry.get("copa_int") or 0) + sc.INT
+            entry["copa_c"] = int(entry.get("copa_c") or 0) + sc.C
+            entry["copa_br"] = int(entry.get("copa_br") or 0) + sc.BR
+            entry["copa_ge"] = round(float(entry.get("copa_ge") or 0) + sc.GE, 2)
+            entry["copa_xg"] = round(float(entry.get("copa_xg") or 0) + jogador.xg, 2)
+            entry["copa_xa"] = round(float(entry.get("copa_xa") or 0) + jogador.xa, 2)
 
             if fotmob_jogos[aid] > cartola_jogos_inicial.get(aid, 0):
                 _aplicar_scouts_fotmob(entry, sc)

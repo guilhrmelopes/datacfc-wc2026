@@ -21,6 +21,35 @@ from scoring.cartola import (
 FOTMOB_MATCH_URL = "https://www.fotmob.com/api/data/matchDetails?matchId={match_id}"
 FOTMOB_LEAGUE_URL = "https://www.fotmob.com/api/data/leagues?id=77"
 SEASON_STATS_BASE = "https://data.fotmob.com/stats/77/season/24254"
+MINUTOS_MAXIMO_PARTIDA = 90
+
+_SUBSTITUICOES_ASCII = str.maketrans(
+    {
+        "ø": "o",
+        "Ø": "o",
+        "ö": "o",
+        "Ö": "o",
+        "ä": "a",
+        "Ä": "a",
+        "ü": "u",
+        "Ü": "u",
+        "ß": "ss",
+        "ñ": "n",
+        "Ñ": "n",
+        "ç": "c",
+        "Ç": "c",
+        "æ": "ae",
+        "Æ": "ae",
+        "œ": "oe",
+        "Œ": "oe",
+        "ð": "d",
+        "Ð": "d",
+        "þ": "th",
+        "Þ": "th",
+        "å": "a",
+        "Å": "a",
+    }
+)
 
 from scrapers.fotmob_mapa import SIGLA_PARA_FOTMOB_STATS
 
@@ -67,8 +96,11 @@ def _fetch_json(url: str) -> Any:
 
 
 def normalizar_texto(texto: str) -> str:
-    texto = unicodedata.normalize("NFD", texto)
+    """ASCII-friendly para matching FotMob ↔ Cartola (ø, ñ, ü, etc.)."""
+    texto = unicodedata.normalize("NFKD", texto)
     texto = "".join(c for c in texto if unicodedata.category(c) != "Mn")
+    texto = texto.translate(_SUBSTITUICOES_ASCII)
+    texto = texto.encode("ascii", "ignore").decode("ascii")
     texto = re.sub(r"[^a-z0-9\s]", " ", texto.lower())
     return " ".join(texto.split())
 
@@ -101,6 +133,8 @@ _ALIAS_FOTMOB_ATLETA: dict[str, int] = {
     "bounou": 80951,
     "patrick beach": 151039,
     "patrick thomas beach": 151039,
+    "martin odegaard": 89973,
+    "odegaard": 89973,
 }
 
 
@@ -170,9 +204,16 @@ def associar_jogador_mercado(
             if inter:
                 score = 50 + len(inter) * 10
 
-        sobrenome_fotmob = _tokens(nome_fotmob)[-1] if _tokens(nome_fotmob) else ""
+        tokens_nome = _tokens(nome_fotmob)
+        sobrenome_fotmob = tokens_nome[-1] if tokens_nome else ""
+        if len(_tokens(apelido)) == 1 and sobrenome_fotmob:
+            fuzzy_sobrenome = _score_fuzzy_nome(sobrenome_fotmob, apelido)
+            if fuzzy_sobrenome >= 80:
+                score = max(score, fuzzy_sobrenome)
         if len(_tokens(apelido)) == 1 and sobrenome_fotmob == _tokens(apelido)[0]:
-            score = max(score, 70)
+            score = max(score, 90)
+        elif ap_norm and sobrenome_fotmob and ap_norm == sobrenome_fotmob:
+            score = max(score, 95)
 
         fuzzy = _score_fuzzy_nome(nome_fotmob, apelido)
         if fuzzy >= 85:
@@ -285,7 +326,7 @@ def extrair_scouts_jogador(
     bucket: Bucket,
     time_sofreu_gol: bool,
 ) -> ScoutsPartida:
-    minutos = _stat_int(player, "Minutes played")
+    minutos = min(_stat_int(player, "Minutes played"), MINUTOS_MAXIMO_PARTIDA)
     ft_map, fd_map, ff_map, gc_map = _contar_shotmap(player.get("shotmap") or [])
     ca, cv = _contar_cartoes(eventos)
 
@@ -362,7 +403,7 @@ def processar_partida(
 
         time_sofreu = gols_sofridos > 0
 
-        minutos = _stat_int(player, "Minutes played")
+        minutos = min(_stat_int(player, "Minutes played"), MINUTOS_MAXIMO_PARTIDA)
         if minutos <= 0:
             continue
 

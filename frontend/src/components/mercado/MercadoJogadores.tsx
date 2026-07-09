@@ -23,6 +23,7 @@ import {
   dePctPor90Copa,
   mediaBaseCopa,
   mediaGeralCopa,
+  formatMinutosPorRodada,
   minutosPorJogoCopa,
   jogadorAtivoNoHub,
   oddsVigentes,
@@ -352,13 +353,21 @@ function copaCol(
 const COL_J = copaCol("j", "J", "Número de jogos", (j) =>
   temCopa(j) ? (j.copa_jogos_num ?? 0) : null,
 );
-const COL_MIN = copaCol(
-  "min",
-  "MIN",
-  "Minutos por jogo",
-  (j) => minutosPorJogoCopa(j),
-  1,
-);
+const COL_MIN: ColDef = {
+  key: "min",
+  header: "MIN",
+  title: "Média de minutos por partida (máx. 90' por jogo; passe o mouse para ver por rodada)",
+  render: (j) => {
+    const v = minutosPorJogoCopa(j);
+    if (v === null) return <Dash />;
+    const detalhe = formatMinutosPorRodada(j);
+    return (
+      <span className="tabular-nums" title={detalhe ?? undefined}>
+        {fmt(v, 1)}
+      </span>
+    );
+  },
+};
 const COL_G = copaCol("g", "G", "Gols na competição", (j) =>
   temCopa(j) ? (j.copa_goals ?? 0) : null,
 );

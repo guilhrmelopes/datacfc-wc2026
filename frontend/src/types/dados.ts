@@ -102,6 +102,8 @@ export interface JogadorMercado {
   /** Métricas acumuladas na fase de grupos (Cartola Copa). */
   copa_jogos_num?: number;
   copa_mins_played?: number;
+  /** Minutos por rodada Cartola (ex.: {"1": 90, "5": 87}). */
+  copa_mins_por_rodada?: Record<string, number>;
   copa_goals?: number;
   copa_goal_assist?: number;
   copa_clean_sheet?: number;

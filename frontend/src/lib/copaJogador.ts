@@ -83,7 +83,27 @@ export function scoutPorJogoCopa(
 }
 
 export function minutosPorJogoCopa(j: JogadorMercado): number | null {
-  return scoutPorJogoCopa(j, j.copa_mins_played);
+  if (!temCopa(j)) return null;
+  const porRodada = j.copa_mins_por_rodada;
+  if (porRodada && Object.keys(porRodada).length > 0) {
+    const valores = Object.values(porRodada);
+    const total = valores.reduce((acc, n) => acc + n, 0);
+    return round2(total / valores.length);
+  }
+  const mins = j.copa_mins_played ?? 0;
+  const jogos = jogosCopa(j);
+  if (jogos <= 0) return null;
+  return round2(mins / jogos);
+}
+
+/** Detalhe R1: 90' · R2: 81' … para tooltip da coluna MIN. */
+export function formatMinutosPorRodada(j: JogadorMercado): string | null {
+  const porRodada = j.copa_mins_por_rodada;
+  if (!porRodada || Object.keys(porRodada).length === 0) return null;
+  return Object.entries(porRodada)
+    .sort(([a], [b]) => Number(a) - Number(b))
+    .map(([rodada, mins]) => `R${rodada}: ${mins}'`)
+    .join(" · ");
 }
 
 export function xgPor90Copa(j: JogadorMercado): number | null {
