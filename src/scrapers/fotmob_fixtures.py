@@ -42,44 +42,67 @@ def _utc_para_hora_brasil(utc_iso: str) -> tuple[str, str]:
     return dt.strftime("%Y-%m-%d"), dt.strftime("%H:%M:%S")
 
 
-def listar_partidas_grupos() -> list[PartidaCalendario]:
-    payload = _fetch_json(FOTMOB_LEAGUE_URL)
-    partidas: list[PartidaCalendario] = []
+def _partida_from_bloco(bloco: dict, *, grupo: str, rodada: int) -> PartidaCalendario | None:
+    home = bloco.get("home", {}).get("name", "")
+    away = bloco.get("away", {}).get("name", "")
+    mandante = fotmob_para_selecao(home)
+    visitante = fotmob_para_selecao(away)
+    if not mandante or not visitante:
+        return None
 
+    status = bloco.get("status") or {}
+    utc_time = status.get("utcTime") or ""
+    data, hora = _utc_para_hora_brasil(utc_time) if utc_time else ("", "")
+
+    return PartidaCalendario(
+        match_id=str(bloco.get("id", "")),
+        grupo=grupo,
+        rodada=rodada,
+        mandante=mandante,
+        visitante=visitante,
+        data=data,
+        hora=hora,
+        utc_time=utc_time,
+        finalizada=bool(status.get("finished")),
+        placar=status.get("scoreStr"),
+    )
+
+
+def _listar_partidas_payload(payload: dict) -> list[PartidaCalendario]:
+    from scrapers.fotmob_playoffs import RODADA_POR_FASE
+
+    partidas: list[PartidaCalendario] = []
     for bloco in payload.get("overview", {}).get("matches", {}).get("allMatches", []):
         grupo = bloco.get("group")
         rodada_raw = bloco.get("round")
-        if not grupo or rodada_raw not in ("1", "2", "3"):
+        if grupo and rodada_raw in ("1", "2", "3"):
+            partida = _partida_from_bloco(bloco, grupo=str(grupo), rodada=int(rodada_raw))
+        elif not grupo:
+            stage = str(rodada_raw or "")
+            rodada_ko = RODADA_POR_FASE.get(stage)
+            if rodada_ko is None:
+                continue
+            partida = _partida_from_bloco(bloco, grupo="KO", rodada=rodada_ko)
+        else:
             continue
-
-        home = bloco.get("home", {}).get("name", "")
-        away = bloco.get("away", {}).get("name", "")
-        mandante = fotmob_para_selecao(home)
-        visitante = fotmob_para_selecao(away)
-        if not mandante or not visitante:
-            continue
-
-        status = bloco.get("status") or {}
-        utc_time = status.get("utcTime") or ""
-        data, hora = _utc_para_hora_brasil(utc_time) if utc_time else ("", "")
-
-        partidas.append(
-            PartidaCalendario(
-                match_id=str(bloco.get("id", "")),
-                grupo=str(grupo),
-                rodada=int(rodada_raw),
-                mandante=mandante,
-                visitante=visitante,
-                data=data,
-                hora=hora,
-                utc_time=utc_time,
-                finalizada=bool(status.get("finished")),
-                placar=status.get("scoreStr"),
-            )
-        )
+        if partida:
+            partidas.append(partida)
 
     partidas.sort(key=lambda p: (p.rodada, p.data, p.hora, p.match_id))
     return partidas
+
+
+def listar_partidas_grupos() -> list[PartidaCalendario]:
+    return [p for p in _listar_partidas_payload(_fetch_json(FOTMOB_LEAGUE_URL)) if p.grupo != "KO"]
+
+
+def listar_partidas_todas() -> list[PartidaCalendario]:
+    """Fase de grupos + mata-mata (para xG/xA e métricas FotMob)."""
+    return _listar_partidas_payload(_fetch_json(FOTMOB_LEAGUE_URL))
+
+
+def indice_partidas_copa() -> dict[str, PartidaCalendario]:
+    return {p.match_id: p for p in listar_partidas_todas()}
 
 
 def extrair_classificacao_grupos() -> dict[str, list[dict]]:

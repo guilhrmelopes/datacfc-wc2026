@@ -200,10 +200,10 @@ def recalcular_mg_mb_mercado(
             acum_jogos[aid] = acum_jogos.get(aid, 0) + 1
 
     if partidas_fotmob and selecoes:
-        from scrapers.fotmob_fixtures import listar_partidas_grupos
+        from scrapers.fotmob_fixtures import indice_partidas_copa
 
         sigla_map = _sigla_por_selecao(selecoes)
-        partidas_idx = {p.match_id: p for p in listar_partidas_grupos()}
+        partidas_idx = indice_partidas_copa()
         for match_id in partidas_fotmob:
             meta = partidas_idx.get(match_id)
             if not meta:
@@ -1071,7 +1071,7 @@ def rebuild_extras_fotmob(
     mercado = _carregar_json(caminho_mercado)
     sigla_map = _sigla_por_selecao(selecoes)
 
-    from scrapers.fotmob_fixtures import listar_partidas_grupos
+    from scrapers.fotmob_fixtures import indice_partidas_copa
 
     _CAMPOS_FOTMOB_EXTRAS = (
         "copa_mins_played",
@@ -1087,7 +1087,7 @@ def rebuild_extras_fotmob(
         for campo in _CAMPOS_FOTMOB_EXTRAS:
             entry[campo] = 0
 
-    partidas_idx = {p.match_id: p for p in listar_partidas_grupos()}
+    partidas_idx = indice_partidas_copa()
     fotmob_jogos: dict[int, int] = {}
     cartola_jogos_inicial = {
         int(j["atleta_id"]): int(j.get("copa_jogos_num") or 0)
