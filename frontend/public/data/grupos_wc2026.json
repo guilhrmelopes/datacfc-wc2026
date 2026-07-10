@@ -1372,8 +1372,8 @@
       "hora": "14:00:00",
       "utc": "2026-07-10T17:00:00.000Z",
       "match_id": "4653853",
-      "finalizada": false,
-      "placar": null,
+      "finalizada": true,
+      "placar": "2-1",
       "valida_cartola": true
     },
     {
@@ -1400,6 +1400,20 @@
       "hora": "20:00:00",
       "utc": "2026-07-11T23:00:00.000Z",
       "match_id": "4653854",
+      "finalizada": false,
+      "placar": null,
+      "valida_cartola": true
+    },
+    {
+      "grupo": "KO",
+      "fase": "1/2",
+      "rodada": 7,
+      "mandante": "FRANCE",
+      "visitante": "SPAIN",
+      "data": "2026-07-14",
+      "hora": "14:00:00",
+      "utc": "2026-07-14T17:00:00.000Z",
+      "match_id": "4653855",
       "finalizada": false,
       "placar": null,
       "valida_cartola": true

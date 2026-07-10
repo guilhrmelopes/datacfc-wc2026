@@ -837,12 +837,12 @@
             "tbd": false,
             "team_id": 8263
           },
-          "placar_mandante": 0,
-          "placar_visitante": 0,
-          "mandante_venceu": false,
+          "placar_mandante": 2,
+          "placar_visitante": 1,
+          "mandante_venceu": true,
           "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-10",
           "hora": "14:00:00",
           "utc_time": "2026-07-10T17:00:00.000Z"
@@ -930,13 +930,13 @@
             "team_id": 6723
           },
           "visitante": {
-            "rotulo": "TBD",
-            "nome_fotmob": "Spain/Belgium",
-            "selecao": null,
-            "sigla": "TBD",
-            "url_escudo": null,
-            "tbd": true,
-            "team_id": 2070470
+            "rotulo": "ESP",
+            "nome_fotmob": "Spain",
+            "selecao": "SPAIN",
+            "sigla": "ESP",
+            "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
+            "tbd": false,
+            "team_id": 6720
           },
           "placar_mandante": null,
           "placar_visitante": null,
@@ -988,13 +988,13 @@
     "stage": "final",
     "match_id": "4653858",
     "mandante": {
-      "rotulo": "WS1",
-      "nome_fotmob": "Winner SF 1",
+      "rotulo": "TBD",
+      "nome_fotmob": "France/Spain",
       "selecao": null,
-      "sigla": "WS1",
+      "sigla": "TBD",
       "url_escudo": null,
       "tbd": true,
-      "team_id": 1983
+      "team_id": 2075533
     },
     "visitante": {
       "rotulo": "WS2",
@@ -1020,13 +1020,13 @@
     "stage": "bronze",
     "match_id": "4653857",
     "mandante": {
-      "rotulo": "LS1",
-      "nome_fotmob": "Loser SF 1",
+      "rotulo": "TBD",
+      "nome_fotmob": "France/Spain",
       "selecao": null,
-      "sigla": "LS1",
+      "sigla": "TBD",
       "url_escudo": null,
       "tbd": true,
-      "team_id": 1981
+      "team_id": 2075533
     },
     "visitante": {
       "rotulo": "LS2",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-10T20:23:16.561504+00:00"
+  "atualizado_em": "2026-07-10T21:34:00.324881+00:00"
 }
