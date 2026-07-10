@@ -83,9 +83,9 @@
     ],
     "elo_rating": 1756.0,
     "elo_rank": 25,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301496+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934348+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 51.3,
+    "rating_scouts_100": 51.4,
     "rating_ko_100": 29.0,
     "elo_ko": 1737.2,
     "rating_copa_100": 43.2
@@ -202,12 +202,12 @@
     ],
     "elo_rating": 2156.0,
     "elo_rank": 3,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301514+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934357+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 74.8,
+    "rating_scouts_100": 75.1,
     "rating_ko_100": 94.0,
     "elo_ko": 2163.3,
-    "rating_copa_100": 88.3
+    "rating_copa_100": 88.4
   },
   {
     "selecao": "AUSTRALIA",
@@ -293,12 +293,12 @@
     ],
     "elo_rating": 1795.0,
     "elo_rank": 23,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301520+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934361+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 50.0,
+    "rating_scouts_100": 50.4,
     "rating_ko_100": 34.3,
     "elo_ko": 1771.5,
-    "rating_copa_100": 46.1
+    "rating_copa_100": 46.3
   },
   {
     "selecao": "AUSTRIA",
@@ -384,12 +384,12 @@
     ],
     "elo_rating": 1821.0,
     "elo_rank": 20,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301523+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934365+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 39.2,
+    "rating_scouts_100": 39.8,
     "rating_ko_100": 40.1,
     "elo_ko": 1810.0,
-    "rating_copa_100": 45.1
+    "rating_copa_100": 45.4
   },
   {
     "selecao": "BELGIUM",
@@ -401,22 +401,22 @@
     "rating_elo_100": 71.8,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/BEL/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 2.6,
-      "goals_conceded_team_match": 1.0,
-      "possession_percentage_team": 54.9,
+      "goals_team_match": 2.2,
+      "goals_conceded_team_match": 0.8,
+      "possession_percentage_team": 45.8,
       "clean_sheet_team": 1.0,
       "expected_goals_team": 10.5,
       "expected_goals_conceded_team": 6.2,
-      "ontarget_scoring_att_team": 6.4,
+      "ontarget_scoring_att_team": 5.3,
       "big_chance_team": 14.0,
       "touches_in_opp_box_team": 211.0,
-      "total_tackle_team": 15.2,
-      "poss_won_att_3rd_team": 2.8,
-      "saves_team": 2.0,
-      "fk_foul_lost_team": 12.0,
+      "total_tackle_team": 12.7,
+      "poss_won_att_3rd_team": 2.3,
+      "saves_team": 1.7,
+      "fk_foul_lost_team": 10.0,
       "total_yel_card_team": 4.0,
       "total_red_card_team": 1.0,
-      "J": 5.0
+      "J": 6.0
     },
     "confrontos_agendados": [
       {
@@ -503,12 +503,12 @@
     ],
     "elo_rating": 1961.0,
     "elo_rank": 10,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301527+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934369+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 64.5,
+    "rating_scouts_100": 56.3,
     "rating_ko_100": 69.3,
     "elo_ko": 2001.5,
-    "rating_copa_100": 68.4
+    "rating_copa_100": 65.5
   },
   {
     "selecao": "BOSNIA AND HERZEGOVINA",
@@ -594,12 +594,12 @@
     ],
     "elo_rating": 1605.0,
     "elo_rank": 39,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301557+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934372+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 35.0,
+    "rating_scouts_100": 35.4,
     "rating_ko_100": 5.3,
     "elo_ko": 1581.7,
-    "rating_copa_100": 23.7
+    "rating_copa_100": 23.8
   },
   {
     "selecao": "BRAZIL",
@@ -699,12 +699,12 @@
     ],
     "elo_rating": 1993.0,
     "elo_rank": 7,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301560+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934375+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 68.8,
+    "rating_scouts_100": 69.5,
     "rating_ko_100": 66.1,
     "elo_ko": 1980.1,
-    "rating_copa_100": 70.0
+    "rating_copa_100": 70.3
   },
   {
     "selecao": "CANADA",
@@ -804,12 +804,12 @@
     ],
     "elo_rating": 1729.0,
     "elo_rank": 30,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301563+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934377+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 66.6,
+    "rating_scouts_100": 67.4,
     "rating_ko_100": 25.4,
     "elo_ko": 1713.7,
-    "rating_copa_100": 44.6
+    "rating_copa_100": 44.9
   },
   {
     "selecao": "CAPE VERDE",
@@ -895,7 +895,7 @@
     ],
     "elo_rating": 1619.0,
     "elo_rank": 38,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301566+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934380+00:00",
     "jogos_mata_mata": 1,
     "rating_scouts_100": 40.5,
     "rating_ko_100": 10.7,
@@ -1000,12 +1000,12 @@
     ],
     "elo_rating": 2003.0,
     "elo_rank": 5,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301569+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934383+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 62.8,
+    "rating_scouts_100": 63.6,
     "rating_ko_100": 66.1,
     "elo_ko": 1980.6,
-    "rating_copa_100": 68.3
+    "rating_copa_100": 68.6
   },
   {
     "selecao": "CROATIA",
@@ -1091,12 +1091,12 @@
     ],
     "elo_rating": 1881.0,
     "elo_rank": 16,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301572+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934386+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 44.2,
+    "rating_scouts_100": 44.7,
     "rating_ko_100": 48.5,
     "elo_ko": 1864.6,
-    "rating_copa_100": 52.2
+    "rating_copa_100": 52.3
   },
   {
     "selecao": "CURACAO",
@@ -1168,12 +1168,12 @@
     ],
     "elo_rating": 1438.0,
     "elo_rank": 47,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301575+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934389+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 26.1,
+    "rating_scouts_100": 26.6,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 13.7
+    "rating_copa_100": 13.9
   },
   {
     "selecao": "CZECHIA",
@@ -1245,9 +1245,9 @@
     ],
     "elo_rating": 1680.0,
     "elo_rank": 34,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301578+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934392+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 36.8,
+    "rating_scouts_100": 36.9,
     "rating_ko_100": null,
     "elo_ko": null,
     "rating_copa_100": 35.9
@@ -1336,12 +1336,12 @@
     ],
     "elo_rating": 1704.0,
     "elo_rank": 33,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301581+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934395+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 41.9,
+    "rating_scouts_100": 42.1,
     "rating_ko_100": 23.2,
     "elo_ko": 1699.0,
-    "rating_copa_100": 35.8
+    "rating_copa_100": 35.9
   },
   {
     "selecao": "ECUADOR",
@@ -1427,12 +1427,12 @@
     ],
     "elo_rating": 1871.0,
     "elo_rank": 17,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301583+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934397+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 54.2,
+    "rating_scouts_100": 54.4,
     "rating_ko_100": 44.3,
     "elo_ko": 1837.5,
-    "rating_copa_100": 54.1
+    "rating_copa_100": 54.2
   },
   {
     "selecao": "EGYPT",
@@ -1532,12 +1532,12 @@
     ],
     "elo_rating": 1742.0,
     "elo_rank": 28,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301586+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934400+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 48.7,
+    "rating_scouts_100": 49.2,
     "rating_ko_100": 32.5,
     "elo_ko": 1760.3,
-    "rating_copa_100": 41.4
+    "rating_copa_100": 41.6
   },
   {
     "selecao": "ENGLAND",
@@ -1651,12 +1651,12 @@
     ],
     "elo_rating": 2076.0,
     "elo_rank": 4,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301589+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934403+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 66.1,
+    "rating_scouts_100": 67.0,
     "rating_ko_100": 84.1,
     "elo_ko": 2098.5,
-    "rating_copa_100": 78.6
+    "rating_copa_100": 78.9
   },
   {
     "selecao": "FRANCE",
@@ -1770,12 +1770,12 @@
     ],
     "elo_rating": 2163.0,
     "elo_rank": 2,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301592+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934406+00:00",
     "jogos_mata_mata": 3,
-    "rating_scouts_100": 76.5,
+    "rating_scouts_100": 77.0,
     "rating_ko_100": 99.4,
     "elo_ko": 2198.9,
-    "rating_copa_100": 91.0
+    "rating_copa_100": 91.2
   },
   {
     "selecao": "GERMANY",
@@ -1861,12 +1861,12 @@
     ],
     "elo_rating": 1907.0,
     "elo_rank": 13,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301595+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934409+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 79.9,
+    "rating_scouts_100": 80.3,
     "rating_ko_100": 51.0,
     "elo_ko": 1881.3,
-    "rating_copa_100": 66.6
+    "rating_copa_100": 66.8
   },
   {
     "selecao": "GHANA",
@@ -1952,12 +1952,12 @@
     ],
     "elo_rating": 1570.0,
     "elo_rank": 41,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301597+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934411+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 40.9,
+    "rating_scouts_100": 40.7,
     "rating_ko_100": 3.0,
     "elo_ko": 1566.3,
-    "rating_copa_100": 23.4
+    "rating_copa_100": 23.3
   },
   {
     "selecao": "HAITI",
@@ -2029,12 +2029,12 @@
     ],
     "elo_rating": 1517.0,
     "elo_rank": 46,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301600+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934414+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 34.5,
+    "rating_scouts_100": 34.6,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 23.1
+    "rating_copa_100": 23.2
   },
   {
     "selecao": "IRAN",
@@ -2106,12 +2106,12 @@
     ],
     "elo_rating": 1764.0,
     "elo_rank": 24,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301603+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934417+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 54.7,
+    "rating_scouts_100": 55.1,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 50.0
+    "rating_copa_100": 50.2
   },
   {
     "selecao": "IRAQ",
@@ -2183,7 +2183,7 @@
     ],
     "elo_rating": 1561.0,
     "elo_rank": 43,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301606+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934420+00:00",
     "jogos_mata_mata": 0,
     "rating_scouts_100": 21.5,
     "rating_ko_100": null,
@@ -2274,12 +2274,12 @@
     ],
     "elo_rating": 1727.0,
     "elo_rank": 31,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301608+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934422+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 58.1,
+    "rating_scouts_100": 58.6,
     "rating_ko_100": 26.0,
     "elo_ko": 1717.6,
-    "rating_copa_100": 43.4
+    "rating_copa_100": 43.5
   },
   {
     "selecao": "JAPAN",
@@ -2365,12 +2365,12 @@
     ],
     "elo_rating": 1888.0,
     "elo_rank": 15,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301611+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934425+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 45.4,
+    "rating_scouts_100": 45.9,
     "rating_ko_100": 49.4,
     "elo_ko": 1871.0,
-    "rating_copa_100": 53.2
+    "rating_copa_100": 53.3
   },
   {
     "selecao": "JORDAN",
@@ -2442,12 +2442,12 @@
     ],
     "elo_rating": 1628.0,
     "elo_rank": 37,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301614+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934428+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 30.2,
+    "rating_scouts_100": 30.5,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 29.2
+    "rating_copa_100": 29.3
   },
   {
     "selecao": "MEXICO",
@@ -2547,12 +2547,12 @@
     ],
     "elo_rating": 1913.0,
     "elo_rank": 12,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301617+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934431+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 61.3,
+    "rating_scouts_100": 61.7,
     "rating_ko_100": 58.3,
     "elo_ko": 1929.0,
-    "rating_copa_100": 61.5
+    "rating_copa_100": 61.6
   },
   {
     "selecao": "MOROCCO",
@@ -2666,12 +2666,12 @@
     ],
     "elo_rating": 1901.0,
     "elo_rank": 14,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301619+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934434+00:00",
     "jogos_mata_mata": 3,
-    "rating_scouts_100": 59.5,
+    "rating_scouts_100": 60.0,
     "rating_ko_100": 58.8,
     "elo_ko": 1932.6,
-    "rating_copa_100": 60.6
+    "rating_copa_100": 60.8
   },
   {
     "selecao": "NETHERLANDS",
@@ -2757,12 +2757,12 @@
     ],
     "elo_rating": 1971.0,
     "elo_rank": 9,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301623+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934436+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 65.4,
+    "rating_scouts_100": 66.3,
     "rating_ko_100": 61.0,
     "elo_ko": 1946.5,
-    "rating_copa_100": 67.4
+    "rating_copa_100": 67.7
   },
   {
     "selecao": "NEW ZEALAND",
@@ -2834,12 +2834,12 @@
     ],
     "elo_rating": 1534.0,
     "elo_rank": 45,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301625+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934439+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 36.2,
+    "rating_scouts_100": 36.7,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 25.1
+    "rating_copa_100": 25.4
   },
   {
     "selecao": "NORWAY",
@@ -2953,12 +2953,12 @@
     ],
     "elo_rating": 1972.0,
     "elo_rank": 8,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301627+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934442+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 60.0,
+    "rating_scouts_100": 61.1,
     "rating_ko_100": 70.8,
     "elo_ko": 2011.3,
-    "rating_copa_100": 67.7
+    "rating_copa_100": 68.1
   },
   {
     "selecao": "PANAMA",
@@ -3030,9 +3030,9 @@
     ],
     "elo_rating": 1658.0,
     "elo_rank": 35,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301630+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934445+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 40.8,
+    "rating_scouts_100": 40.9,
     "rating_ko_100": null,
     "elo_ko": null,
     "rating_copa_100": 36.1
@@ -3135,12 +3135,12 @@
     ],
     "elo_rating": 1814.0,
     "elo_rank": 22,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301632+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934447+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 38.9,
+    "rating_scouts_100": 38.6,
     "rating_ko_100": 43.6,
     "elo_ko": 1832.6,
-    "rating_copa_100": 44.7
+    "rating_copa_100": 44.5
   },
   {
     "selecao": "PORTUGAL",
@@ -3240,12 +3240,12 @@
     ],
     "elo_rating": 1995.0,
     "elo_rank": 6,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301634+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934450+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 56.9,
+    "rating_scouts_100": 57.7,
     "rating_ko_100": 68.6,
     "elo_ko": 1996.7,
-    "rating_copa_100": 66.8
+    "rating_copa_100": 67.1
   },
   {
     "selecao": "QATAR",
@@ -3317,12 +3317,12 @@
     ],
     "elo_rating": 1411.0,
     "elo_rank": 48,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301636+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934453+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 24.0,
+    "rating_scouts_100": 24.4,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 10.8
+    "rating_copa_100": 11.0
   },
   {
     "selecao": "SAUDI ARABIA",
@@ -3394,12 +3394,12 @@
     ],
     "elo_rating": 1596.0,
     "elo_rank": 40,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301639+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934455+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 31.5,
+    "rating_scouts_100": 31.7,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 27.5
+    "rating_copa_100": 27.6
   },
   {
     "selecao": "SCOTLAND",
@@ -3471,12 +3471,12 @@
     ],
     "elo_rating": 1745.0,
     "elo_rank": 27,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301641+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934458+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 36.0,
+    "rating_scouts_100": 36.5,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 40.2
+    "rating_copa_100": 40.4
   },
   {
     "selecao": "SENEGAL",
@@ -3562,12 +3562,12 @@
     ],
     "elo_rating": 1816.0,
     "elo_rank": 21,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301643+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934461+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 59.5,
+    "rating_scouts_100": 60.3,
     "rating_ko_100": 38.8,
     "elo_ko": 1801.5,
-    "rating_copa_100": 51.7
+    "rating_copa_100": 52.0
   },
   {
     "selecao": "SOUTH AFRICA",
@@ -3653,12 +3653,12 @@
     ],
     "elo_rating": 1560.0,
     "elo_rank": 44,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301645+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934464+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 32.9,
+    "rating_scouts_100": 33.0,
     "rating_ko_100": 0.0,
     "elo_ko": 1546.8,
-    "rating_copa_100": 19.3
+    "rating_copa_100": 19.4
   },
   {
     "selecao": "SOUTH KOREA",
@@ -3730,12 +3730,12 @@
     ],
     "elo_rating": 1723.0,
     "elo_rank": 32,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301648+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934466+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 51.9,
+    "rating_scouts_100": 52.3,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 45.7
+    "rating_copa_100": 45.9
   },
   {
     "selecao": "SPAIN",
@@ -3747,22 +3747,22 @@
     "rating_elo_100": 100.0,
     "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
     "metricas_coletivas": {
-      "goals_team_match": 1.8,
+      "goals_team_match": 1.5,
       "goals_conceded_team_match": 0.0,
-      "possession_percentage_team": 65.6,
+      "possession_percentage_team": 54.7,
       "clean_sheet_team": 5.0,
       "expected_goals_team": 9.7,
       "expected_goals_conceded_team": 1.5,
-      "ontarget_scoring_att_team": 6.4,
+      "ontarget_scoring_att_team": 5.3,
       "big_chance_team": 15.0,
       "touches_in_opp_box_team": 185.0,
-      "total_tackle_team": 15.4,
-      "poss_won_att_3rd_team": 7.2,
-      "saves_team": 1.2,
-      "fk_foul_lost_team": 11.0,
+      "total_tackle_team": 12.8,
+      "poss_won_att_3rd_team": 6.0,
+      "saves_team": 1.0,
+      "fk_foul_lost_team": 9.2,
       "total_yel_card_team": 3.0,
       "total_red_card_team": null,
-      "J": 5.0
+      "J": 6.0
     },
     "confrontos_agendados": [
       {
@@ -3849,12 +3849,12 @@
     ],
     "elo_rating": 2177.0,
     "elo_rank": 1,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301650+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934469+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 77.9,
+    "rating_scouts_100": 67.5,
     "rating_ko_100": 100.0,
     "elo_ko": 2202.6,
-    "rating_copa_100": 92.3
+    "rating_copa_100": 88.6
   },
   {
     "selecao": "SWEDEN",
@@ -3940,12 +3940,12 @@
     ],
     "elo_rating": 1731.0,
     "elo_rank": 29,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301652+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934471+00:00",
     "jogos_mata_mata": 1,
-    "rating_scouts_100": 46.5,
+    "rating_scouts_100": 47.7,
     "rating_ko_100": 27.0,
     "elo_ko": 1723.6,
-    "rating_copa_100": 39.7
+    "rating_copa_100": 40.2
   },
   {
     "selecao": "SWITZERLAND",
@@ -4059,12 +4059,12 @@
     ],
     "elo_rating": 1949.0,
     "elo_rank": 11,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301654+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934474+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 70.3,
+    "rating_scouts_100": 71.2,
     "rating_ko_100": 68.2,
     "elo_ko": 1993.9,
-    "rating_copa_100": 69.5
+    "rating_copa_100": 69.8
   },
   {
     "selecao": "TUNISIA",
@@ -4136,12 +4136,12 @@
     ],
     "elo_rating": 1562.0,
     "elo_rank": 42,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301657+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934477+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 25.3,
+    "rating_scouts_100": 25.4,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 22.2
+    "rating_copa_100": 22.3
   },
   {
     "selecao": "TURKIYE",
@@ -4213,12 +4213,12 @@
     ],
     "elo_rating": 1852.0,
     "elo_rank": 18,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301659+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934480+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 71.0,
+    "rating_scouts_100": 71.4,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 63.6
+    "rating_copa_100": 63.8
   },
   {
     "selecao": "UNITED STATES",
@@ -4318,12 +4318,12 @@
     ],
     "elo_rating": 1747.0,
     "elo_rank": 26,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301661+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934482+00:00",
     "jogos_mata_mata": 2,
-    "rating_scouts_100": 54.7,
+    "rating_scouts_100": 55.1,
     "rating_ko_100": 30.1,
     "elo_ko": 1744.4,
-    "rating_copa_100": 42.9
+    "rating_copa_100": 43.0
   },
   {
     "selecao": "URUGUAY",
@@ -4395,12 +4395,12 @@
     ],
     "elo_rating": 1841.0,
     "elo_rank": 19,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301663+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934485+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 51.2,
+    "rating_scouts_100": 51.9,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 53.9
+    "rating_copa_100": 54.2
   },
   {
     "selecao": "UZBEKISTAN",
@@ -4472,11 +4472,11 @@
     ],
     "elo_rating": 1631.0,
     "elo_rank": 36,
-    "elo_atualizado_em": "2026-07-10T17:19:19.301666+00:00",
+    "elo_atualizado_em": "2026-07-10T18:57:36.934487+00:00",
     "jogos_mata_mata": 0,
-    "rating_scouts_100": 27.2,
+    "rating_scouts_100": 27.3,
     "rating_ko_100": null,
     "elo_ko": null,
-    "rating_copa_100": 28.0
+    "rating_copa_100": 28.1
   }
 ]
