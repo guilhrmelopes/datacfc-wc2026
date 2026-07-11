@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-07-11T11:48:26.107923+00:00",
+  "atualizado_em": "2026-07-11T14:35:19.154415+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -75,10 +75,10 @@
       "rating_100": 64.4
     },
     "ALE": {
-      "elo": 1907.0,
+      "elo": 1908.0,
       "rank": 13,
       "codigo_elo": "DE",
-      "rating_100": 63.7
+      "rating_100": 63.8
     },
     "MAR": {
       "elo": 1901.0,
