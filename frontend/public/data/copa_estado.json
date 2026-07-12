@@ -1,5 +1,5 @@
 {
-  "rodada_cartola_atual": 6,
+  "rodada_cartola_atual": 7,
   "partidas_processadas": [
     "4667751",
     "4667752",
@@ -102,7 +102,7 @@
     "4653852",
     "4653854"
   ],
-  "atualizado_em": "2026-07-12T10:53:27.810935+00:00",
+  "atualizado_em": "2026-07-12T11:57:06.567179+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -23143,9 +23143,9 @@
       }
     }
   },
-  "status_mercado": 4,
+  "status_mercado": 1,
   "bola_rolando": false,
-  "cartola_atualizado_em": "2026-07-12T10:52:39.468724+00:00",
+  "cartola_atualizado_em": "2026-07-12T11:55:32.596637+00:00",
   "playoffs_ativos": true,
   "transicao_playoffs": false,
   "transicao_r16": false
