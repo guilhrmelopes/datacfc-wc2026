@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-07-14T21:29:44.838478+00:00",
+  "atualizado_em": "2026-07-14T22:31:53.662284+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -75,10 +75,10 @@
       "rating_100": 61.1
     },
     "ALE": {
-      "elo": 1907.0,
+      "elo": 1908.0,
       "rank": 13,
       "codigo_elo": "DE",
-      "rating_100": 60.4
+      "rating_100": 60.5
     },
     "MAR": {
       "elo": 1901.0,
@@ -93,10 +93,10 @@
       "rating_100": 58.1
     },
     "CRO": {
-      "elo": 1881.0,
+      "elo": 1882.0,
       "rank": 16,
       "codigo_elo": "HR",
-      "rating_100": 57.2
+      "rating_100": 57.4
     },
     "EQU": {
       "elo": 1871.0,
@@ -135,10 +135,10 @@
       "rating_100": 49.1
     },
     "AUS": {
-      "elo": 1794.0,
+      "elo": 1795.0,
       "rank": 23,
       "codigo_elo": "AU",
-      "rating_100": 46.7
+      "rating_100": 46.8
     },
     "IRA": {
       "elo": 1764.0,
