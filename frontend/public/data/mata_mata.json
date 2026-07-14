@@ -939,11 +939,11 @@
             "team_id": 6720
           },
           "placar_mandante": 0,
-          "placar_visitante": 0,
+          "placar_visitante": 2,
           "mandante_venceu": false,
-          "visitante_venceu": false,
-          "finalizada": false,
-          "em_andamento": true,
+          "visitante_venceu": true,
+          "finalizada": true,
+          "em_andamento": false,
           "data": "2026-07-14",
           "hora": "14:00:00",
           "utc_time": "2026-07-14T17:00:00.000Z"
@@ -988,13 +988,13 @@
     "stage": "final",
     "match_id": "4653858",
     "mandante": {
-      "rotulo": "TBD",
-      "nome_fotmob": "France/Spain",
-      "selecao": null,
-      "sigla": "TBD",
-      "url_escudo": null,
-      "tbd": true,
-      "team_id": 2075533
+      "rotulo": "ESP",
+      "nome_fotmob": "Spain",
+      "selecao": "SPAIN",
+      "sigla": "ESP",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/ESP/60x60.png",
+      "tbd": false,
+      "team_id": 6720
     },
     "visitante": {
       "rotulo": "TBD",
@@ -1020,13 +1020,13 @@
     "stage": "bronze",
     "match_id": "4653857",
     "mandante": {
-      "rotulo": "TBD",
-      "nome_fotmob": "France/Spain",
-      "selecao": null,
-      "sigla": "TBD",
-      "url_escudo": null,
-      "tbd": true,
-      "team_id": 2075533
+      "rotulo": "FRA",
+      "nome_fotmob": "France",
+      "selecao": "FRANCE",
+      "sigla": "FRA",
+      "url_escudo": "https://s3.glbimg.com/v1/AUTH_925c4b2308d342c6ba7864ea930fdada/clubes_2026/escudos/FRA/60x60.png",
+      "tbd": false,
+      "team_id": 6723
     },
     "visitante": {
       "rotulo": "TBD",
@@ -1047,5 +1047,5 @@
     "hora": "16:00:00",
     "utc_time": "2026-07-18T19:00:00.000Z"
   },
-  "atualizado_em": "2026-07-14T20:07:17.928652+00:00"
+  "atualizado_em": "2026-07-14T21:29:44.546273+00:00"
 }
