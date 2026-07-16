@@ -1,6 +1,6 @@
 {
-  "atualizado_em": "2026-07-08T00:32:02.847728+00:00",
-  "rodada": 6,
+  "atualizado_em": "2026-07-16T11:39:22.310639+00:00",
+  "rodada": 8,
   "eventos": [
     {
       "id": 66456904,
@@ -701,6 +701,20 @@
       "away": "SWITZERLAND",
       "date": "2026-07-11T23:00:00.000Z",
       "fixture_id": "4653854"
+    },
+    {
+      "id": 53452539,
+      "home": "FRANCE",
+      "away": "ENGLAND",
+      "date": "2026-07-18T19:00:00.000Z",
+      "fixture_id": "4653857"
+    },
+    {
+      "id": 53452537,
+      "home": "SPAIN",
+      "away": "ARGENTINA",
+      "date": "2026-07-19T17:00:00.000Z",
+      "fixture_id": "4653858"
     }
   ]
 }

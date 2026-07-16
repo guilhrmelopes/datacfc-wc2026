@@ -173,7 +173,8 @@ def selecoes_eliminadas_ko(mata_mata: dict) -> set[str]:
                 if nome_v not in vivas_pendentes:
                     eliminadas.add(nome_v)
 
-    return eliminadas
+    # Perdedores de semi ainda jogam a disputa de 3º — permanecem vivos no hub/Cartola.
+    return eliminadas - vivas_pendentes
 
 
 def selecoes_vivas_ko(mata_mata: dict, classificadas: set[str]) -> set[str]:

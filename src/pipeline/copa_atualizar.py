@@ -518,10 +518,10 @@ def executar_atualizacao(pasta_dados: Path) -> dict:
 
     resumo_ratings = atualizar_ratings_selecoes(caminho_selecoes, mata_mata_payload)
 
-    rodada = int(
-        estado.get("rodada_cartola_atual")
-        or _rodada_efetiva(partidas, estado, confrontos_calendario)
-    )
+    rodada_estado = int(estado.get("rodada_cartola_atual") or 0)
+    rodada_calc = _rodada_efetiva(partidas, estado, confrontos_calendario)
+    # Cartola manda a rodada; o calendário KO avança quando as semis encerram (ex.: R8).
+    rodada = max(rodada_estado, rodada_calc) if rodada_estado else rodada_calc
     estado["rodada_cartola_atual"] = rodada
     estado["partidas_processadas"] = processadas
     estado["atualizado_em"] = datetime.now(timezone.utc).isoformat()
