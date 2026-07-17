@@ -1,5 +1,5 @@
 {
-  "atualizado_em": "2026-07-16T23:25:53.908621+00:00",
+  "atualizado_em": "2026-07-17T04:09:49.424819+00:00",
   "fonte": "https://www.eloratings.net/2026_World_Cup.tsv",
   "selecoes": {
     "ESP": {
@@ -261,10 +261,10 @@
       "rating_100": 18.3
     },
     "AFS": {
-      "elo": 1560.0,
+      "elo": 1559.0,
       "rank": 44,
       "codigo_elo": "ZA",
-      "rating_100": 18.1
+      "rating_100": 18.0
     },
     "NZE": {
       "elo": 1534.0,
