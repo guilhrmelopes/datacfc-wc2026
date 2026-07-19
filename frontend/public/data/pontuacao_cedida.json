@@ -1270,7 +1270,7 @@
     },
     "ZAG": {
       "cedido": {
-        "valor": 1.94,
+        "valor": 1.91,
         "cor": "bg-red-500"
       },
       "conquistado": {
@@ -1898,7 +1898,7 @@
         "cor": "bg-orange-500"
       },
       "conquistado": {
-        "valor": 4.05,
+        "valor": 4.02,
         "cor": "bg-yellow-500"
       }
     },
