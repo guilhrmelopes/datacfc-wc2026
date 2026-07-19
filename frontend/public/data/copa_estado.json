@@ -105,7 +105,7 @@
     "4653856",
     "4653857"
   ],
-  "atualizado_em": "2026-07-19T20:09:01.969688+00:00",
+  "atualizado_em": "2026-07-19T21:15:10.410766+00:00",
   "pontuados_por_rodada": {
     "1": {
       "100038": {
@@ -23761,10 +23761,23 @@
         "posicao_id": 3,
         "clube_id": 2385
       },
-      "103067": {
-        "pontuacao": 5.7,
+      "101843": {
+        "pontuacao": 2.2,
         "scout": {
+          "FC": 1,
+          "FD": 1,
           "FF": 1,
+          "FS": 1
+        },
+        "posicao_id": 5,
+        "clube_id": 2326
+      },
+      "103067": {
+        "pontuacao": 7.7,
+        "scout": {
+          "DS": 1,
+          "FF": 1,
+          "FS": 1,
           "I": 1,
           "SG": 1
         },
@@ -23772,20 +23785,21 @@
         "clube_id": 2326
       },
       "103184": {
-        "pontuacao": 11.2,
+        "pontuacao": 12.9,
         "scout": {
-          "DS": 4,
-          "FC": 1,
-          "FS": 1,
+          "DS": 5,
+          "FC": 2,
+          "FS": 2,
           "SG": 1
         },
         "posicao_id": 2,
         "clube_id": 2326
       },
       "103687": {
-        "pontuacao": -0.3,
+        "pontuacao": -0.4,
         "scout": {
-          "FC": 1
+          "FC": 3,
+          "FS": 1
         },
         "posicao_id": 5,
         "clube_id": 2357
@@ -23820,9 +23834,9 @@
         "clube_id": 2357
       },
       "105952": {
-        "pontuacao": 1.4,
+        "pontuacao": 2.9,
         "scout": {
-          "DS": 1,
+          "DS": 2,
           "FC": 2,
           "FS": 1
         },
@@ -23859,18 +23873,31 @@
         "clube_id": 2385
       },
       "108643": {
-        "pontuacao": 0.5,
+        "pontuacao": -0.6,
         "scout": {
+          "CA": 2,
+          "DS": 1,
+          "FC": 2,
           "FS": 1
         },
         "posicao_id": 4,
         "clube_id": 2357
       },
       "109333": {
-        "pontuacao": 0.2,
+        "pontuacao": 0.5,
         "scout": {
-          "FC": 1,
+          "FC": 4,
+          "FD": 1,
           "FS": 1
+        },
+        "posicao_id": 4,
+        "clube_id": 2326
+      },
+      "109570": {
+        "pontuacao": 2.7,
+        "scout": {
+          "DS": 1,
+          "FD": 1
         },
         "posicao_id": 4,
         "clube_id": 2326
@@ -23942,6 +23969,14 @@
         "posicao_id": 3,
         "clube_id": 2370
       },
+      "114321": {
+        "pontuacao": 1.2,
+        "scout": {
+          "FD": 1
+        },
+        "posicao_id": 5,
+        "clube_id": 2326
+      },
       "115424": {
         "pontuacao": 1.0,
         "scout": {
@@ -23949,6 +23984,14 @@
         },
         "posicao_id": 3,
         "clube_id": 2370
+      },
+      "118142": {
+        "pontuacao": -0.3,
+        "scout": {
+          "FC": 1
+        },
+        "posicao_id": 5,
+        "clube_id": 2357
       },
       "118711": {
         "pontuacao": 0.0,
@@ -23989,9 +24032,9 @@
         "clube_id": 2385
       },
       "124602": {
-        "pontuacao": 2.9,
+        "pontuacao": 4.4,
         "scout": {
-          "DS": 1,
+          "DS": 2,
           "FC": 1,
           "FD": 1,
           "FS": 1
@@ -24008,8 +24051,11 @@
         "clube_id": 2385
       },
       "126863": {
-        "pontuacao": 5.0,
+        "pontuacao": 8.2,
         "scout": {
+          "DS": 1,
+          "FD": 1,
+          "FS": 1,
           "SG": 1
         },
         "posicao_id": 3,
@@ -24024,20 +24070,33 @@
         "clube_id": 2370
       },
       "67746": {
-        "pontuacao": 3.0,
+        "pontuacao": 3.5,
         "scout": {
           "DS": 1,
-          "FS": 3
+          "FS": 4
         },
         "posicao_id": 5,
         "clube_id": 2357
       },
       "69219": {
-        "pontuacao": 5.0,
+        "pontuacao": 6.7,
         "scout": {
+          "DS": 1,
+          "FC": 1,
+          "FS": 1,
           "SG": 1
         },
         "posicao_id": 3,
+        "clube_id": 2357
+      },
+      "79259": {
+        "pontuacao": 1.1,
+        "scout": {
+          "CA": 1,
+          "DS": 2,
+          "FC": 3
+        },
+        "posicao_id": 4,
         "clube_id": 2357
       },
       "81104": {
@@ -24052,8 +24111,11 @@
         "clube_id": 2385
       },
       "81947": {
-        "pontuacao": 5.0,
+        "pontuacao": 6.4,
         "scout": {
+          "FC": 1,
+          "FD": 1,
+          "FS": 1,
           "SG": 1
         },
         "posicao_id": 3,
@@ -24078,9 +24140,9 @@
         "clube_id": 2385
       },
       "89019": {
-        "pontuacao": 7.6,
+        "pontuacao": 16.7,
         "scout": {
-          "DE": 2,
+          "DE": 9,
           "SG": 1
         },
         "posicao_id": 1,
@@ -24093,14 +24155,18 @@
         "clube_id": 2370
       },
       "89912": {
-        "pontuacao": 0.0,
-        "scout": {},
+        "pontuacao": 0.5,
+        "scout": {
+          "FS": 1
+        },
         "posicao_id": 4,
         "clube_id": 2357
       },
       "92510": {
-        "pontuacao": 0.0,
-        "scout": {},
+        "pontuacao": 1.5,
+        "scout": {
+          "DS": 1
+        },
         "posicao_id": 4,
         "clube_id": 2326
       },
@@ -24167,11 +24233,21 @@
         "posicao_id": 5,
         "clube_id": 2385
       },
-      "95456": {
-        "pontuacao": -0.1,
+      "95138": {
+        "pontuacao": 6.5,
         "scout": {
+          "DS": 1,
+          "SG": 1
+        },
+        "posicao_id": 2,
+        "clube_id": 2357
+      },
+      "95456": {
+        "pontuacao": 5.4,
+        "scout": {
+          "DS": 3,
           "FC": 2,
-          "FS": 1
+          "FS": 3
         },
         "posicao_id": 4,
         "clube_id": 2326
@@ -24207,9 +24283,9 @@
         "clube_id": 2385
       },
       "96681": {
-        "pontuacao": 6.1,
+        "pontuacao": 9.1,
         "scout": {
-          "DS": 1,
+          "DS": 3,
           "FC": 3,
           "FS": 1,
           "SG": 1
@@ -24226,19 +24302,39 @@
         "clube_id": 2357
       },
       "96822": {
-        "pontuacao": 0.7,
+        "pontuacao": 1.9,
         "scout": {
           "FC": 1,
+          "FD": 1,
           "FS": 2
         },
         "posicao_id": 4,
         "clube_id": 2326
       },
+      "96838": {
+        "pontuacao": 1.8,
+        "scout": {
+          "FF": 1,
+          "FS": 2
+        },
+        "posicao_id": 4,
+        "clube_id": 2326
+      },
+      "97613": {
+        "pontuacao": 6.5,
+        "scout": {
+          "DS": 1,
+          "SG": 1
+        },
+        "posicao_id": 3,
+        "clube_id": 2357
+      },
       "97614": {
-        "pontuacao": 7.7,
+        "pontuacao": 8.7,
         "scout": {
           "DS": 2,
           "FC": 1,
+          "FS": 2,
           "SG": 1
         },
         "posicao_id": 2,
@@ -24256,7 +24352,7 @@
   },
   "status_mercado": 2,
   "bola_rolando": true,
-  "cartola_atualizado_em": "2026-07-19T20:08:06.483036+00:00",
+  "cartola_atualizado_em": "2026-07-19T21:14:32.506399+00:00",
   "playoffs_ativos": true,
   "transicao_playoffs": false,
   "transicao_r16": false
