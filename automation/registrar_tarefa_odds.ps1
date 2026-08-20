@@ -1,29 +1,21 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-  Registra tarefas no Agendador do Windows para atualizar odds 6×/dia (hora local).
+  DEPRECATED — projeto arquivado; não registre tarefas de odds.
 
-  powershell -ExecutionPolicy Bypass -File automation\registrar_tarefa_odds.ps1
+.DESCRIPTION
+  Remove qualquer tarefa DataCFC residual no Agendador do Windows.
 #>
 
-$Raiz = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$Script = Join-Path $Raiz "automation\atualizar_odds.ps1"
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Continue"
 
-if (-not (Test-Path $Script)) {
-    throw "Script não encontrado: $Script"
-}
+Get-ScheduledTask -ErrorAction SilentlyContinue |
+    Where-Object { $_.TaskName -like "DataCFC*" -or $_.TaskPath -eq '\DataCFC\' } |
+    ForEach-Object {
+        Write-Host "Removendo tarefa local: $($_.TaskPath)$($_.TaskName)"
+        Stop-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -ErrorAction SilentlyContinue
+        Unregister-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -Confirm:$false -ErrorAction SilentlyContinue
+    }
 
-$TaskPrefix = "DataCFC-AtualizarOdds"
-$Horarios = @("06:00", "09:00", "12:00", "15:00", "18:00", "21:00")
-$Action = "powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$Script`""
-
-foreach ($h in $Horarios) {
-    $suffix = $h.Replace(":", "")
-    $name = if ($h -eq "06:00") { $TaskPrefix } else { "$TaskPrefix-$suffix" }
-    schtasks /Create /TN $name /TR $Action /SC DAILY /ST $h /F | Out-Null
-    Write-Host "Tarefa registrada: $name ($h)"
-}
-
-Write-Host ""
-Write-Host "Testar agora:"
-Write-Host "  powershell -ExecutionPolicy Bypass -File `"$Script`""
+Write-Host "Odds: workflow manual apenas (.github/workflows/update-odds.yml). Projeto arquivado."

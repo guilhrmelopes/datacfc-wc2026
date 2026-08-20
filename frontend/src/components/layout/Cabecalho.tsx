@@ -49,14 +49,11 @@ export function Cabecalho() {
     };
   }, [atualizar]);
 
-  const textoTimestamp =
-    carregando && !atualizadoEm
-      ? "Verificando atualização…"
-      : atualizadoEm
-        ? `Atualizado em ${formatarTimestampDashboard(atualizadoEm)}`
-        : "Atualização indisponível";
-
-  const servidorOnline = Boolean(atualizadoEm) || carregando;
+  const textoTimestamp = atualizadoEm
+    ? `Snapshot final · ${formatarTimestampDashboard(atualizadoEm)}`
+    : carregando
+      ? "Carregando snapshot…"
+      : "Snapshot indisponível";
 
   return (
     <header className="mb-6 border-b border-[var(--color-border)] pb-4">
@@ -75,7 +72,7 @@ export function Cabecalho() {
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Data CFC — Copa do Mundo 2026</h1>
             <p className="text-sm text-[var(--color-muted)]">
-              Análise de seleções, jogadores e confrontos
+              Arquivo · análise de seleções, jogadores e confrontos
             </p>
           </div>
         </div>
@@ -83,14 +80,12 @@ export function Cabecalho() {
         <div className="flex shrink-0 items-center gap-2.5">
           <p
             className="flex items-center justify-end gap-2 text-right text-xs text-[var(--color-muted)]"
-            title="Horário de Brasília — atualiza automaticamente após cada rotina"
+            title="Dados finais da Copa — atualização automática desligada"
           >
-            {servidorOnline && (
-              <span
-                className="indicador-online h-2 w-2 shrink-0 rounded-full bg-emerald-400"
-                aria-hidden="true"
-              />
-            )}
+            <span
+              className="h-2 w-2 shrink-0 rounded-full bg-amber-500/80"
+              aria-hidden="true"
+            />
             <span>{textoTimestamp}</span>
           </p>
           <a

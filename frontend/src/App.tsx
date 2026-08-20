@@ -66,6 +66,12 @@ export default function App() {
 
   return (
     <div className="mx-auto min-h-screen max-w-[1600px] px-4 py-6 sm:px-6">
+      <div
+        role="status"
+        className="mb-4 border-b border-[var(--color-border)] pb-3 text-sm text-[var(--color-muted)]"
+      >
+        Copa 2026 encerrada — esta é uma demo congelada do Data CFC. Os dados não são mais atualizados.
+      </div>
       <Cabecalho />
       <Tabs value={aba} onValueChange={(v) => setAba(v as AbaAtiva)}>
         <TabsList className="mb-2 flex flex-wrap">

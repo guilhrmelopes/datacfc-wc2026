@@ -1,32 +1,22 @@
 #Requires -Version 5.1
 <#
 .SYNOPSIS
-  Registra tarefa agendada para atualizar a Copa a cada 30 minutos.
+  DEPRECATED — projeto arquivado; não registre tarefas locais.
 
 .DESCRIPTION
-  Execute uma vez como administrador. A tarefa chama automation/atualizar_copa.ps1,
-  que roda Cartola (/copa/), FotMob, odds GA%/SG% e push (deploy Vercel).
-
-  Para agenda completa (status jogadores + 6×/dia), use registrar_agenda_completa.ps1.
+  Remove qualquer tarefa DataCFC residual. Workflows de Copa estão sem cron.
 #>
 
 Set-StrictMode -Version Latest
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Continue"
 
-$Raiz = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
-$Script = Join-Path $Raiz "automation\atualizar_copa.ps1"
-$NomeTarefa = "DataCFC_AtualizarCopa_30min"
+Get-ScheduledTask -ErrorAction SilentlyContinue |
+    Where-Object { $_.TaskName -like "DataCFC*" -or $_.TaskPath -eq '\DataCFC\' } |
+    ForEach-Object {
+        Write-Host "Removendo tarefa local: $($_.TaskPath)$($_.TaskName)"
+        Stop-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -ErrorAction SilentlyContinue
+        Unregister-ScheduledTask -TaskName $_.TaskName -TaskPath $_.TaskPath -Confirm:$false -ErrorAction SilentlyContinue
+    }
 
-if (-not (Test-Path $Script)) {
-    throw "Script não encontrado: $Script"
-}
-
-$acao = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-NoProfile -ExecutionPolicy Bypass -File `"$Script`""
-$trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).Date -RepetitionInterval (New-TimeSpan -Minutes 30) -RepetitionDuration (New-TimeSpan -Days 60)
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
-
-Register-ScheduledTask -TaskName $NomeTarefa -Action $acao -Trigger $trigger -Settings $settings -Force | Out-Null
-
-Write-Host "Tarefa '$NomeTarefa' registrada — a cada 30 min por 60 dias."
-Write-Host "Fluxo: Cartola + FotMob + odds + commit/push."
-Write-Host "Para remover: Unregister-ScheduledTask -TaskName '$NomeTarefa' -Confirm:`$false"
+Write-Host ""
+Write-Host "OK — sem agenda local. Projeto arquivado."

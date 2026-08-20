@@ -1,88 +1,50 @@
 # Data CFC — Copa do Mundo 2026
 
-Dashboard de análise de seleções e jogadores para a Copa do Mundo 2026.
+**Status: arquivado (demo congelada).** A Copa 2026 acabou; os dados não são mais atualizados. O site permanece no ar como case study.
 
-## Funcionalidades
+**Demo:** [datacfc-wc2026.vercel.app](https://datacfc-wc2026.vercel.app) · **Repo:** [guilhrmelopes/datacfc-wc2026](https://github.com/guilhrmelopes/datacfc-wc2026)
 
-- **HUB Seleções** — scouts coletivos por seleção (gols, posse, xG, desarmes e muito mais) com formatação condicional por faixa de desempenho
-- **Fase de Grupos** — classificação ao vivo dos grupos A–L
-- **HUB Jogadores** — ranking de jogadores por posição (GOL, LAT, ZAG, MEI, ATA) com métricas de performance e próximo adversário
+Dashboard de análise para quem joga **Cartola FC** na Copa: scouts de seleções e jogadores, classificação, mata-mata e contexto de odds (GA% / SG%) num só lugar.
 
-## Tecnologias
+## O que o produto faz
 
-- [React 19](https://react.dev/) + [Vite 6](https://vitejs.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind CSS 4](https://tailwindcss.com/)
-- [Radix UI](https://www.radix-ui.com/)
+| Aba | Conteúdo |
+|-----|----------|
+| **Fase de Grupos** | Classificação dos grupos A–L |
+| **Mata-mata** | Chave / bracket até a final |
+| **HUB Seleções** | Scouts coletivos (gols, posse, xG, desarmes, etc.) e recorrência |
+| **HUB Jogadores** | Rankings por posição (GOL, LAT, ZAG, MEI, ATA), ratings, próximo adversário, odds e cobradores |
 
-## Atualização automática de dados
+## Stack
 
-Todo o fluxo (Copa, scouts, pontuações, odds e deploy) pode rodar **localmente** ou **na nuvem** (GitHub Actions).
+- **Frontend:** React 19, Vite 6, TypeScript, Tailwind CSS 4, Radix UI
+- **Dados:** Python 3.12, Playwright (odds), PowerShell automation
+- **Deploy:** GitHub Actions → commit de JSONs → Vercel
 
-### O que é atualizado
+## Arquitetura (visão geral)
 
-| Etapa | Fonte | Arquivos |
-|-------|--------|----------|
-| Copa (classificação, hub, cedido/conquistado) | FotMob API | `copa_estado.json`, `grupos_wc2026.json`, `classificacao_grupos.json`, `pontuacao_cedida.json`, `selecoes.json`, `jogadores_mercado.json` |
-| Status e fotos | Prováveis do Cartola | `jogadores_mercado.json` |
-| Odds GA% / SG% | Playwright (local) | `odds_jogadores.json`, `eventos_odds_rodada1.json` |
-
-O **deploy** ocorre automaticamente via **push → Vercel** quando há mudanças nos JSONs.
-
-### Setup (uma vez)
-
-```powershell
-cd C:\caminho\para\datacfc_wc2026
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements-odds.txt
-playwright install chromium
+```mermaid
+flowchart LR
+  FotMob[FotMob] --> Pipeline[Pipeline Python]
+  Cartola[Cartola / Prováveis] --> Pipeline
+  Odds[OddsHub Playwright] --> Pipeline
+  Pipeline --> JSON[frontend/public/data]
+  JSON --> SPA[SPA React]
+  SPA --> Vercel[Vercel]
 ```
 
-### Atualizar tudo manualmente (recomendado)
+Detalhes em [ARCHITECTURE.md](ARCHITECTURE.md).
+
+## Como rodar localmente (dev)
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File automation\atualizar_tudo.ps1
+cd frontend
+npm install
+npm run dev
 ```
 
-Sem odds (só Copa + status):
+Os JSONs já estão em `frontend/public/data/`. O pipeline Python / scrapers ficam no repo para referência histórica; **não há mais agenda automática** (cron desligado).
 
-```powershell
-powershell -ExecutionPolicy Bypass -File automation\atualizar_tudo.ps1 -SkipOdds
-```
+## Licença / uso
 
-Sem push (testar localmente):
-
-```powershell
-powershell -ExecutionPolicy Bypass -File automation\atualizar_tudo.ps1 -SkipPush
-```
-
-### Agendar automaticamente (Windows)
-
-Registra **Copa a cada 30 min** + **atualização completa 6×/dia**:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File automation\registrar_agenda_completa.ps1
-```
-
-Horários completos (hora local): 06h, 09h, 12h, 15h, 18h, 21h.
-
-Logs: `logs/atualizar_tudo/` e `logs/atualizar_copa/`.
-
-### GitHub Actions (nuvem)
-
-| Workflow | Frequência | Conteúdo |
-|----------|------------|----------|
-| `update-copa.yml` | A cada 30 min | Copa + status → push → Vercel |
-| `update-status.yml` | 3×/dia | Status e fotos |
-| `update-odds.yml` | Manual | Odds (emergência — Cloudflare no runner) |
-
-Odds continuam sendo raspadas **localmente** (Playwright + Chromium) — o runner do GitHub costuma ser bloqueado.
-
-### Scripts individuais
-
-```powershell
-powershell -ExecutionPolicy Bypass -File automation\atualizar_copa.ps1
-powershell -ExecutionPolicy Bypass -File automation\atualizar_odds.ps1
-```
-
+Projeto pessoal / portfólio. Fontes de dados de terceiros (FotMob, Cartola, etc.) sujeitas aos termos de cada provedor.
