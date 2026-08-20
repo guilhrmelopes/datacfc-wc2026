@@ -1,24 +1,9 @@
 name: Atualizar dados Copa (FotMob)
 
+# ARQUIVADO — Copa 2026 encerrada. Sem schedule.
+# Manter só workflow_dispatch para reexecução manual pontual, se necessário.
 on:
-  schedule:
-    # A cada 30 min (≥ 2h pedido para mata-mata) — roda na nuvem com PC desligado
-    - cron: "*/30 * * * *"
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "src/scrapers/**"
-      - "src/pipeline/copa_atualizar.py"
-      - "automation/executar_odds.py"
-      - "automation/validar_odds.py"
-      - "automation/preparar_mercado_odds.py"
-      - "automation/validar_pipeline_odds.py"
-      - "automation/testar_resolucao_eventos.py"
-      - "src/scrapers/mapeamento_odds.py"
-      - "src/scrapers/resolucao_eventos_odds.py"
-      - "frontend/public/data/mapeamento_jogadores_odds.json"
-      - "requirements*.txt"
 
 concurrency:
   group: update-copa-${{ github.ref }}

@@ -1,17 +1,7 @@
 name: Atualizar status e fotos dos jogadores
 
-
-
+# ARQUIVADO — Copa 2026 encerrada. Sem schedule.
 on:
-
-  schedule:
-
-    - cron: '0 12 * * *'   # 09h BRT (UTC-3)
-
-    - cron: '0 17 * * *'   # 14h BRT
-
-    - cron: '0 0  * * *'   # 21h BRT
-
   workflow_dispatch:
 
 
