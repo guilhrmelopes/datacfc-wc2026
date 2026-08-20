@@ -1,10 +1,10 @@
 # Data CFC — Copa do Mundo 2026
 
-**Status: arquivado (demo congelada).** A Copa 2026 acabou; os dados não são mais atualizados. O site permanece no ar como case study.
+**Status: arquivado (demo congelada).** A Copa do Mundo 2026 acabou e os dados não são mais atualizados. O site permanece no ar como case study.
 
 **Demo:** [datacfc-wc2026.vercel.app](https://datacfc-wc2026.vercel.app) · **Repo:** [guilhrmelopes/datacfc-wc2026](https://github.com/guilhrmelopes/datacfc-wc2026)
 
-Dashboard de análise para quem joga **Cartola FC** na Copa: scouts de seleções e jogadores, classificação, mata-mata e contexto de odds (GA% / SG%) num só lugar.
+Dashboard de análise para quem jogou o **Cartola FC** na Copa do Mundo: scouts de seleções e jogadores, classificação, mata-mata e contexto de odds (Anytime Goalscorer, Player To Assist, Player To Score or Assist, Clean Sheet) num só lugar.
 
 ## O que o produto faz
 
